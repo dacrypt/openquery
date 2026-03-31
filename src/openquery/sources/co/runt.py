@@ -49,14 +49,14 @@ class RuntSource(BaseSource):
             description="Colombian vehicle registry with real-time SOAT, RTM, and ownership data",
             country="CO",
             url=RUNT_PAGE,
-            supported_inputs=[DocumentType.VIN, DocumentType.PLATE],
+            supported_inputs=[DocumentType.VIN, DocumentType.PLATE, DocumentType.CEDULA],
             requires_captcha=True,
             requires_browser=True,
             rate_limit_rpm=5,
         )
 
     def query(self, input: QueryInput) -> BaseModel:
-        """Query RUNT by VIN or plate."""
+        """Query RUNT by VIN, plate, or owner cedula."""
         if input.document_type == DocumentType.VIN:
             return self._query_with_retries(
                 tipo_consulta="2", campo="vin", valor=input.document_number
@@ -65,10 +65,17 @@ class RuntSource(BaseSource):
             return self._query_with_retries(
                 tipo_consulta="1", campo="placa", valor=input.document_number
             )
+        elif input.document_type == DocumentType.CEDULA:
+            return self._query_with_retries(
+                tipo_consulta="1", campo="documento", valor=input.document_number,
+                tipo_documento=input.extra.get("tipo_documento", "C"),
+            )
         else:
             raise SourceError("co.runt", f"Unsupported input type: {input.document_type}")
 
-    def _query_with_retries(self, tipo_consulta: str, campo: str, valor: str) -> RuntResult:
+    def _query_with_retries(
+        self, tipo_consulta: str, campo: str, valor: str, tipo_documento: str = "C",
+    ) -> RuntResult:
         """Execute query with captcha retry logic."""
         from openquery.core.browser import BrowserManager
         from openquery.core.captcha import OCRSolver
@@ -93,7 +100,8 @@ class RuntSource(BaseSource):
 
                     # Step 3: Execute query
                     data = self._execute_query(
-                        page, tipo_consulta, campo, valor, captcha_text, captcha_id
+                        page, tipo_consulta, campo, valor, captcha_text, captcha_id,
+                        tipo_documento=tipo_documento,
                     )
 
                     # Step 4: Parse response
@@ -152,14 +160,15 @@ class RuntSource(BaseSource):
         valor: str,
         captcha_text: str,
         captcha_id: str,
+        tipo_documento: str = "C",
     ) -> dict:
         """POST auth query to RUNT API via browser fetch."""
         body = {
             "procedencia": "NACIONAL",
             "tipoConsulta": tipo_consulta,
             "placa": valor if campo == "placa" else None,
-            "tipoDocumento": "C",
-            "documento": None,
+            "tipoDocumento": tipo_documento,
+            "documento": valor if campo == "documento" else None,
             "vin": valor if campo == "vin" else None,
             "soat": None,
             "aseguradora": "",
@@ -282,6 +291,19 @@ class RuntSource(BaseSource):
             num_regrabacion_serie=g(["numRegraSerie"]),
             regrabacion_vin=gb(["esRegrabadoVin"]),
             num_regrabacion_vin=g(["numRegraVin"]),
+            # SOAT
+            soat_vigente=gb(["soatVigente", "vigenciaSoat"]),
+            soat_aseguradora=g(["aseguradora", "soatAseguradora", "nombreAseguradora"]),
+            soat_vencimiento=g([
+                "fechaVencimientoSoat", "soatFechaVencimiento", "vencimientoSoat",
+            ]),
+            # RTM (tecnicomecanica)
+            tecnomecanica_vigente=gb(["rtmVigente", "vigenciaRTM", "tecnomecanicaVigente"]),
+            tecnomecanica_vencimiento=g([
+                "fechaVencimientoRTM", "rtmFechaVencimiento", "vencimientoRTM",
+                "tecnomecanicaVencimiento",
+            ]),
+            # Registration
             fecha_matricula=g(["fechaMatricula"]),
             fecha_registro=g(["fechaRegistro"]),
             autoridad_transito=g(["organismoTransito"]),

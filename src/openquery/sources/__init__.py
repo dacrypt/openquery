@@ -49,3 +49,15 @@ def _ensure_loaded() -> None:
         import openquery.sources.co.runt  # noqa: F401
     except ImportError:
         pass
+    try:
+        import openquery.sources.co.procuraduria  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.policia  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.adres  # noqa: F401
+    except ImportError:
+        pass
