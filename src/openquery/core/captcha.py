@@ -132,6 +132,64 @@ class OCRSolver(CaptchaSolver):
         return text, avg_conf
 
 
+class TrOCRSolver(CaptchaSolver):
+    """Solve captchas using Microsoft's TrOCR transformer model.
+
+    Uses the pretrained trocr-small-printed model (~130MB) for high-accuracy
+    printed text recognition. Significantly better than tesseract for
+    ambiguous characters (5/S, 8/B, T/I, c/e).
+
+    First call downloads the model from HuggingFace and caches it locally.
+    Subsequent calls are fast (~50-200ms per image on CPU).
+    """
+
+    def __init__(self, model_name: str = "microsoft/trocr-small-printed", max_chars: int = 5):
+        self._model_name = model_name
+        self._max_chars = max_chars
+        self._processor = None
+        self._model = None
+
+    def _load_model(self):
+        """Lazy-load the TrOCR model on first use."""
+        if self._processor is not None:
+            return
+
+        try:
+            from transformers import TrOCRProcessor, VisionEncoderDecoderModel
+        except ImportError as e:
+            raise ImportError(
+                "transformers and torch are required for TrOCR. "
+                "Install: pip install 'openquery[trocr]'"
+            ) from e
+
+        logger.info("Loading TrOCR model '%s'...", self._model_name)
+        self._processor = TrOCRProcessor.from_pretrained(self._model_name)
+        self._model = VisionEncoderDecoderModel.from_pretrained(self._model_name)
+        logger.info("TrOCR model loaded")
+
+    def solve(self, image_bytes: bytes, **hints: str) -> str:
+        from PIL import Image
+
+        self._load_model()
+
+        max_chars = int(hints.get("length", self._max_chars))
+        img = Image.open(io.BytesIO(image_bytes)).convert("RGB")
+
+        pixel_values = self._processor(images=img, return_tensors="pt").pixel_values
+        generated_ids = self._model.generate(pixel_values)
+        text = self._processor.batch_decode(generated_ids, skip_special_tokens=True)[0]
+
+        # Clean to alphanumeric only
+        text = re.sub(r"[^a-zA-Z0-9]", "", text.strip())
+
+        if len(text) < 3:
+            from openquery.exceptions import CaptchaError
+
+            raise CaptchaError("trocr", f"TrOCR returned too few characters: '{text}'")
+
+        return text[:max_chars]
+
+
 class TwoCaptchaSolver(CaptchaSolver):
     """Solve captchas using the 2captcha.com API."""
 
