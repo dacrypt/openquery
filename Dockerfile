@@ -1,6 +1,6 @@
 FROM python:3.12-slim
 
-# System dependencies for tesseract OCR and Playwright
+# System dependencies for tesseract OCR
 RUN apt-get update && apt-get install -y --no-install-recommends \
     tesseract-ocr \
     libtesseract-dev \
@@ -12,10 +12,10 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 WORKDIR /app
 
 # Copy project files
-COPY pyproject.toml .
+COPY pyproject.toml README.md ./
 COPY src/ src/
 
-# Install dependencies
+# Install dependencies (system-wide, no venv)
 RUN uv pip install --system ".[serve]"
 
 # Install Playwright browsers

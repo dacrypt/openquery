@@ -19,13 +19,24 @@ class TestSolveCaptcha:
     def test_solve_returns_alphanumeric(self):
         from PIL import Image, ImageDraw, ImageFont
 
-        img = Image.new("RGB", (200, 60), color="white")
+        # Create a large, clear image that OCR can read with any font
+        img = Image.new("RGB", (400, 80), color="white")
         draw = ImageDraw.Draw(img)
-        try:
-            font = ImageFont.truetype("/System/Library/Fonts/Helvetica.ttc", 36)
-        except OSError:
-            font = ImageFont.load_default()
-        draw.text((20, 10), "AB12C", fill="black", font=font)
+        # Try system fonts across platforms, fall back to default at large size
+        font = None
+        for path in [
+            "/System/Library/Fonts/Helvetica.ttc",  # macOS
+            "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",  # Ubuntu
+            "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",  # Fedora
+        ]:
+            try:
+                font = ImageFont.truetype(path, 48)
+                break
+            except OSError:
+                continue
+        if font is None:
+            font = ImageFont.load_default(size=48)
+        draw.text((30, 10), "AB12C", fill="black", font=font)
 
         buf = io.BytesIO()
         img.save(buf, format="PNG")
