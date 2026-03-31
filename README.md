@@ -274,6 +274,18 @@ uv run ruff check src/ tests/
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
+## Documentation
+
+| Guide | Description |
+|-------|-------------|
+| [Getting Started](docs/getting-started.md) | Installation, first query, engine setup |
+| [Sources Guide](docs/sources.md) | All 5 Colombian sources with field reference |
+| [CAPTCHA Guide](docs/captcha.md) | OCR engines, voting, LLM backends, benchmarks |
+| [Audit Guide](docs/audit.md) | Evidence capture, PDF reports, compliance |
+| [API Guide](docs/api.md) | REST endpoints, authentication, deployment |
+| [Adding Sources](docs/adding-sources.md) | Step-by-step guide to create new source plugins |
+| [Changelog](CHANGELOG.md) | Version history |
+
 ## License
 
 [MIT](LICENSE)
