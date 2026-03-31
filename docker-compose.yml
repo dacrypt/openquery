@@ -1,0 +1,24 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - OPENQUERY_API_KEY=${OPENQUERY_API_KEY:-}
+      - OPENQUERY_CACHE_BACKEND=redis
+      - OPENQUERY_REDIS_URL=redis://redis:6379/0
+      - OPENQUERY_LOG_LEVEL=INFO
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+volumes:
+  redis_data:
