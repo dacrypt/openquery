@@ -13,7 +13,9 @@ OpenQuery provides a plugin-based framework for scraping government websites, pu
 
 - **Unified interface** — one CLI and one API endpoint for all data sources
 - **Browser automation** — Playwright-based scraping for JavaScript-heavy sites
-- **CAPTCHA solving** — local OCR (pytesseract) with optional paid service fallback
+- **Multi-engine CAPTCHA solving** — PaddleOCR (100%), EasyOCR+Tesseract voting (90%), with cloud and paid fallbacks
+- **LLM-powered knowledge CAPTCHAs** — Ollama (local), HuggingFace, Anthropic, OpenAI fallback chain
+- **Audit & evidence** — screenshots, network logs, and PDF evidence reports for compliance
 - **WAF bypass** — browser-context API calls preserve session cookies
 - **Caching** — in-memory, Redis, or SQLite backends with configurable TTL
 - **Rate limiting** — per-source token-bucket to respect server limits
@@ -26,7 +28,10 @@ OpenQuery provides a plugin-based framework for scraping government websites, pu
 | Source | Country | Description | Inputs | CAPTCHA |
 |--------|---------|-------------|--------|---------|
 | `co.simit` | CO | Traffic fines and violations | cedula, placa | No |
-| `co.runt` | CO | National vehicle registry (SOAT, RTM, ownership) | vin, placa | Yes (OCR) |
+| `co.runt` | CO | National vehicle registry (SOAT, RTM, ownership) | vin, placa, cedula | Yes (image OCR) |
+| `co.procuraduria` | CO | Disciplinary records (antecedentes) | cedula | Yes (knowledge QA) |
+| `co.policia` | CO | Criminal background (antecedentes penales) | cedula | No |
+| `co.adres` | CO | Health system enrollment (EPS/regime) | cedula | No |
 
 ## Installation
 
@@ -42,24 +47,40 @@ uv add openquery
 
 ### System Dependencies
 
-OpenQuery requires [Tesseract OCR](https://github.com/tesseract-ocr/tesseract) for CAPTCHA solving and Playwright browsers for web scraping:
+Playwright browsers are required for web scraping:
 
 ```bash
-# macOS
-brew install tesseract
 playwright install chromium
-
-# Ubuntu/Debian
-sudo apt-get install tesseract-ocr
-playwright install --with-deps chromium
 ```
+
+### CAPTCHA Engines (pick one or more)
+
+OpenQuery auto-detects installed OCR engines and builds an optimal solver chain:
+
+| Engine | Accuracy | Speed | Install |
+|--------|----------|-------|---------|
+| **PaddleOCR** (recommended) | 100% | ~130ms | `pip install "openquery[paddleocr]"` |
+| EasyOCR + Tesseract (voting) | 90% | ~500ms | `pip install "openquery[easyocr]"` + `brew install tesseract` |
+| Tesseract alone | 80% | ~390ms | `brew install tesseract` (included by default) |
+
+For knowledge-based CAPTCHAs (Procuraduria), you need at least one LLM backend:
+
+| Backend | Cost | Setup |
+|---------|------|-------|
+| **Ollama** (recommended) | Free | `ollama pull llama3.2:1b` |
+| HuggingFace Inference | Free | Set `HF_TOKEN` env var |
+| Anthropic | Paid | Set `ANTHROPIC_API_KEY` env var |
+| OpenAI | Paid | Set `OPENAI_API_KEY` env var |
 
 ### Optional Extras
 
 ```bash
-pip install "openquery[serve]"    # FastAPI server (fastapi, uvicorn)
-pip install "openquery[redis]"    # Redis cache backend
-pip install "openquery[captcha]"  # 2captcha paid CAPTCHA solving
+pip install "openquery[paddleocr]"   # PaddleOCR — best CAPTCHA accuracy (100%)
+pip install "openquery[easyocr]"     # EasyOCR — good accuracy (85%), combines with Tesseract for 90%
+pip install "openquery[huggingface]" # HuggingFace Inference API (OCR + QA)
+pip install "openquery[serve]"       # FastAPI server (fastapi, uvicorn)
+pip install "openquery[redis]"       # Redis cache backend
+pip install "openquery[captcha]"     # 2captcha paid CAPTCHA solving (last resort)
 ```
 
 ## Quick Start
@@ -79,8 +100,20 @@ openquery query co.runt --placa ABC123
 # Query by VIN
 openquery query co.runt --vin 5YJ3E1EA1PF000001
 
+# Disciplinary records
+openquery query co.procuraduria --cedula 12345678
+
+# Criminal background
+openquery query co.policia --cedula 12345678
+
+# Health system enrollment
+openquery query co.adres --cedula 12345678
+
 # Output raw JSON
 openquery query co.simit --cedula 12345678 --json
+
+# Generate audit evidence (screenshots + PDF report)
+openquery query co.runt --placa ABC123 --audit --audit-dir ./evidence
 ```
 
 ### REST API
@@ -153,9 +186,11 @@ All settings use environment variables with the `OPENQUERY_` prefix:
 | `OPENQUERY_BROWSER_HEADLESS` | `true` | Run browser in headless mode |
 | `OPENQUERY_BROWSER_TIMEOUT` | `30.0` | Browser operation timeout in seconds |
 | `OPENQUERY_RATE_LIMIT_DEFAULT_RPM` | `10` | Default requests per minute per source |
-| `OPENQUERY_CAPTCHA_SOLVER` | `ocr` | CAPTCHA solver: `ocr`, `2captcha`, `chained` |
-| `OPENQUERY_TWO_CAPTCHA_API_KEY` | _(none)_ | 2captcha.com API key |
 | `OPENQUERY_LOG_LEVEL` | `INFO` | Logging level |
+| `TWO_CAPTCHA_API_KEY` | _(none)_ | 2captcha.com API key (paid fallback) |
+| `HF_TOKEN` | _(none)_ | HuggingFace token (free OCR + QA) |
+| `ANTHROPIC_API_KEY` | _(none)_ | Anthropic API key (paid QA fallback) |
+| `OPENAI_API_KEY` | _(none)_ | OpenAI API key (paid QA fallback) |
 
 ## Adding a New Source
 
@@ -206,14 +241,20 @@ The `@register` decorator automatically makes the source available in the CLI, A
 
 ```
 openquery/
-├── core/           # Infrastructure (browser, captcha, cache, rate limiting)
-├── sources/        # Data source plugins, organized by country
-│   ├── base.py     # BaseSource ABC — implement this to add sources
-│   ├── co/         # Colombia (SIMIT, RUNT)
-│   └── us/         # United States (future)
-├── models/         # Pydantic response models, organized by country
-├── server/         # FastAPI REST API
-└── commands/       # Typer CLI commands
+├── core/
+│   ├── browser.py    # Playwright browser management
+│   ├── captcha.py    # Multi-engine CAPTCHA solvers (PaddleOCR, EasyOCR, Tesseract, voting)
+│   ├── llm.py        # LLM QA chain (Ollama, HuggingFace, Anthropic, OpenAI)
+│   ├── audit.py      # Evidence capture (screenshots, network logs, PDF reports)
+│   ├── cache.py      # Caching backends (memory, Redis, SQLite)
+│   └── rate_limit.py # Token-bucket rate limiting
+├── sources/          # Data source plugins, organized by country
+│   ├── base.py       # BaseSource ABC — implement this to add sources
+│   ├── co/           # Colombia (SIMIT, RUNT, Procuraduria, Policia, ADRES)
+│   └── us/           # United States (future)
+├── models/           # Pydantic response models, organized by country
+├── server/           # FastAPI REST API
+└── commands/         # Typer CLI commands
 ```
 
 ## Development

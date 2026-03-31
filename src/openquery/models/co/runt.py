@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from datetime import datetime
+from typing import Any
 
 from pydantic import BaseModel, Field
 
@@ -106,3 +107,5 @@ class RuntResult(BaseModel):
 
     # Control flags
     mostrar_solicitudes: bool = True
+
+    audit: Any | None = Field(default=None, exclude=True)  # AuditRecord when audit=True

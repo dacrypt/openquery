@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from datetime import datetime
+from typing import Any
 
 from pydantic import BaseModel, Field
 
@@ -25,3 +26,4 @@ class AdresResult(BaseModel):
     departamento: str = ""
     fecha_afiliacion: str = ""
     fecha_efectiva: str = ""
+    audit: Any | None = Field(default=None, exclude=True)  # AuditRecord when audit=True

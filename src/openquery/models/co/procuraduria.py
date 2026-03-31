@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from datetime import datetime
+from typing import Any
 
 from pydantic import BaseModel, Field
 
@@ -20,3 +21,4 @@ class ProcuraduriaResult(BaseModel):
     mensaje: str = ""  # e.g., "No tiene antecedentes" or description of records
     certificado_url: str = ""  # URL to the PDF certificate if generated
     detalles: list[dict] = Field(default_factory=list)  # Parsed sanction details
+    audit: Any | None = Field(default=None, exclude=True)  # AuditRecord when audit=True

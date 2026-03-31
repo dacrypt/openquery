@@ -34,6 +34,58 @@ AUTH_URL = f"{BASE_URL}/auth"
 MAX_RETRIES = 3
 
 
+def _build_captcha_chain():
+    """Build a captcha solver chain based on available backends.
+
+    Primary: PaddleOCR PP-OCRv5 (~100% accuracy, ~130ms).
+    Fallback chain: VotingSolver(EasyOCR+Tesseract) → HuggingFace → 2Captcha.
+    Degrades gracefully based on what's installed.
+    """
+    import os
+
+    from openquery.core.captcha import ChainedSolver, OCRSolver
+
+    solvers = []
+
+    # PaddleOCR (best accuracy ~100%, needs paddleocr+paddlepaddle installed)
+    try:
+        from openquery.core.captcha import PaddleOCRSolver
+
+        solvers.append(PaddleOCRSolver(max_chars=5))
+    except Exception:
+        pass
+
+    # Voting (EasyOCR + Tesseract, ~90% combined)
+    try:
+        from openquery.core.captcha import EasyOCRSolver, VotingSolver
+
+        solvers.append(VotingSolver([EasyOCRSolver(max_chars=5), OCRSolver(max_chars=5)]))
+    except Exception:
+        # Tesseract alone as minimum fallback
+        solvers.append(OCRSolver(max_chars=5))
+
+    if not solvers:
+        solvers.append(OCRSolver(max_chars=5))
+
+    # HuggingFace OCR (optional, needs HF_TOKEN)
+    if os.environ.get("HF_TOKEN"):
+        try:
+            from openquery.core.captcha import HuggingFaceOCRSolver
+
+            solvers.append(HuggingFaceOCRSolver(max_chars=5))
+        except Exception:
+            pass
+
+    # 2Captcha (paid, last resort)
+    two_captcha_key = os.environ.get("TWO_CAPTCHA_API_KEY", "")
+    if two_captcha_key:
+        from openquery.core.captcha import TwoCaptchaSolver
+
+        solvers.append(TwoCaptchaSolver(api_key=two_captcha_key))
+
+    return ChainedSolver(solvers) if len(solvers) > 1 else solvers[0]
+
+
 @register
 class RuntSource(BaseSource):
     """Query Colombia's RUNT vehicle registry."""
@@ -59,32 +111,43 @@ class RuntSource(BaseSource):
         """Query RUNT by VIN, plate, or owner cedula."""
         if input.document_type == DocumentType.VIN:
             return self._query_with_retries(
-                tipo_consulta="2", campo="vin", valor=input.document_number
+                tipo_consulta="2", campo="vin", valor=input.document_number,
+                audit=input.audit,
             )
         elif input.document_type == DocumentType.PLATE:
             return self._query_with_retries(
-                tipo_consulta="1", campo="placa", valor=input.document_number
+                tipo_consulta="1", campo="placa", valor=input.document_number,
+                audit=input.audit,
             )
         elif input.document_type == DocumentType.CEDULA:
             return self._query_with_retries(
                 tipo_consulta="1", campo="documento", valor=input.document_number,
                 tipo_documento=input.extra.get("tipo_documento", "C"),
+                audit=input.audit,
             )
         else:
             raise SourceError("co.runt", f"Unsupported input type: {input.document_type}")
 
     def _query_with_retries(
         self, tipo_consulta: str, campo: str, valor: str, tipo_documento: str = "C",
+        audit: bool = False,
     ) -> RuntResult:
         """Execute query with captcha retry logic."""
         from openquery.core.browser import BrowserManager
-        from openquery.core.captcha import OCRSolver
 
         browser = BrowserManager(headless=self._headless, timeout=self._timeout)
-        solver = OCRSolver(max_chars=5)
+        solver = _build_captcha_chain()
         last_error: Exception | None = None
+        collector = None
+
+        if audit:
+            from openquery.core.audit import AuditCollector
+            collector = AuditCollector("co.runt", campo, valor)
 
         with browser.page(RUNT_PAGE, wait_until="networkidle") as page:
+            if collector:
+                collector.attach(page)
+
             for attempt in range(1, MAX_RETRIES + 1):
                 try:
                     logger.info(
@@ -98,6 +161,9 @@ class RuntSource(BaseSource):
                     captcha_text = solver.solve(image_bytes)
                     logger.info("Captcha solved: %s", captcha_text)
 
+                    if collector:
+                        collector.screenshot(page, f"captcha_attempt_{attempt}")
+
                     # Step 3: Execute query
                     data = self._execute_query(
                         page, tipo_consulta, campo, valor, captcha_text, captcha_id,
@@ -106,7 +172,14 @@ class RuntSource(BaseSource):
 
                     # Step 4: Parse response
                     vin = valor if campo == "vin" else ""
-                    return self._parse_response(data, vin)
+                    result = self._parse_response(data, vin)
+
+                    if collector:
+                        collector.screenshot(page, "result")
+                        result_json = result.model_dump_json()
+                        result.audit = collector.generate_pdf(page, result_json)
+
+                    return result
 
                 except (SourceError, CaptchaError) as e:
                     last_error = e

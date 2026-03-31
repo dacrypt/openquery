@@ -19,6 +19,8 @@ def query_cmd(
     placa: str | None = typer.Option(None, "--placa", "-p", help="License plate"),
     vin: str | None = typer.Option(None, "--vin", "-v", help="VIN number"),
     output_json: bool = typer.Option(False, "--json", "-j", help="Output raw JSON"),
+    audit: bool = typer.Option(False, "--audit", "-a", help="Capture evidence (screenshots + PDF)"),
+    audit_dir: str | None = typer.Option(None, "--audit-dir", help="Directory to save audit files"),
 ) -> None:
     """Query a public data source."""
     from openquery.sources import get_source
@@ -53,10 +55,14 @@ def query_cmd(
         raise typer.Exit(1)
 
     console.print(f"[bold]Querying {meta.display_name}...[/bold]")
+    if audit:
+        console.print("[dim]Audit mode: capturing evidence...[/dim]")
 
     start = time.monotonic()
     try:
-        result = src.query(QueryInput(document_type=doc_type, document_number=doc_number))
+        result = src.query(QueryInput(
+            document_type=doc_type, document_number=doc_number, audit=audit,
+        ))
     except Exception as e:
         console.print(f"[red]Error:[/red] {e}")
         raise typer.Exit(1) from e
@@ -80,3 +86,46 @@ def query_cmd(
             title=f"{meta.display_name} — {doc_number}",
             subtitle=f"{elapsed_ms}ms",
         ))
+
+    # Save audit files if requested
+    if audit and hasattr(result, "audit") and result.audit is not None:
+        _save_audit(result.audit, source, doc_number, audit_dir)
+
+
+def _save_audit(audit_record, source: str, doc_number: str, audit_dir: str | None) -> None:
+    """Save audit evidence to disk."""
+    import base64
+    import json
+    from pathlib import Path
+
+    from openquery.models.audit import AuditRecord
+
+    out_dir = Path(audit_dir) if audit_dir else Path.cwd() / "audit"
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    # Filename prefix: source_masked-doc_timestamp
+    masked = AuditRecord.mask_document(doc_number)
+    ts = audit_record.queried_at.strftime("%Y%m%d_%H%M%S")
+    prefix = f"{source}_{masked}_{ts}"
+
+    # Save PDF
+    if audit_record.pdf_base64:
+        pdf_path = out_dir / f"{prefix}_evidence.pdf"
+        pdf_path.write_bytes(base64.b64decode(audit_record.pdf_base64))
+        console.print(f"[green]PDF saved:[/green] {pdf_path}")
+
+    # Save screenshots
+    for ss in audit_record.screenshots:
+        if ss.png_base64:
+            ss_path = out_dir / f"{prefix}_{ss.label}.png"
+            ss_path.write_bytes(base64.b64decode(ss.png_base64))
+            console.print(f"[green]Screenshot saved:[/green] {ss_path}")
+
+    # Save audit metadata as JSON (without base64 blobs)
+    meta_record = audit_record.model_dump(mode="json")
+    meta_record.pop("pdf_base64", None)
+    for ss in meta_record.get("screenshots", []):
+        ss.pop("png_base64", None)
+    meta_path = out_dir / f"{prefix}_audit.json"
+    meta_path.write_text(json.dumps(meta_record, indent=2, ensure_ascii=False))
+    console.print(f"[green]Audit log saved:[/green] {meta_path}")

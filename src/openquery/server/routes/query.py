@@ -24,6 +24,7 @@ class QueryRequest(BaseModel):
     document_type: DocumentType
     document_number: str
     bypass_cache: bool = False
+    audit: bool = False  # Capture screenshots + network log + PDF evidence
 
 
 class QueryResponse(BaseModel):
@@ -38,6 +39,7 @@ class QueryResponse(BaseModel):
     error: str | None = None
     detail: str | None = None
     retryable: bool = False
+    audit: dict[str, Any] | None = None  # AuditRecord when audit=True
 
 
 @router.post("/query", response_model=QueryResponse)
@@ -82,10 +84,16 @@ async def query(req: QueryRequest) -> QueryResponse:
         result = src.query(QueryInput(
             document_type=req.document_type,
             document_number=req.document_number,
+            audit=req.audit,
         ))
         data = result.model_dump(mode="json")
 
-        # Cache result
+        # Extract audit record if present
+        audit_data = None
+        if req.audit and hasattr(result, "audit") and result.audit is not None:
+            audit_data = result.audit.model_dump(mode="json")
+
+        # Cache result (without audit data)
         cache.set(cache_key, data)
 
         elapsed = int((time.monotonic() - start) * 1000)
@@ -94,6 +102,7 @@ async def query(req: QueryRequest) -> QueryResponse:
             queried_at=datetime.now(),
             latency_ms=elapsed,
             data=data,
+            audit=audit_data,
         )
     except Exception as e:
         elapsed = int((time.monotonic() - start) * 1000)

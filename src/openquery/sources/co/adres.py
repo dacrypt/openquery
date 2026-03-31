@@ -63,15 +63,25 @@ class AdresSource(BaseSource):
             raise SourceError(
                 "co.adres", f"Unsupported document type: {input.document_type}"
             )
-        return self._query(input.document_type, input.document_number)
+        return self._query(input.document_type, input.document_number, audit=input.audit)
 
-    def _query(self, doc_type: DocumentType, doc_number: str) -> AdresResult:
+    def _query(
+        self, doc_type: DocumentType, doc_number: str, audit: bool = False,
+    ) -> AdresResult:
         from openquery.core.browser import BrowserManager
 
         browser = BrowserManager(headless=self._headless, timeout=self._timeout)
+        collector = None
+
+        if audit:
+            from openquery.core.audit import AuditCollector
+            collector = AuditCollector("co.adres", str(doc_type), doc_number)
 
         with browser.page(ADRES_URL) as page:
             try:
+                if collector:
+                    collector.attach(page)
+
                 # Wait for the ASP.NET form
                 page.wait_for_selector(
                     "#ddlTipoDocumento, select, #txtNumDocumento",
@@ -98,6 +108,9 @@ class AdresSource(BaseSource):
                 num_input.fill(doc_number)
                 logger.info("Filled document number")
 
+                if collector:
+                    collector.screenshot(page, "form_filled")
+
                 # Click "Consultar"
                 submit = page.query_selector(
                     "#btnConsultar, input[value='Consultar'], "
@@ -115,7 +128,16 @@ class AdresSource(BaseSource):
                     timeout=15000,
                 )
 
-                return self._parse_result(page, doc_type, doc_number)
+                if collector:
+                    collector.screenshot(page, "result")
+
+                result = self._parse_result(page, doc_type, doc_number)
+
+                if collector:
+                    result_json = result.model_dump_json()
+                    result.audit = collector.generate_pdf(page, result_json)
+
+                return result
 
             except SourceError:
                 raise

@@ -56,22 +56,27 @@ class TestCaptchaSolver:
         assert result == "MA"
 
     def test_invalid_without_llm_raises(self):
-        """Without LLM API keys, unsolvable captcha should raise."""
+        """Without LLM API keys and Ollama, unsolvable captcha should raise."""
         import os
+        from unittest.mock import patch
+
+        import httpx
 
         from openquery.exceptions import SourceError
 
-        # Temporarily clear API keys
-        old_anthropic = os.environ.pop("ANTHROPIC_API_KEY", None)
-        old_openai = os.environ.pop("OPENAI_API_KEY", None)
+        # Temporarily clear all API keys
+        old_keys = {}
+        for key in ("ANTHROPIC_API_KEY", "OPENAI_API_KEY", "HF_TOKEN"):
+            old_keys[key] = os.environ.pop(key, None)
         try:
-            with pytest.raises(SourceError, match="Cannot solve"):
-                ProcuraduriaSource._solve_captcha("What is the meaning of life?")
+            # Mock Ollama connection to fail (not running)
+            with patch("httpx.post", side_effect=httpx.ConnectError("Connection refused")):
+                with pytest.raises(SourceError, match="Cannot solve"):
+                    ProcuraduriaSource._solve_captcha("What is the meaning of life?")
         finally:
-            if old_anthropic:
-                os.environ["ANTHROPIC_API_KEY"] = old_anthropic
-            if old_openai:
-                os.environ["OPENAI_API_KEY"] = old_openai
+            for key, val in old_keys.items():
+                if val:
+                    os.environ[key] = val
 
 
 class TestProcuraduriaSourceMeta:

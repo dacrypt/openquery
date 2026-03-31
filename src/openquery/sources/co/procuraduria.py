@@ -39,78 +39,22 @@ DOC_TYPE_MAP = {
 }
 
 
-def _solve_with_llm(question: str) -> str:
-    """Use an LLM to answer a knowledge-based captcha question.
+def _solve_with_qa_chain(question: str) -> str:
+    """Use the QA solver chain to answer a knowledge-based captcha question.
 
-    Tries Anthropic API first (ANTHROPIC_API_KEY), falls back to OpenAI (OPENAI_API_KEY).
-    Uses the cheapest/fastest model available.
+    Tries backends in order: Ollama (free/local) → HuggingFace (free/cloud)
+    → Anthropic (paid) → OpenAI (paid).
     """
-    import os
+    from openquery.core.llm import QAError, build_qa_chain
 
-    anthropic_key = os.environ.get("ANTHROPIC_API_KEY", "")
-    openai_key = os.environ.get("OPENAI_API_KEY", "")
-
-    prompt = (
-        f"Answer this question in one or two words only, no punctuation, no explanation. "
-        f"If it says 'sin tilde' omit accents. Question: {question}"
-    )
-
-    if anthropic_key:
-        try:
-            import httpx
-
-            resp = httpx.post(
-                "https://api.anthropic.com/v1/messages",
-                headers={
-                    "x-api-key": anthropic_key,
-                    "anthropic-version": "2023-06-01",
-                    "content-type": "application/json",
-                },
-                json={
-                    "model": "claude-haiku-4-5-20251001",
-                    "max_tokens": 20,
-                    "messages": [{"role": "user", "content": prompt}],
-                },
-                timeout=10.0,
-            )
-            data = resp.json()
-            answer = data["content"][0]["text"].strip().lower()
-            answer = re.sub(r"[.!?]", "", answer)
-            logger.info("LLM (Anthropic) answered: '%s'", answer)
-            return answer
-        except Exception as e:
-            logger.warning("Anthropic LLM failed: %s", e)
-
-    if openai_key:
-        try:
-            import httpx
-
-            resp = httpx.post(
-                "https://api.openai.com/v1/chat/completions",
-                headers={
-                    "Authorization": f"Bearer {openai_key}",
-                    "Content-Type": "application/json",
-                },
-                json={
-                    "model": "gpt-4o-mini",
-                    "max_tokens": 20,
-                    "messages": [{"role": "user", "content": prompt}],
-                },
-                timeout=10.0,
-            )
-            data = resp.json()
-            answer = data["choices"][0]["message"]["content"].strip().lower()
-            answer = re.sub(r"[.!?]", "", answer)
-            logger.info("LLM (OpenAI) answered: '%s'", answer)
-            return answer
-        except Exception as e:
-            logger.warning("OpenAI LLM failed: %s", e)
-
-    raise SourceError(
-        "co.procuraduria",
-        f"Cannot solve captcha: '{question}'. "
-        "Set ANTHROPIC_API_KEY or OPENAI_API_KEY to solve knowledge questions.",
-    )
+    try:
+        chain = build_qa_chain()
+        return chain.answer(question)
+    except QAError as e:
+        raise SourceError(
+            "co.procuraduria",
+            f"Cannot solve captcha: '{question}'. {e.detail}",
+        ) from e
 
 
 @register
@@ -144,7 +88,10 @@ class ProcuraduriaSource(BaseSource):
         last_error: Exception | None = None
         for attempt in range(3):
             try:
-                return self._query(input.document_type, input.document_number, nombre=nombre)
+                return self._query(
+                    input.document_type, input.document_number,
+                    nombre=nombre, audit=input.audit,
+                )
             except SourceError as e:
                 last_error = e
                 logger.warning("Attempt %d failed: %s", attempt + 1, e)
@@ -152,13 +99,22 @@ class ProcuraduriaSource(BaseSource):
 
     def _query(
         self, doc_type: DocumentType, doc_number: str, nombre: str = "",
+        audit: bool = False,
     ) -> ProcuraduriaResult:
         from openquery.core.browser import BrowserManager
 
         browser = BrowserManager(headless=self._headless, timeout=self._timeout)
+        collector = None
+
+        if audit:
+            from openquery.core.audit import AuditCollector
+            collector = AuditCollector("co.procuraduria", str(doc_type), doc_number)
 
         with browser.page(PROCURADURIA_URL) as page:
             try:
+                if collector:
+                    collector.attach(page)
+
                 # Wait for form to load
                 page.wait_for_selector("#ddlTipoID", timeout=15000)
 
@@ -177,12 +133,24 @@ class ProcuraduriaSource(BaseSource):
                 page.fill("#txtRespuestaPregunta", str(answer))
                 logger.info("Captcha: '%s' -> '%s'", captcha_text, answer)
 
+                if collector:
+                    collector.screenshot(page, "form_filled")
+
                 # Click "Generar"
                 page.click("#btnExportar")
                 page.wait_for_timeout(3000)
 
+                if collector:
+                    collector.screenshot(page, "result")
+
                 # Parse result
-                return self._parse_result(page, doc_type, doc_number)
+                result = self._parse_result(page, doc_type, doc_number)
+
+                if collector:
+                    result_json = result.model_dump_json()
+                    result.audit = collector.generate_pdf(page, result_json)
+
+                return result
 
             except SourceError:
                 raise
@@ -218,8 +186,8 @@ class ProcuraduriaSource(BaseSource):
             if len(first_name) >= 2:
                 return first_name[:2].upper()
 
-        # Fallback: use LLM to answer knowledge questions
-        return _solve_with_llm(text)
+        # Fallback: use QA chain to answer knowledge questions
+        return _solve_with_qa_chain(text)
 
     def _parse_result(
         self, page, doc_type: DocumentType, doc_number: str,

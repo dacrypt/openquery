@@ -55,16 +55,24 @@ class SimitSource(BaseSource):
         if input.document_type not in (DocumentType.CEDULA, DocumentType.PLATE):
             raise SourceError("co.simit", f"Unsupported input type: {input.document_type}")
 
-        return self._query(input.document_number)
+        return self._query(input.document_number, audit=input.audit)
 
-    def _query(self, search_term: str) -> SimitResult:
+    def _query(self, search_term: str, audit: bool = False) -> SimitResult:
         """Full flow: launch browser, fill form, parse results."""
         from openquery.core.browser import BrowserManager
 
         browser = BrowserManager(headless=self._headless, timeout=self._timeout)
+        collector = None
+
+        if audit:
+            from openquery.core.audit import AuditCollector
+            collector = AuditCollector("co.simit", "cedula/placa", search_term)
 
         with browser.page(SIMIT_URL) as page:
             try:
+                if collector:
+                    collector.attach(page)
+
                 # Wait for the Angular SPA to render
                 logger.info("Waiting for search form...")
                 input_locator = page.get_by_label(
@@ -75,6 +83,9 @@ class SimitSource(BaseSource):
                 # Fill search term
                 input_locator.fill(search_term)
                 logger.info("Filled search term: %s", search_term)
+
+                if collector:
+                    collector.screenshot(page, "form_filled")
 
                 # Wait for anti-bot JS to enable the button
                 page.wait_for_timeout(2000)
@@ -91,9 +102,17 @@ class SimitSource(BaseSource):
                 )
                 page.wait_for_timeout(2000)
 
+                if collector:
+                    collector.screenshot(page, "result")
+
                 # Parse results
                 result = self._parse_results(page, search_term)
                 result.historial = self._parse_historial(page)
+
+                # Generate audit evidence
+                if collector:
+                    result_json = result.model_dump_json()
+                    result.audit = collector.generate_pdf(page, result_json)
 
                 return result
 

@@ -31,6 +31,7 @@ class QueryInput(BaseModel):
     document_type: DocumentType
     document_number: str
     extra: dict[str, Any] = Field(default_factory=dict)
+    audit: bool = False  # When True, capture screenshots + network log + PDF evidence
 
 
 class SourceMeta(BaseModel):

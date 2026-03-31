@@ -52,15 +52,23 @@ class PoliciaSource(BaseSource):
                 "co.policia",
                 f"Only cedula queries supported, got: {input.document_type}",
             )
-        return self._query(input.document_number)
+        return self._query(input.document_number, audit=input.audit)
 
-    def _query(self, cedula: str) -> PoliciaResult:
+    def _query(self, cedula: str, audit: bool = False) -> PoliciaResult:
         from openquery.core.browser import BrowserManager
 
         browser = BrowserManager(headless=self._headless, timeout=self._timeout)
+        collector = None
+
+        if audit:
+            from openquery.core.audit import AuditCollector
+            collector = AuditCollector("co.policia", "cedula", cedula)
 
         with browser.page(POLICIA_URL) as page:
             try:
+                if collector:
+                    collector.attach(page)
+
                 # Step 1: Accept terms — JSF form with radio buttons
                 page.wait_for_selector("#continuarBtn, #aceptaOption\\:0", timeout=15000)
 
@@ -90,6 +98,9 @@ class PoliciaSource(BaseSource):
                 cedula_input.fill(cedula)
                 logger.info("Filled cedula: %s", cedula)
 
+                if collector:
+                    collector.screenshot(page, "form_filled")
+
                 # Step 3: Submit the query
                 submit_btn = page.query_selector(
                     'button[type="submit"], input[type="submit"], '
@@ -102,8 +113,17 @@ class PoliciaSource(BaseSource):
 
                 page.wait_for_timeout(3000)
 
+                if collector:
+                    collector.screenshot(page, "result")
+
                 # Step 4: Parse result
-                return self._parse_result(page, cedula)
+                result = self._parse_result(page, cedula)
+
+                if collector:
+                    result_json = result.model_dump_json()
+                    result.audit = collector.generate_pdf(page, result_json)
+
+                return result
 
             except SourceError:
                 raise

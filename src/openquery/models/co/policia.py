@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from datetime import datetime
+from typing import Any
 
 from pydantic import BaseModel, Field
 
@@ -18,3 +19,4 @@ class PoliciaResult(BaseModel):
     tiene_antecedentes: bool = False
     mensaje: str = ""  # "No tiene asuntos pendientes" or details
     detalles: list[dict] = Field(default_factory=list)
+    audit: Any | None = Field(default=None, exclude=True)  # AuditRecord when audit=True
