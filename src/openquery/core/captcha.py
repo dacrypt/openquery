@@ -38,13 +38,9 @@ class CaptchaSolver(ABC):
 class OCRSolver(CaptchaSolver):
     """Solve simple captchas using pytesseract OCR.
 
-    Image processing pipeline (from RUNT):
-    1. Convert to grayscale
-    2. Auto-contrast enhancement
-    3. Threshold to black/white (cutoff=128)
-    4. Scale up 3x with LANCZOS resampling
-    5. Median blur (3px) to smooth edges
-    6. pytesseract with PSM 8 (single word) and alphanumeric whitelist
+    Uses multiple preprocessing pipelines and picks the best result
+    based on confidence scoring. This handles the common confusion pairs
+    (5/S, c/e, T/I, 8/B) that single-pass OCR struggles with.
     """
 
     def __init__(self, max_chars: int = 5) -> None:
@@ -52,40 +48,88 @@ class OCRSolver(CaptchaSolver):
 
     def solve(self, image_bytes: bytes, **hints: str) -> str:
         try:
-            import pytesseract
-            from PIL import Image, ImageFilter, ImageOps
+            import pytesseract  # noqa: F401
+            from PIL import Image
         except ImportError as e:
             raise ImportError(
                 "pytesseract and Pillow are required for OCR captcha solving. "
                 "Install: brew install tesseract && pip install pytesseract Pillow"
             ) from e
 
+        max_chars = int(hints.get("length", self._max_chars))
         img = Image.open(io.BytesIO(image_bytes))
 
-        # Pre-process for better OCR
-        img = img.convert("L")  # Grayscale
-        img = ImageOps.autocontrast(img)  # Enhance contrast
-        img = img.point(lambda x: 255 if x > 128 else 0, "1")  # Threshold
-        img = img.resize((img.width * 3, img.height * 3), Image.LANCZOS)  # Scale up
-        img = img.filter(ImageFilter.MedianFilter(3))  # Smooth edges
+        candidates = []
+        for preprocessed in self._preprocess_variants(img):
+            text, conf = self._ocr_with_confidence(preprocessed, pytesseract)
+            text = re.sub(r"[^a-zA-Z0-9]", "", text.strip())
+            if len(text) >= 3:
+                candidates.append((text[:max_chars], conf))
 
-        # OCR with restrictive whitelist
-        text = pytesseract.image_to_string(
-            img,
-            config=(
-                "--psm 8 -c tessedit_char_whitelist="
-                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-            ),
-        )
-        text = re.sub(r"[^a-zA-Z0-9]", "", text.strip())
-
-        max_chars = int(hints.get("length", self._max_chars))
-        if len(text) < 3:
+        if not candidates:
             from openquery.exceptions import CaptchaError
 
-            raise CaptchaError("ocr", f"OCR returned too few characters: '{text}'")
+            raise CaptchaError("ocr", "OCR returned too few characters from all pipelines")
 
-        return text[:max_chars]
+        # Pick candidate with highest confidence
+        best_text, best_conf = max(candidates, key=lambda x: x[1])
+        logger.debug("OCR candidates: %s, best: '%s' (%.1f)", candidates, best_text, best_conf)
+        return best_text
+
+    @staticmethod
+    def _preprocess_variants(img):
+        """Generate multiple preprocessed versions of the image.
+
+        Different thresholds and filters help with different character shapes.
+        """
+        from PIL import Image, ImageFilter, ImageOps
+
+        gray = img.convert("L")
+        contrasted = ImageOps.autocontrast(gray)
+
+        # Pipeline 1: Standard (threshold=128, 3x scale, median blur)
+        p1 = contrasted.point(lambda x: 255 if x > 128 else 0, "1")
+        p1 = p1.resize((p1.width * 3, p1.height * 3), Image.LANCZOS)
+        p1 = p1.filter(ImageFilter.MedianFilter(3))
+        yield p1
+
+        # Pipeline 2: Lower threshold (captures thinner strokes, helps 5/S, T/I)
+        p2 = contrasted.point(lambda x: 255 if x > 100 else 0, "1")
+        p2 = p2.resize((p2.width * 3, p2.height * 3), Image.LANCZOS)
+        p2 = p2.filter(ImageFilter.MedianFilter(3))
+        yield p2
+
+        # Pipeline 3: Higher threshold + sharpen (reduces noise, helps 8/B, c/e)
+        p3 = contrasted.point(lambda x: 255 if x > 160 else 0, "1")
+        p3 = p3.resize((p3.width * 4, p3.height * 4), Image.LANCZOS)
+        p3 = p3.filter(ImageFilter.SHARPEN)
+        yield p3
+
+    @staticmethod
+    def _ocr_with_confidence(img, pytesseract) -> tuple[str, float]:
+        """Run OCR and return (text, confidence).
+
+        Uses image_to_string for text and image_to_data for confidence.
+        """
+        ocr_config = (
+            "--psm 8 -c tessedit_char_whitelist="
+            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        )
+
+        # Get the text
+        text = pytesseract.image_to_string(img, config=ocr_config).strip()
+
+        # Get confidence from image_to_data
+        try:
+            data = pytesseract.image_to_data(
+                img, config=ocr_config, output_type=pytesseract.Output.DICT
+            )
+            confidences = [int(c) for c in data["conf"] if int(c) > 0]
+            avg_conf = sum(confidences) / len(confidences) if confidences else 0.0
+        except Exception:
+            avg_conf = 50.0  # Default if confidence extraction fails
+
+        return text, avg_conf
 
 
 class TwoCaptchaSolver(CaptchaSolver):
