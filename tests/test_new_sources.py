@@ -89,4 +89,12 @@ class TestSourceRegistry:
         assert "co.procuraduria" in names
         assert "co.policia" in names
         assert "co.adres" in names
-        assert len(names) == 5
+        assert "co.peajes" in names
+        assert "co.combustible" in names
+        assert "co.estaciones_ev" in names
+        assert "co.siniestralidad" in names
+        assert "co.vehiculos" in names
+        assert "co.pico_y_placa" in names
+        assert "co.fasecolda" in names
+        assert "co.recalls" in names
+        assert len(names) == 13

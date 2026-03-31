@@ -25,13 +25,21 @@ OpenQuery provides a plugin-based framework for scraping government websites, pu
 
 ## Built-in Sources
 
-| Source | Country | Description | Inputs | CAPTCHA |
+| Source | Country | Description | Inputs | Browser |
 |--------|---------|-------------|--------|---------|
-| `co.simit` | CO | Traffic fines and violations | cedula, placa | No |
-| `co.runt` | CO | National vehicle registry (SOAT, RTM, ownership) | vin, placa, cedula | Yes (image OCR) |
-| `co.procuraduria` | CO | Disciplinary records (antecedentes) | cedula | Yes (knowledge QA) |
-| `co.policia` | CO | Criminal background (antecedentes penales) | cedula | No |
-| `co.adres` | CO | Health system enrollment (EPS/regime) | cedula | No |
+| `co.simit` | CO | Traffic fines and violations | cedula, placa | Yes |
+| `co.runt` | CO | Vehicle registry (SOAT, RTM, ownership) | vin, placa, cedula | Yes |
+| `co.procuraduria` | CO | Disciplinary records | cedula | Yes |
+| `co.policia` | CO | Criminal background | cedula | Yes |
+| `co.adres` | CO | Health system enrollment (EPS) | cedula | Yes |
+| `co.pico_y_placa` | CO | Driving restrictions (Bogota/Medellin/Cali) | placa | No |
+| `co.peajes` | CO | Toll road tariffs (ANI) | custom | No |
+| `co.combustible` | CO | Fuel prices by city/station | custom | No |
+| `co.estaciones_ev` | CO | EV charging stations | custom | No |
+| `co.siniestralidad` | CO | Road crash hotspots (ANSV) | custom | No |
+| `co.vehiculos` | CO | National vehicle fleet data | placa, custom | No |
+| `co.fasecolda` | CO | Vehicle reference prices (insurance) | custom | Yes |
+| `co.recalls` | CO | Vehicle safety recalls (SIC) | custom | Yes |
 
 ## Installation
 
@@ -108,6 +116,24 @@ openquery query co.policia --cedula 12345678
 
 # Health system enrollment
 openquery query co.adres --cedula 12345678
+
+# Pico y placa — is my plate restricted today?
+openquery query co.pico_y_placa --placa ABC123
+
+# Toll tariffs
+openquery query co.peajes --custom peaje --extra '{"peaje": "ALVARADO"}'
+
+# Fuel prices in Bogota
+openquery query co.combustible --custom fuel --extra '{"municipio": "BOGOTA"}'
+
+# EV charging stations in Medellin
+openquery query co.estaciones_ev --custom ev --extra '{"ciudad": "Medellin"}'
+
+# Road crash hotspots
+openquery query co.siniestralidad --custom stats --extra '{"departamento": "CUNDINAMARCA"}'
+
+# Vehicle fleet lookup by plate
+openquery query co.vehiculos --placa ABC123
 
 # Output raw JSON
 openquery query co.simit --cedula 12345678 --json

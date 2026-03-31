@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-03-31
+
+### Added
+
+- **8 new Colombian vehicle/transport sources**:
+  - `co.pico_y_placa` — driving restriction calculator for Bogota, Medellin, Cali (pure logic, no network)
+  - `co.peajes` — toll road tariffs from ANI via datos.gov.co Socrata API
+  - `co.combustible` — fuel prices by city/station via datos.gov.co
+  - `co.estaciones_ev` — EV charging stations map via datos.gov.co
+  - `co.siniestralidad` — road crash hotspots via ANSV/datos.gov.co
+  - `co.vehiculos` — national vehicle fleet data (plate/brand lookup) via datos.gov.co
+  - `co.fasecolda` — vehicle reference prices for insurance (browser-based)
+  - `co.recalls` — vehicle safety recall campaigns from SIC (browser-based)
+- 5 Socrata API sources require zero browser automation (httpx only)
+- Pico y Placa includes 2026 Colombian holiday calendar
+- 195 tests (up from 144)
+
 ## [0.2.0] - 2026-03-31
 
 ### Added
@@ -63,6 +80,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Docker and docker-compose support with Redis
 - 29 unit tests
 
-[Unreleased]: https://github.com/dacrypt/openquery/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/dacrypt/openquery/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/dacrypt/openquery/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/dacrypt/openquery/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/dacrypt/openquery/releases/tag/v0.1.0

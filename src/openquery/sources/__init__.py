@@ -61,3 +61,35 @@ def _ensure_loaded() -> None:
         import openquery.sources.co.adres  # noqa: F401
     except ImportError:
         pass
+    try:
+        import openquery.sources.co.peajes  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.combustible  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.estaciones_ev  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.siniestralidad  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.fasecolda  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.pico_y_placa  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.recalls  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.vehiculos  # noqa: F401
+    except ImportError:
+        pass
