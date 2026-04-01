@@ -72,3 +72,8 @@ testpaths = ["tests"]
 markers = [
     "integration: marks tests that hit real external services (deselect with '-m \"not integration\"')",
 ]
+
+[dependency-groups]
+dev = [
+    "pytest-cov>=7.1.0",
+]
