@@ -69,6 +69,7 @@ class VehiculosSource(BaseSource):
 
     def _query_by_plate(self, placa: str) -> VehiculosResult:
         """Query by exact plate number."""
+        placa = placa.upper().strip()
 
         params = {
             "$where": f"placa='{placa}'",
