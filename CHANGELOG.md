@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.2] - 2026-03-31
+
+### Added
+
+- **392 unit tests** (up from 195) — 73% line coverage
+- 15 new test files covering previously untested modules:
+  - `test_rate_limit.py` — token bucket rate limiter, thread safety
+  - `test_retry.py` — exponential backoff, delay caps, exception filtering
+  - `test_exceptions.py` — full exception hierarchy
+  - `test_config.py` — Settings defaults and env var overrides
+  - `test_sources_base.py` — DocumentType, QueryInput, SourceMeta, BaseSource
+  - `test_browser.py` — BrowserManager with mocked Playwright
+  - `test_socrata_sources.py` — all 5 API sources with mocked httpx
+  - `test_browser_sources.py` — policia/adres parse logic, fasecolda/recalls validation
+  - `test_api_extended.py` — query endpoint (cache, rate-limit, errors), health, sources
+  - `test_cache_extended.py` — SQLiteCache, create_cache factory
+  - `test_cli.py` — version, sources, query commands
+  - `test_auth.py` — API key middleware (enabled/disabled/bypass)
+  - `test_sources_registry.py` — register, get_source, list_sources
+  - `test_models_extended.py` — all model JSON roundtrips
+  - `test_fasecolda_recalls_logic.py` — browser source logic (mocked)
+- `pytest-cov` dev dependency for coverage reporting
+
 ## [0.3.1] - 2026-03-31
 
 ### Fixed
@@ -88,7 +111,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Docker and docker-compose support with Redis
 - 29 unit tests
 
-[Unreleased]: https://github.com/dacrypt/openquery/compare/v0.3.1...HEAD
+[Unreleased]: https://github.com/dacrypt/openquery/compare/v0.3.2...HEAD
+[0.3.2]: https://github.com/dacrypt/openquery/compare/v0.3.1...v0.3.2
 [0.3.1]: https://github.com/dacrypt/openquery/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/dacrypt/openquery/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/dacrypt/openquery/compare/v0.1.0...v0.2.0
