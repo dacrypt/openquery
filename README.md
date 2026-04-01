@@ -23,23 +23,136 @@ OpenQuery provides a plugin-based framework for scraping government websites, pu
 - **Extensible** — add new data sources by implementing a single class
 - **Country-organized** — sources grouped by country code (`co`, `us`, etc.)
 
-## Built-in Sources
+## Built-in Sources — 73 sources across 3 countries
 
-| Source | Country | Description | Inputs | Browser |
-|--------|---------|-------------|--------|---------|
-| `co.simit` | CO | Traffic fines and violations | cedula, placa | Yes |
-| `co.runt` | CO | Vehicle registry (SOAT, RTM, ownership) | vin, placa, cedula | Yes |
-| `co.procuraduria` | CO | Disciplinary records | cedula | Yes |
-| `co.policia` | CO | Criminal background | cedula | Yes |
-| `co.adres` | CO | Health system enrollment (EPS) | cedula | Yes |
-| `co.pico_y_placa` | CO | Driving restrictions (Bogota/Medellin/Cali) | placa | No |
-| `co.peajes` | CO | Toll road tariffs (ANI) | custom | No |
-| `co.combustible` | CO | Fuel prices by city/station | custom | No |
-| `co.estaciones_ev` | CO | EV charging stations | custom | No |
-| `co.siniestralidad` | CO | Road crash hotspots (ANSV) | custom | No |
-| `co.vehiculos` | CO | National vehicle fleet data | placa, custom | No |
-| `co.fasecolda` | CO | Vehicle reference prices (insurance) | custom | Yes |
-| `co.recalls` | CO | Vehicle safety recalls (SIC) | custom | Yes |
+### Colombia (66 sources)
+
+#### Antecedentes y Justicia
+| Source | Description | Inputs | Browser |
+|--------|-------------|--------|---------|
+| `co.policia` | Criminal background (Policía Nacional) | cedula | Yes |
+| `co.procuraduria` | Disciplinary records (Procuraduría) | cedula | Yes |
+| `co.contraloria` | Fiscal responsibility (Contraloría) | cedula, nit, pasaporte | Yes |
+| `co.rnmc` | Police corrective measures (RNMC) | cedula, pasaporte | Yes |
+| `co.consulta_procesos` | Judicial processes (Rama Judicial) | cedula, nit | Yes |
+| `co.tutelas` | Constitutional protection actions (Tutelas) | cedula, nit | Yes |
+| `co.jep` | Transitional justice (JEP) | cedula | Yes |
+| `co.inpec` | Prison population (INPEC) | cedula | Yes |
+
+#### Identidad y Registro Civil
+| Source | Description | Inputs | Browser |
+|--------|-------------|--------|---------|
+| `co.estado_cedula` | Cédula status (Registraduría) | cedula | Yes |
+| `co.estado_tramite_cedula` | ID card processing status | cedula | Yes |
+| `co.defuncion` | Cédula vigency — alive/deceased | cedula | Yes |
+| `co.puesto_votacion` | Voting station lookup | cedula | Yes |
+| `co.registro_civil` | Civil registry certificate | cedula | Yes |
+| `co.nombre_completo` | Full name lookup by document | cedula | Yes |
+| `co.libreta_militar` | Military service status | cedula | Yes |
+| `co.migracion_ppt` | PPT temporary protection permit | custom | Yes |
+
+#### Compliance y AML
+| Source | Description | Inputs | Browser |
+|--------|-------------|--------|---------|
+| `co.pep` | Politically Exposed Persons (SIGEP) | cedula | No |
+| `co.proveedores_ficticios` | DIAN fictitious providers | nit | No |
+
+#### Seguridad Social
+| Source | Description | Inputs | Browser |
+|--------|-------------|--------|---------|
+| `co.adres` | Health system enrollment (EPS/BDUA) | cedula | Yes |
+| `co.colpensiones` | Pension affiliation (Colpensiones) | cedula | Yes |
+| `co.fopep` | Pensioners payroll (FOPEP) | cedula | Yes |
+| `co.ruaf` | Unified affiliates registry (SISPRO) | cedula | Yes |
+| `co.rethus` | Health workforce registry (RETHUS) | cedula | Yes |
+| `co.soi` | Social security payments (SOI/PILA) | cedula, nit | Yes |
+| `co.seguridad_social` | Integrated social security status | cedula, nit | Yes |
+| `co.afiliados_compensado` | Compensation fund affiliation | cedula | Yes |
+| `co.sisben` | Socioeconomic classification (SISBEN) | cedula | Yes |
+
+#### Empresas y Comercio
+| Source | Description | Inputs | Browser |
+|--------|-------------|--------|---------|
+| `co.dian_rut` | Tax registry status (DIAN RUT) | cedula, nit | Yes |
+| `co.rues` | Business registry (RUES/Confecámaras) | cedula, nit | Yes |
+| `co.secop` | Public procurement (SECOP) | nit | No |
+| `co.cufe_dian` | Electronic invoice verification (CUFE) | custom | Yes |
+| `co.einforma` | Business intelligence (eInforma) | nit | Yes |
+
+#### Propiedad e Inmuebles
+| Source | Description | Inputs | Browser |
+|--------|-------------|--------|---------|
+| `co.snr` | Property owner index (SNR) | cedula, nit | Yes |
+| `co.certificado_tradicion` | Property title certificate (SNR) | custom | Yes |
+| `co.garantias_mobiliarias` | Movable collateral registry | cedula | Yes |
+| `co.cambio_estrato` | Socioeconomic stratum certification | cedula | Yes |
+
+#### Vehículos y Tránsito
+| Source | Description | Inputs | Browser |
+|--------|-------------|--------|---------|
+| `co.simit` | Traffic fines and violations (SIMIT) | cedula, placa | Yes |
+| `co.runt` | Vehicle registry (RUNT) | vin, placa, cedula | Yes |
+| `co.runt_conductor` | Driver information (RUNT) | cedula | Yes |
+| `co.runt_soat` | Mandatory insurance status (SOAT) | placa | Yes |
+| `co.runt_rtm` | Technical inspection status (RTM) | placa | Yes |
+| `co.comparendos_transito` | Detailed traffic violations | cedula, placa | Yes |
+| `co.fasecolda` | Vehicle reference prices (insurance) | custom | Yes |
+| `co.recalls` | Vehicle safety recalls (SIC) | custom | Yes |
+| `co.retencion_vehiculos` | Impounded vehicles | placa | Yes |
+| `co.pico_y_placa` | Driving restrictions (13 cities) | placa | No |
+| `co.peajes` | Toll road tariffs | custom | No |
+| `co.combustible` | Fuel prices by city/station | custom | No |
+| `co.estaciones_ev` | EV charging stations | custom | No |
+| `co.siniestralidad` | Road crash hotspots (ANSV) | custom | No |
+| `co.vehiculos` | National vehicle fleet data | placa, custom | No |
+
+#### Vivienda y Servicios
+| Source | Description | Inputs | Browser |
+|--------|-------------|--------|---------|
+| `co.mi_casa_ya` | Housing subsidies (Mi Casa Ya) | cedula | Yes |
+| `co.tarifas_energia` | Electricity tariffs (SUI) | custom | No |
+
+#### Turismo
+| Source | Description | Inputs | Browser |
+|--------|-------------|--------|---------|
+| `co.rnt_turismo` | National tourism registry (RNT) | nit | No |
+
+#### Salud
+| Source | Description | Inputs | Browser |
+|--------|-------------|--------|---------|
+| `co.licencias_salud` | Health service providers (REPS) | nit | No |
+
+#### Consejos Profesionales (11 sources)
+| Source | Description | Inputs | Browser |
+|--------|-------------|--------|---------|
+| `co.copnia` | Engineering (COPNIA) | cedula, nit | Yes |
+| `co.conaltel` | Electrical technology (CONALTEL) | cedula | Yes |
+| `co.consejo_mecanica` | Mechanical/Electronic engineering | cedula | Yes |
+| `co.cpae` | Business administration (CPAE) | cedula | Yes |
+| `co.cpip` | Petroleum engineering (CPIP) | cedula | Yes |
+| `co.cpiq` | Chemical engineering (CPIQ) | cedula | Yes |
+| `co.cpnaa` | Architecture (CPNAA) | cedula, pasaporte | Yes |
+| `co.cpnt` | Topography (CPNT) | cedula | Yes |
+| `co.cpbiol` | Biology (CPBiol) | cedula | Yes |
+| `co.veterinario` | Veterinary medicine (COMVEZCOL) | cedula | Yes |
+| `co.urna` | Law professionals (CSJ) | cedula, nit | Yes |
+
+### United States (5 sources)
+
+| Source | Description | Inputs | Browser |
+|--------|-------------|--------|---------|
+| `us.ofac` | OFAC SDN sanctions list (US Treasury) | cedula, nit, pasaporte, custom | No |
+| `us.nhtsa_vin` | VIN decode (NHTSA vPIC) | vin | No |
+| `us.nhtsa_recalls` | Vehicle safety recalls (NHTSA) | custom | No |
+| `us.nhtsa_complaints` | Vehicle safety complaints (NHTSA) | custom | No |
+| `us.epa_fuel_economy` | EPA fuel economy ratings | custom | No |
+
+### International (2 sources)
+
+| Source | Description | Inputs | Browser |
+|--------|-------------|--------|---------|
+| `intl.onu` | UN Security Council sanctions list | cedula, nit, pasaporte, custom | No |
+| `intl.ship_tracking` | Global vessel position tracking | custom | No |
 
 ## Installation
 
@@ -276,8 +389,9 @@ openquery/
 │   └── rate_limit.py # Token-bucket rate limiting
 ├── sources/          # Data source plugins, organized by country
 │   ├── base.py       # BaseSource ABC — implement this to add sources
-│   ├── co/           # Colombia (SIMIT, RUNT, Procuraduria, Policia, ADRES)
-│   └── us/           # United States (future)
+│   ├── co/           # Colombia (66 sources)
+│   ├── us/           # United States (5 sources: OFAC, NHTSA, EPA)
+│   └── intl/         # International (2 sources: ONU, Ship Tracking)
 ├── models/           # Pydantic response models, organized by country
 ├── server/           # FastAPI REST API
 └── commands/         # Typer CLI commands
@@ -305,7 +419,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 | Guide | Description |
 |-------|-------------|
 | [Getting Started](docs/getting-started.md) | Installation, first query, engine setup |
-| [Sources Guide](docs/sources.md) | All 13 Colombian sources with field reference |
+| [Sources Guide](docs/sources.md) | All 73 sources (66 CO + 5 US + 2 INTL) with field reference |
 | [CAPTCHA Guide](docs/captcha.md) | OCR engines, voting, LLM backends, benchmarks |
 | [Audit Guide](docs/audit.md) | Evidence capture, PDF reports, compliance |
 | [API Guide](docs/api.md) | REST endpoints, authentication, deployment |

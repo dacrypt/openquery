@@ -83,31 +83,32 @@ class TestPicoYPlacaBogota:
         )
         return src.query(inp)
 
-    def test_even_day_restricts_1_to_5(self):
+    def test_even_day_restricts_6_to_0(self):
         src = self._make_source()
-        # 2026-04-06 is Monday, day 6 is even, not a holiday
-        for digit in range(1, 6):
+        # 2026-04-06 is Monday, day 6 is even — plates 6,7,8,9,0 restricted
+        # Verified: bogota.gov.co March 2026
+        for digit in [6, 7, 8, 9, 0]:
             result = self._query(src, f"ABC00{digit}", "2026-04-06")
             assert result.restringido is True, f"digit {digit} should be restricted on even day"
 
-    def test_even_day_allows_6_to_0(self):
+    def test_even_day_allows_1_to_5(self):
         src = self._make_source()
-        # 2026-04-06 day 6 is even
-        for digit in [6, 7, 8, 9, 0]:
+        # 2026-04-06 day 6 is even — plates 1,2,3,4,5 can circulate
+        for digit in range(1, 6):
             result = self._query(src, f"ABC00{digit}", "2026-04-06")
             assert not result.restringido, f"digit {digit} not restricted"
 
-    def test_odd_day_restricts_6_to_0(self):
+    def test_odd_day_restricts_1_to_5(self):
         src = self._make_source()
-        # 2026-04-07 is Tuesday, day 7 is odd, not a holiday
-        for digit in [6, 7, 8, 9, 0]:
+        # 2026-04-07 is Tuesday, day 7 is odd — plates 1,2,3,4,5 restricted
+        for digit in range(1, 6):
             result = self._query(src, f"ABC00{digit}", "2026-04-07")
             assert result.restringido is True, f"digit {digit} should be restricted on odd day"
 
-    def test_odd_day_allows_1_to_5(self):
+    def test_odd_day_allows_6_to_0(self):
         src = self._make_source()
-        # 2026-04-07 day 7 is odd
-        for digit in range(1, 6):
+        # 2026-04-07 day 7 is odd — plates 6,7,8,9,0 can circulate
+        for digit in [6, 7, 8, 9, 0]:
             result = self._query(src, f"ABC00{digit}", "2026-04-07")
             assert result.restringido is False, f"digit {digit} should NOT be restricted on odd day"
 

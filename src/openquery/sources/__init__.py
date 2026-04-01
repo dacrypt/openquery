@@ -93,3 +93,207 @@ def _ensure_loaded() -> None:
         import openquery.sources.co.vehiculos  # noqa: F401
     except ImportError:
         pass
+    try:
+        import openquery.sources.co.contraloria  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.us.ofac  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.intl.onu  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.us.nhtsa_vin  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.us.nhtsa_recalls  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.us.nhtsa_complaints  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.us.epa_fuel_economy  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.intl.ship_tracking  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.pep  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.proveedores_ficticios  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.dian_rut  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.estado_cedula  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.sisben  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.rues  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.colpensiones  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.libreta_militar  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.rnmc  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.defuncion  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.inpec  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.secop  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.rethus  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.ruaf  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.fopep  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.snr  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.garantias_mobiliarias  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.copnia  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.runt_conductor  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.puesto_votacion  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.consejos_profesionales  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.migracion_ppt  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.soi  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.cambio_estrato  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.rnt_turismo  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.retencion_vehiculos  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.cufe_dian  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.nombre_completo  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.afiliados_compensado  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.mi_casa_ya  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.einforma  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.consulta_procesos  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.certificado_tradicion  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.runt_soat  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.runt_rtm  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.jep  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.tarifas_energia  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.estado_tramite_cedula  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.seguridad_social  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.registro_civil  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.tutelas  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.comparendos_transito  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.licencias_salud  # noqa: F401
+    except ImportError:
+        pass
