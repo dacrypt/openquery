@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-03-31
+
+### Fixed
+
+- **co.combustible**: correct Socrata field names (`bandera`, `direccion`, `precio`) and use `starts_with()` for municipio/departamento matching to handle suffixed values like `"BOGOTA  D.C."`
+- **co.estaciones_ev**: add Unicode accents to `tipo_de_estacion` filter (`Estación`), fix field name mappings (`estaci_n`, `direcci_n`, `est_ndar_cargador`), use `starts_with()` for accent-insensitive city matching
+- **co.vehiculos**: normalize plate input with `upper().strip()` before querying
+
 ## [0.3.0] - 2026-03-31
 
 ### Added
@@ -80,7 +88,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Docker and docker-compose support with Redis
 - 29 unit tests
 
-[Unreleased]: https://github.com/dacrypt/openquery/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/dacrypt/openquery/compare/v0.3.1...HEAD
+[0.3.1]: https://github.com/dacrypt/openquery/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/dacrypt/openquery/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/dacrypt/openquery/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/dacrypt/openquery/releases/tag/v0.1.0

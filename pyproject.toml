@@ -1,6 +1,6 @@
 [project]
 name = "openquery"
-version = "0.3.0"
+version = "0.3.1"
 description = "Query public data sources worldwide via scraping and APIs"
 readme = "README.md"
 license = { text = "MIT" }
