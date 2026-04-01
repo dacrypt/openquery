@@ -18,4 +18,5 @@ class PeajeResult(BaseModel):
     valor: int = 0
     fecha_actualizacion: str = ""
     resultados: list[dict] = Field(default_factory=list)
+    total: int = 0
     audit: Any | None = Field(default=None, exclude=True)

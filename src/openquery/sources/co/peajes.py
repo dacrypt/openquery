@@ -68,6 +68,7 @@ class PeajesSource(BaseSource):
             result = PeajeResult(
                 peaje=peaje_name,
                 resultados=data,
+                total=len(data),
             )
 
             # Populate top-level fields from first result if filtering by name
