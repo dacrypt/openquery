@@ -83,7 +83,32 @@ Then query:
 openquery query co.procuraduria --cedula 12345678
 ```
 
-## 6. (Optional) Generate audit evidence
+## 6. Try the instant vehicle/transport sources
+
+These sources use open data APIs — no browser or CAPTCHA needed:
+
+```bash
+# Is my plate restricted today? (pure logic, instant)
+openquery query co.pico_y_placa --placa ABC123
+
+# Vehicle fleet lookup by plate
+openquery query co.vehiculos --placa ABC123
+
+# Toll tariffs
+openquery query co.peajes --custom tolls --extra '{"peaje": "ALVARADO"}'
+
+# Fuel prices in Bogota
+openquery query co.combustible --custom fuel --extra '{"municipio": "BOGOTA"}'
+
+# EV charging stations in Medellin
+openquery query co.estaciones_ev --custom ev --extra '{"ciudad": "Medellin"}'
+
+# Road crash hotspots
+openquery query co.siniestralidad --custom stats \
+  --extra '{"departamento": "CUNDINAMARCA"}'
+```
+
+## 7. (Optional) Generate audit evidence
 
 For compliance, generate screenshots and PDF reports:
 

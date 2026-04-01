@@ -1,6 +1,6 @@
 # Sources Guide
 
-OpenQuery includes 5 built-in sources for Colombian public data. Each source handles browser automation, CAPTCHA solving, and response parsing automatically.
+OpenQuery includes 13 built-in sources for Colombian public data. Sources are organized in two categories: **person/document queries** (browser-based) and **vehicle/transport data** (API-based, instant).
 
 ## co.simit — Traffic Fines
 
@@ -144,16 +144,278 @@ openquery query co.adres --cedula 12345678
 
 ---
 
-## Querying all sources
+# Vehicle & Transport Sources
 
-You can query multiple sources for the same person:
+These sources query open data APIs and require **no browser** — responses are instant.
+
+---
+
+## co.pico_y_placa — Driving Restrictions
+
+**Pure logic** — no network calls, instant response.
+
+Calculates whether a vehicle is restricted from driving based on its license plate, city, and date. Supports Bogota, Medellin, and Cali with their respective 2026 rules. Includes Colombian public holidays.
 
 ```bash
-# One by one
+# Is my plate restricted today in Bogota?
+openquery query co.pico_y_placa --placa ABC123
+
+# Check a specific city and date
+openquery query co.pico_y_placa --placa ABC123 \
+  --extra '{"ciudad": "medellin", "fecha": "2026-04-06"}'
+```
+
+**Response fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `placa` | str | License plate queried |
+| `ultimo_digito` | str | Last digit of plate |
+| `ciudad` | str | City (bogota, medellin, cali) |
+| `fecha` | str | Date queried (ISO format) |
+| `restringido` | bool | True if driving is restricted |
+| `horario` | str | Restriction hours (e.g., "6:00-21:00") |
+| `motivo` | str | Why restricted or allowed |
+| `exento` | bool | True if exempt (EV/hybrid) |
+
+**City rules:**
+
+| City | System | Hours | Schedule |
+|------|--------|-------|----------|
+| Bogota | Par/impar by calendar day | 6AM-9PM | Even day: 1-5 restricted; Odd: 6-0 |
+| Medellin | Fixed rotation by weekday | 5AM-8PM | Mon:1,7 Tue:0,3 Wed:4,6 Thu:5,9 Fri:2,8 |
+| Cali | Fixed rotation by weekday | 6AM-7PM | Mon:1,2 Tue:3,4 Wed:5,6 Thu:7,8 Fri:9,0 |
+
+**Requirements:** None
+
+---
+
+## co.peajes — Toll Road Tariffs
+
+**Data source:** [datos.gov.co](https://www.datos.gov.co/resource/7gj8-j6i3.json) (ANI)
+
+Queries toll booth tariffs from the Agencia Nacional de Infraestructura. Returns prices by vehicle category for all concession tolls in Colombia.
+
+```bash
+# All tolls
+openquery query co.peajes --custom tolls
+
+# Filter by toll name
+openquery query co.peajes --custom tolls --extra '{"peaje": "ALVARADO"}'
+
+# Filter by vehicle category (I-VII)
+openquery query co.peajes --custom tolls --extra '{"categoria": "I"}'
+```
+
+**Response fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `peaje` | str | Toll booth name |
+| `categoria` | str | Vehicle category (I-VII) |
+| `valor` | int | Toll price in COP |
+| `fecha_actualizacion` | str | Last price update |
+| `resultados` | list | All matching toll records |
+
+**Requirements:** None (API-based)
+
+---
+
+## co.combustible — Fuel Prices
+
+**Data source:** [datos.gov.co](https://www.datos.gov.co/resource/gjy9-tpph.json)
+
+Queries gasoline and diesel prices by city, station, and brand.
+
+```bash
+# Fuel prices in Bogota
+openquery query co.combustible --custom fuel \
+  --extra '{"municipio": "BOGOTA"}'
+
+# Filter by department
+openquery query co.combustible --custom fuel \
+  --extra '{"departamento": "ANTIOQUIA"}'
+
+# Filter by fuel type
+openquery query co.combustible --custom fuel \
+  --extra '{"producto": "GASOLINA CORRIENTE OXIGENADA"}'
+```
+
+**Response fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `departamento` | str | Department name |
+| `municipio` | str | Municipality name |
+| `estaciones` | list | Stations with name, brand, address, product, price |
+| `total_estaciones` | int | Number of stations returned |
+
+**Requirements:** None (API-based)
+
+---
+
+## co.estaciones_ev — EV Charging Stations
+
+**Data source:** [datos.gov.co](https://www.datos.gov.co/resource/qqm3-dw2u.json) (EPM)
+
+Queries the registry of electric vehicle charging stations with location, connector type, and operating hours.
+
+```bash
+# All EV stations
+openquery query co.estaciones_ev --custom ev
+
+# Filter by city
+openquery query co.estaciones_ev --custom ev \
+  --extra '{"ciudad": "Medellin"}'
+```
+
+**Response fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `ciudad` | str | City name |
+| `estaciones` | list | Stations: name, address, type (rapida/semi-rapida), hours, connector, lat, lon |
+| `total` | int | Number of stations returned |
+
+**Requirements:** None (API-based)
+
+---
+
+## co.siniestralidad — Road Crash Hotspots
+
+**Data source:** [datos.gov.co](https://www.datos.gov.co/resource/rs3u-8r4q.json) (ANSV)
+
+Queries critical road safety sectors from the Agencia Nacional de Seguridad Vial. Returns crash hotspots with fatality counts and geospatial data.
+
+```bash
+# By department
+openquery query co.siniestralidad --custom stats \
+  --extra '{"departamento": "CUNDINAMARCA"}'
+
+# By municipality
+openquery query co.siniestralidad --custom stats \
+  --extra '{"municipio": "BOGOTA"}'
+```
+
+**Response fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `departamento` | str | Department name |
+| `municipio` | str | Municipality name |
+| `sectores` | list | Hotspots: road name, fatalities, lat/lon, km marker |
+| `total_sectores` | int | Number of critical sectors |
+| `total_fallecidos` | int | Total fatalities across sectors |
+
+**Requirements:** None (API-based)
+
+---
+
+## co.vehiculos — National Vehicle Fleet
+
+**Data source:** [datos.gov.co](https://www.datos.gov.co/resource/g7i9-xkxz.json) (RUNT open data)
+
+Queries the national vehicle fleet registry (40M+ records) from datos.gov.co. Look up vehicles by plate or search by brand.
+
+```bash
+# Lookup by plate
+openquery query co.vehiculos --placa ABC123
+
+# Search by brand (e.g., find all Teslas in Colombia)
+openquery query co.vehiculos --custom brand \
+  --extra '{"marca": "TESLA"}'
+```
+
+**Response fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `placa` | str | License plate |
+| `clase` | str | Vehicle class (AUTOMOVIL, CAMIONETA, etc.) |
+| `marca` | str | Brand |
+| `modelo` | str | Model year |
+| `servicio` | str | Service type (PARTICULAR, PUBLICO) |
+| `cilindraje` | int | Engine displacement (cc) |
+| `resultados` | list | All matching records |
+| `total` | int | Number of results |
+
+**Requirements:** None (API-based)
+
+---
+
+## co.fasecolda — Vehicle Reference Prices
+
+**Website:** [fasecolda.com](https://www.fasecolda.com/fasecolda-guia-de-valores/)
+
+Queries the Fasecolda Guia de Valores for official vehicle reference prices. These prices are used by insurance companies, tax authorities, and buyers/sellers across Colombia. Covers 17,000+ vehicle references.
+
+```bash
+openquery query co.fasecolda --custom price \
+  --extra '{"marca": "TESLA", "modelo": "2026"}'
+```
+
+**Response fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `marca` | str | Brand |
+| `linea` | str | Model line |
+| `modelo` | int | Year |
+| `valor` | int | Reference price in COP |
+| `cilindraje` | int | Engine displacement |
+| `combustible` | str | Fuel type |
+| `transmision` | str | Transmission type |
+| `puertas` | int | Number of doors |
+| `pasajeros` | int | Passenger capacity |
+| `codigo_fasecolda` | str | Fasecolda reference code |
+| `resultados` | list | All matching references |
+
+**Requirements:** Browser (Playwright)
+
+---
+
+## co.recalls — Vehicle Safety Recalls
+
+**Website:** [SIC](https://sedeelectronica.sic.gov.co/temas/proteccion-al-consumidor/consumo-seguro/campanas-de-seguridad/automotores)
+
+Queries the Superintendencia de Industria y Comercio for active vehicle safety recall campaigns. Search by brand to find affected models and components.
+
+```bash
+openquery query co.recalls --custom recall \
+  --extra '{"marca": "TESLA"}'
+```
+
+**Response fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `marca` | str | Brand searched |
+| `modelo` | str | Model (if specified) |
+| `total_campanias` | int | Number of active recalls |
+| `campanias` | list | Recalls: component, description, affected years, manufacturer URL |
+
+**Requirements:** Browser (Playwright). Note: SIC site may have SSL issues; errors include the manual lookup URL.
+
+---
+
+## Querying multiple sources
+
+**Person background check (all by cedula):**
+
+```bash
 openquery query co.simit --cedula 12345678
 openquery query co.procuraduria --cedula 12345678
 openquery query co.policia --cedula 12345678
 openquery query co.adres --cedula 12345678
+```
+
+**Vehicle report (all by plate):**
+
+```bash
+openquery query co.runt --placa ABC123
+openquery query co.pico_y_placa --placa ABC123
+openquery query co.vehiculos --placa ABC123
+openquery query co.simit --placa ABC123
 ```
 
 Or via the REST API in parallel — see [API Guide](api.md).
