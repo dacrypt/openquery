@@ -23,9 +23,9 @@ OpenQuery provides a plugin-based framework for scraping government websites, pu
 - **Extensible** — add new data sources by implementing a single class
 - **Country-organized** — sources grouped by country code (`co`, `us`, etc.)
 
-## Built-in Sources — 73 sources across 3 countries
+## Built-in Sources — 100 sources across 8 countries
 
-### Colombia (66 sources)
+### Colombia (72 sources)
 
 #### Antecedentes y Justicia
 | Source | Description | Inputs | Browser |
@@ -50,12 +50,15 @@ OpenQuery provides a plugin-based framework for scraping government websites, pu
 | `co.nombre_completo` | Full name lookup by document | cedula | Yes |
 | `co.libreta_militar` | Military service status | cedula | Yes |
 | `co.migracion_ppt` | PPT temporary protection permit | custom | Yes |
+| `co.estado_cedula_extranjeria` | Foreign ID card status (Migración) | custom | Yes |
+| `co.validar_policia` | Police officer validation | custom | Yes |
 
 #### Compliance y AML
 | Source | Description | Inputs | Browser |
 |--------|-------------|--------|---------|
 | `co.pep` | Politically Exposed Persons (SIGEP) | cedula | No |
 | `co.proveedores_ficticios` | DIAN fictitious providers | nit | No |
+| `co.rne` | Do Not Call registry (RNE/CRC) | custom | No |
 
 #### Seguridad Social
 | Source | Description | Inputs | Browser |
@@ -78,6 +81,9 @@ OpenQuery provides a plugin-based framework for scraping government websites, pu
 | `co.secop` | Public procurement (SECOP) | nit | No |
 | `co.cufe_dian` | Electronic invoice verification (CUFE) | custom | Yes |
 | `co.einforma` | Business intelligence (eInforma) | nit | Yes |
+| `co.camara_comercio_medellin` | Medellín Chamber of Commerce | nit, custom | Yes |
+| `co.directorio_empresas` | Business directory (datos.gov.co) | nit, custom | No |
+| `co.empresas_google` | Business search (Google Maps) | custom | Yes |
 
 #### Propiedad e Inmuebles
 | Source | Description | Inputs | Browser |
@@ -146,6 +152,52 @@ OpenQuery provides a plugin-based framework for scraping government websites, pu
 | `us.nhtsa_recalls` | Vehicle safety recalls (NHTSA) | custom | No |
 | `us.nhtsa_complaints` | Vehicle safety complaints (NHTSA) | custom | No |
 | `us.epa_fuel_economy` | EPA fuel economy ratings | custom | No |
+
+### Ecuador (6 sources)
+
+| Source | Description | Inputs | Browser |
+|--------|-------------|--------|---------|
+| `ec.sri_ruc` | Tax registry RUC (SRI) | custom | No |
+| `ec.ant_citaciones` | Traffic fines (ANT) | cedula, placa, custom | No |
+| `ec.cne_padron` | Voter registry (CNE) | cedula | Yes |
+| `ec.funcion_judicial` | Judicial processes (Función Judicial) | cedula, custom | Yes |
+| `ec.supercias` | Company registry (Superintendencia) | custom | Yes |
+| `ec.senescyt` | Professional degrees (SENESCYT) | cedula, custom | Yes |
+
+### Peru (5 sources)
+
+| Source | Description | Inputs | Browser |
+|--------|-------------|--------|---------|
+| `pe.sunat_ruc` | Tax registry RUC (SUNAT) | custom | Yes |
+| `pe.poder_judicial` | Judicial case search (CEJ) | custom | Yes |
+| `pe.osce_sancionados` | Sanctioned gov contractors (OSCE) | custom | Yes |
+| `pe.sunarp_vehicular` | Vehicle registry (SUNARP) | placa | Yes |
+| `pe.servir_sanciones` | Public servant sanctions (SERVIR) | custom | Yes |
+
+### Chile (3 sources)
+
+| Source | Description | Inputs | Browser |
+|--------|-------------|--------|---------|
+| `cl.sii_rut` | Tax registry RUT (SII) | custom | Yes |
+| `cl.pjud` | Judicial case search (PJUD) | custom | Yes |
+| `cl.fiscalizacion` | Traffic infractions | placa | Yes |
+
+### Mexico (4 sources)
+
+| Source | Description | Inputs | Browser |
+|--------|-------------|--------|---------|
+| `mx.curp` | Population registry CURP (RENAPO) | custom | Yes |
+| `mx.sat_efos` | SAT blacklist EFOS/EDOS | custom | Yes |
+| `mx.siem` | Business directory SIEM | custom | Yes |
+| `mx.repuve` | Stolen vehicle check (REPUVE) | placa, vin | Yes |
+
+### Argentina (3 sources)
+
+| Source | Description | Inputs | Browser |
+|--------|-------------|--------|---------|
+| `ar.afip_cuit` | Tax registry CUIT/CUIL (AFIP) | custom | Yes |
+| `ar.pjn` | Federal judiciary cases (PJN) | custom | Yes |
+| `ar.dnrpa` | Vehicle registration (DNRPA) | placa | Yes |
 
 ### International (2 sources)
 
@@ -389,9 +441,14 @@ openquery/
 │   └── rate_limit.py # Token-bucket rate limiting
 ├── sources/          # Data source plugins, organized by country
 │   ├── base.py       # BaseSource ABC — implement this to add sources
-│   ├── co/           # Colombia (66 sources)
-│   ├── us/           # United States (5 sources: OFAC, NHTSA, EPA)
-│   └── intl/         # International (2 sources: ONU, Ship Tracking)
+│   ├── co/           # Colombia (72 sources)
+│   ├── ec/           # Ecuador (6 sources)
+│   ├── pe/           # Peru (5 sources)
+│   ├── cl/           # Chile (3 sources)
+│   ├── mx/           # Mexico (4 sources)
+│   ├── ar/           # Argentina (3 sources)
+│   ├── us/           # United States (5 sources)
+│   └── intl/         # International (2 sources)
 ├── models/           # Pydantic response models, organized by country
 ├── server/           # FastAPI REST API
 └── commands/         # Typer CLI commands
@@ -419,7 +476,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 | Guide | Description |
 |-------|-------------|
 | [Getting Started](docs/getting-started.md) | Installation, first query, engine setup |
-| [Sources Guide](docs/sources.md) | All 73 sources (66 CO + 5 US + 2 INTL) with field reference |
+| [Sources Guide](docs/sources.md) | All 100 sources across 8 countries with field reference |
 | [CAPTCHA Guide](docs/captcha.md) | OCR engines, voting, LLM backends, benchmarks |
 | [Audit Guide](docs/audit.md) | Evidence capture, PDF reports, compliance |
 | [API Guide](docs/api.md) | REST endpoints, authentication, deployment |

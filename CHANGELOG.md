@@ -7,6 +7,53 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-04-01
+
+### Added
+
+- **27 new data sources** across 6 countries — total now **100 sources in 8 countries**
+- **6 new Colombian sources** closing coverage gaps:
+  - `co.estado_cedula_extranjeria` — foreign national ID status (Migración Colombia)
+  - `co.validar_policia` — police officer validation (Policía Nacional)
+  - `co.rne` — Do Not Call registry (CRC, Ley 2300/2023)
+  - `co.camara_comercio_medellin` — Medellín Chamber of Commerce business registry
+  - `co.directorio_empresas` — business directory via datos.gov.co open data API
+  - `co.empresas_google` — business search via Google Maps scraping
+- **Ecuador (6 sources)** — first LATAM expansion:
+  - `ec.sri_ruc` — SRI tax registry (REST API)
+  - `ec.ant_citaciones` — ANT traffic fines (AJAX JSON API)
+  - `ec.cne_padron` — CNE voter registry / identity verification
+  - `ec.funcion_judicial` — judicial process search (e-SATJE)
+  - `ec.supercias` — Superintendencia de Compañías business registry
+  - `ec.senescyt` — professional degree verification
+- **Peru (5 sources)**:
+  - `pe.sunat_ruc` — SUNAT tax registry
+  - `pe.poder_judicial` — judicial case search (CEJ)
+  - `pe.osce_sancionados` — sanctioned government contractors (OSCE)
+  - `pe.sunarp_vehicular` — vehicle registry (SUNARP)
+  - `pe.servir_sanciones` — public servant sanctions (SERVIR)
+- **Chile (3 sources)**:
+  - `cl.sii_rut` — SII tax registry (Situación Tributaria)
+  - `cl.pjud` — Poder Judicial case search
+  - `cl.fiscalizacion` — traffic infractions
+- **Mexico (4 sources)**:
+  - `mx.curp` — CURP population registry (RENAPO)
+  - `mx.sat_efos` — SAT EFOS/EDOS blacklist (facturas falsas)
+  - `mx.siem` — SIEM business directory
+  - `mx.repuve` — REPUVE stolen vehicle check
+- **Argentina (3 sources)**:
+  - `ar.afip_cuit` — AFIP CUIT/CUIL tax registry
+  - `ar.pjn` — federal judiciary case search (PJN)
+  - `ar.dnrpa` — vehicle registration lookup (DNRPA)
+- **495 unit tests** (up from 392) — 0 regressions
+
+## [0.4.0] - 2026-03-31
+
+### Added
+
+- 73 sources across 3 countries (CO, US, INTL)
+- `--custom` and `--extra` CLI flags
+
 ## [0.3.2] - 2026-03-31
 
 ### Added
@@ -111,7 +158,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Docker and docker-compose support with Redis
 - 29 unit tests
 
-[Unreleased]: https://github.com/dacrypt/openquery/compare/v0.3.2...HEAD
+[Unreleased]: https://github.com/dacrypt/openquery/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/dacrypt/openquery/compare/v0.4.0...v0.5.0
+[0.4.0]: https://github.com/dacrypt/openquery/compare/v0.3.2...v0.4.0
 [0.3.2]: https://github.com/dacrypt/openquery/compare/v0.3.1...v0.3.2
 [0.3.1]: https://github.com/dacrypt/openquery/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/dacrypt/openquery/compare/v0.2.0...v0.3.0

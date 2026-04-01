@@ -54,7 +54,7 @@ class TestListSources:
         for src in sources:
             assert isinstance(src, BaseSource)
             assert src.meta().name
-            assert src.meta().country == "CO"
+            assert src.meta().country in ("CO", "US", "INTL", "EC", "PE", "CL", "MX", "AR")
 
     def test_all_sources_have_supported_inputs(self):
         for src in list_sources():

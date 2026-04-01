@@ -297,3 +297,115 @@ def _ensure_loaded() -> None:
         import openquery.sources.co.licencias_salud  # noqa: F401
     except ImportError:
         pass
+    try:
+        import openquery.sources.co.estado_cedula_extranjeria  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.validar_policia  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.rne  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.camara_comercio_medellin  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.directorio_empresas  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.empresas_google  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.ec.sri_ruc  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.ec.ant_citaciones  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.ec.cne_padron  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.ec.funcion_judicial  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.ec.supercias  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.ec.senescyt  # noqa: F401
+    except ImportError:
+        pass
+    # Peru
+    try:
+        import openquery.sources.pe.sunat_ruc  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.pe.poder_judicial  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.pe.osce_sancionados  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.pe.sunarp_vehicular  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.pe.servir_sanciones  # noqa: F401
+    except ImportError:
+        pass
+    # Chile
+    try:
+        import openquery.sources.cl.sii_rut  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.cl.pjud  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.cl.fiscalizacion  # noqa: F401
+    except ImportError:
+        pass
+    # Mexico
+    try:
+        import openquery.sources.mx.curp  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.mx.sat_efos  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.mx.siem  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.mx.repuve  # noqa: F401
+    except ImportError:
+        pass
+    # Argentina
+    try:
+        import openquery.sources.ar.afip_cuit  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.ar.pjn  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.ar.dnrpa  # noqa: F401
+    except ImportError:
+        pass

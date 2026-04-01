@@ -1,6 +1,6 @@
 # Sources Guide
 
-OpenQuery includes 13 built-in sources for Colombian public data. Sources are organized in two categories: **person/document queries** (browser-based) and **vehicle/transport data** (API-based, instant).
+OpenQuery includes **100 built-in sources across 8 countries** (CO, EC, PE, CL, MX, AR, US, INTL). Sources are organized by country with categories like identity, judicial, tax/business, vehicles, and compliance.
 
 ## co.simit — Traffic Fines
 
