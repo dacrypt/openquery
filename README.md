@@ -305,7 +305,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 | Guide | Description |
 |-------|-------------|
 | [Getting Started](docs/getting-started.md) | Installation, first query, engine setup |
-| [Sources Guide](docs/sources.md) | All 5 Colombian sources with field reference |
+| [Sources Guide](docs/sources.md) | All 13 Colombian sources with field reference |
 | [CAPTCHA Guide](docs/captcha.md) | OCR engines, voting, LLM backends, benchmarks |
 | [Audit Guide](docs/audit.md) | Evidence capture, PDF reports, compliance |
 | [API Guide](docs/api.md) | REST endpoints, authentication, deployment |

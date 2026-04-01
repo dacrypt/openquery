@@ -54,6 +54,14 @@ class TestQueryCommand:
         assert result.exit_code == 1
         assert "does not support" in result.output
 
+    def test_invalid_extra_json(self):
+        result = runner.invoke(app, [
+            "query", "co.peajes", "--custom", "tolls",
+            "--extra", "not-valid-json",
+        ])
+        assert result.exit_code == 1
+        assert "Invalid" in result.output
+
     @patch("openquery.sources.get_source")
     def test_successful_query_json(self, mock_get_source):
         from pydantic import BaseModel

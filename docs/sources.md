@@ -22,9 +22,9 @@ openquery query co.simit --placa ABC123
 |-------|------|-------------|
 | `comparendos` | int | Number of traffic violations |
 | `multas` | int | Number of fines |
+| `acuerdos_pago` | int | Number of payment agreements |
 | `total_deuda` | float | Total outstanding debt (COP) |
 | `paz_y_salvo` | bool | True if no pending fines |
-| `detalles` | list | Individual fine details |
 | `historial` | list | Payment history |
 
 **Requirements:** None (no CAPTCHA, no API keys)
@@ -55,17 +55,17 @@ openquery query co.runt --cedula 12345678
 | `placa` | str | License plate |
 | `marca` | str | Brand |
 | `linea` | str | Model line |
-| `modelo` | int | Year |
+| `modelo_ano` | str | Model year |
 | `color` | str | Color |
-| `servicio` | str | Service type (particular/publico) |
-| `clase` | str | Vehicle class |
-| `combustible` | str | Fuel type |
+| `tipo_servicio` | str | Service type (particular/publico) |
+| `clase_vehiculo` | str | Vehicle class |
+| `tipo_combustible` | str | Fuel type |
 | `cilindraje` | str | Engine displacement |
 | `estado` | str | Registration status |
 | `soat_vigente` | bool | SOAT insurance active |
 | `soat_vencimiento` | str | SOAT expiration date |
-| `rtm_vigente` | bool | RTM inspection active |
-| `rtm_vencimiento` | str | RTM expiration date |
+| `tecnomecanica_vigente` | bool | RTM inspection active |
+| `tecnomecanica_vencimiento` | str | RTM expiration date |
 
 **Requirements:** At least one OCR engine for image CAPTCHA (see [CAPTCHA Guide](captcha.md))
 
@@ -134,11 +134,15 @@ openquery query co.adres --cedula 12345678
 | Field | Type | Description |
 |-------|------|-------------|
 | `cedula` | str | Document number queried |
-| `afiliado` | bool | True if enrolled in health system |
+| `tipo_documento` | str | Document type (CC, NI, PA) |
+| `nombre` | str | Full name |
+| `estado_afiliacion` | str | Enrollment status (ACTIVO, RETIRADO) |
 | `eps` | str | EPS name (health insurer) |
-| `regimen` | str | Coverage regime (contributivo/subsidiado) |
-| `estado` | str | Enrollment status |
-| `mensaje` | str | Additional details |
+| `regimen` | str | Coverage regime (CONTRIBUTIVO/SUBSIDIADO) |
+| `tipo_afiliado` | str | Affiliation type (COTIZANTE/BENEFICIARIO) |
+| `municipio` | str | Municipality |
+| `departamento` | str | Department |
+| `fecha_afiliacion` | str | Affiliation date |
 
 **Requirements:** None
 

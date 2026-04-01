@@ -182,6 +182,14 @@ Each source has a configured rate limit (requests per minute). The API respects 
 | co.procuraduria | 5 rpm |
 | co.policia | 10 rpm |
 | co.adres | 10 rpm |
+| co.pico_y_placa | 10 rpm |
+| co.peajes | 30 rpm |
+| co.combustible | 30 rpm |
+| co.estaciones_ev | 30 rpm |
+| co.siniestralidad | 30 rpm |
+| co.vehiculos | 30 rpm |
+| co.fasecolda | 10 rpm |
+| co.recalls | 5 rpm |
 
 ## Example: Python Client
 

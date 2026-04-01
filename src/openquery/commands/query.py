@@ -1,7 +1,8 @@
-"""CLI command: openquery query <source> --cedula/--placa/--vin <value>"""
+"""CLI command: openquery query <source> --cedula/--placa/--vin/--custom <value>"""
 
 from __future__ import annotations
 
+import json as json_module
 import time
 
 import typer
@@ -18,12 +19,23 @@ def query_cmd(
     cedula: str | None = typer.Option(None, "--cedula", "-c", help="Cedula number"),
     placa: str | None = typer.Option(None, "--placa", "-p", help="License plate"),
     vin: str | None = typer.Option(None, "--vin", "-v", help="VIN number"),
+    custom: str | None = typer.Option(None, "--custom", help="Custom query label"),
+    extra: str | None = typer.Option(None, "--extra", "-e", help="Extra JSON params"),
     output_json: bool = typer.Option(False, "--json", "-j", help="Output raw JSON"),
-    audit: bool = typer.Option(False, "--audit", "-a", help="Capture evidence (screenshots + PDF)"),
-    audit_dir: str | None = typer.Option(None, "--audit-dir", help="Directory to save audit files"),
+    audit: bool = typer.Option(False, "--audit", "-a", help="Capture evidence"),
+    audit_dir: str | None = typer.Option(None, "--audit-dir", help="Audit output dir"),
 ) -> None:
     """Query a public data source."""
     from openquery.sources import get_source
+
+    # Parse extra JSON
+    extra_dict: dict = {}
+    if extra:
+        try:
+            extra_dict = json_module.loads(extra)
+        except json_module.JSONDecodeError as e:
+            console.print(f"[red]Error:[/red] Invalid --extra JSON: {e}")
+            raise typer.Exit(1) from e
 
     # Determine document type and number
     if cedula:
@@ -35,8 +47,13 @@ def query_cmd(
     elif vin:
         doc_type = DocumentType.VIN
         doc_number = vin
+    elif custom is not None:
+        doc_type = DocumentType.CUSTOM
+        doc_number = custom
     else:
-        console.print("[red]Error:[/red] Provide --cedula, --placa, or --vin")
+        console.print(
+            "[red]Error:[/red] Provide --cedula, --placa, --vin, or --custom"
+        )
         raise typer.Exit(1)
 
     try:
@@ -61,7 +78,10 @@ def query_cmd(
     start = time.monotonic()
     try:
         result = src.query(QueryInput(
-            document_type=doc_type, document_number=doc_number, audit=audit,
+            document_type=doc_type,
+            document_number=doc_number,
+            extra=extra_dict,
+            audit=audit,
         ))
     except Exception as e:
         console.print(f"[red]Error:[/red] {e}")
