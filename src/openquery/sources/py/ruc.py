@@ -19,7 +19,7 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-SET_URL = "https://servicios.set.gov.py/eset-publico/"
+SET_URL = "https://servicios.set.gov.py/eset-publico/perfilPublicoContribIService.do"
 
 
 @register
@@ -38,7 +38,7 @@ class PyRucSource(BaseSource):
             country="PY",
             url=SET_URL,
             supported_inputs=[DocumentType.CUSTOM],
-            requires_captcha=False,
+            requires_captcha=True,  # reCAPTCHA v2
             requires_browser=True,
             rate_limit_rpm=10,
         )
@@ -67,9 +67,9 @@ class PyRucSource(BaseSource):
                 page.wait_for_load_state("networkidle", timeout=30000)
                 page.wait_for_timeout(2000)
 
+                # Fill RUC — exact selector: input[name="ruc"]
                 ruc_input = page.query_selector(
-                    '#ruc, input[name*="ruc"], input[id*="ruc"], '
-                    'input[type="text"]'
+                    'input[name="ruc"], #ruc'
                 )
                 if not ruc_input:
                     raise SourceError("py.ruc", "Could not find RUC input field")
@@ -80,9 +80,10 @@ class PyRucSource(BaseSource):
                 if collector:
                     collector.screenshot(page, "form_filled")
 
+                # Submit — exact selector: button[name="btnBuscar"]
                 submit = page.query_selector(
-                    'button[type="submit"], input[type="submit"], '
-                    'button:has-text("Consultar"), button:has-text("Buscar")'
+                    'button[name="btnBuscar"], '
+                    'button[type="submit"]'
                 )
                 if submit:
                     submit.click()

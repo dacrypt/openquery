@@ -85,12 +85,11 @@ KNOWN_STATUS: dict[str, str] = {
     "co.mi_casa_ya": "SELECTOR_STALE: Mi Casa Ya form selectors outdated",
     "ar.afip_cuit": "CAPTCHA: AFIP CAPTCHA OCR solving needs tuning (text distortion too complex)",
     "co.einforma": "INTERMITTENT: eInforma sometimes times out on slow page load",
-    # New countries — need selector inspection
-    "cr.cedula": "SELECTOR_STALE: TSE Costa Rica form selectors need inspection",
-    "do.rnc": "SITE_TIMEOUT: DGII Dominican Republic takes >30s to load",
-    "py.ruc": "SELECTOR_STALE: SET Paraguay form selectors need inspection",
-    "gt.nit": "SITE_TIMEOUT: SAT Guatemala takes >30s to load",
-    "hn.rtn": "SELECTOR_STALE: SAR Honduras form selectors need inspection",
+    # New countries — blockers identified
+    "do.rnc": "WAF_BLOCKED: DGII Dominican Republic returns 403 to headless browsers",
+    "gt.nit": "WAF_BLOCKED: SAT Guatemala behind Cloudflare Turnstile",
+    "py.ruc": "RECAPTCHA: SET Paraguay has reCAPTCHA v2 on form",
+    "cl.sii_rut": "INTERMITTENT: SII Chile form sometimes fails to load (Cloudflare)",
 }
 
 # ── Public test data (no personal data) ──────────────────────────────────

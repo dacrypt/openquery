@@ -19,7 +19,8 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-SAR_URL = "https://www.sar.gob.hn/verificador-rtn/"
+# Navigate directly to the iframe URL (the parent page embeds this)
+SAR_URL = "https://enlacertn.sar.gob.hn/index.aspx"
 
 
 @register
@@ -67,9 +68,9 @@ class HnRtnSource(BaseSource):
                 page.wait_for_load_state("networkidle", timeout=30000)
                 page.wait_for_timeout(2000)
 
+                # Fill RTN — exact ID: #txtCriterio
                 rtn_input = page.query_selector(
-                    '#rtn, input[name*="rtn"], input[id*="rtn"], '
-                    'input[type="text"]'
+                    '#txtCriterio, input[name="txtCriterio"]'
                 )
                 if not rtn_input:
                     raise SourceError("hn.rtn", "Could not find RTN input field")
@@ -77,12 +78,25 @@ class HnRtnSource(BaseSource):
                 rtn_input.fill(rtn)
                 logger.info("Filled RTN: %s", rtn)
 
+                # Solve BotDetect CAPTCHA if present
+                captcha_img = page.query_selector('#c_index_examplecaptcha_CaptchaImage')
+                if captcha_img:
+                    captcha_bytes = captcha_img.screenshot()
+                    if captcha_bytes:
+                        from openquery.core.captcha import OCRSolver
+                        solver = OCRSolver(max_chars=6)
+                        captcha_text = solver.solve(captcha_bytes)
+                        captcha_input = page.query_selector('#CaptchaCodeTextBox')
+                        if captcha_input:
+                            captcha_input.fill(captcha_text)
+                            logger.info("Solved CAPTCHA: %s", captcha_text)
+
                 if collector:
                     collector.screenshot(page, "form_filled")
 
+                # Submit — exact ID: #btnBuscar
                 submit = page.query_selector(
-                    'button[type="submit"], input[type="submit"], '
-                    'button:has-text("Verificar"), button:has-text("Consultar")'
+                    '#btnBuscar, input[name="btnBuscar"]'
                 )
                 if submit:
                     submit.click()

@@ -56,7 +56,9 @@
       "WebFetch(domain:movilidadcali.com.co)",
       "WebFetch(domain:transitodegiron.com.co)",
       "WebFetch(domain:www.transitobucaramanga.gov.co)",
-      "WebFetch(domain:transitopasto.gov.co)"
+      "WebFetch(domain:transitopasto.gov.co)",
+      "mcp__MCP_DOCKER__browser_take_screenshot",
+      "mcp__MCP_DOCKER__browser_wait_for"
     ]
   }
 }

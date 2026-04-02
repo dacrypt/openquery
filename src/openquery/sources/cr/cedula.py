@@ -19,7 +19,7 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-TSE_URL = "https://www.consulta.tse.go.cr/consulta_persona/consulta_cedula.aspx"
+TSE_URL = "https://servicioselectorales.tse.go.cr/chc/consulta_cedula.aspx"
 
 
 @register
@@ -67,10 +67,9 @@ class CrCedulaSource(BaseSource):
                 page.wait_for_load_state("networkidle", timeout=30000)
                 page.wait_for_timeout(2000)
 
-                # Fill cedula — ASP.NET form
+                # Fill cedula — exact IDs from site inspection
                 cedula_input = page.query_selector(
-                    '#txtcedula, input[name*="txtcedula"], '
-                    'input[type="text"]'
+                    '#txtcedula, input[name="txtcedula"]'
                 )
                 if not cedula_input:
                     raise SourceError("cr.cedula", "Could not find cedula input field")
@@ -81,10 +80,9 @@ class CrCedulaSource(BaseSource):
                 if collector:
                     collector.screenshot(page, "form_filled")
 
-                # Submit
+                # Submit — exact ID: #btnConsultaCedula
                 submit = page.query_selector(
-                    '#btnConsultaCedula, input[type="submit"], '
-                    'button[type="submit"]'
+                    '#btnConsultaCedula, input[name="btnConsultaCedula"]'
                 )
                 if submit:
                     submit.click()
