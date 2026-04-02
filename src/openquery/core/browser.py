@@ -1,4 +1,8 @@
-"""Browser automation manager using Playwright.
+"""Browser automation manager using Patchright (stealth Playwright).
+
+Uses Patchright — a drop-in Playwright replacement that patches Chrome DevTools
+Protocol leaks to avoid WAF/bot detection. Falls back to Playwright if
+Patchright is not installed.
 
 Provides two patterns:
 1. DOM scraping — navigate, fill forms, parse elements (SIMIT pattern)
@@ -14,9 +18,31 @@ from typing import Any
 
 logger = logging.getLogger(__name__)
 
+# Stealth launch args — reduce headless browser detection
+_STEALTH_ARGS = [
+    "--disable-blink-features=AutomationControlled",
+    "--no-first-run",
+    "--no-default-browser-check",
+]
+
+
+def _get_sync_playwright():
+    """Get sync_playwright from patchright (preferred) or playwright (fallback)."""
+    try:
+        from patchright.sync_api import sync_playwright
+        return sync_playwright
+    except ImportError:
+        logger.debug("Patchright not installed, falling back to Playwright")
+        from playwright.sync_api import sync_playwright
+        return sync_playwright
+
 
 class BrowserManager:
-    """Manage Playwright browser lifecycle and provide scraping utilities."""
+    """Manage browser lifecycle with stealth capabilities.
+
+    Uses Patchright (patched Playwright) to bypass WAF/bot detection.
+    Falls back to standard Playwright if Patchright is not available.
+    """
 
     def __init__(self, headless: bool = True, timeout: float = 30.0) -> None:
         self._headless = headless
@@ -24,21 +50,34 @@ class BrowserManager:
 
     @contextmanager
     def page(self, url: str | None = None, wait_until: str = "domcontentloaded"):
-        """Get a Playwright page within a managed browser context.
+        """Get a browser page within a managed stealth context.
 
         Args:
             url: If provided, navigates to this URL (useful for acquiring WAF cookies).
             wait_until: Playwright wait condition for navigation.
 
         Yields:
-            A Playwright Page object.
+            A Playwright/Patchright Page object.
         """
-        from playwright.sync_api import sync_playwright
+        sync_playwright = _get_sync_playwright()
 
         with sync_playwright() as pw:
-            browser = pw.chromium.launch(headless=self._headless)
+            browser = pw.chromium.launch(
+                headless=self._headless,
+                args=_STEALTH_ARGS,
+            )
             try:
-                page = browser.new_page()
+                context = browser.new_context(
+                    user_agent=(
+                        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                        "AppleWebKit/537.36 (KHTML, like Gecko) "
+                        "Chrome/131.0.0.0 Safari/537.36"
+                    ),
+                    viewport={"width": 1920, "height": 1080},
+                    locale="es-CO",
+                    timezone_id="America/Bogota",
+                )
+                page = context.new_page()
                 page.set_default_timeout(self._timeout * 1000)
 
                 if url:

@@ -32,7 +32,17 @@
       "WebFetch(domain:reportes.sisben.gov.co)",
       "WebFetch(domain:repuve.cias.gob.mx)",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "mcp__MCP_DOCKER__browser_click"
+      "mcp__MCP_DOCKER__browser_click",
+      "WebFetch(domain:comp.transitoitagui.gov.co)",
+      "WebFetch(domain:movilidad.transitoitagui.gov.co)",
+      "WebFetch(domain:digital.transitobello.com)",
+      "WebFetch(domain:tramitesmov.envigado.gov.co)",
+      "WebFetch(domain:transitosabaneta.utsetsa.com)",
+      "WebFetch(domain:movilidad.envigado.gov.co)",
+      "WebFetch(domain:movilidad.rionegro.gov.co)",
+      "WebFetch(domain:emtrasur.com.co)",
+      "WebFetch(domain:sistematizacion.emtrasur.com.co)",
+      "WebFetch(domain:serviciosdetransito.com)"
     ]
   }
 }

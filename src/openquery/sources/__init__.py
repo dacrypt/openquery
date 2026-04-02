@@ -326,6 +326,18 @@ def _ensure_loaded() -> None:
     except ImportError:
         pass
     try:
+        import openquery.sources.co.multas_bogota  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.multas_medellin  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.co.multas_itagui  # noqa: F401
+    except ImportError:
+        pass
+    try:
         import openquery.sources.ec.sri_ruc  # noqa: F401
     except ImportError:
         pass

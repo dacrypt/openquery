@@ -26,68 +26,15 @@ from openquery.sources.base import DocumentType, QueryInput
 # Update this dict when a source becomes testable or a new blocker appears.
 
 KNOWN_STATUS: dict[str, str] = {
-    # Auth/credentials required
+    # Only truly impossible sources — everything else gets tested with Patchright stealth
     "co.rne": "AUTH_REQUIRED: Needs CRC portal credentials (usuario/password)",
     "co.fasecolda": "AUTH_REQUIRED: Needs manual bearer token capture",
     "co.fopep": "AUTH_REQUIRED: Login-gated portal with reCAPTCHA",
     "co.soi": "AUTH_REQUIRED: Login-only payment platform (ACH Colombia)",
     "ec.sri_ruc": "AUTH_REQUIRED: SRI API requires authorization token",
-    # API removed or changed
-    "co.proveedores_ficticios": "API_REMOVED: Dataset removed from datos.gov.co (now PDF-only at dian.gov.co)",
-    "co.directorio_empresas": "API_REMOVED: Dataset API no longer available on datos.gov.co",
-    # No search form
-    "co.jep": "NO_FORM: JEP is SharePoint — no direct person/document search form",
-    # WAF blocks headless browsers (even from Colombian IP)
-    "co.estado_cedula": "WAF_BLOCKED: Registraduría ICEfaces blocks headless browsers (dynamic session IDs)",
-    "co.nombre_completo": "WAF_BLOCKED: Registraduría ICEfaces blocks headless browsers",
-    "co.defuncion": "WAF_BLOCKED: Registraduría ICEfaces blocks headless browsers",
-    "co.puesto_votacion": "WAF_BLOCKED: Registraduría ICEfaces blocks headless browsers",
-    "co.estado_tramite_cedula": "WAF_BLOCKED: Registraduría ICEfaces blocks headless browsers",
-    "co.registro_civil": "WAF_BLOCKED: Registraduría ICEfaces blocks headless browsers",
-    "co.libreta_militar": "WAF_BLOCKED: mil.co blocks headless browsers",
-    "co.estado_cedula_extranjeria": "WAF_BLOCKED: Migración blocks headless browsers",
-    "co.colpensiones": "WAF_BLOCKED: Returns 403 Forbidden to headless browsers",
-    "co.rethus": "WAF_BLOCKED: SISPRO WAF blocks headless browsers (Attack ID 20000051)",
-    "co.ruaf": "WAF_BLOCKED: SISPRO WAF blocks headless browsers",
-    "co.garantias_mobiliarias": "WAF_BLOCKED: WAF blocks headless browsers (Attack ID 20000051)",
-    "co.supersociedades": "WAF_BLOCKED: Supersociedades WAF blocks headless browsers",
-    # RUNT family — API changed
-    "co.runt": "RUNT_DATA: RUNT works but test plate data doesn't match (captcha solver works)",
-    "co.runt_conductor": "RUNT_DATA: RUNT driver lookup — captcha OK but no matching conductor data",
-    "co.runt_soat": "RUNT_DATA: RUNT SOAT works but test plate data doesn't match",
-    "co.runt_rtm": "RUNT_DATA: RUNT RTM works but test plate data doesn't match",
-    # Sites genuinely down or unreachable
-    "co.certificado_tradicion": "SITE_DOWN: supernotariado.gov.co times out",
-    "pe.servir_sanciones": "SITE_DOWN: sanciones.gob.pe times out",
-    "pe.sunat_ruc": "SITE_DOWN: e-consultaruc.sunat.gob.pe connection reset",
-    "cl.fiscalizacion": "SITE_DOWN: Site times out",
-    "mx.repuve": "SITE_DOWN: repuve.gob.mx times out",
-    "ec.ant_citaciones": "API_ERROR: ANT API returns HTTP 500",
-    # Intermittent/slow sites (sometimes work, sometimes timeout)
-    "co.adres": "SITE_MAINTENANCE: ADRES frequently in maintenance mode",
-    "co.afiliados_compensado": "INTERMITTENT: Site loads slowly, timeouts common",
-    "co.cambio_estrato": "INTERMITTENT: Bucaramanga portal loads slowly",
-    "co.seguridad_social": "WAF_BLOCKED: miseguridadsocial.gov.co blocks headless browsers",
-    "co.mi_casa_ya": "WAF_BLOCKED: Mi Casa Ya portal blocks headless browsers",
-    "co.inpec": "SITE_DOWN: INPEC returns 504 from Azure Gateway",
-    "co.tutelas": "WAF_BLOCKED: Rama Judicial blocks headless browsers",
-    "pe.sunarp_vehicular": "INTERMITTENT: SUNARP sometimes times out",
-    "mx.curp": "INTERMITTENT: gob.mx API sometimes times out (30s limit)",
-    # Sites that need specific selector work
-    "co.cufe_dian": "INTERMITTENT: DIAN Cloudflare sometimes blocks",
-    "co.rnmc": "SELECTOR_STALE: ASP.NET postback timing issue",
-    "co.consulta_procesos": "SELECTOR_STALE: Vue.js SPA with dynamic IDs",
-    "co.rues": "RECAPTCHA: rues.org.co has reCAPTCHA v2 on search",
-    "ec.senescyt": "SELECTOR_STALE: senescyt.gob.ec form structure changed",
-    "pe.poder_judicial": "SELECTOR_STALE: PJ Peru form structure changed",
-    "pe.osce_sancionados": "SELECTOR_STALE: OSCE form structure changed",
-    "ar.afip_cuit": "SELECTOR_STALE: AFIP/ARCA form is inside iframe with CAPTCHA",
-    "ar.dnrpa": "SELECTOR_STALE: DNRPA form structure changed",
-    "cl.pjud": "SELECTOR_STALE: PJUD form structure changed",
-    "mx.sat_efos": "SELECTOR_STALE: SAT EFOS page structure changed",
-    "mx.siem": "SELECTOR_STALE: SIEM form structure changed",
-    "co.dian_rut": "INTERMITTENT: DIAN Cloudflare Turnstile sometimes blocks/slows",
-    "cl.sii_rut": "SELECTOR_STALE: SII Chile CAPTCHA form structure changed",
+    "co.proveedores_ficticios": "API_REMOVED: Dataset removed from datos.gov.co",
+    "co.directorio_empresas": "API_REMOVED: Dataset API no longer available",
+    "co.jep": "NO_FORM: JEP is SharePoint — no search form",
 }
 
 # ── Public test data (no personal data) ──────────────────────────────────
