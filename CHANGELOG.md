@@ -7,6 +7,52 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-04-02
+
+### Added
+
+- **7 new countries** — OpenQuery now covers **14 countries** (was 8), **98 sources** (was 92):
+  - 🇧🇷 **Brazil**: `br.cnpj` — business registry via BrasilAPI (REST API, no auth, no CAPTCHA)
+  - 🇨🇷 **Costa Rica**: `cr.cedula` — voter registry via TSE (ASP.NET, no CAPTCHA)
+  - 🇩🇴 **Dominican Republic**: `do.rnc` — tax registry via DGII
+  - 🇵🇾 **Paraguay**: `py.ruc` — tax registry via SET/DNIT
+  - 🇬🇹 **Guatemala**: `gt.nit` — tax registry via SAT
+  - 🇭🇳 **Honduras**: `hn.rtn` — tax registry via SAR (BotDetect CAPTCHA + OCR)
+  - Plus `co.supersociedades` (insolvency) and `cl.superir` (bankruptcy) from v0.6.0
+- **Patchright stealth browser** — replaced Playwright with Patchright (drop-in replacement) to bypass WAF/bot detection:
+  - Patches Chrome DevTools Protocol leaks that WAFs use to detect automation
+  - Stealth args: `--disable-blink-features=AutomationControlled`
+  - Realistic user-agent (Chrome 131), viewport (1920x1080), locale (es-CO)
+  - Falls back to Playwright if Patchright not installed
+- **reCAPTCHA infrastructure** — config fields for CapSolver, CapMonster, AntiCaptcha API keys
+- **Real query test runner** — `tests/e2e/run_real_queries.py` with:
+  - 98 public data queries across 14 countries
+  - Known status categorization (WAF_BLOCKED, AUTH_REQUIRED, SITE_DOWN, etc.)
+  - Auto-generated `docs/test_results.md` with failure analysis
+  - Live success rate tracking and accountability reporting
+- **2 new Colombian sources**: `co.supersociedades` (insolvency), `cl.superir` (bankruptcy)
+
+### Changed
+
+- **Browser timeout** increased from 30s to 60s default for slow government sites
+- **30+ source URL/selector updates** — government sites that changed their HTML structure
+- **OFAC** converted from dead search API to SDN XML search (bulk download + local search)
+- **mx.curp** converted from browser scraping to direct JSON API (gob.mx/v1/renapoCURP)
+- **co.pep** switched to datos.gov.co Socrata API (bypasses SSL issues on funcionpublica.gov.co)
+- **3 Socrata dataset IDs** updated: tarifas_energia, rnt_turismo, licencias_salud
+- **8 DNS/URL fixes**: RUNT, RUAF, RETHUS, retencion_vehiculos, servir_sanciones, sat_efos
+- **Mass selector migration**: `wait_for_selector('input[type="text"]')` → `wait_for_load_state("networkidle")` across 34 source files
+
+### Fixed
+
+- `intl.onu` — added `follow_redirects=True` for UN sanctions XML download
+- `co.contraloria` — navigate to iframe URL at cfiscal.contraloria.gov.co
+- `co.copnia` — new URL tramites.copnia.gov.co with ASP.NET MVC selectors
+- `co.snr` — URL updated to /app/inicio.dma with PrimeFaces selectors
+- `cl.sii_rut` — updated to use `input.rut-form` selector
+- `ar.afip_cuit` — navigate to iframe URL, added CAPTCHA OCR
+- `co.retencion_vehiculos` — Angular Material selectors for Barranquilla portal
+
 ## [0.6.0] - 2026-04-01
 
 ### Added
@@ -193,7 +239,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Docker and docker-compose support with Redis
 - 29 unit tests
 
-[Unreleased]: https://github.com/dacrypt/openquery/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/dacrypt/openquery/compare/v0.7.0...HEAD
+[0.7.0]: https://github.com/dacrypt/openquery/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/dacrypt/openquery/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/dacrypt/openquery/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/dacrypt/openquery/compare/v0.3.2...v0.4.0

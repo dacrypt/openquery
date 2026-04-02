@@ -1,6 +1,6 @@
 # Sources Guide
 
-OpenQuery includes **102 built-in sources across 8 countries** (CO, EC, PE, CL, MX, AR, US, INTL). Sources are organized by country with categories like identity, judicial, tax/business, vehicles, and compliance.
+OpenQuery includes **98 built-in sources across 14 countries** (CO, EC, PE, CL, MX, AR, US, INTL). Sources are organized by country with categories like identity, judicial, tax/business, vehicles, and compliance.
 
 ## co.simit — Traffic Fines
 

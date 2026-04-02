@@ -27,7 +27,7 @@ OpenQuery provides a plugin-based framework for scraping government websites, pu
 - **Extensible** — add new data sources by implementing a single class
 - **Country-organized** — sources grouped by country code (`co`, `us`, etc.)
 
-## Built-in Sources — 102 sources across 8 countries
+## Built-in Sources — 98 sources across 14 countries
 
 ### Colombia (73 sources)
 
@@ -204,6 +204,42 @@ OpenQuery provides a plugin-based framework for scraping government websites, pu
 | `ar.afip_cuit` | Tax registry CUIT/CUIL (AFIP) | custom | Yes |
 | `ar.pjn` | Federal judiciary cases (PJN) | custom | Yes |
 | `ar.dnrpa` | Vehicle registration (DNRPA) | placa | Yes |
+
+### Brazil (1 source)
+
+| Source | Description | Inputs | Browser |
+|--------|-------------|--------|---------|
+| `br.cnpj` | Business registry CNPJ (BrasilAPI) | nit, custom | No |
+
+### Costa Rica (1 source)
+
+| Source | Description | Inputs | Browser |
+|--------|-------------|--------|---------|
+| `cr.cedula` | Voter registry cédula (TSE) | cedula, custom | Yes |
+
+### Dominican Republic (1 source)
+
+| Source | Description | Inputs | Browser |
+|--------|-------------|--------|---------|
+| `do.rnc` | Tax registry RNC (DGII) | cedula, nit, custom | Yes |
+
+### Paraguay (1 source)
+
+| Source | Description | Inputs | Browser |
+|--------|-------------|--------|---------|
+| `py.ruc` | Tax registry RUC (SET/DNIT) | custom | Yes |
+
+### Guatemala (1 source)
+
+| Source | Description | Inputs | Browser |
+|--------|-------------|--------|---------|
+| `gt.nit` | Tax registry NIT (SAT) | nit, custom | Yes |
+
+### Honduras (1 source)
+
+| Source | Description | Inputs | Browser |
+|--------|-------------|--------|---------|
+| `hn.rtn` | Tax registry RTN (SAR) | custom | Yes |
 
 ### International (2 sources)
 
