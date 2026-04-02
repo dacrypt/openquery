@@ -25,7 +25,7 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 logger = logging.getLogger(__name__)
 
 SUNAT_URL = (
-    "https://e-consultaruc.sunat.gob.pe/cl-ti-itmrconsruc/FrameCriterioBusquedaWeb.jsp"
+    "https://e-consultaruc.sunat.gob.pe/cl-ti-itmrconsruc/FrameCriterioBusquedaMovil.jsp"
 )
 
 
@@ -82,18 +82,25 @@ class SunatRucSource(BaseSource):
                 if collector:
                     collector.attach(page)
 
-                page.wait_for_selector(
-                    "input[type='text'], #txtRuc, #txtNumeroDocumento",
-                    timeout=15000,
-                )
+                page.wait_for_load_state("networkidle", timeout=15000)
                 page.wait_for_timeout(2000)
 
                 if ruc:
+                    # Click "Por RUC" tab and fill
+                    ruc_tab = page.query_selector("#btnPorRuc")
+                    if ruc_tab:
+                        ruc_tab.click()
+                        page.wait_for_timeout(500)
                     ruc_input = page.query_selector("#txtRuc, input[name*='ruc']")
                     if ruc_input:
                         ruc_input.fill(ruc)
                         logger.info("Filled RUC: %s", ruc)
                 elif dni:
+                    # Click "Por Documento" tab and fill
+                    doc_tab = page.query_selector("#btnPorDocumento")
+                    if doc_tab:
+                        doc_tab.click()
+                        page.wait_for_timeout(500)
                     dni_input = page.query_selector(
                         "#txtNumeroDocumento, input[name*='documento']"
                     )
@@ -101,8 +108,13 @@ class SunatRucSource(BaseSource):
                         dni_input.fill(dni)
                         logger.info("Filled DNI: %s", dni)
                 elif name:
+                    # Click "Por Razon Social" tab and fill
+                    name_tab = page.query_selector("#btnPorRazonSocial")
+                    if name_tab:
+                        name_tab.click()
+                        page.wait_for_timeout(500)
                     name_input = page.query_selector(
-                        "#txtRazonSocial, input[name*='razon']"
+                        "#txtNombreRazonSocial, input[name*='razon']"
                     )
                     if name_input:
                         name_input.fill(name)
@@ -111,8 +123,10 @@ class SunatRucSource(BaseSource):
                 if collector:
                     collector.screenshot(page, "form_filled")
 
+                # Submit — exact ID: #btnAceptar
                 submit = page.query_selector(
-                    "#btnBuscar, input[value='Buscar'], "
+                    "#btnAceptar, #btnBuscar, "
+                    "input[value='Buscar'], "
                     "button:has-text('Buscar')"
                 )
                 if submit:

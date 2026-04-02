@@ -69,8 +69,8 @@ class EstadoCedulaSource(BaseSource):
                 if collector:
                     collector.attach(page)
 
-                page.wait_for_selector('input[type="text"]', timeout=15000)
-                page.wait_for_timeout(2000)
+                page.wait_for_load_state("networkidle", timeout=15000)
+                page.wait_for_timeout(3000)
 
                 # Fill cedula
                 cedula_input = page.query_selector(

@@ -20,12 +20,16 @@ OpenQuery provides a plugin-based framework for scraping government websites, pu
 - **Caching** — in-memory, Redis, or SQLite backends with configurable TTL
 - **Rate limiting** — per-source token-bucket to respect server limits
 - **REST API** — FastAPI server with auto-generated OpenAPI docs
+- **Document OCR** — extract structured data from ID documents (cedula, INE, DNI, carnet, passport)
+- **Face verification** — 1:1 face comparison with liveness detection (DeepFace/ArcFace)
+- **Health monitoring** — per-source circuit breaker with automatic failover
+- **Dashboard** — web UI for source browsing, querying, and health monitoring
 - **Extensible** — add new data sources by implementing a single class
 - **Country-organized** — sources grouped by country code (`co`, `us`, etc.)
 
-## Built-in Sources — 100 sources across 8 countries
+## Built-in Sources — 102 sources across 8 countries
 
-### Colombia (72 sources)
+### Colombia (73 sources)
 
 #### Antecedentes y Justicia
 | Source | Description | Inputs | Browser |
@@ -84,6 +88,7 @@ OpenQuery provides a plugin-based framework for scraping government websites, pu
 | `co.camara_comercio_medellin` | Medellín Chamber of Commerce | nit, custom | Yes |
 | `co.directorio_empresas` | Business directory (datos.gov.co) | nit, custom | No |
 | `co.empresas_google` | Business search (Google Maps) | custom | Yes |
+| `co.supersociedades` | Insolvency proceedings (Ley 1116) | nit, cedula, custom | Yes |
 
 #### Propiedad e Inmuebles
 | Source | Description | Inputs | Browser |
@@ -174,13 +179,14 @@ OpenQuery provides a plugin-based framework for scraping government websites, pu
 | `pe.sunarp_vehicular` | Vehicle registry (SUNARP) | placa | Yes |
 | `pe.servir_sanciones` | Public servant sanctions (SERVIR) | custom | Yes |
 
-### Chile (3 sources)
+### Chile (4 sources)
 
 | Source | Description | Inputs | Browser |
 |--------|-------------|--------|---------|
 | `cl.sii_rut` | Tax registry RUT (SII) | custom | Yes |
 | `cl.pjud` | Judicial case search (PJUD) | custom | Yes |
 | `cl.fiscalizacion` | Traffic infractions | placa | Yes |
+| `cl.superir` | Insolvency/bankruptcy (Superir) | custom | Yes |
 
 ### Mexico (4 sources)
 
@@ -251,9 +257,11 @@ For knowledge-based CAPTCHAs (Procuraduria), you need at least one LLM backend:
 pip install "openquery[paddleocr]"   # PaddleOCR — best CAPTCHA accuracy (100%)
 pip install "openquery[easyocr]"     # EasyOCR — good accuracy (85%), combines with Tesseract for 90%
 pip install "openquery[huggingface]" # HuggingFace Inference API (OCR + QA)
-pip install "openquery[serve]"       # FastAPI server (fastapi, uvicorn)
+pip install "openquery[serve]"       # FastAPI server + dashboard (fastapi, uvicorn)
 pip install "openquery[redis]"       # Redis cache backend
 pip install "openquery[captcha]"     # 2captcha paid CAPTCHA solving (last resort)
+pip install "openquery[deepface]"    # Face verification (DeepFace + ArcFace)
+pip install "openquery[passport]"    # Passport MRZ reading (passporteye)
 ```
 
 ## Quick Start
@@ -305,6 +313,15 @@ openquery query co.simit --cedula 12345678 --json
 
 # Generate audit evidence (screenshots + PDF report)
 openquery query co.runt --placa ABC123 --audit --audit-dir ./evidence
+
+# Source health status
+openquery health
+
+# Extract data from ID document photo
+openquery ocr --type co.cedula cedula_photo.jpg
+
+# Face verification (compare ID photo vs selfie)
+openquery face-verify id_photo.jpg selfie.jpg
 ```
 
 ### REST API
@@ -354,6 +371,10 @@ curl -X POST http://localhost:8000/api/v1/query \
 | `POST` | `/api/v1/query` | Query a data source |
 | `GET` | `/api/v1/sources` | List available sources |
 | `GET` | `/api/v1/health` | Health check and cache stats |
+| `GET` | `/api/v1/sources/health` | Detailed per-source health report |
+| `POST` | `/api/v1/ocr/extract` | Extract data from ID document image |
+| `POST` | `/api/v1/face/verify` | Face verification (1:1 comparison) |
+| `GET` | `/dashboard` | Web dashboard UI |
 | `GET` | `/docs` | Interactive API documentation |
 
 ### Docker
@@ -476,11 +497,13 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 | Guide | Description |
 |-------|-------------|
 | [Getting Started](docs/getting-started.md) | Installation, first query, engine setup |
-| [Sources Guide](docs/sources.md) | All 100 sources across 8 countries with field reference |
+| [Sources Guide](docs/sources.md) | All 102 sources across 8 countries with field reference |
 | [CAPTCHA Guide](docs/captcha.md) | OCR engines, voting, LLM backends, benchmarks |
 | [Audit Guide](docs/audit.md) | Evidence capture, PDF reports, compliance |
 | [API Guide](docs/api.md) | REST endpoints, authentication, deployment |
 | [Adding Sources](docs/adding-sources.md) | Step-by-step guide to create new source plugins |
+| [Test Results](docs/test_results.md) | Real query results against live government services |
+| [Competitors](docs/competitors.md) | Competitive landscape analysis (15 tools compared) |
 | [Changelog](CHANGELOG.md) | Version history |
 
 ## License

@@ -79,45 +79,42 @@ class ValidarPoliciaSource(BaseSource):
                 if collector:
                     collector.attach(page)
 
-                page.wait_for_selector('input[type="text"], select', timeout=15000)
+                page.wait_for_load_state("networkidle", timeout=15000)
                 page.wait_for_timeout(2000)
 
-                # Look for the "Validar Policía" tab/button and click it
+                # Click "Validar Policia" tab — exact ID from site inspection
                 validar_tab = page.query_selector(
-                    'a[href*="validar"], a[id*="validar"], '
-                    'button[id*="validar"], input[id*="validar"], '
-                    'a:text("Validar"), a:text("validar")'
+                    '#ctl00_ContentPlaceHolder3_btnActivaPol, '
+                    'a[id*="btnActivaPol"]'
                 )
                 if validar_tab:
                     validar_tab.click()
                     page.wait_for_timeout(2000)
 
-                # Fill cédula
+                # Fill cédula — exact ID: #ctl00_ContentPlaceHolder3_txtIdentificacion
                 cedula_input = page.query_selector(
-                    'input[type="text"][id*="cedula"], '
-                    'input[type="text"][id*="documento"], '
-                    'input[type="text"][id*="numero"], '
-                    'input[type="text"]'
+                    '#ctl00_ContentPlaceHolder3_txtIdentificacion, '
+                    'input[id*="txtIdentificacion"]'
                 )
                 if not cedula_input:
                     raise SourceError("co.validar_policia", "Could not find cédula input field")
 
                 cedula_input.fill(cedula)
 
-                # Fill placa (badge number)
+                # Fill placa — exact ID: #ctl00_ContentPlaceHolder3_txtPlaca
                 if placa:
                     placa_input = page.query_selector(
-                        'input[type="text"][id*="placa"], '
-                        'input[type="text"][name*="placa"]'
+                        '#ctl00_ContentPlaceHolder3_txtPlaca, '
+                        'input[id*="txtPlaca"]'
                     )
                     if placa_input:
                         placa_input.fill(placa)
 
-                # Fill carnet
+                # Fill carnet — exact ID: #ctl00_ContentPlaceHolder3_txtCarnet
                 if carnet:
                     carnet_input = page.query_selector(
-                        'input[type="text"][id*="carnet"], '
-                        'input[type="text"][name*="carnet"]'
+                        '#ctl00_ContentPlaceHolder3_txtCarnet, '
+                        'input[id*="txtCarnet"]'
                     )
                     if carnet_input:
                         carnet_input.fill(carnet)
@@ -125,11 +122,11 @@ class ValidarPoliciaSource(BaseSource):
                 if collector:
                     collector.screenshot(page, "form_filled")
 
-                # Submit
+                # Submit — exact ID: #ctl00_ContentPlaceHolder3_btnBuscaPol
                 submit_btn = page.query_selector(
-                    'button[type="submit"], input[type="submit"], '
-                    'input[id*="consultar"], input[id*="validar"], '
-                    'button[id*="consultar"], button[id*="validar"]'
+                    '#ctl00_ContentPlaceHolder3_btnBuscaPol, '
+                    'a[id*="btnBuscaPol"], '
+                    'button[type="submit"], input[type="submit"]'
                 )
                 if submit_btn:
                     submit_btn.click()

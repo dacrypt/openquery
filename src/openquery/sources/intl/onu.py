@@ -62,7 +62,7 @@ class OnuSource(BaseSource):
 
     def _search(self, query: str) -> OnuResult:
         try:
-            with httpx.Client(timeout=self._timeout, verify=True) as client:
+            with httpx.Client(timeout=self._timeout, verify=True, follow_redirects=True) as client:
                 resp = client.get(ONU_XML_URL)
                 resp.raise_for_status()
                 xml_content = resp.content

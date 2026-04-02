@@ -1,20 +1,17 @@
 """CURP source — Mexican population registry (RENAPO).
 
-Queries the Mexican CURP validation system.
-The portal uses a color CAPTCHA.
+Queries the Mexican CURP validation system via JSON API.
+No browser or CAPTCHA required.
 
-Flow:
-1. Navigate to CURP consultation page
-2. Enter CURP code
-3. Solve color CAPTCHA
-4. Submit and parse result
+API: https://www.gob.mx/v1/renapoCURP/consulta
 """
 
 from __future__ import annotations
 
 import logging
-import re
+from datetime import datetime
 
+import httpx
 from pydantic import BaseModel
 
 from openquery.exceptions import SourceError
@@ -24,16 +21,16 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-CURP_URL = "https://consultas.curp.gob.mx/CurpSP/gobmx/ConsultaCURP"
+API_URL = "https://www.gob.mx/v1/renapoCURP/consulta"
+PAGE_URL = "https://www.gob.mx/curp/"
 
 
 @register
 class CurpSource(BaseSource):
-    """Query Mexican CURP population registry."""
+    """Query Mexican CURP population registry via JSON API."""
 
-    def __init__(self, timeout: float = 30.0, headless: bool = True) -> None:
+    def __init__(self, timeout: float = 15.0) -> None:
         self._timeout = timeout
-        self._headless = headless
 
     def meta(self) -> SourceMeta:
         return SourceMeta(
@@ -41,10 +38,10 @@ class CurpSource(BaseSource):
             display_name="CURP — Consulta de CURP",
             description="Mexican CURP validation: personal data and birth certificate status",
             country="MX",
-            url=CURP_URL,
+            url=PAGE_URL,
             supported_inputs=[DocumentType.CUSTOM],
-            requires_captcha=True,
-            requires_browser=True,
+            requires_captcha=False,
+            requires_browser=False,
             rate_limit_rpm=10,
         )
 
@@ -52,104 +49,49 @@ class CurpSource(BaseSource):
         curp = input.extra.get("curp", "") or input.document_number
         if not curp:
             raise SourceError("mx.curp", "CURP is required (pass via extra.curp)")
-        return self._query(curp, audit=input.audit)
+        return self._query(curp.upper().strip())
 
-    def _query(self, curp: str, audit: bool = False) -> CurpResult:
-        from openquery.core.browser import BrowserManager
+    def _query(self, curp: str) -> CurpResult:
+        try:
+            headers = {
+                "Content-Type": "application/json",
+                "Referer": "https://www.gob.mx/",
+                "Origin": "https://www.gob.mx",
+            }
+            payload = {"curp": curp, "tipoBusqueda": "curp"}
 
-        browser = BrowserManager(headless=self._headless, timeout=self._timeout)
-        collector = None
+            logger.info("Querying CURP API for: %s", curp)
 
-        if audit:
-            from openquery.core.audit import AuditCollector
-            collector = AuditCollector("mx.curp", "curp", curp)
+            with httpx.Client(timeout=self._timeout, headers=headers) as client:
+                resp = client.post(API_URL, json=payload)
+                resp.raise_for_status()
+                data = resp.json()
 
-        with browser.page(CURP_URL) as page:
-            try:
-                if collector:
-                    collector.attach(page)
-
-                page.wait_for_selector('input[type="text"]', timeout=15000)
-                page.wait_for_timeout(2000)
-
-                # Fill CURP
-                curp_input = page.query_selector(
-                    'input[name*="curp"], input[name*="CURP"], input[id*="curp"], '
-                    'input[type="text"]'
+            if data.get("codigo") != "01" or not data.get("registros"):
+                return CurpResult(
+                    queried_at=datetime.now(),
+                    curp=curp,
+                    estatus="No encontrado",
                 )
-                if not curp_input:
-                    raise SourceError("mx.curp", "Could not find CURP input field")
-                curp_input.fill(curp.upper())
-                logger.info("Filled CURP: %s", curp)
 
-                if collector:
-                    collector.screenshot(page, "form_filled")
+            registro = data["registros"][0]
 
-                # Submit
-                submit = page.query_selector(
-                    'button[type="submit"], input[type="submit"], '
-                    "button:has-text('Buscar'), button:has-text('Consultar')"
-                )
-                if submit:
-                    submit.click()
-                else:
-                    curp_input.press("Enter")
+            return CurpResult(
+                queried_at=datetime.now(),
+                curp=registro.get("curp", curp),
+                nombre=registro.get("nombres", ""),
+                apellido_paterno=registro.get("apellido1", ""),
+                apellido_materno=registro.get("apellido2", ""),
+                fecha_nacimiento=registro.get("fechNac", ""),
+                sexo=registro.get("sexo", ""),
+                estado_nacimiento=registro.get("desEntNac", ""),
+                estatus=registro.get("statusCurp", ""),
+                documento_probatorio=registro.get("docProbatorio", ""),
+            )
 
-                page.wait_for_timeout(3000)
-                page.wait_for_selector("body", timeout=15000)
-
-                if collector:
-                    collector.screenshot(page, "result")
-
-                result = self._parse_result(page, curp)
-
-                if collector:
-                    result.audit = collector.generate_pdf(page, result.model_dump_json())
-
-                return result
-
-            except SourceError:
-                raise
-            except Exception as e:
-                raise SourceError("mx.curp", f"Query failed: {e}") from e
-
-    def _parse_result(self, page, curp: str) -> CurpResult:
-        from datetime import datetime
-
-        body_text = page.inner_text("body")
-        body_lower = body_text.lower()
-
-        result = CurpResult(queried_at=datetime.now(), curp=curp.upper())
-
-        # Parse fields from result page
-        field_patterns = [
-            (r"(?:nombre|names?)[:\s]+([^\n]+)", "nombre"),
-            (r"(?:primer\s*apellido|apellido\s*paterno)[:\s]+([^\n]+)", "apellido_paterno"),
-            (r"(?:segundo\s*apellido|apellido\s*materno)[:\s]+([^\n]+)", "apellido_materno"),
-            (r"(?:fecha\s*(?:de\s*)?nacimiento)[:\s]+([^\n]+)", "fecha_nacimiento"),
-            (r"(?:sexo|g[eé]nero)[:\s]+([^\n]+)", "sexo"),
-            (r"(?:entidad\s*(?:de\s*)?nacimiento|estado\s*(?:de\s*)?nacimiento)[:\s]+([^\n]+)", "estado_nacimiento"),
-            (r"(?:estatus|status)[:\s]+([^\n]+)", "estatus"),
-            (r"(?:documento\s*probatorio)[:\s]+([^\n]+)", "documento_probatorio"),
-        ]
-
-        for pattern, field in field_patterns:
-            m = re.search(pattern, body_text, re.IGNORECASE)
-            if m:
-                setattr(result, field, m.group(1).strip())
-
-        # Try table-based parsing
-        rows = page.query_selector_all("table tr, .datos-personales tr")
-        for row in rows:
-            cells = row.query_selector_all("td, th")
-            if len(cells) >= 2:
-                label = (cells[0].inner_text() or "").strip().lower()
-                value = (cells[1].inner_text() or "").strip()
-                if "nombre" in label and not result.nombre:
-                    result.nombre = value
-                elif "paterno" in label:
-                    result.apellido_paterno = value
-                elif "materno" in label:
-                    result.apellido_materno = value
-
-        return result
+        except httpx.HTTPStatusError as e:
+            raise SourceError("mx.curp", f"API returned HTTP {e.response.status_code}") from e
+        except httpx.RequestError as e:
+            raise SourceError("mx.curp", f"Request failed: {e}") from e
+        except Exception as e:
+            raise SourceError("mx.curp", f"Query failed: {e}") from e

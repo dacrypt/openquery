@@ -10,7 +10,7 @@ from fastapi import APIRouter
 from pydantic import BaseModel
 
 from openquery.core.cache import make_key
-from openquery.server.deps import get_cache, get_rate_limiter
+from openquery.server.deps import get_cache, get_health_monitor, get_rate_limiter
 from openquery.sources import get_source
 from openquery.sources.base import DocumentType, QueryInput
 
@@ -69,6 +69,17 @@ async def query(req: QueryRequest) -> QueryResponse:
     except KeyError as e:
         return QueryResponse(ok=False, source=req.source, error="unknown_source", detail=str(e))
 
+    # Circuit breaker check
+    monitor = get_health_monitor()
+    if not monitor.is_available(req.source):
+        return QueryResponse(
+            ok=False,
+            source=req.source,
+            error="circuit_open",
+            detail=f"Source {req.source} temporarily unavailable due to repeated failures",
+            retryable=True,
+        )
+
     # Rate limit
     if not limiter.is_allowed(req.source):
         return QueryResponse(
@@ -97,6 +108,7 @@ async def query(req: QueryRequest) -> QueryResponse:
         cache.set(cache_key, data)
 
         elapsed = int((time.monotonic() - start) * 1000)
+        monitor.record_success(req.source, elapsed)
         return QueryResponse(
             source=req.source,
             queried_at=datetime.now(),
@@ -106,6 +118,7 @@ async def query(req: QueryRequest) -> QueryResponse:
         )
     except Exception as e:
         elapsed = int((time.monotonic() - start) * 1000)
+        monitor.record_failure(req.source, str(e))
         return QueryResponse(
             ok=False,
             source=req.source,

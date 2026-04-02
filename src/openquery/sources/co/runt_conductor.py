@@ -10,7 +10,7 @@ Flow:
 4. POST driver query via browser-context fetch
 5. Parse response into RuntConductorResult model
 
-Source: https://www.rfrfrunt.gov.co/
+Source: https://ciudadano.runt.gov.co/
 """
 
 from __future__ import annotations
@@ -29,7 +29,7 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-RUNT_PAGE = "https://www.rfrfrunt.gov.co/consultaCiudadana/#/consultaConductor"
+RUNT_PAGE = "https://ciudadano.runt.gov.co/consultaCiudadana/#/consultaConductor"
 BASE_URL = "https://runtproapi.runt.gov.co/CYRConsultaConductorMS"
 CAPTCHA_URL = f"{BASE_URL}/captcha/libre-captcha/generar"
 AUTH_URL = f"{BASE_URL}/auth"

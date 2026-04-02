@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenQuery Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>OpenQuery</h1>
+    <p class="subtitle">Public Data Sources Dashboard</p>
+    <div id="status-bar">
+      <span id="overall-status"></span>
+      <span id="source-count"></span>
+    </div>
+  </header>
+
+  <main>
+    <!-- Query Section -->
+    <section id="query-section">
+      <h2>Query</h2>
+      <form id="query-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="source-select">Source</label>
+            <select id="source-select" required>
+              <option value="">Loading sources...</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="doc-type">Document Type</label>
+            <select id="doc-type" required>
+              <option value="cedula">Cedula</option>
+              <option value="nit">NIT</option>
+              <option value="pasaporte">Passport</option>
+              <option value="placa">Plate</option>
+              <option value="vin">VIN</option>
+              <option value="custom">Custom</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="doc-number">Document Number</label>
+            <input type="text" id="doc-number" placeholder="Enter document number" required>
+          </div>
+          <button type="submit" id="query-btn">Query</button>
+        </div>
+      </form>
+      <div id="query-result" class="hidden">
+        <h3>Result</h3>
+        <pre id="result-json"></pre>
+      </div>
+    </section>
+
+    <!-- Sources Health Table -->
+    <section id="sources-section">
+      <h2>Sources <span id="refresh-timer" class="muted"></span></h2>
+      <div class="table-controls">
+        <input type="text" id="source-filter" placeholder="Filter sources...">
+        <select id="country-filter">
+          <option value="">All Countries</option>
+        </select>
+      </div>
+      <table id="sources-table">
+        <thead>
+          <tr>
+            <th>Source</th>
+            <th>Country</th>
+            <th>Status</th>
+            <th>Description</th>
+            <th>Inputs</th>
+            <th>CAPTCHA</th>
+          </tr>
+        </thead>
+        <tbody id="sources-body">
+          <tr><td colspan="6" class="center">Loading...</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Recent Queries -->
+    <section id="history-section">
+      <h2>Recent Queries</h2>
+      <table id="history-table">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Source</th>
+            <th>Document</th>
+            <th>Latency</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="history-body">
+          <tr><td colspan="5" class="center muted">No queries yet</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer>
+    <p>OpenQuery &mdash; Query public data sources worldwide</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

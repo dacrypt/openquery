@@ -41,6 +41,10 @@ class Settings(BaseSettings):
     browser_headless: bool = True
     browser_timeout: float = 30.0
 
+    # Circuit breaker
+    circuit_breaker_threshold: int = 5
+    circuit_breaker_cooldown: float = 60.0
+
     # Logging
     log_level: str = "INFO"
 

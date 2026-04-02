@@ -7,6 +7,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-04-01
+
+### Added
+
+- **Health monitoring & circuit breaker** — per-source health tracking with CLOSED/OPEN/HALF_OPEN state machine
+  - `GET /api/v1/sources/health` — detailed per-source health report
+  - Enhanced `GET /api/v1/health` — now includes source health summary
+  - CLI: `openquery health` — source status table
+  - Circuit breaker auto-blocks failing sources after configurable threshold
+  - `OPENQUERY_CIRCUIT_BREAKER_THRESHOLD` and `OPENQUERY_CIRCUIT_BREAKER_COOLDOWN` settings
+- **Document OCR extraction** — extract structured data from ID document images
+  - 5 country pipelines: Colombian cedula, Mexican INE, Peruvian DNI, Chilean carnet, Passport MRZ
+  - Reuses PaddleOCR engine (already in project for CAPTCHA solving)
+  - `POST /api/v1/ocr/extract` — REST API endpoint
+  - CLI: `openquery ocr --type co.cedula photo.jpg`
+  - Optional `passporteye` dependency for passport MRZ parsing
+- **Face verification** — 1:1 face comparison with liveness detection
+  - DeepFace with ArcFace backend (99.4% accuracy on LFW)
+  - Built-in anti-spoofing (Silent-Face-Anti-Spoofing)
+  - `POST /api/v1/face/verify` — REST API endpoint
+  - CLI: `openquery face-verify photo.jpg selfie.jpg`
+  - Optional `deepface` dependency: `pip install 'openquery[deepface]'`
+- **Dashboard UI** — web-based SPA at `/dashboard`
+  - Source browser with filtering by country and search
+  - Query form with real-time results
+  - Query history log
+  - Auto-refreshing health status indicators
+  - Vanilla HTML/CSS/JS (zero build dependencies)
+  - Dark theme, responsive design
+- **2 new insolvency/financial sources**:
+  - `co.supersociedades` — Colombian insolvency proceedings (Ley 1116, Superintendencia de Sociedades)
+  - `cl.superir` — Chilean bankruptcy/insolvency registry (Superintendencia de Insolvencia)
+- **Competitive landscape analysis** — `docs/competitors.md` with 15-tool comparison matrix
+- **61 new tests** — 579 unit tests total (up from 495)
+
 ## [0.5.0] - 2026-04-01
 
 ### Added
@@ -158,7 +193,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Docker and docker-compose support with Redis
 - 29 unit tests
 
-[Unreleased]: https://github.com/dacrypt/openquery/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/dacrypt/openquery/compare/v0.6.0...HEAD
+[0.6.0]: https://github.com/dacrypt/openquery/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/dacrypt/openquery/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/dacrypt/openquery/compare/v0.3.2...v0.4.0
 [0.3.2]: https://github.com/dacrypt/openquery/compare/v0.3.1...v0.3.2

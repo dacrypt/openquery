@@ -61,31 +61,62 @@ class OfacSource(BaseSource):
         return self._search(search_term)
 
     def _search(self, query: str) -> OfacResult:
+        import xml.etree.ElementTree as ET
+
         try:
-            with httpx.Client(timeout=self._timeout, verify=True) as client:
-                resp = client.get(
-                    OFAC_API_URL,
-                    params={"q": query, "score": int(self._min_score)},
-                    headers={"Accept": "application/json"},
-                )
+            logger.info("Downloading OFAC SDN XML list...")
+            with httpx.Client(timeout=self._timeout, verify=True, follow_redirects=True) as client:
+                resp = client.get(OFAC_SDN_XML_URL)
                 resp.raise_for_status()
-                data = resp.json()
+                xml_content = resp.content
 
+            root = ET.fromstring(xml_content)
+            ns = {"sdn": "https://sanctionslistservice.ofac.treas.gov/api/PublicationPreview/exports/SDN_ADVANCED.XML"}
+
+            # Try with and without namespace
+            query_lower = query.lower()
             matches = []
-            results = data if isinstance(data, list) else data.get("results", [])
 
-            for entry in results:
-                score = float(entry.get("score", 0))
-                if score < self._min_score:
-                    continue
-                matches.append(OfacEntry(
-                    uid=str(entry.get("uid", "")),
-                    name=entry.get("name", ""),
-                    type=entry.get("type", ""),
-                    programs=entry.get("programs", []),
-                    remarks=entry.get("remarks", ""),
-                    score=score,
-                ))
+            for entry in root.iter():
+                if entry.tag.endswith("sdnEntry") or entry.tag == "sdnEntry":
+                    uid_elem = entry.find("uid") or entry.find("{*}uid")
+                    uid = uid_elem.text if uid_elem is not None and uid_elem.text else ""
+
+                    # Get names
+                    name_parts = []
+                    for tag in ("firstName", "lastName", "{*}firstName", "{*}lastName"):
+                        elem = entry.find(tag)
+                        if elem is not None and elem.text:
+                            name_parts.append(elem.text.strip())
+
+                    full_name = " ".join(name_parts)
+                    if not full_name:
+                        continue
+
+                    if query_lower not in full_name.lower():
+                        continue
+
+                    sdn_type_elem = entry.find("sdnType") or entry.find("{*}sdnType")
+                    sdn_type = sdn_type_elem.text if sdn_type_elem is not None else ""
+
+                    remarks_elem = entry.find("remarks") or entry.find("{*}remarks")
+                    remarks = remarks_elem.text[:200] if remarks_elem is not None and remarks_elem.text else ""
+
+                    # Get programs
+                    programs = []
+                    for prog in entry.iter():
+                        if prog.tag.endswith("program") or prog.tag == "program":
+                            if prog.text:
+                                programs.append(prog.text.strip())
+
+                    matches.append(OfacEntry(
+                        uid=uid,
+                        name=full_name,
+                        type=sdn_type,
+                        programs=programs,
+                        remarks=remarks,
+                        score=100.0,  # Exact XML match
+                    ))
 
             return OfacResult(
                 queried_at=datetime.now(),
@@ -99,5 +130,7 @@ class OfacSource(BaseSource):
             raise SourceError("us.ofac", f"OFAC API returned HTTP {e.response.status_code}") from e
         except httpx.RequestError as e:
             raise SourceError("us.ofac", f"Request failed: {e}") from e
+        except ET.ParseError as e:
+            raise SourceError("us.ofac", f"Failed to parse OFAC SDN XML: {e}") from e
         except Exception as e:
             raise SourceError("us.ofac", f"OFAC search failed: {e}") from e

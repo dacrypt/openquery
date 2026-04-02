@@ -6,7 +6,18 @@ from functools import lru_cache
 
 from openquery.config import get_settings
 from openquery.core.cache import CacheBackend, create_cache
+from openquery.core.health import SourceHealthMonitor
 from openquery.core.rate_limit import RateLimiter
+
+
+@lru_cache
+def get_health_monitor() -> SourceHealthMonitor:
+    """Get the shared health monitor."""
+    settings = get_settings()
+    return SourceHealthMonitor(
+        threshold=settings.circuit_breaker_threshold,
+        cooldown=settings.circuit_breaker_cooldown,
+    )
 
 
 @lru_cache

@@ -34,5 +34,20 @@ class RateLimitError(OpenQueryError):
         super().__init__(msg)
 
 
+class DocumentOCRError(OpenQueryError):
+    """Document OCR extraction failed."""
+
+    def __init__(self, source: str, message: str) -> None:
+        self.source = source
+        super().__init__(f"[OCR:{source}] {message}")
+
+
+class FaceVerificationError(OpenQueryError):
+    """Face verification failed."""
+
+    def __init__(self, message: str) -> None:
+        super().__init__(f"[Face] {message}")
+
+
 class CacheError(OpenQueryError):
     """Cache backend error."""

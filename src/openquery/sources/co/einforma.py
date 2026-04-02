@@ -72,18 +72,14 @@ class EinformaSource(BaseSource):
                 if collector:
                     collector.attach(page)
 
-                page.wait_for_selector('input[type="text"]', timeout=15000)
+                page.wait_for_load_state("networkidle", timeout=15000)
                 page.wait_for_timeout(2000)
 
-                # Fill search input
+                # Fill search input — exact IDs from site: #search (mobile), #search2 (desktop)
                 search_input = page.query_selector(
-                    'input[type="text"][id*="search"], '
-                    'input[type="text"][id*="buscar"], '
-                    'input[type="text"][id*="nit"], '
-                    'input[type="text"][placeholder*="NIT"], '
-                    'input[type="text"][placeholder*="Buscar"], '
-                    'input[type="text"][placeholder*="empresa"], '
+                    '#search, #search2, '
                     'input[type="search"], '
+                    'input[type="text"][placeholder*="empresa"], '
                     'input[type="text"]'
                 )
                 if not search_input:
@@ -95,11 +91,11 @@ class EinformaSource(BaseSource):
                 if collector:
                     collector.screenshot(page, "form_filled")
 
-                # Submit
+                # Submit — use the button or press Enter (JS-based form action)
                 submit_btn = page.query_selector(
-                    'button[type="submit"], input[type="submit"], '
-                    'button[id*="buscar"], button[id*="search"], '
-                    'a[id*="buscar"]'
+                    '#boton_buscador_nacional, '
+                    'input[type="submit"].searchbox-submit, '
+                    'input[type="button"].searchbox-submit'
                 )
                 if submit_btn:
                     submit_btn.click()

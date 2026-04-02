@@ -24,7 +24,7 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-RETHUS_URL = "https://rfrfrethus2.minsalud.gov.co/ReTHUS/"
+RETHUS_URL = "https://web.sispro.gov.co/ReTHUS/"
 
 
 @register

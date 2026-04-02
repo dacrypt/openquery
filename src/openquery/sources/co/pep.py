@@ -24,8 +24,8 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-# Función Pública — FDCI PEP consultation (GET form, no CAPTCHA on individual search)
-PEP_API_URL = "https://www.funcionpublica.gov.co/fdci/consultaCiudadana/consultaPEP"
+# datos.gov.co Socrata API — SIGEP public officials dataset (reliable, no SSL issues)
+PEP_API_URL = "https://www.datos.gov.co/resource/3qxn-uc22.json"
 PEP_PAGE_URL = "https://www.funcionpublica.gov.co/fdci/consultaCiudadana/consultaPEP"
 
 
@@ -60,16 +60,14 @@ class PepSource(BaseSource):
 
     def _search(self, documento: str, nombre: str = "") -> PepResult:
         try:
-            params: dict[str, str] = {}
+            params: dict[str, str] = {"$limit": "50"}
 
             if documento:
-                params["numeroDocumento"] = documento
+                params["$where"] = f"numero_documento='{documento}'"
                 logger.info("Searching PEP by document: %s", documento)
             elif nombre:
-                parts = nombre.split(maxsplit=1)
-                params["primerNombre"] = parts[0]
-                if len(parts) > 1:
-                    params["primerApellido"] = parts[1]
+                prefix = nombre[:10].upper()
+                params["$where"] = f"starts_with(upper(nombre_pep), '{prefix}')"
                 logger.info("Searching PEP by name: %s", nombre)
 
             with httpx.Client(timeout=self._timeout) as client:
@@ -79,18 +77,12 @@ class PepSource(BaseSource):
 
             registros = []
             for entry in data:
-                nombre_completo = " ".join(filter(None, [
-                    entry.get("primer_nombre", ""),
-                    entry.get("segundo_nombre", ""),
-                    entry.get("primer_apellido", ""),
-                    entry.get("segundo_apellido", ""),
-                ]))
                 registros.append(PepEntry(
-                    nombre=nombre_completo.strip(),
-                    cargo=entry.get("nombre_del_cargo", ""),
+                    nombre=entry.get("nombre_pep", ""),
+                    cargo=entry.get("denominacion_cargo", entry.get("nombre_del_cargo", "")),
                     entidad=entry.get("nombre_entidad", ""),
-                    fecha_vinculacion=entry.get("fecha_de_vinculaci_n", ""),
-                    estado=entry.get("tipo_de_vinculaci_n", ""),
+                    fecha_vinculacion=entry.get("fecha_vinculacion", entry.get("fecha_de_vinculaci_n", "")),
+                    estado=entry.get("fecha_desvinculacion", entry.get("tipo_de_vinculaci_n", "")),
                 ))
 
             return PepResult(

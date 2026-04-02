@@ -23,7 +23,7 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-SERVIR_URL = "https://sanciones.gob.pe/"
+SERVIR_URL = "https://www.sanciones.gob.pe/"
 
 
 @register

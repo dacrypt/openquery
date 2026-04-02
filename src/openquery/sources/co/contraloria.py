@@ -24,7 +24,7 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-CONTRALORIA_URL = "https://www.contraloria.gov.co/web/guest/persona-natural"
+CONTRALORIA_URL = "https://cfiscal.contraloria.gov.co/Certificados/CertificadoPersonaNatural.aspx"
 
 
 @register
@@ -43,7 +43,7 @@ class ContraloriaSource(BaseSource):
             country="CO",
             url=CONTRALORIA_URL,
             supported_inputs=[DocumentType.CEDULA, DocumentType.NIT, DocumentType.PASSPORT],
-            requires_captcha=False,
+            requires_captcha=True,  # reCAPTCHA v2 on the form
             requires_browser=True,
             rate_limit_rpm=10,
         )
@@ -77,32 +77,29 @@ class ContraloriaSource(BaseSource):
                 if collector:
                     collector.attach(page)
 
-                # Wait for the form to load
-                page.wait_for_selector(
-                    'select, input[type="text"], #tipo_documento, #documento',
-                    timeout=15000,
-                )
+                # Wait for ASP.NET form to load — exact selectors from site inspection
+                page.wait_for_load_state("networkidle", timeout=15000)
                 page.wait_for_timeout(2000)
 
-                # Select document type if dropdown exists
+                # Select document type — exact ID: #ddlTipoDocumento
                 doc_select = page.query_selector(
-                    'select[id*="tipo"], select[name*="tipo"], select[id*="document"]'
+                    '#ddlTipoDocumento, '
+                    'select[id*="TipoDocumento"], select[id*="tipo"]'
                 )
                 if doc_select:
                     select_value = doc_type_map.get(doc_type, "CC")
                     page.select_option(
-                        'select[id*="tipo"], select[name*="tipo"], select[id*="document"]',
+                        '#ddlTipoDocumento, '
+                        'select[id*="TipoDocumento"], select[id*="tipo"]',
                         value=select_value,
                         timeout=5000,
                     )
                     logger.info("Selected document type: %s", select_value)
 
-                # Fill document number
+                # Fill document number — exact ID: #txtNumeroDocumento
                 doc_input = page.query_selector(
-                    'input[type="text"][id*="numero"], '
-                    'input[type="text"][id*="documento"], '
-                    'input[type="text"][name*="numero"], '
-                    'input[type="text"][name*="documento"], '
+                    '#txtNumeroDocumento, '
+                    'input[id*="NumeroDocumento"], '
                     'input[type="text"]'
                 )
                 if not doc_input:
@@ -114,11 +111,11 @@ class ContraloriaSource(BaseSource):
                 if collector:
                     collector.screenshot(page, "form_filled")
 
-                # Submit
+                # Submit — exact ID: #btnBuscar
                 submit_btn = page.query_selector(
-                    'button[type="submit"], input[type="submit"], '
-                    'button[id*="consultar"], button[id*="buscar"], '
-                    'a[id*="consultar"], a[id*="buscar"]'
+                    '#btnBuscar, '
+                    'input[id*="btnBuscar"], '
+                    'button[type="submit"], input[type="submit"]'
                 )
                 if submit_btn:
                     submit_btn.click()

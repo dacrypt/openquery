@@ -20,12 +20,26 @@ def create_app() -> FastAPI:
     from openquery.server.routes.query import router as query_router
     from openquery.server.routes.sources import router as sources_router
 
+    from openquery.server.routes.face import router as face_router
+    from openquery.server.routes.ocr import router as ocr_router
+
     app.include_router(health_router, prefix="/api/v1", tags=["system"])
     app.include_router(sources_router, prefix="/api/v1", tags=["system"])
     app.include_router(query_router, prefix="/api/v1", tags=["query"])
+    app.include_router(ocr_router, prefix="/api/v1", tags=["ocr"])
+    app.include_router(face_router, prefix="/api/v1", tags=["face"])
 
     # API key middleware
     from openquery.server.auth import setup_auth
     setup_auth(app)
+
+    # Dashboard static files
+    from pathlib import Path
+
+    from fastapi.staticfiles import StaticFiles
+
+    static_dir = Path(__file__).parent / "static"
+    if static_dir.exists():
+        app.mount("/dashboard", StaticFiles(directory=str(static_dir), html=True), name="dashboard")
 
     return app

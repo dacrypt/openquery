@@ -20,7 +20,7 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-API_URL = "https://www.datos.gov.co/resource/bshp-gbss.json"
+API_URL = "https://www.datos.gov.co/resource/ytme-6qnu.json"
 PAGE_URL = "https://www.datos.gov.co/"
 
 
@@ -66,10 +66,10 @@ class TarifasEnergiaSource(BaseSource):
             if municipio:
                 prefix = municipio[:5]
                 conditions.append(
-                    f"starts_with(upper(municipio), '{prefix}')"
+                    f"starts_with(upper(operador_de_red), '{prefix}')"
                 )
             if estrato:
-                conditions.append(f"estrato='{estrato}'")
+                conditions.append(f"nivel='{estrato}'")
 
             where_clause = " AND ".join(conditions)
             params: dict[str, str] = {"$where": where_clause, "$limit": "500"}
@@ -86,12 +86,12 @@ class TarifasEnergiaSource(BaseSource):
             tarifas = []
             for row in data:
                 tarifas.append(TarifaEnergia(
-                    estrato=row.get("estrato", ""),
-                    componente=row.get("componente", row.get("concepto", "")),
-                    valor_kwh=row.get("valor_kwh", row.get("tarifa", "")),
-                    empresa=row.get("empresa", row.get("prestador", "")),
-                    departamento=row.get("departamento", ""),
-                    municipio=row.get("municipio", ""),
+                    estrato=row.get("nivel", row.get("estrato", "")),
+                    componente=row.get("periodo", row.get("componente", "")),
+                    valor_kwh=row.get("cu_total", row.get("valor_kwh", "")),
+                    empresa=row.get("operador_de_red", row.get("empresa", "")),
+                    departamento=row.get("a_o", row.get("departamento", "")),
+                    municipio=row.get("operador_de_red", row.get("municipio", "")),
                 ))
 
             query_desc = municipio or f"estrato {estrato}"

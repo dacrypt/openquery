@@ -24,7 +24,7 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-RUAF_URL = "https://rufruf.minsalud.gov.co/RuafUI/Consultas"
+RUAF_URL = "https://ruaf.sispro.gov.co/AfiliadosRP.aspx"
 
 DOC_TYPE_MAP = {
     DocumentType.CEDULA: "CC",

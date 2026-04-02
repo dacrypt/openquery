@@ -68,26 +68,25 @@ class SisbenSource(BaseSource):
                 if collector:
                     collector.attach(page)
 
-                page.wait_for_selector('select, input[type="text"]', timeout=15000)
+                page.wait_for_load_state("networkidle", timeout=15000)
                 page.wait_for_timeout(2000)
 
-                # Select doc type
-                doc_select = page.query_selector(
-                    'select[id*="tipo"], select[name*="tipo"]'
-                )
+                # Select doc type — exact ID from site inspection
+                doc_select = page.query_selector('#TipoID, select[id*="tipo"]')
                 if doc_select:
-                    select_value = "CC" if doc_type == DocumentType.CEDULA else "PA"
+                    # 3=Cedula de Ciudadania, 4=Cedula de extranjeria
+                    select_value = "3" if doc_type == DocumentType.CEDULA else "6"
                     page.select_option(
-                        'select[id*="tipo"], select[name*="tipo"]',
+                        '#TipoID, select[id*="tipo"]',
                         value=select_value,
                         timeout=5000,
                     )
 
-                # Fill document number
+                # Fill document number — exact ID: #documento (type=search, not text)
                 doc_input = page.query_selector(
-                    'input[type="text"][id*="numero"], '
-                    'input[type="text"][id*="documento"], '
-                    'input[type="text"]'
+                    '#documento, '
+                    'input[type="search"], '
+                    'input[id*="documento"]'
                 )
                 if not doc_input:
                     raise SourceError("co.sisben", "Could not find document input field")
@@ -97,11 +96,11 @@ class SisbenSource(BaseSource):
                 if collector:
                     collector.screenshot(page, "form_filled")
 
-                # Submit
+                # Submit — exact ID: #botonenvio
                 submit_btn = page.query_selector(
-                    'button[type="submit"], input[type="submit"], '
-                    'button[id*="consultar"], button[id*="buscar"], '
-                    'input[id*="consultar"], input[id*="buscar"]'
+                    '#botonenvio, '
+                    'button[type="submit"], '
+                    'input[type="submit"]'
                 )
                 if submit_btn:
                     submit_btn.click()

@@ -8,7 +8,7 @@ Flow:
 2. Enter vehicle plate number
 3. Submit and parse retention status
 
-Source: https://www.simtbarranquilla.gov.co/
+Source: https://portal.barranquilla.gov.co:8181/mov_estadoVehiculo/
 """
 
 from __future__ import annotations
@@ -24,7 +24,7 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-RETENCION_URL = "https://www.simtbarranquilla.gov.co/"
+RETENCION_URL = "https://portal.barranquilla.gov.co:8181/mov_estadoVehiculo/"
 
 
 @register

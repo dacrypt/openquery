@@ -9,7 +9,7 @@ Flow:
 4. POST query via browser-context fetch
 5. Parse RTM data from response
 
-Source: https://www.rfrfrunt.gov.co/
+Source: https://ciudadano.runt.gov.co/
 """
 
 from __future__ import annotations
@@ -28,7 +28,7 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-RUNT_PAGE = "https://www.rfrfrunt.gov.co/consultaCiudadana/#/consultaVehiculo"
+RUNT_PAGE = "https://ciudadano.runt.gov.co/consultaCiudadana/#/consultaVehiculo"
 BASE_URL = "https://runtproapi.runt.gov.co/CYRConsultaVehiculoMS"
 CAPTCHA_URL = f"{BASE_URL}/captcha/libre-captcha/generar"
 AUTH_URL = f"{BASE_URL}/auth"

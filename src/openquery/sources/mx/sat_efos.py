@@ -23,7 +23,7 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-SAT_EFOS_URL = "https://listados.sat.gob.mx/"
+SAT_EFOS_URL = "http://omawww.sat.gob.mx/cifras_sat/Paginas/DatosAbiertos/contribuyentes_publicados.html"
 
 
 @register

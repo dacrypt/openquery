@@ -75,16 +75,14 @@ class RuesSource(BaseSource):
                 if collector:
                     collector.attach(page)
 
-                page.wait_for_selector('input[type="text"]', timeout=15000)
+                page.wait_for_load_state("networkidle", timeout=15000)
                 page.wait_for_timeout(2000)
 
-                # Fill search input
+                # Fill search input — exact ID from site inspection: #search
                 search_input = page.query_selector(
+                    '#search, #search2, '
                     'input[type="text"][id*="search"], '
-                    'input[type="text"][id*="buscar"], '
-                    'input[type="text"][id*="nit"], '
-                    'input[type="text"][placeholder*="NIT"], '
-                    'input[type="text"][placeholder*="Buscar"], '
+                    'input[type="text"][placeholder*="busqueda"], '
                     'input[type="text"]'
                 )
                 if not search_input:
@@ -96,11 +94,11 @@ class RuesSource(BaseSource):
                 if collector:
                     collector.screenshot(page, "form_filled")
 
-                # Submit
+                # Submit — exact ID: #btn-busqueda or generic submit
                 submit_btn = page.query_selector(
-                    'button[type="submit"], input[type="submit"], '
-                    'button[id*="buscar"], button[id*="search"], '
-                    'a[id*="buscar"]'
+                    '#btn-busqueda, '
+                    'button[type="submit"], '
+                    'button.btn-busqueda'
                 )
                 if submit_btn:
                     submit_btn.click()

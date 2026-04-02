@@ -24,6 +24,7 @@ def serve_cmd(
         raise typer.Exit(1)
 
     console.print(f"[bold]Starting OpenQuery API server on {host}:{port}[/bold]")
+    console.print(f"  Dashboard: http://{host}:{port}/dashboard")
     console.print(f"  Docs: http://{host}:{port}/docs")
     console.print(f"  Sources: http://{host}:{port}/api/v1/sources")
 

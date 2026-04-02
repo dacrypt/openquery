@@ -70,27 +70,27 @@ class RnmcSource(BaseSource):
                 if collector:
                     collector.attach(page)
 
-                page.wait_for_selector('input[type="text"], select', timeout=15000)
+                page.wait_for_load_state("networkidle", timeout=15000)
                 page.wait_for_timeout(2000)
 
-                # Select document type
+                # Select document type — exact ASP.NET IDs from site inspection
                 doc_select = page.query_selector(
-                    'select[id*="tipo"], select[name*="tipo"]'
+                    '#ctl00_ContentPlaceHolder3_ddlTipoDoc, '
+                    'select[id*="TipoDoc"], select[id*="tipo"]'
                 )
                 if doc_select:
-                    # Confirmed: CC=55, Extranjero=842
-                    select_value = "55" if doc_type == DocumentType.CEDULA else "842"
+                    select_value = "55" if doc_type == DocumentType.CEDULA else "58"
                     page.select_option(
-                        'select[id*="tipo"], select[name*="tipo"]',
+                        '#ctl00_ContentPlaceHolder3_ddlTipoDoc, '
+                        'select[id*="TipoDoc"], select[id*="tipo"]',
                         value=select_value,
                         timeout=5000,
                     )
 
-                # Fill document number
+                # Fill document number — exact ID from site inspection
                 doc_input = page.query_selector(
-                    'input[type="text"][id*="documento"], '
-                    'input[type="text"][id*="cedula"], '
-                    'input[type="text"][id*="numero"], '
+                    '#ctl00_ContentPlaceHolder3_txtExpediente, '
+                    'input[id*="txtExpediente"], '
                     'input[type="text"]'
                 )
                 if not doc_input:
@@ -98,23 +98,14 @@ class RnmcSource(BaseSource):
 
                 doc_input.fill(documento)
 
-                # Fill date if provided
-                if fecha:
-                    date_input = page.query_selector(
-                        'input[type="text"][id*="fecha"], '
-                        'input[type="date"]'
-                    )
-                    if date_input:
-                        date_input.fill(fecha)
-
                 if collector:
                     collector.screenshot(page, "form_filled")
 
-                # Submit
+                # Submit via ASP.NET postback — click the "Nueva Busqueda" button
                 submit_btn = page.query_selector(
-                    'button[type="submit"], input[type="submit"], '
-                    'input[id*="consultar"], input[id*="buscar"], '
-                    'button[id*="consultar"], a[id*="consultar"]'
+                    '#ctl00_ContentPlaceHolder3_btnNuevo, '
+                    'a[id*="btnNuevo"], '
+                    'button[type="submit"], input[type="submit"]'
                 )
                 if submit_btn:
                     submit_btn.click()

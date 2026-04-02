@@ -21,8 +21,8 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-API_URL = "https://www.datos.gov.co/resource/2z2j-kxnj.json"
-PAGE_URL = "https://www.datos.gov.co/Comercio-Industria-y-Turismo/Registro-Nacional-de-Turismo-RNT-/2z2j-kxnj"
+API_URL = "https://www.datos.gov.co/resource/thwd-ivmp.json"
+PAGE_URL = "https://www.datos.gov.co/Comercio-Industria-y-Turismo/Registro-Nacional-de-Turismo-RNT-/thwd-ivmp"
 
 
 @register
