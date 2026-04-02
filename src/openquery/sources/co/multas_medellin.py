@@ -4,26 +4,31 @@ Queries Medellín's Secretaría de Movilidad via the portal-movilidad SPA.
 The portal is an AngularJS SPA built by Quipux S.A.S with backend at /backavit/.
 
 Portal: https://www.medellin.gov.co/portal-movilidad/
-Backend: https://www.medellin.gov.co/backavit/
-reCAPTCHA: v3 (invisible/score-based)
-
-NOTE: The portal has been intermittently unavailable (503/connection resets).
-The JSP sub-portals at /qxi_tramites/consultas/ are also frequently down.
-This source implements the browser flow but may need refinement when the
-portal is consistently accessible.
+Backend: https://www.medellin.gov.co/backavit/avit/
 
 Flow:
-1. Navigate to portal-movilidad SPA
-2. Wait for AngularJS to render the consultation form
-3. Fill document type, document number, or plate
-4. Handle reCAPTCHA v3 (automatic/score-based)
-5. Parse results from DOM or intercept API calls to /backavit/
+1. Navigate to portal-movilidad
+2. Wait for AngularJS SPA to render search input
+3. Close any popup modals
+4. Fill search input with cédula or placa and press Enter
+5. SPA navigates to #/resultado-home-public//{term}/0/2
+6. Intercept API call to /backavit/avit/home/findInfoHomePublic
+7. Parse comparendos/multas from API response
+
+API endpoints:
+- User lookup: GET /backavit/avit/home/findUsuarios/{term}
+- Full query:  GET /backavit/avit/home/findInfoHomePublic
+  Returns: consultaMultaOComparendoOutDTO with informacionComparendo[],
+           informacionMulta[], informacionMoroso[], etc.
+
+No explicit CAPTCHA — reCAPTCHA v3 is invisible/score-based and passes
+automatically with patchright stealth browser.
 """
 
 from __future__ import annotations
 
+import json
 import logging
-import re
 from datetime import datetime
 
 from pydantic import BaseModel
@@ -60,7 +65,7 @@ class MultasMedellinSource(BaseSource):
             country="CO",
             url=PORTAL_URL,
             supported_inputs=[DocumentType.CEDULA, DocumentType.PLATE],
-            requires_captcha=True,  # reCAPTCHA v3
+            requires_captcha=False,
             requires_browser=True,
             rate_limit_rpm=5,
         )
@@ -95,45 +100,16 @@ class MultasMedellinSource(BaseSource):
                 "co.multas_medellin", doc_type.value, search_term
             )
 
-        with browser.page(PORTAL_URL) as page:
+        with browser.page(PORTAL_URL, wait_until="domcontentloaded") as page:
             try:
                 if collector:
                     collector.attach(page)
 
-                # Intercept API calls to /backavit/
-                api_data: list[dict] = []
-
-                def handle_response(response):
-                    url = response.url
-                    if "backavit" in url and response.status == 200:
-                        try:
-                            body = response.text()
-                            import json
-
-                            parsed = json.loads(body)
-                            if isinstance(parsed, list):
-                                api_data.extend(parsed)
-                            elif isinstance(parsed, dict):
-                                api_data.append(parsed)
-                        except Exception:
-                            pass
-
-                page.on("response", handle_response)
-
                 # Wait for AngularJS SPA to render
                 logger.info("Waiting for Movilidad en Línea SPA...")
-                try:
-                    page.wait_for_selector(
-                        "input, select, .form-control, [ng-model]",
-                        state="visible",
-                        timeout=20000,
-                    )
-                except Exception:
-                    # SPA may not render visible elements quickly
-                    logger.warning("SPA form elements not found, waiting longer...")
-                    page.wait_for_timeout(10000)
+                page.wait_for_timeout(8000)
 
-                # Check if the page actually loaded
+                # Check if the page loaded
                 body_text = page.inner_text("body")
                 if not body_text.strip() or "can't be reached" in body_text:
                     raise SourceError(
@@ -141,67 +117,59 @@ class MultasMedellinSource(BaseSource):
                         "Portal de Movilidad de Medellín no disponible",
                     )
 
+                # Close any popup modals (appointment scheduling, etc.)
+                page.evaluate("""() => {
+                    var modals = document.querySelectorAll('.modal.show, .modal.fade.show');
+                    modals.forEach(m => { m.style.display='none'; m.classList.remove('show'); });
+                    var backdrops = document.querySelectorAll('.modal-backdrop');
+                    backdrops.forEach(b => b.remove());
+                    document.body.classList.remove('modal-open');
+                    document.body.style.overflow = 'auto';
+                }""")
+                page.wait_for_timeout(500)
+
+                # Intercept the main API response
+                api_result = {}
+
+                def handle_response(response):
+                    url = response.url
+                    if "findInfoHomePublic" in url and response.status == 200:
+                        try:
+                            body = response.text()
+                            parsed = json.loads(body)
+                            api_result.update(parsed)
+                        except Exception:
+                            pass
+                    elif "findUsuarios" in url and response.status == 200:
+                        try:
+                            body = response.text()
+                            parsed = json.loads(body)
+                            if isinstance(parsed, list) and parsed:
+                                api_result["_user"] = parsed[0]
+                        except Exception:
+                            pass
+
+                page.on("response", handle_response)
+
                 if collector:
                     collector.screenshot(page, "portal_loaded")
 
-                # Try to navigate to estado de cuenta section
-                # The SPA uses hash-based routing
-                estado_cuenta_link = page.query_selector(
-                    'a:has-text("Estado de cuenta"), '
-                    'a:has-text("Consultar"), '
-                    '[href*="estado-cuenta"]'
-                )
-                if estado_cuenta_link:
-                    estado_cuenta_link.click()
-                    page.wait_for_timeout(3000)
-                    logger.info("Navigated to estado de cuenta")
+                # Fill search input and press Enter
+                search_input = page.locator('[ng-model="ctrl.input"]')
+                search_input.fill(search_term)
+                logger.info("Filled search term: %s", search_term)
+                search_input.press("Enter")
+                logger.info("Pressed Enter — waiting for results...")
 
-                # Find and fill the search form
-                # Look for document/plate input fields
-                doc_input = page.query_selector(
-                    'input[ng-model*="documento"], '
-                    'input[ng-model*="identificacion"], '
-                    'input[name*="documento"], '
-                    'input[name*="numero"], '
-                    'input[type="text"]:visible'
-                )
-
-                if doc_input:
-                    doc_input.fill(search_term)
-                    logger.info("Filled search term: %s", search_term)
-                else:
-                    raise SourceError(
-                        "co.multas_medellin",
-                        "No se encontró campo de búsqueda en el portal",
-                    )
-
-                if collector:
-                    collector.screenshot(page, "form_filled")
-
-                # Look for submit button
-                submit_btn = page.query_selector(
-                    'button:has-text("Consultar"), '
-                    'button:has-text("Buscar"), '
-                    'input[type="submit"], '
-                    'button[type="submit"]'
-                )
-
-                if submit_btn:
-                    submit_btn.click()
-                    logger.info("Clicked submit")
-                    page.wait_for_timeout(8000)
-                else:
-                    raise SourceError(
-                        "co.multas_medellin",
-                        "No se encontró botón de consulta",
-                    )
+                # Wait for navigation and API response
+                page.wait_for_timeout(10000)
 
                 if collector:
                     collector.screenshot(page, "result")
 
-                # Parse results from API data or DOM
-                return self._parse_results(
-                    page, search_term, collector, api_data
+                # Parse results
+                return self._parse_response(
+                    page, search_term, api_result, collector
                 )
 
             except SourceError:
@@ -211,65 +179,106 @@ class MultasMedellinSource(BaseSource):
                     "co.multas_medellin", f"Query failed: {e}"
                 ) from e
 
-    def _parse_results(
+    def _parse_response(
         self,
         page,
         search_term: str,
+        api_result: dict,
         collector,
-        api_data: list[dict],
     ) -> MultasTransitoLocalResult:
-        """Parse results from API data or DOM."""
-        body_text = page.inner_text("body")
+        """Parse the intercepted API response."""
+        # Extract user name
+        nombre = ""
+        user_info = api_result.get("_user", {})
+        if user_info:
+            parts = [
+                user_info.get("nombre", ""),
+                user_info.get("apellido1", ""),
+            ]
+            nombre = " ".join(p for p in parts if p).strip()
 
-        # Check for "paz y salvo" / no results
-        lower = body_text.lower()
-        if any(
-            phrase in lower
-            for phrase in ["paz y salvo", "no registra", "no tiene", "sin resultados"]
-        ):
+        # Check body text for "no presenta ninguna multa"
+        body_text = page.inner_text("body")
+        body_lower = body_text.lower()
+        no_multas = any(
+            phrase in body_lower
+            for phrase in [
+                "no presenta ninguna multa",
+                "no registra",
+                "no tiene",
+            ]
+        )
+
+        # Extract comparendos from the API response
+        consulta = api_result.get("consultaMultaOComparendoOutDTO", {})
+        if not consulta and no_multas:
             return MultasTransitoLocalResult(
                 queried_at=datetime.now(),
                 documento=search_term,
+                nombre=nombre,
                 ciudad="Medellín",
-                mensaje="No registra comparendos pendientes",
+                mensaje="No registra multas ni comparendos en Medellín",
             )
 
-        # Try to parse from API data first
-        if api_data:
-            return self._parse_api_data(search_term, collector, api_data, page)
-
-        # Fallback: parse from DOM tables
-        return self._parse_dom(page, search_term, collector)
-
-    def _parse_api_data(
-        self,
-        search_term: str,
-        collector,
-        api_data: list[dict],
-        page,
-    ) -> MultasTransitoLocalResult:
-        """Parse results from intercepted API data."""
         comparendos: list[ComparendoLocal] = []
-        nombre = ""
         total_deuda = 0.0
 
-        for item in api_data:
-            if not nombre:
-                nombre = str(
-                    item.get("nombre", item.get("nombreInfractor", ""))
-                )
+        # Parse informacionComparendo (comparendos pendientes)
+        for item in consulta.get("informacionComparendo", []):
             comp = ComparendoLocal(
-                numero=str(item.get("numero", item.get("comparendo", ""))),
-                tipo=str(item.get("tipo", "")),
-                fecha=str(item.get("fecha", item.get("fechaComparendo", ""))),
+                numero=str(item.get("numeroComparendo", "")),
+                tipo="Comparendo",
+                fecha=str(item.get("fechaComparendo", "")),
+                fecha_notificacion=str(item.get("fechaNotificacion", "")),
+                infraccion=str(item.get("descripcionInfraccion", "")),
+                codigo_infraccion=str(item.get("codigoInfraccion", "")),
                 estado=str(item.get("estado", "")),
                 placa=str(item.get("placa", "")),
-                saldo=float(item.get("saldo", item.get("valor", 0)) or 0),
-                interes=float(item.get("interes", item.get("interesMora", 0)) or 0),
-                total=float(item.get("total", item.get("valorTotal", 0)) or 0),
+                saldo=float(item.get("valorComparendo", 0) or 0),
+                total=float(item.get("valorTotal", item.get("valorComparendo", 0)) or 0),
             )
             comparendos.append(comp)
             total_deuda += comp.total
+
+        # Parse informacionMulta (resolved fines)
+        for item in consulta.get("informacionMulta", []):
+            comp = ComparendoLocal(
+                numero=str(item.get("numeroResolucion", item.get("numeroComparendo", ""))),
+                tipo="Multa",
+                fecha=str(item.get("fechaResolucion", item.get("fechaComparendo", ""))),
+                infraccion=str(item.get("descripcionInfraccion", "")),
+                codigo_infraccion=str(item.get("codigoInfraccion", "")),
+                estado=str(item.get("estado", "")),
+                placa=str(item.get("placa", "")),
+                saldo=float(item.get("valorMulta", 0) or 0),
+                total=float(item.get("valorTotal", item.get("valorMulta", 0)) or 0),
+            )
+            comparendos.append(comp)
+            total_deuda += comp.total
+
+        # Parse informacionMoroso (delinquent/overdue)
+        for item in consulta.get("informacionMoroso", []):
+            comp = ComparendoLocal(
+                numero=str(item.get("numeroResolucion", "")),
+                tipo="Moroso",
+                fecha=str(item.get("fechaResolucion", "")),
+                estado="Moroso",
+                placa=str(item.get("placa", "")),
+                saldo=float(item.get("valorMoroso", 0) or 0),
+                total=float(item.get("valorTotal", item.get("valorMoroso", 0)) or 0),
+            )
+            comparendos.append(comp)
+            total_deuda += comp.total
+
+        # If no API data but page shows results, try DOM fallback
+        if not comparendos and not no_multas:
+            return MultasTransitoLocalResult(
+                queried_at=datetime.now(),
+                documento=search_term,
+                nombre=nombre,
+                ciudad="Medellín",
+                mensaje="Consulta realizada",
+            )
 
         result = MultasTransitoLocalResult(
             queried_at=datetime.now(),
@@ -279,67 +288,10 @@ class MultasMedellinSource(BaseSource):
             total_comparendos=len(comparendos),
             total_deuda=total_deuda,
             comparendos=comparendos,
-            mensaje=f"Se encontraron {len(comparendos)} comparendo(s)",
-        )
-
-        if collector:
-            result_json = result.model_dump_json()
-            result.audit = collector.generate_pdf(page, result_json)
-
-        return result
-
-    def _parse_dom(
-        self, page, search_term: str, collector
-    ) -> MultasTransitoLocalResult:
-        """Fallback: parse from DOM tables."""
-        comparendos: list[ComparendoLocal] = []
-        body_text = page.inner_text("body")
-        total_deuda = 0.0
-
-        # Try to find table rows
-        rows = page.query_selector_all("table tbody tr")
-        for row in rows:
-            cells = row.query_selector_all("td")
-            if len(cells) >= 4:
-                comp = ComparendoLocal(
-                    numero=(cells[0].inner_text() or "").strip(),
-                    fecha=(cells[1].inner_text() or "").strip(),
-                    estado=(cells[2].inner_text() or "").strip() if len(cells) > 2 else "",
-                    placa=(cells[3].inner_text() or "").strip() if len(cells) > 3 else "",
-                )
-                # Try to extract value
-                if len(cells) > 4:
-                    val_text = (cells[4].inner_text() or "").strip()
-                    val_clean = re.sub(r"[^\d.,]", "", val_text)
-                    try:
-                        comp.total = float(
-                            val_clean.replace(".", "").replace(",", ".")
-                        )
-                    except ValueError:
-                        pass
-                total_deuda += comp.total
-                comparendos.append(comp)
-
-        # Extract total from body text
-        m = re.search(r"Total[:\s]*\$\s*([\d.,]+)", body_text)
-        if m:
-            amount_str = m.group(1).replace(".", "").replace(",", ".")
-            try:
-                total_deuda = float(amount_str)
-            except ValueError:
-                pass
-
-        result = MultasTransitoLocalResult(
-            queried_at=datetime.now(),
-            documento=search_term,
-            ciudad="Medellín",
-            total_comparendos=len(comparendos),
-            total_deuda=total_deuda,
-            comparendos=comparendos,
             mensaje=(
-                f"Se encontraron {len(comparendos)} comparendo(s)"
+                f"Se encontraron {len(comparendos)} registro(s) en Medellín"
                 if comparendos
-                else "Consulta realizada"
+                else "No registra multas ni comparendos en Medellín"
             ),
         )
 
@@ -347,4 +299,10 @@ class MultasMedellinSource(BaseSource):
             result_json = result.model_dump_json()
             result.audit = collector.generate_pdf(page, result_json)
 
+        logger.info(
+            "Medellín results — %d registros, total=$%.0f, nombre=%s",
+            result.total_comparendos,
+            result.total_deuda,
+            result.nombre,
+        )
         return result

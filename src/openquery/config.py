@@ -29,9 +29,14 @@ class Settings(BaseSettings):
     redis_url: str = "redis://localhost:6379/0"
     sqlite_path: str = "~/.openquery/cache.db"
 
-    # Captcha
+    # Captcha — image-based
     captcha_solver: str = "ocr"  # ocr, 2captcha, chained
     two_captcha_api_key: str = ""
+
+    # Captcha — reCAPTCHA v2 providers (set API key to enable)
+    capsolver_api_key: str = ""
+    capmonster_api_key: str = ""
+    anticaptcha_api_key: str = ""
 
     # Rate limiting
     rate_limit_enabled: bool = True

@@ -1,9 +1,16 @@
 """Captcha solving strategies.
 
-Provides an ABC and concrete implementations:
+Image captchas (CaptchaSolver):
 - OCRSolver: Local pytesseract-based solving (free, no network)
-- TwoCaptchaSolver: Paid 2captcha.com API (for reCAPTCHA/hCaptcha)
+- PaddleOCRSolver, EasyOCRSolver, TrOCRSolver: ML-based solvers
+- TwoCaptchaSolver: Paid 2captcha.com API
+- VotingSolver: Character-level majority voting
 - ChainedSolver: Try solvers in order, first success wins
+
+reCAPTCHA v2 (RecaptchaV2Solver):
+- TaskBasedRecaptchaSolver: CapSolver, CapMonster, Anti-Captcha (createTask API)
+- TwoCaptchaRecaptchaSolver: 2Captcha API for reCAPTCHA v2
+- ChainedRecaptchaSolver: Try multiple reCAPTCHA solvers in order
 """
 
 from __future__ import annotations
@@ -487,3 +494,354 @@ class ChainedSolver(CaptchaSolver):
         from openquery.exceptions import CaptchaError
 
         raise CaptchaError("chained", f"All solvers failed. Last: {last_error}")
+
+
+# ---------------------------------------------------------------------------
+# reCAPTCHA v2 solvers
+# ---------------------------------------------------------------------------
+
+
+class RecaptchaV2Solver(ABC):
+    """Abstract solver for Google reCAPTCHA v2.
+
+    Unlike image captcha solvers, reCAPTCHA v2 requires a sitekey and page URL
+    instead of image bytes. The solver contacts an external service that returns
+    a g-recaptcha-response token to inject into the page.
+    """
+
+    @abstractmethod
+    def solve_recaptcha_v2(self, sitekey: str, page_url: str) -> str:
+        """Solve a reCAPTCHA v2 challenge.
+
+        Args:
+            sitekey: The reCAPTCHA data-sitekey from the page HTML.
+            page_url: The full URL of the page containing the captcha.
+
+        Returns:
+            A g-recaptcha-response token string.
+
+        Raises:
+            CaptchaError: If solving fails.
+        """
+
+
+class TaskBasedRecaptchaSolver(RecaptchaV2Solver):
+    """Solve reCAPTCHA v2 via Anti-Captcha-compatible APIs.
+
+    Works with CapSolver, CapMonster, and Anti-Captcha — all use the same
+    createTask/getTaskResult JSON API pattern.
+
+    Providers:
+        CapSolver:    https://api.capsolver.com      (~$1/1000 solves, AI-based)
+        CapMonster:   https://api.capmonster.cloud    (~$0.80/1000, AI-based)
+        Anti-Captcha: https://api.anti-captcha.com    (~$2/1000, human workers)
+    """
+
+    PROVIDER_URLS = {
+        "capsolver": "https://api.capsolver.com",
+        "capmonster": "https://api.capmonster.cloud",
+        "anticaptcha": "https://api.anti-captcha.com",
+    }
+
+    # Task type naming varies slightly per provider
+    TASK_TYPES = {
+        "capsolver": "ReCaptchaV2TaskProxyLess",
+        "capmonster": "NoCaptchaTaskProxyless",
+        "anticaptcha": "NoCaptchaTaskProxyless",
+    }
+
+    def __init__(
+        self,
+        api_key: str,
+        provider: str = "capsolver",
+        poll_interval: float = 5.0,
+        max_wait: float = 120.0,
+    ) -> None:
+        self._api_key = api_key
+        self._provider = provider.lower()
+        self._base_url = self.PROVIDER_URLS.get(
+            self._provider, provider  # allow raw URL
+        )
+        self._task_type = self.TASK_TYPES.get(self._provider, "NoCaptchaTaskProxyless")
+        self._poll_interval = poll_interval
+        self._max_wait = max_wait
+
+    def solve_recaptcha_v2(self, sitekey: str, page_url: str) -> str:
+        import time
+
+        import httpx
+
+        from openquery.exceptions import CaptchaError
+
+        # Step 1: Create task
+        create_payload = {
+            "clientKey": self._api_key,
+            "task": {
+                "type": self._task_type,
+                "websiteURL": page_url,
+                "websiteKey": sitekey,
+            },
+        }
+
+        try:
+            with httpx.Client(timeout=30.0) as client:
+                resp = client.post(
+                    f"{self._base_url}/createTask", json=create_payload
+                )
+                resp.raise_for_status()
+                data = resp.json()
+        except Exception as e:
+            raise CaptchaError(
+                self._provider, f"createTask failed: {e}"
+            ) from e
+
+        error_id = data.get("errorId", 0)
+        if error_id:
+            raise CaptchaError(
+                self._provider,
+                f"createTask error: {data.get('errorDescription', 'unknown')}",
+            )
+
+        task_id = data.get("taskId")
+        if not task_id:
+            raise CaptchaError(self._provider, "No taskId in createTask response")
+
+        logger.info(
+            "%s: created task %s for sitekey=%s",
+            self._provider,
+            task_id,
+            sitekey[:20],
+        )
+
+        # Step 2: Poll for result
+        poll_payload = {"clientKey": self._api_key, "taskId": task_id}
+        elapsed = 0.0
+
+        while elapsed < self._max_wait:
+            time.sleep(self._poll_interval)
+            elapsed += self._poll_interval
+
+            try:
+                with httpx.Client(timeout=30.0) as client:
+                    resp = client.post(
+                        f"{self._base_url}/getTaskResult", json=poll_payload
+                    )
+                    resp.raise_for_status()
+                    result = resp.json()
+            except Exception as e:
+                logger.warning("%s: poll error: %s", self._provider, e)
+                continue
+
+            status = result.get("status", "")
+            if status == "ready":
+                solution = result.get("solution", {})
+                token = solution.get("gRecaptchaResponse", "")
+                if token:
+                    logger.info(
+                        "%s: solved in %.0fs (token=%s...)",
+                        self._provider,
+                        elapsed,
+                        token[:30],
+                    )
+                    return token
+                raise CaptchaError(
+                    self._provider, "No gRecaptchaResponse in solution"
+                )
+
+            if result.get("errorId"):
+                raise CaptchaError(
+                    self._provider,
+                    f"Task error: {result.get('errorDescription', 'unknown')}",
+                )
+
+            logger.debug(
+                "%s: task %s status=%s (%.0fs elapsed)",
+                self._provider,
+                task_id,
+                status,
+                elapsed,
+            )
+
+        raise CaptchaError(
+            self._provider,
+            f"Timeout after {self._max_wait}s waiting for solution",
+        )
+
+
+class TwoCaptchaRecaptchaSolver(RecaptchaV2Solver):
+    """Solve reCAPTCHA v2 using the 2Captcha API.
+
+    Price: ~$2.99/1000 solves. Uses human workers (15-45s typical).
+    """
+
+    def __init__(self, api_key: str) -> None:
+        self._api_key = api_key
+
+    def solve_recaptcha_v2(self, sitekey: str, page_url: str) -> str:
+        from openquery.exceptions import CaptchaError
+
+        try:
+            from twocaptcha import TwoCaptcha
+        except ImportError as e:
+            raise CaptchaError(
+                "2captcha",
+                "python-2captcha is required. Install: pip install 2captcha-python",
+            ) from e
+
+        solver = TwoCaptcha(self._api_key)
+        try:
+            result = solver.recaptcha(sitekey=sitekey, url=page_url)
+            token = result.get("code", "")
+            if not token:
+                raise CaptchaError("2captcha", "No code in 2captcha response")
+            logger.info("2captcha: solved (token=%s...)", token[:30])
+            return token
+        except CaptchaError:
+            raise
+        except Exception as e:
+            raise CaptchaError("2captcha", f"2captcha failed: {e}") from e
+
+
+class ChainedRecaptchaSolver(RecaptchaV2Solver):
+    """Try multiple reCAPTCHA v2 solvers in order. First success wins."""
+
+    def __init__(self, solvers: list[RecaptchaV2Solver]) -> None:
+        self._solvers = solvers
+
+    def solve_recaptcha_v2(self, sitekey: str, page_url: str) -> str:
+        from openquery.exceptions import CaptchaError
+
+        last_error: Exception | None = None
+        for solver in self._solvers:
+            try:
+                return solver.solve_recaptcha_v2(sitekey, page_url)
+            except Exception as e:
+                logger.warning(
+                    "RecaptchaSolver %s failed: %s", type(solver).__name__, e
+                )
+                last_error = e
+
+        raise CaptchaError(
+            "chained_recaptcha",
+            f"All reCAPTCHA solvers failed. Last: {last_error}",
+        )
+
+
+# ---------------------------------------------------------------------------
+# reCAPTCHA v2 helpers
+# ---------------------------------------------------------------------------
+
+
+def extract_recaptcha_sitekey(page) -> str | None:
+    """Extract reCAPTCHA v2 sitekey from a Playwright page.
+
+    Looks for data-sitekey attribute on reCAPTCHA div or iframe src parameter.
+    """
+    sitekey = page.evaluate("""() => {
+        // Try data-sitekey attribute
+        var el = document.querySelector('[data-sitekey]');
+        if (el) return el.getAttribute('data-sitekey');
+        // Try reCAPTCHA iframe src
+        var iframe = document.querySelector('iframe[src*="recaptcha"]');
+        if (iframe) {
+            var match = iframe.src.match(/[?&]k=([^&]+)/);
+            if (match) return match[1];
+        }
+        // Try reCAPTCHA script render param
+        var script = document.querySelector('script[src*="recaptcha/api.js"]');
+        if (script) {
+            var src = script.src;
+            var match = src.match(/[?&]render=([^&]+)/);
+            if (match && match[1] !== 'explicit') return match[1];
+        }
+        return null;
+    }""")
+    return sitekey
+
+
+def inject_recaptcha_token(page, token: str) -> None:
+    """Inject a g-recaptcha-response token into a Playwright page.
+
+    Sets the hidden textarea value and attempts to trigger common callbacks.
+    """
+    page.evaluate("""(token) => {
+        // Set all g-recaptcha-response textareas (some pages have multiple)
+        var textareas = document.querySelectorAll(
+            '#g-recaptcha-response, [name="g-recaptcha-response"], '
+            + 'textarea[id*="g-recaptcha-response"]'
+        );
+        textareas.forEach(ta => {
+            ta.style.display = 'block';
+            ta.value = token;
+        });
+
+        // Try to trigger reCAPTCHA callback
+        try {
+            if (typeof ___grecaptcha_cfg !== 'undefined') {
+                var clients = ___grecaptcha_cfg.clients;
+                for (var key in clients) {
+                    var client = clients[key];
+                    // Walk the client object to find callback
+                    var queue = [client];
+                    while (queue.length > 0) {
+                        var obj = queue.shift();
+                        if (!obj || typeof obj !== 'object') continue;
+                        for (var prop in obj) {
+                            if (prop === 'callback' && typeof obj[prop] === 'function') {
+                                obj[prop](token);
+                                return;
+                            }
+                            if (typeof obj[prop] === 'object' && obj[prop] !== null) {
+                                queue.push(obj[prop]);
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (e) {
+            // Callback trigger is best-effort
+        }
+    }""", token)
+
+
+def build_recaptcha_solver() -> RecaptchaV2Solver | None:
+    """Build a reCAPTCHA v2 solver chain from environment variables.
+
+    Checks for API keys in order of cost-effectiveness:
+    1. OPENQUERY_CAPSOLVER_API_KEY (cheapest, AI-based)
+    2. OPENQUERY_CAPMONSTER_API_KEY
+    3. OPENQUERY_ANTICAPTCHA_API_KEY
+    4. OPENQUERY_TWO_CAPTCHA_API_KEY
+
+    Returns None if no API keys are configured.
+    """
+    from openquery.config import get_settings
+
+    settings = get_settings()
+    solvers: list[RecaptchaV2Solver] = []
+
+    if settings.capsolver_api_key:
+        solvers.append(
+            TaskBasedRecaptchaSolver(settings.capsolver_api_key, "capsolver")
+        )
+
+    if settings.capmonster_api_key:
+        solvers.append(
+            TaskBasedRecaptchaSolver(settings.capmonster_api_key, "capmonster")
+        )
+
+    if settings.anticaptcha_api_key:
+        solvers.append(
+            TaskBasedRecaptchaSolver(settings.anticaptcha_api_key, "anticaptcha")
+        )
+
+    if settings.two_captcha_api_key:
+        solvers.append(
+            TwoCaptchaRecaptchaSolver(settings.two_captcha_api_key)
+        )
+
+    if not solvers:
+        return None
+    if len(solvers) == 1:
+        return solvers[0]
+    return ChainedRecaptchaSolver(solvers)
