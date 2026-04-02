@@ -454,8 +454,159 @@ class VotingSolver(CaptchaSolver):
         return text
 
 
-class TwoCaptchaSolver(CaptchaSolver):
-    """Solve captchas using the 2captcha.com API."""
+class LLMCaptchaSolver(CaptchaSolver):
+    """Solve captchas using a visual LLM (Claude, GPT-4V, etc.).
+
+    Sends the captcha image to an LLM with vision capabilities and asks it to
+    read the text. Works as a free/cheap fallback when OCR solvers fail and
+    no paid captcha service is configured.
+
+    Supports:
+    - Anthropic Claude (claude-sonnet-4-20250514) via ANTHROPIC_API_KEY
+    - OpenAI GPT-4o via OPENAI_API_KEY
+
+    The solver auto-detects which API key is available.
+    """
+
+    def __init__(self, max_chars: int = 6) -> None:
+        self._max_chars = max_chars
+
+    def solve(self, image_bytes: bytes, **hints: str) -> str:
+        import base64
+        import os
+
+        from openquery.exceptions import CaptchaError
+
+        max_chars = int(hints.get("length", self._max_chars))
+        b64_image = base64.b64encode(image_bytes).decode()
+
+        # Try Anthropic first, then OpenAI
+        anthropic_key = os.environ.get("ANTHROPIC_API_KEY", "")
+        openai_key = os.environ.get("OPENAI_API_KEY", "")
+
+        if anthropic_key:
+            return self._solve_anthropic(b64_image, max_chars, anthropic_key)
+        if openai_key:
+            return self._solve_openai(b64_image, max_chars, openai_key)
+
+        raise CaptchaError(
+            "llm",
+            "No LLM API key found. Set ANTHROPIC_API_KEY or OPENAI_API_KEY.",
+        )
+
+    def _solve_anthropic(self, b64_image: str, max_chars: int, api_key: str) -> str:
+        import httpx
+
+        from openquery.exceptions import CaptchaError
+
+        try:
+            with httpx.Client(timeout=30.0) as client:
+                resp = client.post(
+                    "https://api.anthropic.com/v1/messages",
+                    headers={
+                        "x-api-key": api_key,
+                        "anthropic-version": "2023-06-01",
+                        "content-type": "application/json",
+                    },
+                    json={
+                        "model": "claude-sonnet-4-20250514",
+                        "max_tokens": 50,
+                        "messages": [
+                            {
+                                "role": "user",
+                                "content": [
+                                    {
+                                        "type": "image",
+                                        "source": {
+                                            "type": "base64",
+                                            "media_type": "image/png",
+                                            "data": b64_image,
+                                        },
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": (
+                                            "Read the captcha text in this image. "
+                                            "Reply with ONLY the characters, nothing else. "
+                                            "No spaces, no quotes, no explanation."
+                                        ),
+                                    },
+                                ],
+                            }
+                        ],
+                    },
+                )
+                resp.raise_for_status()
+                data = resp.json()
+                text = data["content"][0]["text"].strip()
+                text = re.sub(r"[^a-zA-Z0-9]", "", text)
+
+                if len(text) < 3:
+                    raise CaptchaError("llm_anthropic", f"LLM returned too few chars: '{text}'")
+
+                logger.info("LLM (Claude) captcha result: '%s'", text[:max_chars])
+                return text[:max_chars]
+        except CaptchaError:
+            raise
+        except Exception as e:
+            raise CaptchaError("llm_anthropic", f"Anthropic API failed: {e}") from e
+
+    def _solve_openai(self, b64_image: str, max_chars: int, api_key: str) -> str:
+        import httpx
+
+        from openquery.exceptions import CaptchaError
+
+        try:
+            with httpx.Client(timeout=30.0) as client:
+                resp = client.post(
+                    "https://api.openai.com/v1/chat/completions",
+                    headers={
+                        "Authorization": f"Bearer {api_key}",
+                        "content-type": "application/json",
+                    },
+                    json={
+                        "model": "gpt-4o-mini",
+                        "max_tokens": 50,
+                        "messages": [
+                            {
+                                "role": "user",
+                                "content": [
+                                    {
+                                        "type": "image_url",
+                                        "image_url": {
+                                            "url": f"data:image/png;base64,{b64_image}",
+                                        },
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": (
+                                            "Read the captcha text in this image. "
+                                            "Reply with ONLY the characters, nothing else. "
+                                            "No spaces, no quotes, no explanation."
+                                        ),
+                                    },
+                                ],
+                            }
+                        ],
+                    },
+                )
+                resp.raise_for_status()
+                data = resp.json()
+                text = data["choices"][0]["message"]["content"].strip()
+                text = re.sub(r"[^a-zA-Z0-9]", "", text)
+
+                if len(text) < 3:
+                    raise CaptchaError("llm_openai", f"LLM returned too few chars: '{text}'")
+
+                logger.info("LLM (GPT-4o) captcha result: '%s'", text[:max_chars])
+                return text[:max_chars]
+        except CaptchaError:
+            raise
+        except Exception as e:
+            raise CaptchaError("llm_openai", f"OpenAI API failed: {e}") from e
+
+
+
 
     def __init__(self, api_key: str) -> None:
         self._api_key = api_key

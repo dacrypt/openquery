@@ -72,9 +72,11 @@ class SiiRutSource(BaseSource):
                 page.wait_for_load_state("networkidle", timeout=30000)
                 page.wait_for_timeout(2000)
 
-                # Fill RUT
+                # Fill RUT — exact selector from site: input.rut-form
                 rut_input = page.query_selector(
-                    'input[name*="rut"], input[name*="RUT"], input[type="text"]'
+                    'input.rut-form, '
+                    'input[name*="rut"], input[name*="RUT"], '
+                    'input[placeholder*="12.345"]'
                 )
                 if not rut_input:
                     raise SourceError("cl.sii_rut", "Could not find RUT input field")
@@ -84,10 +86,11 @@ class SiiRutSource(BaseSource):
                 if collector:
                     collector.screenshot(page, "form_filled")
 
-                # Submit form
+                # Submit — exact selector: input[name="Consultar"]
                 submit = page.query_selector(
-                    'button[type="submit"], input[type="submit"], '
-                    "button:has-text('Consultar'), button:has-text('Buscar')"
+                    'input[name="Consultar"], '
+                    'input.button-azul, '
+                    'button[type="submit"], input[type="submit"]'
                 )
                 if submit:
                     submit.click()

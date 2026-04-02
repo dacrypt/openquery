@@ -76,6 +76,15 @@ def _build_captcha_chain():
         except Exception:
             pass
 
+    # LLM visual fallback (uses ANTHROPIC_API_KEY or OPENAI_API_KEY)
+    if os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("OPENAI_API_KEY"):
+        try:
+            from openquery.core.captcha import LLMCaptchaSolver
+
+            solvers.append(LLMCaptchaSolver(max_chars=5))
+        except Exception:
+            pass
+
     # 2Captcha (paid, last resort)
     two_captcha_key = os.environ.get("TWO_CAPTCHA_API_KEY", "")
     if two_captcha_key:

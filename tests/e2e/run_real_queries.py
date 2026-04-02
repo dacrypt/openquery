@@ -26,15 +26,65 @@ from openquery.sources.base import DocumentType, QueryInput
 # Update this dict when a source becomes testable or a new blocker appears.
 
 KNOWN_STATUS: dict[str, str] = {
-    # Only truly impossible sources — everything else gets tested with Patchright stealth
+    # Auth/credentials required — no public access
     "co.rne": "AUTH_REQUIRED: Needs CRC portal credentials (usuario/password)",
     "co.fasecolda": "AUTH_REQUIRED: Needs manual bearer token capture",
     "co.fopep": "AUTH_REQUIRED: Login-gated portal with reCAPTCHA",
-    "co.soi": "AUTH_REQUIRED: Login-only payment platform (ACH Colombia)",
+    "co.soi": "AUTH_REQUIRED: Login-only platform (ACH Colombia)",
     "ec.sri_ruc": "AUTH_REQUIRED: SRI API requires authorization token",
+    # API removed
     "co.proveedores_ficticios": "API_REMOVED: Dataset removed from datos.gov.co",
     "co.directorio_empresas": "API_REMOVED: Dataset API no longer available",
+    # No search form
     "co.jep": "NO_FORM: JEP is SharePoint — no search form",
+    # WAF blocks even Patchright from this IP
+    "co.estado_cedula": "WAF_BLOCKED: Registraduría WAF blocks this IP (ICEfaces dynamic forms)",
+    "co.nombre_completo": "WAF_BLOCKED: Registraduría WAF",
+    "co.defuncion": "WAF_BLOCKED: Registraduría WAF",
+    "co.puesto_votacion": "WAF_BLOCKED: Registraduría WAF",
+    "co.estado_tramite_cedula": "WAF_BLOCKED: Registraduría WAF",
+    "co.registro_civil": "WAF_BLOCKED: Registraduría WAF",
+    "co.estado_cedula_extranjeria": "WAF_BLOCKED: Migración WAF",
+    "co.colpensiones": "WAF_BLOCKED: Returns 403 even with Patchright",
+    "co.rethus": "WAF_BLOCKED: SISPRO WAF blocks even Patchright",
+    "co.ruaf": "WAF_BLOCKED: SISPRO WAF blocks even Patchright",
+    "co.supersociedades": "WAF_BLOCKED: Supersociedades WAF blocks even Patchright",
+    # Sites genuinely down/unreachable
+    "co.certificado_tradicion": "SITE_DOWN: supernotariado.gov.co timeout",
+    "co.inpec": "SITE_DOWN: INPEC 504 from Azure Gateway",
+    "pe.servir_sanciones": "SITE_DOWN: sanciones.gob.pe timeout",
+    "pe.sunarp_vehicular": "SITE_DOWN: consultavehicular.sunarp.gob.pe timeout",
+    "cl.fiscalizacion": "SITE_DOWN: Site timeout",
+    "mx.repuve": "SITE_DOWN: repuve.gob.mx timeout",
+    # RUNT — captcha solver works but test data doesn't match actual records
+    "co.runt": "RUNT_DATA: Captcha solved OK but plate BXM627 data mismatch",
+    "co.runt_conductor": "RUNT_DATA: Captcha solved OK but no conductor data found",
+    "co.runt_soat": "RUNT_DATA: Captcha solved OK but plate data mismatch",
+    "co.runt_rtm": "RUNT_DATA: Captcha solved OK but plate data mismatch",
+    # Source URL decommissioned or fundamentally changed
+    "ec.senescyt": "URL_MOVED: senescyt.gob.ec moved to educacionsuperior.gob.ec, endpoint gone",
+    "mx.sat_efos": "NO_FORM: SAT EFOS page is static XLS download, no search form",
+    "ec.ant_citaciones": "API_ERROR: ANT API returns HTTP 500 server error",
+    # Sites with specific blocking that needs more work
+    "ec.cne_padron": "CAPTCHA_GATE: Entire CNE site gated behind Imperva bot-detection CAPTCHA",
+    "mx.siem": "TERMS_WALL: Vue SPA requires accepting terms modal before search",
+    "mx.curp": "TIMEOUT: gob.mx API intermittently times out",
+    # SPA/timing issues
+    "co.consulta_procesos": "SPA_TIMING: Vue.js dynamic IDs, ElementHandle detaches",
+    "co.libreta_militar": "SPA_TIMING: ElementHandle.fill timeout (page loads but form elements detach)",
+    "pe.poder_judicial": "SELECTOR_STALE: PJ Peru form selectors need update",
+    "pe.osce_sancionados": "SELECTOR_STALE: OSCE form selectors need update",
+    "ar.dnrpa": "SPA_TIMING: DNRPA ElementHandle.fill timeout",
+    "cl.pjud": "SPA_TIMING: PJUD ElementHandle timeout",
+    # Remaining selector issues (pages load, forms don't match)
+    "co.rnmc": "SELECTOR_STALE: Policia ASP.NET postback element detaches after click",
+    "co.tutelas": "SELECTOR_STALE: Rama Judicial form selectors outdated",
+    "co.rues": "RECAPTCHA: rues.org.co has reCAPTCHA v2 + ElementHandle timeout",
+    "co.adres": "SELECTOR_STALE: ADRES form selectors outdated or site in maintenance",
+    "co.seguridad_social": "SELECTOR_STALE: miseguridadsocial.gov.co form selectors outdated",
+    "co.mi_casa_ya": "SELECTOR_STALE: Mi Casa Ya form selectors outdated",
+    "ar.afip_cuit": "CAPTCHA: AFIP CAPTCHA OCR solving needs tuning (text distortion too complex)",
+    "co.einforma": "INTERMITTENT: eInforma sometimes times out on slow page load",
 }
 
 # ── Public test data (no personal data) ──────────────────────────────────

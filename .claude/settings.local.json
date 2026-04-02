@@ -42,7 +42,21 @@
       "WebFetch(domain:movilidad.rionegro.gov.co)",
       "WebFetch(domain:emtrasur.com.co)",
       "WebFetch(domain:sistematizacion.emtrasur.com.co)",
-      "WebFetch(domain:serviciosdetransito.com)"
+      "WebFetch(domain:serviciosdetransito.com)",
+      "WebFetch(domain:www.transitopopayan.com.co)",
+      "WebFetch(domain:movilidad.movilidadvillavicencio.gov.co)",
+      "WebFetch(domain:www.movilidadmanizales.com.co)",
+      "WebFetch(domain:tramitesdttf.siotweb.suiteneptuno.com)",
+      "WebFetch(domain:www.consorciotransitocucuta.com.co)",
+      "WebFetch(domain:www.quipux.com)",
+      "WebFetch(domain:transitotunja.com)",
+      "WebFetch(domain:esitts.com)",
+      "WebFetch(domain:cev.serviciosdetransito.com)",
+      "WebFetch(domain:portal.transitobello.com)",
+      "WebFetch(domain:movilidadcali.com.co)",
+      "WebFetch(domain:transitodegiron.com.co)",
+      "WebFetch(domain:www.transitobucaramanga.gov.co)",
+      "WebFetch(domain:transitopasto.gov.co)"
     ]
   }
 }

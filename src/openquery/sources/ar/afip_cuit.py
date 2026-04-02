@@ -22,7 +22,8 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-AFIP_URL = "https://seti.afip.gob.ar/padron-puc-constancia-internet/ConsultaConstanciaAction.do"
+# Navigate directly to the iframe URL (the parent page wraps this in an iframe)
+AFIP_URL = "https://seti.afip.gob.ar/padron-puc-constancia-internet/jsp/Constancia.jsp"
 
 
 @register
@@ -41,7 +42,7 @@ class AfipCuitSource(BaseSource):
             country="AR",
             url=AFIP_URL,
             supported_inputs=[DocumentType.CUSTOM],
-            requires_captcha=False,
+            requires_captcha=True,  # Custom text CAPTCHA (not reCAPTCHA)
             requires_browser=True,
             rate_limit_rpm=10,
         )
@@ -70,23 +71,35 @@ class AfipCuitSource(BaseSource):
                 page.wait_for_load_state("networkidle", timeout=30000)
                 page.wait_for_timeout(2000)
 
-                # Fill CUIT
+                # Fill CUIT — exact ID from site: #cuit
                 cuit_input = page.query_selector(
-                    'input[name*="cuit"], input[name*="CUIT"], input[id*="cuit"], '
-                    'input[type="text"]'
+                    '#cuit, input[name="cuit"]'
                 )
                 if not cuit_input:
                     raise SourceError("ar.afip_cuit", "Could not find CUIT input field")
-                cuit_input.fill(cuit)
+                cuit_input.fill(cuit.replace("-", ""))
                 logger.info("Filled CUIT: %s", cuit)
+
+                # Solve CAPTCHA if present
+                captcha_img = page.query_selector('img[alt*="distorsionadas"], img.ag-captcha-img')
+                if captcha_img:
+                    captcha_bytes = captcha_img.screenshot()
+                    if captcha_bytes:
+                        from openquery.core.captcha import OCRSolver
+                        solver = OCRSolver(max_chars=6)
+                        captcha_text = solver.solve(captcha_bytes, length="6", charset="alphanumeric")
+                        token_input = page.query_selector('#token, input[name="token"]')
+                        if token_input:
+                            token_input.fill(captcha_text)
+                            logger.info("Solved CAPTCHA: %s", captcha_text)
 
                 if collector:
                     collector.screenshot(page, "form_filled")
 
-                # Submit
+                # Submit — exact selector: button.ag-btn-primary
                 submit = page.query_selector(
-                    'button[type="submit"], input[type="submit"], '
-                    "button:has-text('Buscar'), button:has-text('Consultar')"
+                    'button.ag-btn-primary, '
+                    'button[type="submit"], input[type="submit"]'
                 )
                 if submit:
                     submit.click()
