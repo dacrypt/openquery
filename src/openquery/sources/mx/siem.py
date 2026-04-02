@@ -73,7 +73,7 @@ class SiemSource(BaseSource):
                 if collector:
                     collector.attach(page)
 
-                page.wait_for_selector('input[type="text"]', timeout=15000)
+                page.wait_for_load_state("networkidle", timeout=30000)
                 page.wait_for_timeout(2000)
 
                 # Fill search field

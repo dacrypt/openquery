@@ -23,12 +23,12 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-COPNIA_URL = "https://www.copnia.gov.co/tribunal-de-etica/consulta-de-profesionales"
+COPNIA_URL = "https://tramites.copnia.gov.co/Copnia_Microsite/CertificateOfGoodStanding/CertificateOfGoodStandingStart"
 
 DOC_TYPE_MAP = {
-    DocumentType.CEDULA: "CC",
-    DocumentType.NIT: "NI",
-    DocumentType.PASSPORT: "PA",
+    DocumentType.CEDULA: "1",    # Cedula de Ciudadania
+    DocumentType.NIT: "6",       # NIT
+    DocumentType.PASSPORT: "4",  # Pasaporte
 }
 
 
@@ -78,32 +78,37 @@ class CopniaSource(BaseSource):
                 if collector:
                     collector.attach(page)
 
-                # Wait for form to load
-                page.wait_for_selector(
-                    'select, input[type="text"]',
-                    timeout=15000,
-                )
+                # Wait for ASP.NET MVC form to load
+                page.wait_for_load_state("networkidle", timeout=30000)
                 page.wait_for_timeout(2000)
 
-                # Select document type if dropdown exists
-                doc_select = page.query_selector(
-                    'select[id*="tipo"], select[name*="tipo"], select[id*="document"]'
-                )
+                # Select "Generar certificado" action
+                action_select = page.query_selector('#ActionCode, select[name="ActionCode"]')
+                if action_select:
+                    page.select_option('#ActionCode, select[name="ActionCode"]', value="1")
+                    page.wait_for_timeout(500)
+
+                # Select "Numero de identificacion" search method
+                search_select = page.query_selector('#SearchWithCode, select[name="SearchWithCode"]')
+                if search_select:
+                    page.select_option('#SearchWithCode, select[name="SearchWithCode"]', value="1")
+                    page.wait_for_timeout(500)
+
+                # Select document type — exact IDs from site
+                doc_select = page.query_selector('#DocumentType, select[name="DocumentType"]')
                 if doc_select:
-                    select_value = DOC_TYPE_MAP.get(doc_type, "CC")
+                    select_value = DOC_TYPE_MAP.get(doc_type, "1")
                     page.select_option(
-                        'select[id*="tipo"], select[name*="tipo"], select[id*="document"]',
+                        '#DocumentType, select[name="DocumentType"]',
                         value=select_value,
                         timeout=5000,
                     )
                     logger.info("Selected document type: %s", select_value)
 
-                # Fill document number
+                # Fill document number — exact ID: #DocumentNumber
                 doc_input = page.query_selector(
-                    'input[type="text"][id*="numero"], '
-                    'input[type="text"][id*="documento"], '
-                    'input[type="text"][id*="cedula"], '
-                    'input[type="text"][name*="numero"], '
+                    '#DocumentNumber, '
+                    'input[name="DocumentNumber"], '
                     'input[type="text"]'
                 )
                 if not doc_input:
@@ -115,11 +120,10 @@ class CopniaSource(BaseSource):
                 if collector:
                     collector.screenshot(page, "form_filled")
 
-                # Submit
+                # Submit — exact ID: #btnConsult
                 submit_btn = page.query_selector(
-                    'button[type="submit"], input[type="submit"], '
-                    'button[id*="consultar"], button[id*="buscar"], '
-                    'a[id*="consultar"], a[id*="buscar"]'
+                    '#btnConsult, '
+                    'button[type="submit"], input[type="submit"]'
                 )
                 if submit_btn:
                     submit_btn.click()

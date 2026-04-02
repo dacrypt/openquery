@@ -24,7 +24,7 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-SNR_URL = "https://radicacion.supernotariado.gov.co/app/consultaradicacion.html"
+SNR_URL = "https://radicacion.supernotariado.gov.co/app/inicio.dma"
 
 
 @register
@@ -69,24 +69,27 @@ class SnrSource(BaseSource):
                 if collector:
                     collector.attach(page)
 
-                page.wait_for_selector('input[type="text"]', timeout=15000)
+                page.wait_for_load_state("networkidle", timeout=30000)
                 page.wait_for_timeout(2000)
 
-                # Select document type if dropdown exists
+                # Select search type: Documento
                 tipo_select = page.query_selector(
-                    'select[id*="tipo"], select[id*="document"], select[name*="tipo"]'
+                    '[id$="j_idt43_input"], select[id*="j_idt43"], '
+                    'select[id*="tipo"], select[name*="tipo"]'
                 )
                 if tipo_select:
-                    if tipo == "nit":
-                        tipo_select.select_option(label="NIT")
-                    else:
-                        tipo_select.select_option(label="Cédula de Ciudadanía")
+                    page.select_option(
+                        '[id$="j_idt43_input"], select[id*="j_idt43"], '
+                        'select[id*="tipo"]',
+                        value="DOC",
+                    )
+                    page.wait_for_timeout(1000)
 
-                # Fill document number
+                # Fill document number — PrimeFaces input
                 doc_input = page.query_selector(
-                    'input[type="text"][id*="documento"], '
-                    'input[type="text"][id*="numero"], '
-                    'input[type="text"][id*="cedula"], '
+                    '[id$="j_idt52"], input[id*="j_idt52"], '
+                    'input[placeholder*="NIR"], '
+                    'input.filter-label, '
                     'input[type="text"]'
                 )
                 if not doc_input:

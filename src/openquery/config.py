@@ -39,7 +39,7 @@ class Settings(BaseSettings):
 
     # Browser
     browser_headless: bool = True
-    browser_timeout: float = 30.0
+    browser_timeout: float = 60.0
 
     # Circuit breaker
     circuit_breaker_threshold: int = 5

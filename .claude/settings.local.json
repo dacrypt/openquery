@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:www.infobae.com)",
+      "WebFetch(domain:www.americanmotos.com)",
+      "WebFetch(domain:estrelladigital.com.co)",
+      "WebFetch(domain:www.eltiempo.com)",
+      "WebFetch(domain:www.noticiashoy.co)",
+      "WebFetch(domain:www.medellin.gov.co)",
+      "WebFetch(domain:www.datos.gov.co)",
+      "WebFetch(domain:ciudadano.runt.gov.co)",
+      "mcp__MCP_DOCKER__browser_navigate",
+      "mcp__MCP_DOCKER__browser_snapshot",
+      "mcp__MCP_DOCKER__browser_tabs",
+      "mcp__MCP_DOCKER__browser_run_code",
+      "WebFetch(domain:seti.afip.gob.ar)",
+      "WebFetch(domain:www2.repuve.gob.mx)",
+      "WebFetch(domain:www.sanciones.gob.pe)",
+      "WebFetch(domain:e-consultaruc.sunat.gob.pe)",
+      "mcp__MCP_DOCKER__browser_evaluate",
+      "WebFetch(domain:www.contraloria.gov.co)",
+      "WebFetch(domain:www.libretamilitar.mil.co)",
+      "WebFetch(domain:consultasrc.registraduria.gov.co)",
+      "WebFetch(domain:consultas.curp.gob.mx)",
+      "WebFetch(domain:repuve.gob.mx)",
+      "WebFetch(domain:appsegura.servir.gob.pe)",
+      "WebFetch(domain:www.gob.mx)",
+      "WebFetch(domain:ruaf.sispro.gov.co)",
+      "WebFetch(domain:web.sispro.gov.co)",
+      "WebFetch(domain:app10.sanciones.gob.pe)",
+      "WebFetch(domain:reportes.sisben.gov.co)",
+      "WebFetch(domain:repuve.cias.gob.mx)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "mcp__MCP_DOCKER__browser_click"
+    ]
+  }
+}

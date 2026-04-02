@@ -71,15 +71,13 @@ class RetencionVehiculosSource(BaseSource):
                 if collector:
                     collector.attach(page)
 
-                page.wait_for_selector('input[type="text"]', timeout=15000)
+                page.wait_for_load_state("networkidle", timeout=30000)
                 page.wait_for_timeout(2000)
 
-                # Fill plate number
+                # Fill plate number — Angular Material input
                 plate_input = page.query_selector(
-                    'input[type="text"][id*="placa"], '
-                    'input[type="text"][id*="plate"], '
-                    'input[type="text"][id*="vehiculo"], '
-                    'input[type="text"][name*="placa"], '
+                    'input[placeholder*="ABC123"], '
+                    'input.mat-mdc-input-element, '
                     'input[type="text"]'
                 )
                 if not plate_input:
@@ -91,11 +89,10 @@ class RetencionVehiculosSource(BaseSource):
                 if collector:
                     collector.screenshot(page, "form_filled")
 
-                # Submit
+                # Submit — Angular button
                 submit_btn = page.query_selector(
-                    'button[type="submit"], input[type="submit"], '
-                    'button[id*="consultar"], button[id*="buscar"], '
-                    'a[id*="consultar"]'
+                    'button.btn-primary, '
+                    'button[type="submit"], input[type="submit"]'
                 )
                 if submit_btn:
                     submit_btn.click()

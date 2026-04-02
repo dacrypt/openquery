@@ -33,7 +33,7 @@ OFAC_API_URL = "https://search.ofac-sdn.treas.gov/search"
 class OfacSource(BaseSource):
     """Screen names/entities against the OFAC SDN sanctions list."""
 
-    def __init__(self, timeout: float = 15.0, min_score: float = 80.0) -> None:
+    def __init__(self, timeout: float = 60.0, min_score: float = 80.0) -> None:
         self._timeout = timeout
         self._min_score = min_score
 

@@ -29,7 +29,7 @@ PAGE_URL = "https://www.gob.mx/curp/"
 class CurpSource(BaseSource):
     """Query Mexican CURP population registry via JSON API."""
 
-    def __init__(self, timeout: float = 15.0) -> None:
+    def __init__(self, timeout: float = 30.0) -> None:
         self._timeout = timeout
 
     def meta(self) -> SourceMeta:
