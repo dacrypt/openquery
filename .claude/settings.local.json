@@ -58,7 +58,14 @@
       "WebFetch(domain:www.transitobucaramanga.gov.co)",
       "WebFetch(domain:transitopasto.gov.co)",
       "mcp__MCP_DOCKER__browser_take_screenshot",
-      "mcp__MCP_DOCKER__browser_wait_for"
+      "mcp__MCP_DOCKER__browser_wait_for",
+      "WebFetch(domain:consultaciudadana.segip.gob.bo)",
+      "WebFetch(domain:ov.impuestos.gob.bo)",
+      "WebFetch(domain:siatinfo.impuestos.gob.bo)",
+      "WebFetch(domain:sucive.gub.uy)",
+      "WebFetch(domain:portaldgii.mh.gob.sv)",
+      "WebFetch(domain:login.gob.sv)",
+      "WebFetch(domain:portalpublico.runt.gov.co)"
     ]
   }
 }

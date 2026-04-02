@@ -50,10 +50,10 @@ KNOWN_STATUS: dict[str, str] = {
     "co.ruaf": "WAF_BLOCKED: SISPRO WAF blocks even Patchright",
     "co.supersociedades": "WAF_BLOCKED: Supersociedades WAF blocks even Patchright",
     # Sites genuinely down/unreachable
-    "co.certificado_tradicion": "SITE_DOWN: supernotariado.gov.co timeout",
+    "co.certificado_tradicion": "SITE_DOWN: supernotariado.gov.co still timing out from headless",
     "co.inpec": "SITE_DOWN: INPEC 504 from Azure Gateway",
     "pe.servir_sanciones": "SITE_DOWN: sanciones.gob.pe timeout",
-    "pe.sunarp_vehicular": "SITE_DOWN: consultavehicular.sunarp.gob.pe timeout",
+    # pe.sunarp_vehicular removed — SUNARP recovered
     "cl.fiscalizacion": "SITE_DOWN: Site timeout",
     "mx.repuve": "SITE_DOWN: repuve.gob.mx timeout",
     # RUNT — captcha solver works but test data doesn't match actual records
@@ -90,6 +90,7 @@ KNOWN_STATUS: dict[str, str] = {
     "gt.nit": "WAF_BLOCKED: SAT Guatemala behind Cloudflare Turnstile",
     "py.ruc": "RECAPTCHA: SET Paraguay has reCAPTCHA v2 on form",
     "cl.sii_rut": "INTERMITTENT: SII Chile form sometimes fails to load (Cloudflare)",
+    "uy.sucive": "SELECTOR_STALE: SUCIVE form selectors need site-specific inspection",
 }
 
 # ── Public test data (no personal data) ──────────────────────────────────
@@ -239,6 +240,12 @@ QUERIES: list[dict] = [
 
     # ── Honduras ──
     {"source": "hn.rtn", "doc_type": "custom", "doc_number": "08011900000001", "label": "Test HN RTN", "extra": {"rtn": "08011900000001"}},
+
+    # ── El Salvador ──
+    {"source": "sv.nit", "doc_type": "custom", "doc_number": "00000000-0", "label": "Test SV DUI", "extra": {"dui": "00000000-0"}},
+
+    # ── Uruguay ──
+    {"source": "uy.sucive", "doc_type": "placa", "doc_number": "SBC1234", "label": "Test UY plate", "extra": {"matricula": "SBC1234"}},
 ]
 
 

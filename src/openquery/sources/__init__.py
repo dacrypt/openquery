@@ -467,3 +467,13 @@ def _ensure_loaded() -> None:
         import openquery.sources.hn.rtn  # noqa: F401
     except ImportError:
         pass
+    # El Salvador
+    try:
+        import openquery.sources.sv.nit  # noqa: F401
+    except ImportError:
+        pass
+    # Uruguay
+    try:
+        import openquery.sources.uy.sucive  # noqa: F401
+    except ImportError:
+        pass
