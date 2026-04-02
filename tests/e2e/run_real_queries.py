@@ -85,6 +85,12 @@ KNOWN_STATUS: dict[str, str] = {
     "co.mi_casa_ya": "SELECTOR_STALE: Mi Casa Ya form selectors outdated",
     "ar.afip_cuit": "CAPTCHA: AFIP CAPTCHA OCR solving needs tuning (text distortion too complex)",
     "co.einforma": "INTERMITTENT: eInforma sometimes times out on slow page load",
+    # New countries — need selector inspection
+    "cr.cedula": "SELECTOR_STALE: TSE Costa Rica form selectors need inspection",
+    "do.rnc": "SITE_TIMEOUT: DGII Dominican Republic takes >30s to load",
+    "py.ruc": "SELECTOR_STALE: SET Paraguay form selectors need inspection",
+    "gt.nit": "SITE_TIMEOUT: SAT Guatemala takes >30s to load",
+    "hn.rtn": "SELECTOR_STALE: SAR Honduras form selectors need inspection",
 }
 
 # ── Public test data (no personal data) ──────────────────────────────────
@@ -216,6 +222,24 @@ QUERIES: list[dict] = [
     {"source": "ar.afip_cuit", "doc_type": "custom", "doc_number": "30546689979", "label": "YPF S.A."},
     {"source": "ar.pjn", "doc_type": "custom", "doc_number": "30546689979", "label": "YPF S.A."},
     {"source": "ar.dnrpa", "doc_type": "placa", "doc_number": "AB123CD", "label": "Test AR plate"},
+
+    # ── Brazil ──
+    {"source": "br.cnpj", "doc_type": "nit", "doc_number": "33000167000101", "label": "Petrobras CNPJ"},
+
+    # ── Costa Rica ──
+    {"source": "cr.cedula", "doc_type": "cedula", "doc_number": "101110111", "label": "Test CR cedula"},
+
+    # ── Dominican Republic ──
+    {"source": "do.rnc", "doc_type": "custom", "doc_number": "101000301", "label": "Test DO RNC"},
+
+    # ── Paraguay ──
+    {"source": "py.ruc", "doc_type": "custom", "doc_number": "80000011-7", "label": "Test PY RUC", "extra": {"ruc": "80000011-7"}},
+
+    # ── Guatemala ──
+    {"source": "gt.nit", "doc_type": "custom", "doc_number": "1234567", "label": "Test GT NIT", "extra": {"nit": "1234567"}},
+
+    # ── Honduras ──
+    {"source": "hn.rtn", "doc_type": "custom", "doc_number": "08011900000001", "label": "Test HN RTN", "extra": {"rtn": "08011900000001"}},
 ]
 
 

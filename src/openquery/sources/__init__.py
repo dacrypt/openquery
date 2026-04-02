@@ -437,3 +437,33 @@ def _ensure_loaded() -> None:
         import openquery.sources.ar.dnrpa  # noqa: F401
     except ImportError:
         pass
+    # Brazil
+    try:
+        import openquery.sources.br.cnpj  # noqa: F401
+    except ImportError:
+        pass
+    # Costa Rica
+    try:
+        import openquery.sources.cr.cedula  # noqa: F401
+    except ImportError:
+        pass
+    # Dominican Republic
+    try:
+        import openquery.sources.do.rnc  # noqa: F401
+    except ImportError:
+        pass
+    # Paraguay
+    try:
+        import openquery.sources.py.ruc  # noqa: F401
+    except ImportError:
+        pass
+    # Guatemala
+    try:
+        import openquery.sources.gt.nit  # noqa: F401
+    except ImportError:
+        pass
+    # Honduras
+    try:
+        import openquery.sources.hn.rtn  # noqa: F401
+    except ImportError:
+        pass
