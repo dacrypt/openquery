@@ -82,26 +82,24 @@ class AdresSource(BaseSource):
                 if collector:
                     collector.attach(page)
 
-                # Wait for the ASP.NET form
-                page.wait_for_selector(
-                    "#ddlTipoDocumento, select, #txtNumDocumento",
-                    timeout=15000,
-                )
+                # Wait for the ASP.NET form — exact IDs from site inspection
+                page.wait_for_load_state("networkidle", timeout=30000)
+                page.wait_for_timeout(2000)
 
-                # Select document type
+                # Select document type — exact ID: #tipoDoc
                 adres_type = DOC_TYPE_MAP[doc_type]
                 doc_select = page.query_selector(
-                    "#ddlTipoDocumento, select[name*='TipoDoc']"
+                    "#tipoDoc, #ddlTipoDocumento, select[name='tipoDoc']"
                 )
                 if doc_select:
                     page.select_option(
-                        "#ddlTipoDocumento, select[name*='TipoDoc']", adres_type,
+                        "#tipoDoc, #ddlTipoDocumento", value=adres_type,
                     )
                 logger.info("Selected document type: %s", adres_type)
 
-                # Fill document number
+                # Fill document number — exact ID: #txtNumDoc
                 num_input = page.query_selector(
-                    "#txtNumDocumento, input[name*='NumDoc'], input[type='text']"
+                    "#txtNumDoc, #txtNumDocumento, input[name='txtNumDoc']"
                 )
                 if not num_input:
                     raise SourceError("co.adres", "Could not find document number input")
@@ -111,10 +109,9 @@ class AdresSource(BaseSource):
                 if collector:
                     collector.screenshot(page, "form_filled")
 
-                # Click "Consultar"
+                # Click "Consultar" — exact ID: #btnConsultar
                 submit = page.query_selector(
-                    "#btnConsultar, input[value='Consultar'], "
-                    "button:has-text('Consultar')"
+                    "#btnConsultar, input[name='btnConsultar']"
                 )
                 if submit:
                     submit.click()

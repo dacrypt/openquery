@@ -23,7 +23,7 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-OSCE_URL = "https://www.gob.pe/osce"
+OSCE_URL = "https://www.rnp.gob.pe/consultasenlinea/inhabilitados/busqueda.asp"
 
 
 @register
@@ -79,27 +79,41 @@ class OsceSancionadosSource(BaseSource):
                 if collector:
                     collector.attach(page)
 
-                page.wait_for_selector(
-                    "input[type='text'], #txtBusqueda, #txtRuc",
-                    timeout=15000,
-                )
+                page.wait_for_load_state("networkidle", timeout=30000)
                 page.wait_for_timeout(2000)
 
-                search_value = ruc or name
-                search_input = page.query_selector(
-                    "#txtBusqueda, #txtRuc, input[name*='busqueda'], "
-                    "input[name*='ruc'], input[type='text']"
-                )
-                if search_input:
-                    search_input.fill(search_value)
-                    logger.info("Filled search: %s", search_value)
+                # Fill RUC or name — exact IDs from rnp.gob.pe
+                if ruc:
+                    ruc_input = page.query_selector('#ruc, input[name="ruc"]')
+                    if ruc_input:
+                        ruc_input.fill(ruc)
+                        logger.info("Filled RUC: %s", ruc)
+                elif name:
+                    name_input = page.query_selector('#rz, input[name="rz"]')
+                    if name_input:
+                        name_input.fill(name)
+                        logger.info("Filled name: %s", name)
+
+                # Solve image CAPTCHA if present
+                captcha_img = page.query_selector('#imgCaptcha')
+                if captcha_img:
+                    captcha_bytes = captcha_img.screenshot()
+                    if captcha_bytes:
+                        from openquery.core.captcha import OCRSolver
+                        solver = OCRSolver(max_chars=6)
+                        captcha_text = solver.solve(captcha_bytes)
+                        captcha_input = page.query_selector('#captchacode, input[name="captchacode"]')
+                        if captcha_input:
+                            captcha_input.fill(captcha_text)
+                            logger.info("Solved CAPTCHA: %s", captcha_text)
 
                 if collector:
                     collector.screenshot(page, "form_filled")
 
+                # Submit — use the appropriate button
                 submit = page.query_selector(
-                    "#btnBuscar, input[value='Buscar'], "
-                    "button:has-text('Buscar'), button:has-text('Consultar')"
+                    'button.btn-warning, '
+                    'input[type="submit"]'
                 )
                 if submit:
                     submit.click()

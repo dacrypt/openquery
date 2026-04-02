@@ -70,8 +70,8 @@ class RnmcSource(BaseSource):
                 if collector:
                     collector.attach(page)
 
-                page.wait_for_load_state("networkidle", timeout=15000)
-                page.wait_for_timeout(2000)
+                page.wait_for_load_state("networkidle", timeout=30000)
+                page.wait_for_timeout(3000)
 
                 # Select document type — exact ASP.NET IDs from site inspection
                 doc_select = page.query_selector(
@@ -101,11 +101,12 @@ class RnmcSource(BaseSource):
                 if collector:
                     collector.screenshot(page, "form_filled")
 
-                # Submit via ASP.NET postback — click the "Nueva Busqueda" button
+                # Submit via ASP.NET postback — use btnConsultar (the actual search link)
                 submit_btn = page.query_selector(
+                    '#ctl00_ContentPlaceHolder3_btnConsultar, '
+                    'a[id*="btnConsultar"], '
                     '#ctl00_ContentPlaceHolder3_btnNuevo, '
-                    'a[id*="btnNuevo"], '
-                    'button[type="submit"], input[type="submit"]'
+                    'a[id*="btnNuevo"]'
                 )
                 if submit_btn:
                     submit_btn.click()
