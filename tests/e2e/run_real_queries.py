@@ -31,7 +31,7 @@ KNOWN_STATUS: dict[str, str] = {
     "co.fasecolda": "AUTH_REQUIRED: Needs manual bearer token capture",
     "co.fopep": "AUTH_REQUIRED: Login-gated portal with reCAPTCHA",
     "co.soi": "AUTH_REQUIRED: Login-only platform (ACH Colombia)",
-    "ec.sri_ruc": "AUTH_REQUIRED: SRI API requires authorization token",
+    # ec.sri_ruc removed — fixed! No auth needed, just use param "ruc" not "numeroRuc"
     # API removed
     "co.proveedores_ficticios": "API_REMOVED: Dataset removed from datos.gov.co",
     "co.directorio_empresas": "API_REMOVED: Dataset API no longer available",

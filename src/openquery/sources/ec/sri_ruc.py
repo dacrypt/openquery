@@ -48,25 +48,19 @@ class SriRucSource(BaseSource):
         if input.document_type != DocumentType.CUSTOM:
             raise SourceError("ec.sri_ruc", f"Unsupported input type: {input.document_type}")
 
-        ruc = input.extra.get("ruc", "").strip()
-        token = input.extra.get("token", "").strip()
+        ruc = input.extra.get("ruc", "").strip() or input.document_number.strip()
 
         if not ruc:
             raise SourceError("ec.sri_ruc", "Must provide extra['ruc'] (RUC number)")
-        if not token:
-            raise SourceError("ec.sri_ruc", "Must provide extra['token'] (authorization token)")
 
         try:
-            headers = {
-                "Authorization": token,
-                "Content-Type": "application/json",
-            }
-            params = {"numeroRuc": ruc}
+            # The SRI API works with param name "ruc" (not "numeroRuc")
+            params = {"ruc": ruc}
 
             logger.info("Querying SRI RUC: %s", ruc)
 
             with httpx.Client(timeout=self._timeout) as client:
-                resp = client.get(API_URL, params=params, headers=headers)
+                resp = client.get(API_URL, params=params)
                 resp.raise_for_status()
                 data = resp.json()
 
@@ -78,13 +72,13 @@ class SriRucSource(BaseSource):
             return SriRucResult(
                 ruc=record.get("numeroRuc", ruc),
                 razon_social=record.get("razonSocial", ""),
-                nombre_comercial=record.get("nombreComercial", ""),
-                estado=record.get("estadoContribuyente", record.get("estado", "")),
-                actividad_economica=record.get("actividadEconomicaPrincipal", ""),
-                direccion=record.get("direccionMatriz", record.get("direccion", "")),
-                tipo_contribuyente=record.get("tipoContribuyente", ""),
-                obligado_contabilidad=record.get("obligadoContabilidad", ""),
-                fecha_inicio_actividades=record.get("fechaInicioActividades", ""),
+                nombre_comercial=record.get("nombreComercial", "") or "",
+                estado=record.get("estadoContribuyenteRuc", record.get("estadoContribuyente", record.get("estado", ""))),
+                actividad_economica=record.get("actividadEconomicaPrincipal", record.get("actividadEconomica", "")),
+                direccion=record.get("direccionMatriz", record.get("direccion", "")) or "",
+                tipo_contribuyente=record.get("tipoContribuyente", "") or "",
+                obligado_contabilidad=record.get("obligadoContabilidad", "") or "",
+                fecha_inicio_actividades=record.get("fechaInicioActividades", "") or "",
             )
 
         except SourceError:
