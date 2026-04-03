@@ -277,7 +277,10 @@ class RuntSoatSource(BaseSource):
                 desc = data.get(
                     "descripcionRespuesta", data.get("mensaje", "Unknown error"),
                 )
-                raise SourceError("co.runt_soat", f"RUNT error: {desc}")
+                if "no corresponden" in desc.lower() or "no se encontr" in desc.lower():
+                    logger.info("RUNT SOAT returned no matching data: %s", desc)
+                else:
+                    raise SourceError("co.runt_soat", f"RUNT error: {desc}")
 
         return data
 

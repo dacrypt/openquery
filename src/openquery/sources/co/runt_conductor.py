@@ -269,7 +269,10 @@ class RuntConductorSource(BaseSource):
                 desc = data.get(
                     "descripcionRespuesta", data.get("mensaje", "Unknown error"),
                 )
-                raise SourceError("co.runt_conductor", f"RUNT error: {desc}")
+                if "no corresponden" in desc.lower() or "no se encontr" in desc.lower() or "no tiene" in desc.lower():
+                    logger.info("RUNT conductor returned no matching data: %s", desc)
+                else:
+                    raise SourceError("co.runt_conductor", f"RUNT error: {desc}")
 
         return data
 

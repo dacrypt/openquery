@@ -50,17 +50,17 @@ KNOWN_STATUS: dict[str, str] = {
     "co.ruaf": "WAF_BLOCKED: SISPRO WAF blocks even Patchright",
     "co.supersociedades": "WAF_BLOCKED: Supersociedades WAF blocks even Patchright",
     # Sites genuinely down/unreachable
-    "co.certificado_tradicion": "SITE_DOWN: supernotariado.gov.co still timing out from headless",
+    "co.certificado_tradicion": "SITE_DOWN: supernotariado.gov.co still timing out",
     "co.inpec": "SITE_DOWN: INPEC 504 from Azure Gateway",
     "pe.servir_sanciones": "SITE_DOWN: sanciones.gob.pe timeout",
     # pe.sunarp_vehicular removed — SUNARP recovered
     "cl.fiscalizacion": "SITE_DOWN: Site timeout",
     "mx.repuve": "SITE_DOWN: repuve.gob.mx timeout",
-    # RUNT — captcha solver works but test data doesn't match actual records
-    "co.runt": "RUNT_DATA: Captcha solved OK but plate BXM627 data mismatch",
-    "co.runt_conductor": "RUNT_DATA: Captcha solved OK but no conductor data found",
-    "co.runt_soat": "RUNT_DATA: Captcha solved OK but plate data mismatch",
-    "co.runt_rtm": "RUNT_DATA: Captcha solved OK but plate data mismatch",
+    # RUNT — captcha solver intermittent (sometimes works, sometimes returns invalid)
+    "co.runt": "CAPTCHA_INTERMITTENT: RUNT captcha OCR sometimes fails validation",
+    "co.runt_conductor": "CAPTCHA_INTERMITTENT: RUNT conductor captcha API returns empty",
+    "co.runt_soat": "CAPTCHA_INTERMITTENT: RUNT SOAT captcha OCR sometimes fails",
+    "co.runt_rtm": "CAPTCHA_INTERMITTENT: RUNT RTM captcha OCR sometimes fails",
     # Source URL decommissioned or fundamentally changed
     "ec.senescyt": "URL_MOVED: senescyt.gob.ec moved to educacionsuperior.gob.ec, endpoint gone",
     "mx.sat_efos": "NO_FORM: SAT EFOS page is static XLS download, no search form",
@@ -84,12 +84,12 @@ KNOWN_STATUS: dict[str, str] = {
     "co.seguridad_social": "SELECTOR_STALE: miseguridadsocial.gov.co form selectors outdated",
     "co.mi_casa_ya": "SELECTOR_STALE: Mi Casa Ya form selectors outdated",
     "ar.afip_cuit": "CAPTCHA: AFIP CAPTCHA OCR solving needs tuning (text distortion too complex)",
-    "co.einforma": "INTERMITTENT: eInforma sometimes times out on slow page load",
+    # co.einforma removed — testing again (intermittent)
     # New countries — blockers identified
     "do.rnc": "WAF_BLOCKED: DGII Dominican Republic returns 403 to headless browsers",
     "gt.nit": "WAF_BLOCKED: SAT Guatemala behind Cloudflare Turnstile",
     "py.ruc": "RECAPTCHA: SET Paraguay has reCAPTCHA v2 on form",
-    "cl.sii_rut": "INTERMITTENT: SII Chile form sometimes fails to load (Cloudflare)",
+    # cl.sii_rut removed — testing again (intermittent)
     "uy.sucive": "SELECTOR_STALE: SUCIVE form selectors need site-specific inspection",
 }
 

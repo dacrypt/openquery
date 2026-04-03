@@ -298,7 +298,11 @@ class RuntSource(BaseSource):
                 raise CaptchaError("co.runt", f"Captcha error: {error_msg}")
             if data.get("error") is True:
                 desc = data.get("descripcionRespuesta", data.get("mensaje", "Unknown error"))
-                raise SourceError("co.runt", f"RUNT error: {desc}")
+                # "no corresponden" means valid query but no matching data — not an error
+                if "no corresponden" in desc.lower() or "no se encontr" in desc.lower():
+                    logger.info("RUNT returned no matching data: %s", desc)
+                else:
+                    raise SourceError("co.runt", f"RUNT error: {desc}")
 
         return data
 
