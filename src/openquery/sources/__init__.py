@@ -354,6 +354,10 @@ def _ensure_loaded() -> None:
     except ImportError:
         pass
     try:
+        import openquery.sources.co.secop_procesos  # noqa: F401
+    except ImportError:
+        pass
+    try:
         import openquery.sources.ec.sri_ruc  # noqa: F401
     except ImportError:
         pass

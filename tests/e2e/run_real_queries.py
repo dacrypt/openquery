@@ -68,7 +68,7 @@ KNOWN_STATUS: dict[str, str] = {
     # Sites with specific blocking that needs more work
     "ec.cne_padron": "CAPTCHA_GATE: Entire CNE site gated behind Imperva bot-detection CAPTCHA",
     "mx.siem": "TERMS_WALL: Vue SPA requires accepting terms modal before search",
-    "mx.curp": "TIMEOUT: gob.mx API intermittently times out",
+    # mx.curp removed — timeout increased to 45s, re-testing
     # SPA/timing issues
     "co.consulta_procesos": "SPA_TIMING: Vue.js dynamic IDs, ElementHandle detaches",
     "co.libreta_militar": "SPA_TIMING: ElementHandle.fill timeout (page loads but form elements detach)",
@@ -91,7 +91,7 @@ KNOWN_STATUS: dict[str, str] = {
     "py.ruc": "RECAPTCHA: SET Paraguay has reCAPTCHA v2 on form",
     # cl.sii_rut removed — testing again (intermittent)
     "uy.sucive": "SELECTOR_STALE: SUCIVE form selectors need site-specific inspection",
-    "pa.ruc": "SITE_SLOW: DGI Panama site takes >30s to load",
+    # pa.ruc removed — timeout increased to 90s, re-testing
     # co.afiliados_compensado removed — re-testing
 }
 
@@ -137,6 +137,7 @@ QUERIES: list[dict] = [
     {"source": "co.supersociedades", "doc_type": "nit", "doc_number": "899999068", "label": "Ecopetrol NIT"},
     {"source": "co.secop_sanciones", "doc_type": "nit", "doc_number": "899999068", "label": "Ecopetrol sanciones"},
     {"source": "co.simit_historico", "doc_type": "placa", "doc_number": "MIK715", "label": "SIMIT historico MIK715"},
+    {"source": "co.secop_procesos", "doc_type": "nit", "doc_number": "899999068", "label": "SECOP procesos Ecopetrol"},
 
     # ── Colombia: Vehicles ──
     {"source": "co.simit", "doc_type": "cedula", "doc_number": "79940745", "label": "Iván Duque"},

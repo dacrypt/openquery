@@ -25,7 +25,7 @@ DGI_URL = "https://dgi.mef.gob.pa/Consultas/ConsultaRUC.aspx"
 class PaRucSource(BaseSource):
     """Query Panamanian tax registry (DGI) by RUC."""
 
-    def __init__(self, timeout: float = 30.0, headless: bool = True) -> None:
+    def __init__(self, timeout: float = 90.0, headless: bool = True) -> None:
         self._timeout = timeout
         self._headless = headless
 
