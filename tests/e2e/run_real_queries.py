@@ -218,6 +218,7 @@ QUERIES: list[dict] = [
     {"source": "cl.pjud", "doc_type": "custom", "doc_number": "61704000K", "label": "Codelco"},
     {"source": "cl.fiscalizacion", "doc_type": "placa", "doc_number": "BBBB12", "label": "Test CL plate"},
     {"source": "cl.superir", "doc_type": "custom", "doc_number": "61704000K", "label": "Codelco", "extra": {"rut": "61704000-K"}},
+    {"source": "cl.mindicador", "doc_type": "custom", "doc_number": "", "label": "CL UF/USD/EUR"},
 
     # ── Mexico ──
     {"source": "mx.curp", "doc_type": "custom", "doc_number": "GARC850101HDFRRL09", "label": "Test CURP"},
@@ -231,6 +232,7 @@ QUERIES: list[dict] = [
     {"source": "ar.pjn", "doc_type": "custom", "doc_number": "30546689979", "label": "YPF S.A."},
     {"source": "ar.dnrpa", "doc_type": "placa", "doc_number": "AB123CD", "label": "Test AR plate"},
     {"source": "ar.georef", "doc_type": "custom", "doc_number": "Av Corrientes 1000", "label": "GeoRef Buenos Aires", "extra": {"direccion": "Av Corrientes 1000", "provincia": "buenos aires"}},
+    {"source": "ar.series", "doc_type": "custom", "doc_number": "dolar", "label": "AR USD/ARS", "extra": {"serie": "dolar", "limit": "5"}},
 
     # ── Brazil ──
     {"source": "br.cnpj", "doc_type": "nit", "doc_number": "33000167000101", "label": "Petrobras CNPJ"},

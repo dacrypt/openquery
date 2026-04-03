@@ -408,6 +408,10 @@ def _ensure_loaded() -> None:
     except ImportError:
         pass
     try:
+        import openquery.sources.cl.mindicador  # noqa: F401
+    except ImportError:
+        pass
+    try:
         import openquery.sources.cl.pjud  # noqa: F401
     except ImportError:
         pass
@@ -443,6 +447,10 @@ def _ensure_loaded() -> None:
     # Argentina
     try:
         import openquery.sources.ar.afip_cuit  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.ar.series  # noqa: F401
     except ImportError:
         pass
     try:
