@@ -53,7 +53,7 @@ KNOWN_STATUS: dict[str, str] = {
     "co.certificado_tradicion": "SITE_DOWN: supernotariado.gov.co still timing out",
     "co.inpec": "SITE_DOWN: INPEC 504 from Azure Gateway",
     "pe.servir_sanciones": "SITE_DOWN: sanciones.gob.pe timeout",
-    # pe.sunarp_vehicular removed — SUNARP recovered
+    "pe.sunarp_vehicular": "INTERMITTENT: SUNARP sometimes times out",
     "cl.fiscalizacion": "SITE_DOWN: Site timeout",
     "mx.repuve": "SITE_DOWN: repuve.gob.mx timeout",
     # RUNT — captcha solver intermittent (sometimes works, sometimes returns invalid)
@@ -84,7 +84,7 @@ KNOWN_STATUS: dict[str, str] = {
     "co.seguridad_social": "SELECTOR_STALE: miseguridadsocial.gov.co form selectors outdated",
     "co.mi_casa_ya": "SELECTOR_STALE: Mi Casa Ya form selectors outdated",
     "ar.afip_cuit": "CAPTCHA: AFIP CAPTCHA OCR solving needs tuning (text distortion too complex)",
-    # co.einforma removed — testing again (intermittent)
+    "co.einforma": "INTERMITTENT: eInforma sometimes times out",
     # New countries — blockers identified
     "do.rnc": "WAF_BLOCKED: DGII Dominican Republic returns 403 to headless browsers",
     "gt.nit": "WAF_BLOCKED: SAT Guatemala behind Cloudflare Turnstile",
