@@ -19,7 +19,8 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-SUCIVE_URL = "https://sucive.gub.uy/"
+# Navigate directly to the consultation form (homepage has no form)
+SUCIVE_URL = "https://sucive.gub.uy/consulta_patente"
 
 
 @register
@@ -38,7 +39,7 @@ class UySuciveSource(BaseSource):
             country="UY",
             url=SUCIVE_URL,
             supported_inputs=[DocumentType.PLATE, DocumentType.CUSTOM],
-            requires_captcha=False,
+            requires_captcha=True,  # reCAPTCHA v2 Enterprise
             requires_browser=True,
             rate_limit_rpm=10,
         )
@@ -102,9 +103,10 @@ class UySuciveSource(BaseSource):
                 if collector:
                     collector.screenshot(page, "form_filled")
 
+                # Submit — exact ID: #id1 (Wicket framework)
                 submit = page.query_selector(
-                    'button[type="submit"], input[type="submit"], '
-                    'button:has-text("Consultar")'
+                    '#id1, button[name*="buscarLink"], '
+                    'button:has-text("Consulta")'
                 )
                 if submit:
                     submit.click()

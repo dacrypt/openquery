@@ -1,14 +1,18 @@
-"""Panama RUC source — DGI (Dirección General de Ingresos) tax registry.
+"""Panama RUC source — DGI (Dirección General de Ingresos) taxpayer lookup.
 
-Queries Panama's DGI for RUC (Registro Único de Contribuyentes) data.
+Queries Panama's DGI CCIC list for taxpayer compliance status.
+Simple HTTP POST to PHP form — no browser needed, no CAPTCHA.
 
-Source: https://dgi.mef.gob.pa/
+Source: https://dgi.mef.gob.pa/CCIC/Lis-CC.php
 """
 
 from __future__ import annotations
 
 import logging
+import re
+from datetime import datetime
 
+import httpx
 from pydantic import BaseModel
 
 from openquery.exceptions import SourceError
@@ -18,119 +22,84 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-DGI_URL = "https://dgi.mef.gob.pa/Consultas/ConsultaRUC.aspx"
+DGI_URL = "https://dgi.mef.gob.pa/CCIC/Lis-CC.php"
 
 
 @register
 class PaRucSource(BaseSource):
-    """Query Panamanian tax registry (DGI) by RUC."""
+    """Query Panamanian DGI taxpayer compliance by RUC or name."""
 
-    def __init__(self, timeout: float = 90.0, headless: bool = True) -> None:
+    def __init__(self, timeout: float = 30.0) -> None:
         self._timeout = timeout
-        self._headless = headless
 
     def meta(self) -> SourceMeta:
         return SourceMeta(
             name="pa.ruc",
-            display_name="DGI — Consulta RUC",
-            description="Panamanian tax registry: taxpayer name, status (Dirección General de Ingresos)",
+            display_name="DGI — Consulta RUC / CCIC",
+            description="Panamanian taxpayer compliance status (Dirección General de Ingresos CCIC)",
             country="PA",
             url=DGI_URL,
             supported_inputs=[DocumentType.NIT, DocumentType.CUSTOM],
             requires_captcha=False,
-            requires_browser=True,
+            requires_browser=False,
             rate_limit_rpm=10,
         )
 
     def query(self, input: QueryInput) -> BaseModel:
         ruc = input.extra.get("ruc", "") or input.document_number
-        if not ruc:
-            raise SourceError("pa.ruc", "RUC is required")
-        return self._query(ruc.strip(), audit=input.audit)
+        name = input.extra.get("name", "")
+        if not ruc and not name:
+            raise SourceError("pa.ruc", "RUC or name (extra.name) is required")
+        return self._query(ruc=ruc.strip(), name=name.strip())
 
-    def _query(self, ruc: str, audit: bool = False) -> PaRucResult:
-        from openquery.core.browser import BrowserManager
+    def _query(self, ruc: str = "", name: str = "") -> PaRucResult:
+        try:
+            data = {"submit": "BUSCAR"}
+            if ruc:
+                data["ruc"] = ruc
+                data["nombre"] = ""
+                logger.info("Querying DGI Panama by RUC: %s", ruc)
+            else:
+                data["ruc"] = ""
+                data["nombre"] = name
+                logger.info("Querying DGI Panama by name: %s", name)
 
-        browser = BrowserManager(headless=self._headless, timeout=self._timeout)
-        collector = None
+            with httpx.Client(timeout=self._timeout, verify=False, follow_redirects=True) as client:
+                resp = client.post(DGI_URL, data=data)
+                resp.raise_for_status()
+                html = resp.text
 
-        if audit:
-            from openquery.core.audit import AuditCollector
-            collector = AuditCollector("pa.ruc", "ruc", ruc)
+            return self._parse_html(html, ruc or name)
 
-        with browser.page(DGI_URL) as page:
-            try:
-                if collector:
-                    collector.attach(page)
+        except httpx.HTTPStatusError as e:
+            raise SourceError("pa.ruc", f"API returned HTTP {e.response.status_code}") from e
+        except httpx.RequestError as e:
+            raise SourceError("pa.ruc", f"Request failed: {e}") from e
+        except SourceError:
+            raise
+        except Exception as e:
+            raise SourceError("pa.ruc", f"Query failed: {e}") from e
 
-                page.wait_for_load_state("networkidle", timeout=30000)
-                page.wait_for_timeout(2000)
+    def _parse_html(self, html: str, query: str) -> PaRucResult:
+        result = PaRucResult(queried_at=datetime.now(), ruc=query)
 
-                ruc_input = page.query_selector(
-                    '#txtRUC, input[name*="txtRUC"], input[id*="ruc"], '
-                    'input[type="text"]'
-                )
-                if not ruc_input:
-                    raise SourceError("pa.ruc", "Could not find RUC input field")
+        # Extract table rows from HTML response
+        # The CCIC page returns an HTML table with taxpayer data
+        rows = re.findall(r"<tr[^>]*>(.*?)</tr>", html, re.DOTALL | re.IGNORECASE)
 
-                ruc_input.fill(ruc)
-                logger.info("Filled RUC: %s", ruc)
+        for row in rows:
+            cells = re.findall(r"<td[^>]*>(.*?)</td>", row, re.DOTALL | re.IGNORECASE)
+            cells = [re.sub(r"<[^>]+>", "", c).strip() for c in cells]
+            if len(cells) >= 2 and cells[0]:
+                # First meaningful data row
+                if not result.nombre:
+                    result.ruc = cells[0] if len(cells) > 0 else ""
+                    result.nombre = cells[1] if len(cells) > 1 else ""
+                    result.estado = cells[2] if len(cells) > 2 else ""
 
-                if collector:
-                    collector.screenshot(page, "form_filled")
-
-                submit = page.query_selector(
-                    '#btnConsultar, input[type="submit"], '
-                    'button[type="submit"], '
-                    'button:has-text("Consultar")'
-                )
-                if submit:
-                    submit.click()
-                else:
-                    ruc_input.press("Enter")
-
-                page.wait_for_timeout(5000)
-
-                if collector:
-                    collector.screenshot(page, "result")
-
-                result = self._parse_result(page, ruc)
-
-                if collector:
-                    result.audit = collector.generate_pdf(page, result.model_dump_json())
-
-                return result
-
-            except SourceError:
-                raise
-            except Exception as e:
-                raise SourceError("pa.ruc", f"Query failed: {e}") from e
-
-    def _parse_result(self, page, ruc: str) -> PaRucResult:
-        from datetime import datetime
-
-        body_text = page.inner_text("body")
-
-        result = PaRucResult(queried_at=datetime.now(), ruc=ruc)
-
-        field_map = {
-            "nombre": "nombre",
-            "razon social": "nombre",
-            "dv": "dv",
-            "estado": "estado",
-            "tipo": "tipo_contribuyente",
-            "actividad": "actividad_economica",
-            "direccion": "direccion",
-            "provincia": "provincia",
-        }
-
-        for line in body_text.split("\n"):
-            stripped = line.strip()
-            lower = stripped.lower()
-            for label, field in field_map.items():
-                if label in lower and ":" in stripped:
-                    value = stripped.split(":", 1)[1].strip()
-                    setattr(result, field, value)
-                    break
+        if not result.nombre and "No se encontraron" in html:
+            result.mensaje = "No se encontraron resultados"
+        elif result.nombre:
+            result.mensaje = f"Contribuyente encontrado: {result.nombre}"
 
         return result

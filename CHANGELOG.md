@@ -7,6 +7,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-04-03
+
+### Added
+
+- **10 new countries** — OpenQuery now covers **18 countries**, up from 8 in v0.6.0:
+  - 🇧🇷 Brazil (7 sources): `br.cnpj`, `br.datajud`, `br.fipe`, `br.cep`, `br.banks`, `br.pix`, `br.corretoras`
+  - 🇨🇷 Costa Rica: `cr.cedula` (TSE voter registry)
+  - 🇭🇳 Honduras: `hn.rtn` (SAR tax registry + BotDetect CAPTCHA)
+  - 🇸🇻 El Salvador: `sv.nit` (DGII NIT/DUI lookup)
+  - 🇧🇴 Bolivia: `bo.nit` (SIN tax registry)
+  - 🇩🇴 Dominican Republic: `do.rnc` (DGII)
+  - 🇵🇾 Paraguay: `py.ruc` (SET/DNIT)
+  - 🇬🇹 Guatemala: `gt.nit` (SAT)
+  - 🇵🇦 Panama: `pa.ruc` (DGI)
+  - 🇺🇾 Uruguay: `uy.sucive` (SUCIVE vehicle patent)
+- **5 new Colombian sources**:
+  - `co.supersociedades` — insolvency proceedings (Ley 1116)
+  - `co.secop_sanciones` — contractor sanctions (datos.gov.co Socrata)
+  - `co.secop_procesos` — procurement processes (datos.gov.co Socrata)
+  - `co.simit_historico` — historical traffic fines (datos.gov.co Socrata)
+  - `cl.superir` — Chilean bankruptcy/insolvency registry
+- **1 new Argentina source**: `ar.georef` — address normalization + geocoding (datos.gob.ar API)
+- **112 total sources** across 18 countries (was 92 in v0.6.0)
+- **58 sources confirmed working live** (was 43 in v0.6.0)
+- **Patchright stealth browser** replacing Playwright for WAF bypass
+- **Real query test runner** with categorized known limitations
+
+### Changed
+
+- Browser engine: Playwright → Patchright (CDP leak patches)
+- OFAC: dead search API → SDN XML bulk download + local search
+- mx.curp: browser scraping → JSON API (gob.mx/v1/renapoCURP)
+- co.pep: funcionpublica.gov.co → datos.gov.co Socrata API
+- RUNT: graceful "no data" handling (captcha solver works, empty result not error)
+- 30+ source URL/selector updates for changed government sites
+- Browser timeout: 30s → 60s default
+
 ## [0.7.0] - 2026-04-02
 
 ### Added
@@ -239,7 +276,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Docker and docker-compose support with Redis
 - 29 unit tests
 
-[Unreleased]: https://github.com/dacrypt/openquery/compare/v0.7.0...HEAD
+[Unreleased]: https://github.com/dacrypt/openquery/compare/v0.8.0...HEAD
+[0.8.0]: https://github.com/dacrypt/openquery/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/dacrypt/openquery/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/dacrypt/openquery/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/dacrypt/openquery/compare/v0.4.0...v0.5.0

@@ -90,8 +90,8 @@ KNOWN_STATUS: dict[str, str] = {
     "gt.nit": "WAF_BLOCKED: SAT Guatemala behind Cloudflare Turnstile",
     "py.ruc": "RECAPTCHA: SET Paraguay has reCAPTCHA v2 on form",
     # cl.sii_rut removed — testing again (intermittent)
-    "uy.sucive": "SELECTOR_STALE: SUCIVE form selectors need site-specific inspection",
-    "pa.ruc": "SELECTOR_STALE: DGI Panama form selectors need update",
+    "uy.sucive": "RECAPTCHA: SUCIVE has reCAPTCHA v2 Enterprise on consultation form",
+    "pa.ruc": "WAF_BLOCKED: DGI Panama WAF blocks automated requests + JS rendering required",
     # co.afiliados_compensado removed — re-testing
 }
 
