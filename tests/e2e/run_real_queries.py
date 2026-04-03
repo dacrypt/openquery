@@ -53,8 +53,8 @@ KNOWN_STATUS: dict[str, str] = {
     "co.certificado_tradicion": "SITE_DOWN: supernotariado.gov.co still timing out",
     "co.inpec": "SITE_DOWN: INPEC 504 from Azure Gateway",
     "pe.servir_sanciones": "SITE_DOWN: sanciones.gob.pe timeout",
-    "ar.afip_cuit": "CAPTCHA_INTERMITTENT: AFIP CAPTCHA OCR sometimes returns too few chars",
-    "br.fipe": "API_ERROR: BrasilAPI FIPE returns HTTP 500 intermittently",
+    # ar.afip_cuit removed — re-testing with LLM vision chain
+    # br.fipe removed — fixed test data (001267-0 Fiat Palio works)
     "cl.fiscalizacion": "SITE_DOWN: Site timeout",
     "mx.repuve": "SITE_DOWN: repuve.gob.mx timeout",
     "co.runt": "CAPTCHA_INTERMITTENT: RUNT captcha API sometimes returns empty",
@@ -239,7 +239,7 @@ QUERIES: list[dict] = [
     # ── Brazil ──
     {"source": "br.cnpj", "doc_type": "nit", "doc_number": "33000167000101", "label": "Petrobras CNPJ"},
     {"source": "br.datajud", "doc_type": "custom", "doc_number": "00008323520184013202", "label": "Test BR processo", "extra": {"processo": "00008323520184013202", "tribunal": "api_publica_tjsp"}},
-    {"source": "br.fipe", "doc_type": "custom", "doc_number": "001004-9", "label": "FIPE Gol 1.0", "extra": {"codigo_fipe": "001004-9"}},
+    {"source": "br.fipe", "doc_type": "custom", "doc_number": "001267-0", "label": "FIPE Palio 1.0", "extra": {"codigo_fipe": "001267-0"}},
     {"source": "br.cep", "doc_type": "custom", "doc_number": "01001000", "label": "Praça da Sé SP", "extra": {"cep": "01001000"}},
     {"source": "br.banks", "doc_type": "custom", "doc_number": "001", "label": "Banco do Brasil", "extra": {"code": "001"}},
     {"source": "br.pix", "doc_type": "custom", "doc_number": "pix", "label": "PIX participants"},
