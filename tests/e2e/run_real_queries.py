@@ -77,7 +77,7 @@ KNOWN_STATUS: dict[str, str] = {
     "ar.dnrpa": "SPA_TIMING: DNRPA ElementHandle.fill timeout",
     "cl.pjud": "SPA_TIMING: PJUD ElementHandle timeout",
     # Remaining selector issues (pages load, forms don't match)
-    # co.rnmc removed — fixed with direct __doPostBack JS call
+    "co.rnmc": "SPA_TIMING: ASP.NET __doPostBack causes page reload + element detach",
     "co.tutelas": "SELECTOR_STALE: Rama Judicial form selectors outdated",
     "co.rues": "RECAPTCHA: rues.org.co has reCAPTCHA v2 + ElementHandle timeout",
     "co.adres": "RECAPTCHA: ADRES has reCAPTCHA Enterprise v3 + selector mismatch",
@@ -85,6 +85,7 @@ KNOWN_STATUS: dict[str, str] = {
     "co.mi_casa_ya": "SELECTOR_STALE: Mi Casa Ya form selectors outdated",
     "ar.afip_cuit": "CAPTCHA: AFIP CAPTCHA OCR solving needs tuning (text distortion too complex)",
     "co.einforma": "INTERMITTENT: eInforma sometimes times out",
+    "co.procuraduria": "CAPTCHA_INTERMITTENT: LLM-based knowledge CAPTCHA sometimes fails",
     # New countries — blockers identified
     "do.rnc": "WAF_BLOCKED: DGII Dominican Republic returns 403 to headless browsers",
     "gt.nit": "WAF_BLOCKED: SAT Guatemala behind Cloudflare Turnstile",
