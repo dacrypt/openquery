@@ -85,6 +85,7 @@ KNOWN_STATUS: dict[str, str] = {
     "co.mi_casa_ya": "SELECTOR_STALE: Mi Casa Ya form selectors outdated",
     "ar.afip_cuit": "CAPTCHA: AFIP CAPTCHA OCR solving needs tuning (text distortion too complex)",
     "co.einforma": "INTERMITTENT: eInforma sometimes times out on slow page load",
+    "co.procuraduria": "CAPTCHA_INTERMITTENT: Knowledge CAPTCHA needs Ollama or LLM API key",
     # New countries — blockers identified
     "do.rnc": "WAF_BLOCKED: DGII Dominican Republic returns 403 to headless browsers",
     "gt.nit": "WAF_BLOCKED: SAT Guatemala behind Cloudflare Turnstile",
