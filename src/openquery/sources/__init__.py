@@ -477,3 +477,13 @@ def _ensure_loaded() -> None:
         import openquery.sources.uy.sucive  # noqa: F401
     except ImportError:
         pass
+    # Bolivia
+    try:
+        import openquery.sources.bo.nit  # noqa: F401
+    except ImportError:
+        pass
+    # Panama
+    try:
+        import openquery.sources.pa.ruc  # noqa: F401
+    except ImportError:
+        pass

@@ -246,6 +246,12 @@ QUERIES: list[dict] = [
 
     # ── Uruguay ──
     {"source": "uy.sucive", "doc_type": "placa", "doc_number": "SBC1234", "label": "Test UY plate", "extra": {"matricula": "SBC1234"}},
+
+    # ── Bolivia ──
+    {"source": "bo.nit", "doc_type": "custom", "doc_number": "1023220028", "label": "Test BO NIT", "extra": {"nit": "1023220028"}},
+
+    # ── Panama ──
+    {"source": "pa.ruc", "doc_type": "custom", "doc_number": "8-NT-1-1000", "label": "Test PA RUC", "extra": {"ruc": "8-NT-1-1000"}},
 ]
 
 
