@@ -89,7 +89,7 @@ KNOWN_STATUS: dict[str, str] = {
     # New countries — blockers identified
     "do.rnc": "WAF_BLOCKED: DGII Dominican Republic returns 403 to headless browsers",
     "gt.nit": "WAF_BLOCKED: SAT Guatemala behind Cloudflare Turnstile",
-    "gt.banguat": "SOAP_PARSING: Banguat SOAP XML response needs parsing fix",
+    # gt.banguat removed — SOAP parsing fixed
     "py.datos": "API_REDIRECT: datos.gov.py CKAN API redirects to HTML page",
     "py.ruc": "RECAPTCHA: SET Paraguay has reCAPTCHA v2 on form",
     # cl.sii_rut removed — testing again (intermittent)

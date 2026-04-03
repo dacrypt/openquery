@@ -71,19 +71,20 @@ class GtBanguatSource(BaseSource):
             # Parse SOAP XML response
             root = ET.fromstring(resp.text)
 
+            # Parse exchange rate from SOAP XML — look for fecha/referencia pairs
             registros = []
-            for var in root.iter():
-                if var.tag.endswith("Var") or "CambioDelDia" in var.tag:
-                    fecha = ""
-                    ref = ""
-                    for child in var:
-                        tag = child.tag.split("}")[-1] if "}" in child.tag else child.tag
-                        if tag == "fecha" and child.text:
-                            fecha = child.text.strip()
-                        elif tag == "referencia" and child.text:
-                            ref = child.text.strip()
+            fecha = ""
+            ref = ""
+            for elem in root.iter():
+                tag = elem.tag.split("}")[-1] if "}" in elem.tag else elem.tag
+                if tag == "fecha" and elem.text:
+                    fecha = elem.text.strip()
+                elif tag == "referencia" and elem.text:
+                    ref = elem.text.strip()
                     if fecha and ref:
                         registros.append(TipoCambio(fecha=fecha, referencia=ref))
+                        fecha = ""
+                        ref = ""
 
             return GtBanguatResult(
                 queried_at=datetime.now(),
