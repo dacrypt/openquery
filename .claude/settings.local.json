@@ -71,7 +71,12 @@
       "WebFetch(domain:medium.com)",
       "WebFetch(domain:dev.to)",
       "WebFetch(domain:dev.socrata.com)",
-      "WebFetch(domain:brasilapi.com.br)"
+      "WebFetch(domain:brasilapi.com.br)",
+      "WebFetch(domain:www.inegi.org.mx)",
+      "WebFetch(domain:gaia.inegi.org.mx)",
+      "WebFetch(domain:www.banguat.gob.gt)",
+      "WebFetch(domain:apibcrd.bancentral.gov.do)",
+      "WebFetch(domain:www.datos.gov.py)"
     ]
   }
 }

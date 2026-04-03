@@ -425,6 +425,10 @@ def _ensure_loaded() -> None:
     except ImportError:
         pass
     try:
+        import openquery.sources.mx.inegi  # noqa: F401
+    except ImportError:
+        pass
+    try:
         import openquery.sources.mx.sat_efos  # noqa: F401
     except ImportError:
         pass
@@ -492,14 +496,26 @@ def _ensure_loaded() -> None:
         import openquery.sources.do.rnc  # noqa: F401
     except ImportError:
         pass
+    try:
+        import openquery.sources.do.datos  # noqa: F401
+    except ImportError:
+        pass
     # Paraguay
     try:
         import openquery.sources.py.ruc  # noqa: F401
     except ImportError:
         pass
+    try:
+        import openquery.sources.py.datos  # noqa: F401
+    except ImportError:
+        pass
     # Guatemala
     try:
         import openquery.sources.gt.nit  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.gt.banguat  # noqa: F401
     except ImportError:
         pass
     # Honduras
@@ -517,6 +533,10 @@ def _ensure_loaded() -> None:
         import openquery.sources.uy.sucive  # noqa: F401
     except ImportError:
         pass
+    try:
+        import openquery.sources.uy.datos  # noqa: F401
+    except ImportError:
+        pass
     # Bolivia
     try:
         import openquery.sources.bo.nit  # noqa: F401
@@ -525,5 +545,9 @@ def _ensure_loaded() -> None:
     # Panama
     try:
         import openquery.sources.pa.ruc  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.pa.inec  # noqa: F401
     except ImportError:
         pass

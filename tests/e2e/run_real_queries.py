@@ -88,6 +88,8 @@ KNOWN_STATUS: dict[str, str] = {
     # New countries — blockers identified
     "do.rnc": "WAF_BLOCKED: DGII Dominican Republic returns 403 to headless browsers",
     "gt.nit": "WAF_BLOCKED: SAT Guatemala behind Cloudflare Turnstile",
+    "gt.banguat": "SOAP_PARSING: Banguat SOAP XML response needs parsing fix",
+    "py.datos": "API_REDIRECT: datos.gov.py CKAN API redirects to HTML page",
     "py.ruc": "RECAPTCHA: SET Paraguay has reCAPTCHA v2 on form",
     # cl.sii_rut removed — testing again (intermittent)
     "uy.sucive": "RECAPTCHA: SUCIVE has reCAPTCHA v2 Enterprise on consultation form",
@@ -222,6 +224,7 @@ QUERIES: list[dict] = [
     {"source": "mx.sat_efos", "doc_type": "custom", "doc_number": "test_rfc", "label": "Test SAT RFC"},
     {"source": "mx.siem", "doc_type": "custom", "doc_number": "test", "label": "Test SIEM"},
     {"source": "mx.repuve", "doc_type": "placa", "doc_number": "ABC1234", "label": "Test MX plate"},
+    {"source": "mx.inegi", "doc_type": "custom", "doc_number": "estados", "label": "INEGI Estados"},
 
     # ── Argentina ──
     {"source": "ar.afip_cuit", "doc_type": "custom", "doc_number": "30546689979", "label": "YPF S.A."},
@@ -243,12 +246,15 @@ QUERIES: list[dict] = [
 
     # ── Dominican Republic ──
     {"source": "do.rnc", "doc_type": "custom", "doc_number": "101000301", "label": "Test DO RNC"},
+    {"source": "do.datos", "doc_type": "custom", "doc_number": "poblacion", "label": "DO datos abiertos", "extra": {"q": "poblacion"}},
 
     # ── Paraguay ──
     {"source": "py.ruc", "doc_type": "custom", "doc_number": "80000011-7", "label": "Test PY RUC", "extra": {"ruc": "80000011-7"}},
+    {"source": "py.datos", "doc_type": "custom", "doc_number": "tipo cambio", "label": "PY datos abiertos", "extra": {"q": "tipo cambio"}},
 
     # ── Guatemala ──
     {"source": "gt.nit", "doc_type": "custom", "doc_number": "1234567", "label": "Test GT NIT", "extra": {"nit": "1234567"}},
+    {"source": "gt.banguat", "doc_type": "custom", "doc_number": "tipo_cambio", "label": "Banguat USD/GTQ"},
 
     # ── Honduras ──
     {"source": "hn.rtn", "doc_type": "custom", "doc_number": "08011900000001", "label": "Test HN RTN", "extra": {"rtn": "08011900000001"}},
@@ -258,12 +264,14 @@ QUERIES: list[dict] = [
 
     # ── Uruguay ──
     {"source": "uy.sucive", "doc_type": "placa", "doc_number": "SBC1234", "label": "Test UY plate", "extra": {"matricula": "SBC1234"}},
+    {"source": "uy.datos", "doc_type": "custom", "doc_number": "transporte", "label": "UY datos abiertos", "extra": {"q": "transporte"}},
 
     # ── Bolivia ──
     {"source": "bo.nit", "doc_type": "custom", "doc_number": "1023220028", "label": "Test BO NIT", "extra": {"nit": "1023220028"}},
 
     # ── Panama ──
     {"source": "pa.ruc", "doc_type": "custom", "doc_number": "8-NT-1-1000", "label": "Test PA RUC", "extra": {"ruc": "8-NT-1-1000"}},
+    {"source": "pa.inec", "doc_type": "custom", "doc_number": "categorias", "label": "INEC categorias"},
 ]
 
 
