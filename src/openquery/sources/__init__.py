@@ -350,6 +350,10 @@ def _ensure_loaded() -> None:
     except ImportError:
         pass
     try:
+        import openquery.sources.co.simit_historico  # noqa: F401
+    except ImportError:
+        pass
+    try:
         import openquery.sources.ec.sri_ruc  # noqa: F401
     except ImportError:
         pass
@@ -456,6 +460,10 @@ def _ensure_loaded() -> None:
         pass
     try:
         import openquery.sources.br.cep  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.br.banks  # noqa: F401
     except ImportError:
         pass
     # Costa Rica

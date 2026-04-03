@@ -84,8 +84,7 @@ KNOWN_STATUS: dict[str, str] = {
     "co.seguridad_social": "SELECTOR_STALE: miseguridadsocial.gov.co form selectors outdated",
     "co.mi_casa_ya": "SELECTOR_STALE: Mi Casa Ya form selectors outdated",
     "ar.afip_cuit": "CAPTCHA: AFIP CAPTCHA OCR solving needs tuning (text distortion too complex)",
-    "co.einforma": "INTERMITTENT: eInforma sometimes times out",
-    "co.procuraduria": "CAPTCHA_INTERMITTENT: LLM-based knowledge CAPTCHA sometimes fails",
+    # co.einforma, co.procuraduria removed — re-testing (intermittent)
     # New countries — blockers identified
     "do.rnc": "WAF_BLOCKED: DGII Dominican Republic returns 403 to headless browsers",
     "gt.nit": "WAF_BLOCKED: SAT Guatemala behind Cloudflare Turnstile",
@@ -93,7 +92,7 @@ KNOWN_STATUS: dict[str, str] = {
     # cl.sii_rut removed — testing again (intermittent)
     "uy.sucive": "SELECTOR_STALE: SUCIVE form selectors need site-specific inspection",
     "pa.ruc": "SITE_SLOW: DGI Panama site takes >30s to load",
-    "co.afiliados_compensado": "INTERMITTENT: SSF site sometimes times out",
+    # co.afiliados_compensado removed — re-testing
 }
 
 # ── Public test data (no personal data) ──────────────────────────────────
@@ -137,6 +136,7 @@ QUERIES: list[dict] = [
     {"source": "co.empresas_google", "doc_type": "custom", "doc_number": "Ecopetrol", "label": "Ecopetrol Google"},
     {"source": "co.supersociedades", "doc_type": "nit", "doc_number": "899999068", "label": "Ecopetrol NIT"},
     {"source": "co.secop_sanciones", "doc_type": "nit", "doc_number": "899999068", "label": "Ecopetrol sanciones"},
+    {"source": "co.simit_historico", "doc_type": "placa", "doc_number": "MIK715", "label": "SIMIT historico MIK715"},
 
     # ── Colombia: Vehicles ──
     {"source": "co.simit", "doc_type": "cedula", "doc_number": "79940745", "label": "Iván Duque"},
@@ -232,6 +232,7 @@ QUERIES: list[dict] = [
     {"source": "br.datajud", "doc_type": "custom", "doc_number": "00008323520184013202", "label": "Test BR processo", "extra": {"processo": "00008323520184013202", "tribunal": "api_publica_tjsp"}},
     {"source": "br.fipe", "doc_type": "custom", "doc_number": "001004-9", "label": "FIPE Gol 1.0", "extra": {"codigo_fipe": "001004-9"}},
     {"source": "br.cep", "doc_type": "custom", "doc_number": "01001000", "label": "Praça da Sé SP", "extra": {"cep": "01001000"}},
+    {"source": "br.banks", "doc_type": "custom", "doc_number": "001", "label": "Banco do Brasil", "extra": {"code": "001"}},
 
     # ── Costa Rica ──
     {"source": "cr.cedula", "doc_type": "cedula", "doc_number": "101110111", "label": "Test CR cedula"},
