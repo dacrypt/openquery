@@ -583,3 +583,7 @@ def _ensure_loaded() -> None:
         import openquery.sources.pa.inec  # noqa: F401
     except ImportError:
         pass
+    try:
+        import openquery.sources.pa.contraloria  # noqa: F401
+    except ImportError:
+        pass

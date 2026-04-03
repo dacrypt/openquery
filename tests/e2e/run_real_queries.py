@@ -270,6 +270,7 @@ QUERIES: list[dict] = [
     # ── Panama ──
     {"source": "pa.ruc", "doc_type": "custom", "doc_number": "8-NT-1-1000", "label": "Test PA RUC", "extra": {"ruc": "8-NT-1-1000"}},
     {"source": "pa.inec", "doc_type": "custom", "doc_number": "categorias", "label": "INEC categorias"},
+    {"source": "pa.contraloria", "doc_type": "custom", "doc_number": "", "label": "PA Contraloria noticias"},
 ]
 
 
