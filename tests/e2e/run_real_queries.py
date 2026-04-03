@@ -240,6 +240,7 @@ QUERIES: list[dict] = [
     {"source": "br.corretoras", "doc_type": "nit", "doc_number": "02332886000104", "label": "XP Investimentos"},
 
     {"source": "br.ddd", "doc_type": "custom", "doc_number": "11", "label": "DDD São Paulo", "extra": {"ddd": "11"}},
+    {"source": "br.ibge", "doc_type": "custom", "doc_number": "estados", "label": "BR 27 estados"},
 
     # ── Costa Rica ──
     {"source": "cr.cedula", "doc_type": "cedula", "doc_number": "101110111", "label": "Test CR cedula"},
