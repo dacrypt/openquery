@@ -370,6 +370,10 @@ def _ensure_loaded() -> None:
     except ImportError:
         pass
     try:
+        import openquery.sources.ec.sri_establecimientos  # noqa: F401
+    except ImportError:
+        pass
+    try:
         import openquery.sources.ec.cne_padron  # noqa: F401
     except ImportError:
         pass
@@ -400,6 +404,10 @@ def _ensure_loaded() -> None:
         pass
     try:
         import openquery.sources.pe.datos  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.pe.bcrp  # noqa: F401
     except ImportError:
         pass
     try:

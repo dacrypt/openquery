@@ -190,6 +190,7 @@ QUERIES: list[dict] = [
 
     # ── Ecuador ──
     {"source": "ec.sri_ruc", "doc_type": "custom", "doc_number": "1768153530001", "label": "EP Petroecuador", "extra": {"ruc": "1768153530001"}},
+    {"source": "ec.sri_establecimientos", "doc_type": "custom", "doc_number": "1768153530001", "label": "Petroecuador establecimientos", "extra": {"ruc": "1768153530001"}},
     {"source": "ec.ant_citaciones", "doc_type": "cedula", "doc_number": "1712345678", "label": "Test EC cedula"},
     {"source": "ec.cne_padron", "doc_type": "cedula", "doc_number": "1712345678", "label": "Test EC cedula"},
     {"source": "ec.funcion_judicial", "doc_type": "cedula", "doc_number": "1712345678", "label": "Test EC cedula"},
@@ -203,6 +204,7 @@ QUERIES: list[dict] = [
     {"source": "pe.sunarp_vehicular", "doc_type": "placa", "doc_number": "ABC-123", "label": "Test PE plate"},
     {"source": "pe.servir_sanciones", "doc_type": "custom", "doc_number": "12345678", "label": "Test PE search", "extra": {"nombre": "Garcia"}},
     {"source": "pe.datos", "doc_type": "custom", "doc_number": "salud", "label": "PE datos abiertos", "extra": {"q": "salud"}},
+    {"source": "pe.bcrp", "doc_type": "custom", "doc_number": "tipo_cambio", "label": "PE BCRP USD/PEN", "extra": {"serie": "tipo_cambio"}},
 
     # ── Chile ──
     {"source": "cl.sii_rut", "doc_type": "custom", "doc_number": "61704000K", "label": "Codelco", "extra": {"rut": "61704000-K"}},
