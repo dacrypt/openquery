@@ -222,6 +222,7 @@ QUERIES: list[dict] = [
     {"source": "cl.fiscalizacion", "doc_type": "placa", "doc_number": "BBBB12", "label": "Test CL plate"},
     {"source": "cl.superir", "doc_type": "custom", "doc_number": "61704000K", "label": "Codelco", "extra": {"rut": "61704000-K"}},
     {"source": "cl.mindicador", "doc_type": "custom", "doc_number": "", "label": "CL UF/USD/EUR"},
+    {"source": "cl.datos", "doc_type": "custom", "doc_number": "salud", "label": "CL datos abiertos", "extra": {"q": "salud"}},
 
     # ── Mexico ──
     {"source": "mx.curp", "doc_type": "custom", "doc_number": "GARC850101HDFRRL09", "label": "Test CURP"},

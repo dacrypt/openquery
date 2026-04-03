@@ -420,6 +420,10 @@ def _ensure_loaded() -> None:
     except ImportError:
         pass
     try:
+        import openquery.sources.cl.datos  # noqa: F401
+    except ImportError:
+        pass
+    try:
         import openquery.sources.cl.pjud  # noqa: F401
     except ImportError:
         pass
