@@ -53,7 +53,8 @@ KNOWN_STATUS: dict[str, str] = {
     "co.certificado_tradicion": "SITE_DOWN: supernotariado.gov.co still timing out",
     "co.inpec": "SITE_DOWN: INPEC 504 from Azure Gateway",
     "pe.servir_sanciones": "SITE_DOWN: sanciones.gob.pe timeout",
-    # ar.afip_cuit removed — re-testing with LLM vision chain
+    "ar.afip_cuit": "CAPTCHA: Needs ANTHROPIC_API_KEY for LLM vision CAPTCHA solving",
+    "co.einforma": "INTERMITTENT: Sometimes times out",
     # br.fipe removed — fixed test data (001267-0 Fiat Palio works)
     "cl.fiscalizacion": "SITE_DOWN: Site timeout",
     "mx.repuve": "SITE_DOWN: repuve.gob.mx timeout",
