@@ -445,6 +445,10 @@ def _ensure_loaded() -> None:
         import openquery.sources.ar.dnrpa  # noqa: F401
     except ImportError:
         pass
+    try:
+        import openquery.sources.ar.georef  # noqa: F401
+    except ImportError:
+        pass
     # Brazil
     try:
         import openquery.sources.br.cnpj  # noqa: F401
@@ -464,6 +468,14 @@ def _ensure_loaded() -> None:
         pass
     try:
         import openquery.sources.br.banks  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.br.pix  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.br.corretoras  # noqa: F401
     except ImportError:
         pass
     # Costa Rica

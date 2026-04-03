@@ -226,6 +226,7 @@ QUERIES: list[dict] = [
     {"source": "ar.afip_cuit", "doc_type": "custom", "doc_number": "30546689979", "label": "YPF S.A."},
     {"source": "ar.pjn", "doc_type": "custom", "doc_number": "30546689979", "label": "YPF S.A."},
     {"source": "ar.dnrpa", "doc_type": "placa", "doc_number": "AB123CD", "label": "Test AR plate"},
+    {"source": "ar.georef", "doc_type": "custom", "doc_number": "Av Corrientes 1000", "label": "GeoRef Buenos Aires", "extra": {"direccion": "Av Corrientes 1000", "provincia": "buenos aires"}},
 
     # ── Brazil ──
     {"source": "br.cnpj", "doc_type": "nit", "doc_number": "33000167000101", "label": "Petrobras CNPJ"},
@@ -233,6 +234,8 @@ QUERIES: list[dict] = [
     {"source": "br.fipe", "doc_type": "custom", "doc_number": "001004-9", "label": "FIPE Gol 1.0", "extra": {"codigo_fipe": "001004-9"}},
     {"source": "br.cep", "doc_type": "custom", "doc_number": "01001000", "label": "Praça da Sé SP", "extra": {"cep": "01001000"}},
     {"source": "br.banks", "doc_type": "custom", "doc_number": "001", "label": "Banco do Brasil", "extra": {"code": "001"}},
+    {"source": "br.pix", "doc_type": "custom", "doc_number": "pix", "label": "PIX participants"},
+    {"source": "br.corretoras", "doc_type": "nit", "doc_number": "02332886000104", "label": "XP Investimentos"},
 
     # ── Costa Rica ──
     {"source": "cr.cedula", "doc_type": "cedula", "doc_number": "101110111", "label": "Test CR cedula"},
