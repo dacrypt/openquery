@@ -338,6 +338,10 @@ def _ensure_loaded() -> None:
     except ImportError:
         pass
     try:
+        import openquery.sources.co.secop_sanciones  # noqa: F401
+    except ImportError:
+        pass
+    try:
         import openquery.sources.co.multas_suiteneptuno  # noqa: F401
     except ImportError:
         pass
@@ -440,6 +444,10 @@ def _ensure_loaded() -> None:
     # Brazil
     try:
         import openquery.sources.br.cnpj  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.br.datajud  # noqa: F401
     except ImportError:
         pass
     # Costa Rica

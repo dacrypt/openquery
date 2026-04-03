@@ -65,7 +65,13 @@
       "WebFetch(domain:sucive.gub.uy)",
       "WebFetch(domain:portaldgii.mh.gob.sv)",
       "WebFetch(domain:login.gob.sv)",
-      "WebFetch(domain:portalpublico.runt.gov.co)"
+      "WebFetch(domain:portalpublico.runt.gov.co)",
+      "WebFetch(domain:datajud-wiki.cnj.jus.br)",
+      "WebFetch(domain:api.cmfchile.cl)",
+      "WebFetch(domain:medium.com)",
+      "WebFetch(domain:dev.to)",
+      "WebFetch(domain:dev.socrata.com)",
+      "WebFetch(domain:brasilapi.com.br)"
     ]
   }
 }

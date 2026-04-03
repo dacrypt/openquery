@@ -135,6 +135,7 @@ QUERIES: list[dict] = [
     {"source": "co.directorio_empresas", "doc_type": "nit", "doc_number": "899999068", "label": "Ecopetrol NIT"},
     {"source": "co.empresas_google", "doc_type": "custom", "doc_number": "Ecopetrol", "label": "Ecopetrol Google"},
     {"source": "co.supersociedades", "doc_type": "nit", "doc_number": "899999068", "label": "Ecopetrol NIT"},
+    {"source": "co.secop_sanciones", "doc_type": "nit", "doc_number": "899999068", "label": "Ecopetrol sanciones"},
 
     # ── Colombia: Vehicles ──
     {"source": "co.simit", "doc_type": "cedula", "doc_number": "79940745", "label": "Iván Duque"},
@@ -227,6 +228,7 @@ QUERIES: list[dict] = [
 
     # ── Brazil ──
     {"source": "br.cnpj", "doc_type": "nit", "doc_number": "33000167000101", "label": "Petrobras CNPJ"},
+    {"source": "br.datajud", "doc_type": "custom", "doc_number": "00008323520184013202", "label": "Test BR processo", "extra": {"processo": "00008323520184013202", "tribunal": "api_publica_tjsp"}},
 
     # ── Costa Rica ──
     {"source": "cr.cedula", "doc_type": "cedula", "doc_number": "101110111", "label": "Test CR cedula"},
