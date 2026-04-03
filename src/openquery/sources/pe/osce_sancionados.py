@@ -94,18 +94,9 @@ class OsceSancionadosSource(BaseSource):
                         name_input.fill(name)
                         logger.info("Filled name: %s", name)
 
-                # Solve image CAPTCHA if present
-                captcha_img = page.query_selector('#imgCaptcha')
-                if captcha_img:
-                    captcha_bytes = captcha_img.screenshot()
-                    if captcha_bytes:
-                        from openquery.core.captcha import OCRSolver
-                        solver = OCRSolver(max_chars=6)
-                        captcha_text = solver.solve(captcha_bytes)
-                        captcha_input = page.query_selector('#captchacode, input[name="captchacode"]')
-                        if captcha_input:
-                            captcha_input.fill(captcha_text)
-                            logger.info("Solved CAPTCHA: %s", captcha_text)
+                # Solve image CAPTCHA using universal middleware (LLM vision chain)
+                from openquery.core.captcha_middleware import solve_page_captchas
+                solve_page_captchas(page)
 
                 if collector:
                     collector.screenshot(page, "form_filled")

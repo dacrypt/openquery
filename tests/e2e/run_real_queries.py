@@ -53,14 +53,10 @@ KNOWN_STATUS: dict[str, str] = {
     "co.certificado_tradicion": "SITE_DOWN: supernotariado.gov.co still timing out",
     "co.inpec": "SITE_DOWN: INPEC 504 from Azure Gateway",
     "pe.servir_sanciones": "SITE_DOWN: sanciones.gob.pe timeout",
-    "pe.sunarp_vehicular": "INTERMITTENT: SUNARP sometimes times out",
+    # pe.sunarp_vehicular — re-testing (intermittent)
     "cl.fiscalizacion": "SITE_DOWN: Site timeout",
     "mx.repuve": "SITE_DOWN: repuve.gob.mx timeout",
-    # RUNT — captcha solver intermittent (sometimes works, sometimes returns invalid)
-    "co.runt": "CAPTCHA_INTERMITTENT: RUNT captcha OCR sometimes fails validation",
-    "co.runt_conductor": "CAPTCHA_INTERMITTENT: RUNT conductor captcha API returns empty",
-    "co.runt_soat": "CAPTCHA_INTERMITTENT: RUNT SOAT captcha OCR sometimes fails",
-    "co.runt_rtm": "CAPTCHA_INTERMITTENT: RUNT RTM captcha OCR sometimes fails",
+    # RUNT — re-testing with LLM vision CAPTCHA chain
     # Source URL decommissioned or fundamentally changed
     "ec.senescyt": "URL_MOVED: senescyt.gob.ec moved to educacionsuperior.gob.ec, endpoint gone",
     "mx.sat_efos": "NO_FORM: SAT EFOS page is static XLS download, no search form",
@@ -73,7 +69,7 @@ KNOWN_STATUS: dict[str, str] = {
     "co.consulta_procesos": "SPA_TIMING: Vue.js dynamic IDs, ElementHandle detaches",
     "co.libreta_militar": "SPA_TIMING: ElementHandle.fill timeout (page loads but form elements detach)",
     "pe.poder_judicial": "SELECTOR_STALE: PJ Peru form selectors need update",
-    "pe.osce_sancionados": "CAPTCHA: rnp.gob.pe requires image CAPTCHA + page load timing",
+    # pe.osce_sancionados — re-testing with LLM vision CAPTCHA middleware
     "ar.dnrpa": "SPA_TIMING: DNRPA ElementHandle.fill timeout",
     "cl.pjud": "SPA_TIMING: PJUD ElementHandle timeout",
     # Remaining selector issues (pages load, forms don't match)
@@ -84,8 +80,7 @@ KNOWN_STATUS: dict[str, str] = {
     "co.seguridad_social": "SELECTOR_STALE: miseguridadsocial.gov.co form selectors outdated",
     "co.mi_casa_ya": "SELECTOR_STALE: Mi Casa Ya form selectors outdated",
     # ar.afip_cuit removed — LLM vision CAPTCHA middleware wired
-    "co.einforma": "INTERMITTENT: eInforma sometimes times out on slow page load",
-    "co.procuraduria": "CAPTCHA_INTERMITTENT: Knowledge CAPTCHA needs Ollama or LLM API key",
+    # co.einforma + co.procuraduria — re-testing (intermittent)
     # New countries — blockers identified
     "do.rnc": "WAF_BLOCKED: DGII Dominican Republic returns 403 to headless browsers",
     "gt.nit": "WAF_BLOCKED: SAT Guatemala behind Cloudflare Turnstile",
@@ -241,6 +236,8 @@ QUERIES: list[dict] = [
     {"source": "br.banks", "doc_type": "custom", "doc_number": "001", "label": "Banco do Brasil", "extra": {"code": "001"}},
     {"source": "br.pix", "doc_type": "custom", "doc_number": "pix", "label": "PIX participants"},
     {"source": "br.corretoras", "doc_type": "nit", "doc_number": "02332886000104", "label": "XP Investimentos"},
+
+    {"source": "br.ddd", "doc_type": "custom", "doc_number": "11", "label": "DDD São Paulo", "extra": {"ddd": "11"}},
 
     # ── Costa Rica ──
     {"source": "cr.cedula", "doc_type": "cedula", "doc_number": "101110111", "label": "Test CR cedula"},

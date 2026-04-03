@@ -486,6 +486,10 @@ def _ensure_loaded() -> None:
         import openquery.sources.br.corretoras  # noqa: F401
     except ImportError:
         pass
+    try:
+        import openquery.sources.br.ddd  # noqa: F401
+    except ImportError:
+        pass
     # Costa Rica
     try:
         import openquery.sources.cr.cedula  # noqa: F401
