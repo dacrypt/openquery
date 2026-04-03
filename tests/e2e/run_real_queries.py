@@ -68,7 +68,7 @@ KNOWN_STATUS: dict[str, str] = {
     # Sites with specific blocking that needs more work
     "ec.cne_padron": "CAPTCHA_GATE: Entire CNE site gated behind Imperva bot-detection CAPTCHA",
     "mx.siem": "TERMS_WALL: Vue SPA requires accepting terms modal before search",
-    # mx.curp removed — timeout increased to 45s, re-testing
+    "mx.curp": "TIMEOUT: gob.mx API still times out even at 45s",
     # SPA/timing issues
     "co.consulta_procesos": "SPA_TIMING: Vue.js dynamic IDs, ElementHandle detaches",
     "co.libreta_militar": "SPA_TIMING: ElementHandle.fill timeout (page loads but form elements detach)",
@@ -91,7 +91,7 @@ KNOWN_STATUS: dict[str, str] = {
     "py.ruc": "RECAPTCHA: SET Paraguay has reCAPTCHA v2 on form",
     # cl.sii_rut removed — testing again (intermittent)
     "uy.sucive": "SELECTOR_STALE: SUCIVE form selectors need site-specific inspection",
-    # pa.ruc removed — timeout increased to 90s, re-testing
+    "pa.ruc": "SELECTOR_STALE: DGI Panama form selectors need update",
     # co.afiliados_compensado removed — re-testing
 }
 
