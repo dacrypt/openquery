@@ -79,8 +79,8 @@ KNOWN_STATUS: dict[str, str] = {
     # Remaining selector issues (pages load, forms don't match)
     "co.rnmc": "SPA_TIMING: ASP.NET __doPostBack causes page reload + element detach",
     "co.tutelas": "SELECTOR_STALE: Rama Judicial form selectors outdated",
-    # co.rues removed — reCAPTCHA middleware wired
-    # co.adres removed — reCAPTCHA middleware wired
+    "co.rues": "RECAPTCHA: Detected by middleware — needs CAPSOLVER_API_KEY to solve",
+    "co.adres": "RECAPTCHA: Detected by middleware — needs CAPSOLVER_API_KEY to solve",
     "co.seguridad_social": "SELECTOR_STALE: miseguridadsocial.gov.co form selectors outdated",
     "co.mi_casa_ya": "SELECTOR_STALE: Mi Casa Ya form selectors outdated",
     # ar.afip_cuit removed — LLM vision CAPTCHA middleware wired
