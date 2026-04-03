@@ -140,6 +140,7 @@ QUERIES: list[dict] = [
     {"source": "co.secop_sanciones", "doc_type": "nit", "doc_number": "899999068", "label": "Ecopetrol sanciones"},
     {"source": "co.simit_historico", "doc_type": "placa", "doc_number": "MIK715", "label": "SIMIT historico MIK715"},
     {"source": "co.secop_procesos", "doc_type": "nit", "doc_number": "899999068", "label": "SECOP procesos Ecopetrol"},
+    {"source": "co.datos_catalogo", "doc_type": "custom", "doc_number": "transporte", "label": "CO datos catalogo", "extra": {"q": "transporte"}},
 
     # ── Colombia: Vehicles ──
     {"source": "co.simit", "doc_type": "cedula", "doc_number": "79940745", "label": "Iván Duque"},
@@ -212,6 +213,7 @@ QUERIES: list[dict] = [
     {"source": "pe.osce_sancionados", "doc_type": "custom", "doc_number": "20100030595", "label": "Banco de la Nacion", "extra": {"ruc": "20100030595"}},
     {"source": "pe.sunarp_vehicular", "doc_type": "placa", "doc_number": "ABC-123", "label": "Test PE plate"},
     {"source": "pe.servir_sanciones", "doc_type": "custom", "doc_number": "12345678", "label": "Test PE search", "extra": {"nombre": "Garcia"}},
+    {"source": "pe.datos", "doc_type": "custom", "doc_number": "salud", "label": "PE datos abiertos", "extra": {"q": "salud"}},
 
     # ── Chile ──
     {"source": "cl.sii_rut", "doc_type": "custom", "doc_number": "61704000K", "label": "Codelco", "extra": {"rut": "61704000-K"}},

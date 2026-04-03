@@ -354,6 +354,10 @@ def _ensure_loaded() -> None:
     except ImportError:
         pass
     try:
+        import openquery.sources.co.datos_catalogo  # noqa: F401
+    except ImportError:
+        pass
+    try:
         import openquery.sources.co.secop_procesos  # noqa: F401
     except ImportError:
         pass
@@ -392,6 +396,10 @@ def _ensure_loaded() -> None:
         pass
     try:
         import openquery.sources.pe.osce_sancionados  # noqa: F401
+    except ImportError:
+        pass
+    try:
+        import openquery.sources.pe.datos  # noqa: F401
     except ImportError:
         pass
     try:
