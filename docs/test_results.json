@@ -8,7 +8,7 @@
     "latency_ms": 0,
     "error": "WAF_BLOCKED: Registradur\u00eda WAF blocks this IP (ICEfaces dynamic forms)",
     "fields": 0,
-    "tested_at": "2026-04-02T19:54:19"
+    "tested_at": "2026-04-02T20:06:50"
   },
   {
     "source": "co.nombre_completo",
@@ -19,7 +19,7 @@
     "latency_ms": 0,
     "error": "WAF_BLOCKED: Registradur\u00eda WAF",
     "fields": 0,
-    "tested_at": "2026-04-02T19:54:19"
+    "tested_at": "2026-04-02T20:06:50"
   },
   {
     "source": "co.defuncion",
@@ -30,7 +30,7 @@
     "latency_ms": 0,
     "error": "WAF_BLOCKED: Registradur\u00eda WAF",
     "fields": 0,
-    "tested_at": "2026-04-02T19:54:19"
+    "tested_at": "2026-04-02T20:06:50"
   },
   {
     "source": "co.puesto_votacion",
@@ -41,7 +41,7 @@
     "latency_ms": 0,
     "error": "WAF_BLOCKED: Registradur\u00eda WAF",
     "fields": 0,
-    "tested_at": "2026-04-02T19:54:19"
+    "tested_at": "2026-04-02T20:06:50"
   },
   {
     "source": "co.estado_tramite_cedula",
@@ -52,7 +52,7 @@
     "latency_ms": 0,
     "error": "WAF_BLOCKED: Registradur\u00eda WAF",
     "fields": 0,
-    "tested_at": "2026-04-02T19:54:19"
+    "tested_at": "2026-04-02T20:06:50"
   },
   {
     "source": "co.registro_civil",
@@ -63,7 +63,7 @@
     "latency_ms": 0,
     "error": "WAF_BLOCKED: Registradur\u00eda WAF",
     "fields": 0,
-    "tested_at": "2026-04-02T19:54:19"
+    "tested_at": "2026-04-02T20:06:50"
   },
   {
     "source": "co.libreta_militar",
@@ -74,7 +74,7 @@
     "latency_ms": 0,
     "error": "SPA_TIMING: ElementHandle.fill timeout (page loads but form elements detach)",
     "fields": 0,
-    "tested_at": "2026-04-02T19:54:19"
+    "tested_at": "2026-04-02T20:06:50"
   },
   {
     "source": "co.estado_cedula_extranjeria",
@@ -85,7 +85,7 @@
     "latency_ms": 0,
     "error": "WAF_BLOCKED: Migraci\u00f3n WAF",
     "fields": 0,
-    "tested_at": "2026-04-02T19:54:19"
+    "tested_at": "2026-04-02T20:06:50"
   },
   {
     "source": "co.validar_policia",
@@ -93,10 +93,10 @@
     "doc_type": "custom",
     "doc_number": "79940745",
     "status": "OK",
-    "latency_ms": 24380,
+    "latency_ms": 16328,
     "error": "",
     "fields": 4,
-    "tested_at": "2026-04-02T19:54:19"
+    "tested_at": "2026-04-02T20:06:50"
   },
   {
     "source": "co.migracion_ppt",
@@ -104,10 +104,10 @@
     "doc_type": "custom",
     "doc_number": "12345678",
     "status": "OK",
-    "latency_ms": 20172,
+    "latency_ms": 15283,
     "error": "",
     "fields": 3,
-    "tested_at": "2026-04-02T19:54:43"
+    "tested_at": "2026-04-02T20:07:06"
   },
   {
     "source": "co.policia",
@@ -115,21 +115,21 @@
     "doc_type": "cedula",
     "doc_number": "79940745",
     "status": "OK",
-    "latency_ms": 13025,
+    "latency_ms": 11674,
     "error": "",
     "fields": 2,
-    "tested_at": "2026-04-02T19:55:03"
+    "tested_at": "2026-04-02T20:07:21"
   },
   {
     "source": "co.procuraduria",
     "label": "Iv\u00e1n Duque",
     "doc_type": "cedula",
     "doc_number": "79940745",
-    "status": "ERROR",
-    "latency_ms": 7079,
-    "error": "SourceError: [co.procuraduria] Cannot solve captcha: '\u00bfEscriba los dos ultimos digitos del documento a consultar?'. All QA solvers fa",
-    "fields": 0,
-    "tested_at": "2026-04-02T19:55:16"
+    "status": "OK",
+    "latency_ms": 5280,
+    "error": "",
+    "fields": 3,
+    "tested_at": "2026-04-02T20:07:33"
   },
   {
     "source": "co.contraloria",
@@ -137,10 +137,10 @@
     "doc_type": "cedula",
     "doc_number": "79940745",
     "status": "OK",
-    "latency_ms": 12180,
+    "latency_ms": 11209,
     "error": "",
     "fields": 3,
-    "tested_at": "2026-04-02T19:55:23"
+    "tested_at": "2026-04-02T20:07:38"
   },
   {
     "source": "co.rnmc",
@@ -151,7 +151,7 @@
     "latency_ms": 0,
     "error": "SPA_TIMING: ASP.NET postback ElementHandle detaches mid-click",
     "fields": 0,
-    "tested_at": "2026-04-02T19:55:35"
+    "tested_at": "2026-04-02T20:07:49"
   },
   {
     "source": "co.consulta_procesos",
@@ -162,7 +162,7 @@
     "latency_ms": 0,
     "error": "SPA_TIMING: Vue.js dynamic IDs, ElementHandle detaches",
     "fields": 0,
-    "tested_at": "2026-04-02T19:55:35"
+    "tested_at": "2026-04-02T20:07:49"
   },
   {
     "source": "co.tutelas",
@@ -173,7 +173,7 @@
     "latency_ms": 0,
     "error": "SELECTOR_STALE: Rama Judicial form selectors outdated",
     "fields": 0,
-    "tested_at": "2026-04-02T19:55:35"
+    "tested_at": "2026-04-02T20:07:49"
   },
   {
     "source": "co.jep",
@@ -184,7 +184,7 @@
     "latency_ms": 0,
     "error": "NO_FORM: JEP is SharePoint \u2014 no search form",
     "fields": 0,
-    "tested_at": "2026-04-02T19:55:35"
+    "tested_at": "2026-04-02T20:07:49"
   },
   {
     "source": "co.inpec",
@@ -195,7 +195,7 @@
     "latency_ms": 0,
     "error": "SITE_DOWN: INPEC 504 from Azure Gateway",
     "fields": 0,
-    "tested_at": "2026-04-02T19:55:35"
+    "tested_at": "2026-04-02T20:07:49"
   },
   {
     "source": "co.pep",
@@ -203,10 +203,10 @@
     "doc_type": "cedula",
     "doc_number": "79940745",
     "status": "OK",
-    "latency_ms": 3434,
+    "latency_ms": 810,
     "error": "",
     "fields": 2,
-    "tested_at": "2026-04-02T19:55:35"
+    "tested_at": "2026-04-02T20:07:49"
   },
   {
     "source": "co.proveedores_ficticios",
@@ -217,7 +217,7 @@
     "latency_ms": 0,
     "error": "API_REMOVED: Dataset removed from datos.gov.co",
     "fields": 0,
-    "tested_at": "2026-04-02T19:55:39"
+    "tested_at": "2026-04-02T20:07:50"
   },
   {
     "source": "co.rne",
@@ -228,7 +228,7 @@
     "latency_ms": 0,
     "error": "AUTH_REQUIRED: Needs CRC portal credentials (usuario/password)",
     "fields": 0,
-    "tested_at": "2026-04-02T19:55:39"
+    "tested_at": "2026-04-02T20:07:50"
   },
   {
     "source": "co.dian_rut",
@@ -236,10 +236,10 @@
     "doc_type": "nit",
     "doc_number": "899999068",
     "status": "OK",
-    "latency_ms": 13820,
+    "latency_ms": 14659,
     "error": "",
     "fields": 4,
-    "tested_at": "2026-04-02T19:55:39"
+    "tested_at": "2026-04-02T20:07:50"
   },
   {
     "source": "co.rues",
@@ -250,7 +250,7 @@
     "latency_ms": 0,
     "error": "RECAPTCHA: rues.org.co has reCAPTCHA v2 + ElementHandle timeout",
     "fields": 0,
-    "tested_at": "2026-04-02T19:55:53"
+    "tested_at": "2026-04-02T20:08:05"
   },
   {
     "source": "co.secop",
@@ -258,10 +258,10 @@
     "doc_type": "nit",
     "doc_number": "899999068",
     "status": "OK",
-    "latency_ms": 1699,
+    "latency_ms": 715,
     "error": "",
     "fields": 4,
-    "tested_at": "2026-04-02T19:55:53"
+    "tested_at": "2026-04-02T20:08:05"
   },
   {
     "source": "co.cufe_dian",
@@ -269,10 +269,10 @@
     "doc_type": "custom",
     "doc_number": "test-cufe-123",
     "status": "OK",
-    "latency_ms": 11819,
+    "latency_ms": 12411,
     "error": "",
     "fields": 2,
-    "tested_at": "2026-04-02T19:55:54"
+    "tested_at": "2026-04-02T20:08:06"
   },
   {
     "source": "co.einforma",
@@ -280,10 +280,10 @@
     "doc_type": "nit",
     "doc_number": "899999068",
     "status": "OK",
-    "latency_ms": 14692,
+    "latency_ms": 16069,
     "error": "",
     "fields": 3,
-    "tested_at": "2026-04-02T19:56:06"
+    "tested_at": "2026-04-02T20:08:18"
   },
   {
     "source": "co.camara_comercio_medellin",
@@ -291,10 +291,10 @@
     "doc_type": "nit",
     "doc_number": "899999068",
     "status": "OK",
-    "latency_ms": 10722,
+    "latency_ms": 11827,
     "error": "",
     "fields": 3,
-    "tested_at": "2026-04-02T19:56:21"
+    "tested_at": "2026-04-02T20:08:34"
   },
   {
     "source": "co.directorio_empresas",
@@ -305,7 +305,7 @@
     "latency_ms": 0,
     "error": "API_REMOVED: Dataset API no longer available",
     "fields": 0,
-    "tested_at": "2026-04-02T19:56:32"
+    "tested_at": "2026-04-02T20:08:46"
   },
   {
     "source": "co.empresas_google",
@@ -313,10 +313,10 @@
     "doc_type": "custom",
     "doc_number": "Ecopetrol",
     "status": "OK",
-    "latency_ms": 6559,
+    "latency_ms": 6810,
     "error": "",
     "fields": 6,
-    "tested_at": "2026-04-02T19:56:32"
+    "tested_at": "2026-04-02T20:08:46"
   },
   {
     "source": "co.supersociedades",
@@ -327,7 +327,7 @@
     "latency_ms": 0,
     "error": "WAF_BLOCKED: Supersociedades WAF blocks even Patchright",
     "fields": 0,
-    "tested_at": "2026-04-02T19:56:38"
+    "tested_at": "2026-04-02T20:08:53"
   },
   {
     "source": "co.simit",
@@ -335,54 +335,54 @@
     "doc_type": "cedula",
     "doc_number": "79940745",
     "status": "OK",
-    "latency_ms": 9878,
+    "latency_ms": 16316,
     "error": "",
     "fields": 3,
-    "tested_at": "2026-04-02T19:56:38"
+    "tested_at": "2026-04-02T20:08:53"
   },
   {
     "source": "co.runt",
     "label": "Test plate",
     "doc_type": "placa",
     "doc_number": "BXM627",
-    "status": "ERROR",
-    "latency_ms": 18671,
-    "error": "SourceError: [co.runt] All 3 attempts failed. Last error: [co.runt] RUNT API returned 400: {\"codigoResultado\":\"ERROR\",\"descripcionRes",
+    "status": "SKIP",
+    "latency_ms": 0,
+    "error": "CAPTCHA_INTERMITTENT: RUNT captcha OCR sometimes fails validation",
     "fields": 0,
-    "tested_at": "2026-04-02T19:56:48"
+    "tested_at": "2026-04-02T20:09:09"
   },
   {
     "source": "co.runt_conductor",
     "label": "Iv\u00e1n Duque",
     "doc_type": "cedula",
     "doc_number": "79940745",
-    "status": "ERROR",
-    "latency_ms": 7500,
-    "error": "SourceError: [co.runt_conductor] All 3 attempts failed. Last error: [co.runt_conductor] No captcha ID in response: {'id': '', 'imagen",
+    "status": "SKIP",
+    "latency_ms": 0,
+    "error": "CAPTCHA_INTERMITTENT: RUNT conductor captcha API returns empty",
     "fields": 0,
-    "tested_at": "2026-04-02T19:57:07"
+    "tested_at": "2026-04-02T20:09:09"
   },
   {
     "source": "co.runt_soat",
     "label": "Test plate",
     "doc_type": "placa",
     "doc_number": "BXM627",
-    "status": "ERROR",
-    "latency_ms": 12164,
-    "error": "SourceError: [co.runt_soat] All 3 attempts failed. Last error: 'NoneType' object has no attribute 'get'",
+    "status": "SKIP",
+    "latency_ms": 0,
+    "error": "CAPTCHA_INTERMITTENT: RUNT SOAT captcha OCR sometimes fails",
     "fields": 0,
-    "tested_at": "2026-04-02T19:57:14"
+    "tested_at": "2026-04-02T20:09:09"
   },
   {
     "source": "co.runt_rtm",
     "label": "Test plate",
     "doc_type": "placa",
     "doc_number": "BXM627",
-    "status": "ERROR",
-    "latency_ms": 8471,
-    "error": "SourceError: [co.runt_rtm] All 3 attempts failed. Last error: 'NoneType' object has no attribute 'get'",
+    "status": "SKIP",
+    "latency_ms": 0,
+    "error": "CAPTCHA_INTERMITTENT: RUNT RTM captcha OCR sometimes fails",
     "fields": 0,
-    "tested_at": "2026-04-02T19:57:26"
+    "tested_at": "2026-04-02T20:09:09"
   },
   {
     "source": "co.comparendos_transito",
@@ -390,10 +390,10 @@
     "doc_type": "cedula",
     "doc_number": "79940745",
     "status": "OK",
-    "latency_ms": 12715,
+    "latency_ms": 32494,
     "error": "",
     "fields": 3,
-    "tested_at": "2026-04-02T19:57:35"
+    "tested_at": "2026-04-02T20:09:09"
   },
   {
     "source": "co.retencion_vehiculos",
@@ -401,10 +401,10 @@
     "doc_type": "placa",
     "doc_number": "BXM627",
     "status": "OK",
-    "latency_ms": 10417,
+    "latency_ms": 16490,
     "error": "",
     "fields": 3,
-    "tested_at": "2026-04-02T19:57:48"
+    "tested_at": "2026-04-02T20:09:42"
   },
   {
     "source": "co.fasecolda",
@@ -415,7 +415,7 @@
     "latency_ms": 0,
     "error": "AUTH_REQUIRED: Needs manual bearer token capture",
     "fields": 0,
-    "tested_at": "2026-04-02T19:57:58"
+    "tested_at": "2026-04-02T20:09:58"
   },
   {
     "source": "co.recalls",
@@ -423,10 +423,10 @@
     "doc_type": "custom",
     "doc_number": "test",
     "status": "OK",
-    "latency_ms": 8783,
+    "latency_ms": 14814,
     "error": "",
     "fields": 1,
-    "tested_at": "2026-04-02T19:57:58"
+    "tested_at": "2026-04-02T20:09:58"
   },
   {
     "source": "co.pico_y_placa",
@@ -437,7 +437,7 @@
     "latency_ms": 0,
     "error": "",
     "fields": 9,
-    "tested_at": "2026-04-02T19:58:07"
+    "tested_at": "2026-04-02T20:10:13"
   },
   {
     "source": "co.vehiculos",
@@ -445,10 +445,10 @@
     "doc_type": "placa",
     "doc_number": "BXM627",
     "status": "OK",
-    "latency_ms": 902,
+    "latency_ms": 1069,
     "error": "",
     "fields": 1,
-    "tested_at": "2026-04-02T19:58:07"
+    "tested_at": "2026-04-02T20:10:13"
   },
   {
     "source": "co.peajes",
@@ -456,10 +456,10 @@
     "doc_type": "custom",
     "doc_number": "peaje",
     "status": "OK",
-    "latency_ms": 2699,
+    "latency_ms": 1296,
     "error": "",
     "fields": 4,
-    "tested_at": "2026-04-02T19:58:08"
+    "tested_at": "2026-04-02T20:10:14"
   },
   {
     "source": "co.combustible",
@@ -467,10 +467,10 @@
     "doc_type": "custom",
     "doc_number": "fuel",
     "status": "OK",
-    "latency_ms": 1639,
+    "latency_ms": 1252,
     "error": "",
     "fields": 4,
-    "tested_at": "2026-04-02T19:58:10"
+    "tested_at": "2026-04-02T20:10:15"
   },
   {
     "source": "co.estaciones_ev",
@@ -478,10 +478,10 @@
     "doc_type": "custom",
     "doc_number": "ev",
     "status": "OK",
-    "latency_ms": 953,
+    "latency_ms": 1012,
     "error": "",
     "fields": 1,
-    "tested_at": "2026-04-02T19:58:12"
+    "tested_at": "2026-04-02T20:10:16"
   },
   {
     "source": "co.siniestralidad",
@@ -489,10 +489,10 @@
     "doc_type": "custom",
     "doc_number": "stats",
     "status": "OK",
-    "latency_ms": 778,
+    "latency_ms": 1041,
     "error": "",
     "fields": 5,
-    "tested_at": "2026-04-02T19:58:13"
+    "tested_at": "2026-04-02T20:10:17"
   },
   {
     "source": "co.adres",
@@ -503,7 +503,7 @@
     "latency_ms": 0,
     "error": "RECAPTCHA: ADRES has reCAPTCHA Enterprise v3 + selector mismatch",
     "fields": 0,
-    "tested_at": "2026-04-02T19:58:14"
+    "tested_at": "2026-04-02T20:10:19"
   },
   {
     "source": "co.colpensiones",
@@ -514,7 +514,7 @@
     "latency_ms": 0,
     "error": "WAF_BLOCKED: Returns 403 even with Patchright",
     "fields": 0,
-    "tested_at": "2026-04-02T19:58:14"
+    "tested_at": "2026-04-02T20:10:19"
   },
   {
     "source": "co.fopep",
@@ -525,7 +525,7 @@
     "latency_ms": 0,
     "error": "AUTH_REQUIRED: Login-gated portal with reCAPTCHA",
     "fields": 0,
-    "tested_at": "2026-04-02T19:58:14"
+    "tested_at": "2026-04-02T20:10:19"
   },
   {
     "source": "co.ruaf",
@@ -536,7 +536,7 @@
     "latency_ms": 0,
     "error": "WAF_BLOCKED: SISPRO WAF blocks even Patchright",
     "fields": 0,
-    "tested_at": "2026-04-02T19:58:14"
+    "tested_at": "2026-04-02T20:10:19"
   },
   {
     "source": "co.rethus",
@@ -547,7 +547,7 @@
     "latency_ms": 0,
     "error": "WAF_BLOCKED: SISPRO WAF blocks even Patchright",
     "fields": 0,
-    "tested_at": "2026-04-02T19:58:14"
+    "tested_at": "2026-04-02T20:10:19"
   },
   {
     "source": "co.soi",
@@ -558,7 +558,7 @@
     "latency_ms": 0,
     "error": "AUTH_REQUIRED: Login-only platform (ACH Colombia)",
     "fields": 0,
-    "tested_at": "2026-04-02T19:58:14"
+    "tested_at": "2026-04-02T20:10:19"
   },
   {
     "source": "co.seguridad_social",
@@ -569,18 +569,18 @@
     "latency_ms": 0,
     "error": "SELECTOR_STALE: miseguridadsocial.gov.co form selectors outdated",
     "fields": 0,
-    "tested_at": "2026-04-02T19:58:14"
+    "tested_at": "2026-04-02T20:10:19"
   },
   {
     "source": "co.afiliados_compensado",
     "label": "Iv\u00e1n Duque",
     "doc_type": "cedula",
     "doc_number": "79940745",
-    "status": "OK",
-    "latency_ms": 23771,
-    "error": "",
-    "fields": 3,
-    "tested_at": "2026-04-02T19:58:14"
+    "status": "ERROR",
+    "latency_ms": 30847,
+    "error": "TimeoutError: Page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to \"https://www.ssf.gov.co/\", waiting until \"domcontentloa",
+    "fields": 0,
+    "tested_at": "2026-04-02T20:10:19"
   },
   {
     "source": "co.sisben",
@@ -588,10 +588,10 @@
     "doc_type": "cedula",
     "doc_number": "79940745",
     "status": "OK",
-    "latency_ms": 12183,
+    "latency_ms": 17677,
     "error": "",
     "fields": 3,
-    "tested_at": "2026-04-02T19:58:37"
+    "tested_at": "2026-04-02T20:10:49"
   },
   {
     "source": "co.licencias_salud",
@@ -599,10 +599,10 @@
     "doc_type": "nit",
     "doc_number": "838000096",
     "status": "OK",
-    "latency_ms": 3653,
+    "latency_ms": 1761,
     "error": "",
     "fields": 4,
-    "tested_at": "2026-04-02T19:58:50"
+    "tested_at": "2026-04-02T20:11:07"
   },
   {
     "source": "co.snr",
@@ -610,21 +610,21 @@
     "doc_type": "cedula",
     "doc_number": "79940745",
     "status": "OK",
-    "latency_ms": 9869,
+    "latency_ms": 10258,
     "error": "",
     "fields": 3,
-    "tested_at": "2026-04-02T19:58:53"
+    "tested_at": "2026-04-02T20:11:09"
   },
   {
     "source": "co.certificado_tradicion",
     "label": "Test cert",
     "doc_type": "custom",
     "doc_number": "050C12345678",
-    "status": "ERROR",
-    "latency_ms": 30689,
-    "error": "TimeoutError: Page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to \"https://www.supernotariado.gov.co/\", waiting until \"do",
+    "status": "SKIP",
+    "latency_ms": 0,
+    "error": "SITE_DOWN: supernotariado.gov.co still timing out",
     "fields": 0,
-    "tested_at": "2026-04-02T19:59:03"
+    "tested_at": "2026-04-02T20:11:19"
   },
   {
     "source": "co.garantias_mobiliarias",
@@ -632,10 +632,10 @@
     "doc_type": "cedula",
     "doc_number": "79940745",
     "status": "OK",
-    "latency_ms": 13486,
+    "latency_ms": 14560,
     "error": "",
     "fields": 3,
-    "tested_at": "2026-04-02T19:59:34"
+    "tested_at": "2026-04-02T20:11:19"
   },
   {
     "source": "co.cambio_estrato",
@@ -643,10 +643,10 @@
     "doc_type": "cedula",
     "doc_number": "79940745",
     "status": "OK",
-    "latency_ms": 31861,
+    "latency_ms": 34057,
     "error": "",
     "fields": 4,
-    "tested_at": "2026-04-02T19:59:47"
+    "tested_at": "2026-04-02T20:11:34"
   },
   {
     "source": "co.mi_casa_ya",
@@ -657,7 +657,7 @@
     "latency_ms": 0,
     "error": "SELECTOR_STALE: Mi Casa Ya form selectors outdated",
     "fields": 0,
-    "tested_at": "2026-04-02T20:00:19"
+    "tested_at": "2026-04-02T20:12:08"
   },
   {
     "source": "co.tarifas_energia",
@@ -665,10 +665,10 @@
     "doc_type": "custom",
     "doc_number": "energia",
     "status": "OK",
-    "latency_ms": 1178,
+    "latency_ms": 914,
     "error": "",
     "fields": 4,
-    "tested_at": "2026-04-02T20:00:19"
+    "tested_at": "2026-04-02T20:12:08"
   },
   {
     "source": "co.rnt_turismo",
@@ -676,10 +676,10 @@
     "doc_type": "nit",
     "doc_number": "899999068",
     "status": "OK",
-    "latency_ms": 1439,
+    "latency_ms": 672,
     "error": "",
     "fields": 2,
-    "tested_at": "2026-04-02T20:00:20"
+    "tested_at": "2026-04-02T20:12:09"
   },
   {
     "source": "co.copnia",
@@ -687,10 +687,10 @@
     "doc_type": "cedula",
     "doc_number": "79940745",
     "status": "OK",
-    "latency_ms": 11593,
+    "latency_ms": 12217,
     "error": "",
     "fields": 4,
-    "tested_at": "2026-04-02T20:00:22"
+    "tested_at": "2026-04-02T20:12:09"
   },
   {
     "source": "us.nhtsa_vin",
@@ -698,10 +698,10 @@
     "doc_type": "vin",
     "doc_number": "1HGCM82633A004352",
     "status": "OK",
-    "latency_ms": 732,
+    "latency_ms": 724,
     "error": "",
     "fields": 14,
-    "tested_at": "2026-04-02T20:00:33"
+    "tested_at": "2026-04-02T20:12:21"
   },
   {
     "source": "us.nhtsa_recalls",
@@ -709,10 +709,10 @@
     "doc_type": "custom",
     "doc_number": "recalls",
     "status": "OK",
-    "latency_ms": 318,
+    "latency_ms": 295,
     "error": "",
     "fields": 6,
-    "tested_at": "2026-04-02T20:00:34"
+    "tested_at": "2026-04-02T20:12:22"
   },
   {
     "source": "us.nhtsa_complaints",
@@ -720,10 +720,10 @@
     "doc_type": "custom",
     "doc_number": "complaints",
     "status": "OK",
-    "latency_ms": 251,
+    "latency_ms": 339,
     "error": "",
     "fields": 6,
-    "tested_at": "2026-04-02T20:00:34"
+    "tested_at": "2026-04-02T20:12:22"
   },
   {
     "source": "us.epa_fuel_economy",
@@ -731,10 +731,10 @@
     "doc_type": "custom",
     "doc_number": "fuel",
     "status": "OK",
-    "latency_ms": 942,
+    "latency_ms": 931,
     "error": "",
     "fields": 6,
-    "tested_at": "2026-04-02T20:00:35"
+    "tested_at": "2026-04-02T20:12:23"
   },
   {
     "source": "us.ofac",
@@ -742,10 +742,10 @@
     "doc_type": "custom",
     "doc_number": "Nicolas Maduro",
     "status": "OK",
-    "latency_ms": 26154,
+    "latency_ms": 27068,
     "error": "",
     "fields": 5,
-    "tested_at": "2026-04-02T20:00:36"
+    "tested_at": "2026-04-02T20:12:24"
   },
   {
     "source": "intl.onu",
@@ -753,10 +753,10 @@
     "doc_type": "custom",
     "doc_number": "Nicolas Maduro",
     "status": "OK",
-    "latency_ms": 2642,
+    "latency_ms": 3767,
     "error": "",
     "fields": 2,
-    "tested_at": "2026-04-02T20:01:02"
+    "tested_at": "2026-04-02T20:12:51"
   },
   {
     "source": "intl.ship_tracking",
@@ -764,10 +764,10 @@
     "doc_type": "custom",
     "doc_number": "MMSI:123456789",
     "status": "OK",
-    "latency_ms": 1483,
+    "latency_ms": 1162,
     "error": "",
     "fields": 2,
-    "tested_at": "2026-04-02T20:01:04"
+    "tested_at": "2026-04-02T20:12:55"
   },
   {
     "source": "ec.sri_ruc",
@@ -778,7 +778,7 @@
     "latency_ms": 0,
     "error": "AUTH_REQUIRED: SRI API requires authorization token",
     "fields": 0,
-    "tested_at": "2026-04-02T20:01:06"
+    "tested_at": "2026-04-02T20:12:56"
   },
   {
     "source": "ec.ant_citaciones",
@@ -789,7 +789,7 @@
     "latency_ms": 0,
     "error": "API_ERROR: ANT API returns HTTP 500 server error",
     "fields": 0,
-    "tested_at": "2026-04-02T20:01:06"
+    "tested_at": "2026-04-02T20:12:56"
   },
   {
     "source": "ec.cne_padron",
@@ -800,7 +800,7 @@
     "latency_ms": 0,
     "error": "CAPTCHA_GATE: Entire CNE site gated behind Imperva bot-detection CAPTCHA",
     "fields": 0,
-    "tested_at": "2026-04-02T20:01:06"
+    "tested_at": "2026-04-02T20:12:56"
   },
   {
     "source": "ec.funcion_judicial",
@@ -808,10 +808,10 @@
     "doc_type": "cedula",
     "doc_number": "1712345678",
     "status": "OK",
-    "latency_ms": 14059,
+    "latency_ms": 25757,
     "error": "",
     "fields": 4,
-    "tested_at": "2026-04-02T20:01:06"
+    "tested_at": "2026-04-02T20:12:56"
   },
   {
     "source": "ec.supercias",
@@ -819,10 +819,10 @@
     "doc_type": "custom",
     "doc_number": "1790010937001",
     "status": "OK",
-    "latency_ms": 9051,
+    "latency_ms": 9151,
     "error": "",
     "fields": 3,
-    "tested_at": "2026-04-02T20:01:20"
+    "tested_at": "2026-04-02T20:13:22"
   },
   {
     "source": "ec.senescyt",
@@ -833,7 +833,7 @@
     "latency_ms": 0,
     "error": "URL_MOVED: senescyt.gob.ec moved to educacionsuperior.gob.ec, endpoint gone",
     "fields": 0,
-    "tested_at": "2026-04-02T20:01:29"
+    "tested_at": "2026-04-02T20:13:31"
   },
   {
     "source": "pe.sunat_ruc",
@@ -841,10 +841,10 @@
     "doc_type": "custom",
     "doc_number": "20100030595",
     "status": "OK",
-    "latency_ms": 12600,
+    "latency_ms": 15333,
     "error": "",
     "fields": 10,
-    "tested_at": "2026-04-02T20:01:29"
+    "tested_at": "2026-04-02T20:13:31"
   },
   {
     "source": "pe.poder_judicial",
@@ -855,7 +855,7 @@
     "latency_ms": 0,
     "error": "SELECTOR_STALE: PJ Peru form selectors need update",
     "fields": 0,
-    "tested_at": "2026-04-02T20:01:42"
+    "tested_at": "2026-04-02T20:13:46"
   },
   {
     "source": "pe.osce_sancionados",
@@ -866,7 +866,7 @@
     "latency_ms": 0,
     "error": "CAPTCHA: rnp.gob.pe requires image CAPTCHA + page load timing",
     "fields": 0,
-    "tested_at": "2026-04-02T20:01:42"
+    "tested_at": "2026-04-02T20:13:46"
   },
   {
     "source": "pe.sunarp_vehicular",
@@ -874,10 +874,10 @@
     "doc_type": "placa",
     "doc_number": "ABC-123",
     "status": "OK",
-    "latency_ms": 11152,
+    "latency_ms": 9445,
     "error": "",
     "fields": 3,
-    "tested_at": "2026-04-02T20:01:42"
+    "tested_at": "2026-04-02T20:13:46"
   },
   {
     "source": "pe.servir_sanciones",
@@ -888,7 +888,7 @@
     "latency_ms": 0,
     "error": "SITE_DOWN: sanciones.gob.pe timeout",
     "fields": 0,
-    "tested_at": "2026-04-02T20:01:53"
+    "tested_at": "2026-04-02T20:13:55"
   },
   {
     "source": "cl.sii_rut",
@@ -896,10 +896,10 @@
     "doc_type": "custom",
     "doc_number": "61704000K",
     "status": "OK",
-    "latency_ms": 25355,
+    "latency_ms": 10031,
     "error": "",
     "fields": 6,
-    "tested_at": "2026-04-02T20:01:53"
+    "tested_at": "2026-04-02T20:13:55"
   },
   {
     "source": "cl.pjud",
@@ -910,7 +910,7 @@
     "latency_ms": 0,
     "error": "SPA_TIMING: PJUD ElementHandle timeout",
     "fields": 0,
-    "tested_at": "2026-04-02T20:02:18"
+    "tested_at": "2026-04-02T20:14:05"
   },
   {
     "source": "cl.fiscalizacion",
@@ -921,7 +921,7 @@
     "latency_ms": 0,
     "error": "SITE_DOWN: Site timeout",
     "fields": 0,
-    "tested_at": "2026-04-02T20:02:18"
+    "tested_at": "2026-04-02T20:14:05"
   },
   {
     "source": "cl.superir",
@@ -929,10 +929,10 @@
     "doc_type": "custom",
     "doc_number": "61704000K",
     "status": "OK",
-    "latency_ms": 17173,
+    "latency_ms": 12383,
     "error": "",
     "fields": 2,
-    "tested_at": "2026-04-02T20:02:18"
+    "tested_at": "2026-04-02T20:14:05"
   },
   {
     "source": "mx.curp",
@@ -943,7 +943,7 @@
     "latency_ms": 0,
     "error": "TIMEOUT: gob.mx API intermittently times out",
     "fields": 0,
-    "tested_at": "2026-04-02T20:02:35"
+    "tested_at": "2026-04-02T20:14:18"
   },
   {
     "source": "mx.sat_efos",
@@ -954,7 +954,7 @@
     "latency_ms": 0,
     "error": "NO_FORM: SAT EFOS page is static XLS download, no search form",
     "fields": 0,
-    "tested_at": "2026-04-02T20:02:35"
+    "tested_at": "2026-04-02T20:14:18"
   },
   {
     "source": "mx.siem",
@@ -965,7 +965,7 @@
     "latency_ms": 0,
     "error": "TERMS_WALL: Vue SPA requires accepting terms modal before search",
     "fields": 0,
-    "tested_at": "2026-04-02T20:02:35"
+    "tested_at": "2026-04-02T20:14:18"
   },
   {
     "source": "mx.repuve",
@@ -976,7 +976,7 @@
     "latency_ms": 0,
     "error": "SITE_DOWN: repuve.gob.mx timeout",
     "fields": 0,
-    "tested_at": "2026-04-02T20:02:35"
+    "tested_at": "2026-04-02T20:14:18"
   },
   {
     "source": "ar.afip_cuit",
@@ -987,7 +987,7 @@
     "latency_ms": 0,
     "error": "CAPTCHA: AFIP CAPTCHA OCR solving needs tuning (text distortion too complex)",
     "fields": 0,
-    "tested_at": "2026-04-02T20:02:35"
+    "tested_at": "2026-04-02T20:14:18"
   },
   {
     "source": "ar.pjn",
@@ -995,10 +995,10 @@
     "doc_type": "custom",
     "doc_number": "30546689979",
     "status": "OK",
-    "latency_ms": 19242,
+    "latency_ms": 21414,
     "error": "",
     "fields": 4,
-    "tested_at": "2026-04-02T20:02:35"
+    "tested_at": "2026-04-02T20:14:18"
   },
   {
     "source": "ar.dnrpa",
@@ -1009,7 +1009,7 @@
     "latency_ms": 0,
     "error": "SPA_TIMING: DNRPA ElementHandle.fill timeout",
     "fields": 0,
-    "tested_at": "2026-04-02T20:02:55"
+    "tested_at": "2026-04-02T20:14:39"
   },
   {
     "source": "br.cnpj",
@@ -1017,10 +1017,10 @@
     "doc_type": "nit",
     "doc_number": "33000167000101",
     "status": "OK",
-    "latency_ms": 2196,
+    "latency_ms": 543,
     "error": "",
     "fields": 19,
-    "tested_at": "2026-04-02T20:02:55"
+    "tested_at": "2026-04-02T20:14:39"
   },
   {
     "source": "cr.cedula",
@@ -1028,10 +1028,10 @@
     "doc_type": "cedula",
     "doc_number": "101110111",
     "status": "OK",
-    "latency_ms": 7939,
+    "latency_ms": 7684,
     "error": "",
     "fields": 2,
-    "tested_at": "2026-04-02T20:02:57"
+    "tested_at": "2026-04-02T20:14:40"
   },
   {
     "source": "do.rnc",
@@ -1042,7 +1042,7 @@
     "latency_ms": 0,
     "error": "WAF_BLOCKED: DGII Dominican Republic returns 403 to headless browsers",
     "fields": 0,
-    "tested_at": "2026-04-02T20:03:05"
+    "tested_at": "2026-04-02T20:14:48"
   },
   {
     "source": "py.ruc",
@@ -1053,7 +1053,7 @@
     "latency_ms": 0,
     "error": "RECAPTCHA: SET Paraguay has reCAPTCHA v2 on form",
     "fields": 0,
-    "tested_at": "2026-04-02T20:03:05"
+    "tested_at": "2026-04-02T20:14:48"
   },
   {
     "source": "gt.nit",
@@ -1064,7 +1064,7 @@
     "latency_ms": 0,
     "error": "WAF_BLOCKED: SAT Guatemala behind Cloudflare Turnstile",
     "fields": 0,
-    "tested_at": "2026-04-02T20:03:05"
+    "tested_at": "2026-04-02T20:14:48"
   },
   {
     "source": "hn.rtn",
@@ -1072,10 +1072,10 @@
     "doc_type": "custom",
     "doc_number": "08011900000001",
     "status": "OK",
-    "latency_ms": 15171,
+    "latency_ms": 12144,
     "error": "",
     "fields": 2,
-    "tested_at": "2026-04-02T20:03:05"
+    "tested_at": "2026-04-02T20:14:48"
   },
   {
     "source": "sv.nit",
@@ -1083,10 +1083,10 @@
     "doc_type": "custom",
     "doc_number": "00000000-0",
     "status": "OK",
-    "latency_ms": 14445,
+    "latency_ms": 13081,
     "error": "",
     "fields": 3,
-    "tested_at": "2026-04-02T20:03:20"
+    "tested_at": "2026-04-02T20:15:00"
   },
   {
     "source": "uy.sucive",
@@ -1097,6 +1097,28 @@
     "latency_ms": 0,
     "error": "SELECTOR_STALE: SUCIVE form selectors need site-specific inspection",
     "fields": 0,
-    "tested_at": "2026-04-02T20:03:34"
+    "tested_at": "2026-04-02T20:15:13"
+  },
+  {
+    "source": "bo.nit",
+    "label": "Test BO NIT",
+    "doc_type": "custom",
+    "doc_number": "1023220028",
+    "status": "OK",
+    "latency_ms": 9955,
+    "error": "",
+    "fields": 2,
+    "tested_at": "2026-04-02T20:15:13"
+  },
+  {
+    "source": "pa.ruc",
+    "label": "Test PA RUC",
+    "doc_type": "custom",
+    "doc_number": "8-NT-1-1000",
+    "status": "ERROR",
+    "latency_ms": 36726,
+    "error": "SourceError: [pa.ruc] Query failed: Timeout 30000ms exceeded.",
+    "fields": 0,
+    "tested_at": "2026-04-02T20:15:23"
   }
 ]

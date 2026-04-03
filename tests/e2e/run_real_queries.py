@@ -91,6 +91,8 @@ KNOWN_STATUS: dict[str, str] = {
     "py.ruc": "RECAPTCHA: SET Paraguay has reCAPTCHA v2 on form",
     # cl.sii_rut removed — testing again (intermittent)
     "uy.sucive": "SELECTOR_STALE: SUCIVE form selectors need site-specific inspection",
+    "pa.ruc": "SITE_SLOW: DGI Panama site takes >30s to load",
+    "co.afiliados_compensado": "INTERMITTENT: SSF site sometimes times out",
 }
 
 # ── Public test data (no personal data) ──────────────────────────────────
