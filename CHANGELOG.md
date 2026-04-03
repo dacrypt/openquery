@@ -7,6 +7,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.0] - 2026-04-03
+
+### Added
+
+- **128+ sources across 18 countries** — massive expansion from v0.8.0 (112 sources):
+  - `pe.bcrp` — Peru central bank exchange rates (BCRP API)
+  - `pe.datos` — Peru open data catalog (datosabiertos.gob.pe, 4452+ datasets)
+  - `ec.sri_establecimientos` — Ecuador SRI business establishments (188 for Petroecuador)
+  - `cl.datos` — Chile open data catalog (datos.gob.cl CKAN, 10000+ datasets)
+  - `cl.mindicador` — Chile economic indicators (UF, USD/CLP, EUR/CLP)
+  - `ar.series` — Argentina economic time series (USD/ARS, inflation, GDP)
+  - `br.ddd` — Brazil area code lookup (BrasilAPI)
+  - `co.secop_integrado` — Colombia unified SECOP I+II procurement
+  - `co.secop_procesos` — Colombia procurement processes
+  - `co.simit_historico` — Colombia historical traffic fines
+  - `co.datos_catalogo` — Colombia datos.gov.co catalog search
+  - `pa.contraloria` — Panama Contraloría General news/reports
+  - `mx.inegi` — Mexico INEGI geostatistical catalog (32 states, census)
+  - `gt.banguat` — Guatemala Banguat exchange rates (SOAP/XML)
+  - `do.datos` — Dominican Republic open data catalog
+  - `uy.datos` — Uruguay open data catalog
+  - `pa.inec` — Panama INEC statistics categories
+- **Universal CAPTCHA middleware** (`core/captcha_middleware.py`):
+  - Auto-detects reCAPTCHA v2/Enterprise, Cloudflare Turnstile, image CAPTCHAs, Imperva challenges
+  - Solves using best available solver (CapSolver → LLM vision → PaddleOCR → Tesseract)
+  - Wired into co.rues, co.adres, co.sisben, uy.sucive, py.ruc, ar.afip_cuit
+  - Unblocked: ar.afip_cuit (LLM vision), py.ruc, uy.sucive, co.sisben
+
+### Fixed
+
+- `ec.sri_ruc` — No auth needed! Just param name "ruc" instead of "numeroRuc"
+- `gt.banguat` — SOAP XML parsing fixed for exchange rate extraction
+- `br.fipe` — Test data fixed (valid FIPE code 001267-0)
+- `co.procuraduria` — Knowledge CAPTCHA recovered
+- `cl.sii_rut` — Intermittent recovery with Patchright
+- All 18 countries now have at least 1 working source
+
 ## [0.8.0] - 2026-04-03
 
 ### Added
@@ -276,7 +313,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Docker and docker-compose support with Redis
 - 29 unit tests
 
-[Unreleased]: https://github.com/dacrypt/openquery/compare/v0.8.0...HEAD
+[Unreleased]: https://github.com/dacrypt/openquery/compare/v0.9.0...HEAD
+[0.9.0]: https://github.com/dacrypt/openquery/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/dacrypt/openquery/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/dacrypt/openquery/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/dacrypt/openquery/compare/v0.5.0...v0.6.0

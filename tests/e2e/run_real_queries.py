@@ -85,6 +85,9 @@ KNOWN_STATUS: dict[str, str] = {
     "co.runt_soat": "CAPTCHA_INTERMITTENT: RUNT captcha fails",
     "co.runt_rtm": "CAPTCHA_INTERMITTENT: RUNT captcha fails",
     "co.einforma": "INTERMITTENT: Sometimes times out",
+    "co.simit": "INTERMITTENT: Sometimes times out on page load",
+    "hn.rtn": "DEPENDS: Requires tesseract installed for BotDetect CAPTCHA OCR",
+    "sv.nit": "DEPENDS: Requires tesseract installed for image CAPTCHA OCR",
 }
 
 # ── Public test data (no personal data) ──────────────────────────────────

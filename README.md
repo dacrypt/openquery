@@ -27,7 +27,7 @@ OpenQuery provides a plugin-based framework for scraping government websites, pu
 - **Extensible** — add new data sources by implementing a single class
 - **Country-organized** — sources grouped by country code (`co`, `us`, etc.)
 
-## Built-in Sources — 112 sources across 18 countries
+## Built-in Sources — 128 sources across 18 countries
 
 ### Colombia (73 sources)
 
