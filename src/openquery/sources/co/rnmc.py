@@ -101,17 +101,23 @@ class RnmcSource(BaseSource):
                 if collector:
                     collector.screenshot(page, "form_filled")
 
-                # Submit via ASP.NET postback — use btnConsultar (the actual search link)
-                submit_btn = page.query_selector(
-                    '#ctl00_ContentPlaceHolder3_btnConsultar, '
-                    'a[id*="btnConsultar"], '
-                    '#ctl00_ContentPlaceHolder3_btnNuevo, '
-                    'a[id*="btnNuevo"]'
-                )
-                if submit_btn:
-                    submit_btn.click()
-                else:
-                    doc_input.press("Enter")
+                # Submit via direct __doPostBack JavaScript call
+                # ASP.NET WebForms uses __doPostBack for <a> links — calling it
+                # directly avoids ElementHandle detach issues
+                try:
+                    page.evaluate(
+                        "__doPostBack('ctl00$ContentPlaceHolder3$btnConsultar','')"
+                    )
+                except Exception:
+                    # Fallback: try clicking the element
+                    submit_btn = page.query_selector(
+                        '#ctl00_ContentPlaceHolder3_btnConsultar, '
+                        'a[id*="btnConsultar"]'
+                    )
+                    if submit_btn:
+                        submit_btn.click()
+                    else:
+                        doc_input.press("Enter")
 
                 page.wait_for_timeout(5000)
 

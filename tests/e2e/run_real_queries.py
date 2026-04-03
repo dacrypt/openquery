@@ -77,7 +77,7 @@ KNOWN_STATUS: dict[str, str] = {
     "ar.dnrpa": "SPA_TIMING: DNRPA ElementHandle.fill timeout",
     "cl.pjud": "SPA_TIMING: PJUD ElementHandle timeout",
     # Remaining selector issues (pages load, forms don't match)
-    "co.rnmc": "SPA_TIMING: ASP.NET postback ElementHandle detaches mid-click",
+    # co.rnmc removed — fixed with direct __doPostBack JS call
     "co.tutelas": "SELECTOR_STALE: Rama Judicial form selectors outdated",
     "co.rues": "RECAPTCHA: rues.org.co has reCAPTCHA v2 + ElementHandle timeout",
     "co.adres": "RECAPTCHA: ADRES has reCAPTCHA Enterprise v3 + selector mismatch",
@@ -229,6 +229,8 @@ QUERIES: list[dict] = [
     # ── Brazil ──
     {"source": "br.cnpj", "doc_type": "nit", "doc_number": "33000167000101", "label": "Petrobras CNPJ"},
     {"source": "br.datajud", "doc_type": "custom", "doc_number": "00008323520184013202", "label": "Test BR processo", "extra": {"processo": "00008323520184013202", "tribunal": "api_publica_tjsp"}},
+    {"source": "br.fipe", "doc_type": "custom", "doc_number": "001004-9", "label": "FIPE Gol 1.0", "extra": {"codigo_fipe": "001004-9"}},
+    {"source": "br.cep", "doc_type": "custom", "doc_number": "01001000", "label": "Praça da Sé SP", "extra": {"cep": "01001000"}},
 
     # ── Costa Rica ──
     {"source": "cr.cedula", "doc_type": "cedula", "doc_number": "101110111", "label": "Test CR cedula"},
