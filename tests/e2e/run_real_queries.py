@@ -26,76 +26,64 @@ from openquery.sources.base import DocumentType, QueryInput
 # Update this dict when a source becomes testable or a new blocker appears.
 
 KNOWN_STATUS: dict[str, str] = {
-    # Auth/credentials required — no public access
-    "co.rne": "AUTH_REQUIRED: Needs CRC portal credentials (usuario/password)",
-    "co.fasecolda": "AUTH_REQUIRED: Needs manual bearer token capture",
-    "co.fopep": "AUTH_REQUIRED: Login-gated portal with reCAPTCHA",
-    "co.soi": "AUTH_REQUIRED: Login-only platform (ACH Colombia)",
-    # ec.sri_ruc removed — fixed! No auth needed, just use param "ruc" not "numeroRuc"
-    # API removed
+    # Auth/credentials required
+    "co.rne": "AUTH_REQUIRED: Needs CRC portal credentials",
+    "co.fasecolda": "AUTH_REQUIRED: Needs manual bearer token",
+    "co.fopep": "AUTH_REQUIRED: Login-gated with reCAPTCHA",
+    "co.soi": "AUTH_REQUIRED: Login-only platform",
+    # API removed / no form
     "co.proveedores_ficticios": "API_REMOVED: Dataset removed from datos.gov.co",
-    "co.directorio_empresas": "API_REMOVED: Dataset API no longer available",
-    # No search form
-    "co.jep": "NO_FORM: JEP is SharePoint — no search form",
-    # WAF blocks even Patchright from this IP
-    "co.estado_cedula": "WAF_BLOCKED: Registraduría WAF blocks this IP (ICEfaces dynamic forms)",
+    "co.directorio_empresas": "API_REMOVED: Dataset API gone",
+    "co.jep": "NO_FORM: SharePoint, no search form",
+    "mx.sat_efos": "NO_FORM: Static XLS download page",
+    # WAF blocks even Patchright
+    "co.estado_cedula": "WAF_BLOCKED: Registraduría WAF",
     "co.nombre_completo": "WAF_BLOCKED: Registraduría WAF",
     "co.defuncion": "WAF_BLOCKED: Registraduría WAF",
     "co.puesto_votacion": "WAF_BLOCKED: Registraduría WAF",
     "co.estado_tramite_cedula": "WAF_BLOCKED: Registraduría WAF",
     "co.registro_civil": "WAF_BLOCKED: Registraduría WAF",
     "co.estado_cedula_extranjeria": "WAF_BLOCKED: Migración WAF",
-    "co.colpensiones": "WAF_BLOCKED: Returns 403 even with Patchright",
-    "co.rethus": "WAF_BLOCKED: SISPRO WAF blocks even Patchright",
-    "co.ruaf": "WAF_BLOCKED: SISPRO WAF blocks even Patchright",
-    "co.supersociedades": "WAF_BLOCKED: Supersociedades WAF blocks even Patchright",
-    # Sites genuinely down/unreachable
-    "co.certificado_tradicion": "SITE_DOWN: supernotariado.gov.co still timing out",
-    "co.inpec": "SITE_DOWN: INPEC 504 from Azure Gateway",
+    "co.colpensiones": "WAF_BLOCKED: 403 even with Patchright",
+    "co.rethus": "WAF_BLOCKED: SISPRO WAF",
+    "co.ruaf": "WAF_BLOCKED: SISPRO WAF",
+    "co.supersociedades": "WAF_BLOCKED: WAF blocks Patchright",
+    "do.rnc": "WAF_BLOCKED: DGII returns 403",
+    "gt.nit": "WAF_BLOCKED: Cloudflare Turnstile",
+    "pa.ruc": "WAF_BLOCKED: DGI Panama WAF",
+    # Sites genuinely down
+    "co.certificado_tradicion": "SITE_DOWN: supernotariado.gov.co timeout",
+    "co.inpec": "SITE_DOWN: INPEC 504 Azure Gateway",
     "pe.servir_sanciones": "SITE_DOWN: sanciones.gob.pe timeout",
-    "ar.afip_cuit": "CAPTCHA: Needs ANTHROPIC_API_KEY for LLM vision CAPTCHA solving",
-    "co.einforma": "INTERMITTENT: Sometimes times out",
-    # br.fipe removed — fixed test data (001267-0 Fiat Palio works)
     "cl.fiscalizacion": "SITE_DOWN: Site timeout",
     "mx.repuve": "SITE_DOWN: repuve.gob.mx timeout",
-    "co.runt": "CAPTCHA_INTERMITTENT: RUNT captcha API sometimes returns empty",
-    "co.runt_conductor": "CAPTCHA_INTERMITTENT: RUNT conductor captcha returns empty",
-    "co.runt_soat": "CAPTCHA_INTERMITTENT: RUNT SOAT captcha fails validation",
-    "co.runt_rtm": "CAPTCHA_INTERMITTENT: RUNT RTM captcha fails validation",
-    # Source URL decommissioned or fundamentally changed
-    "ec.senescyt": "URL_MOVED: senescyt.gob.ec moved to educacionsuperior.gob.ec, endpoint gone",
-    "mx.sat_efos": "NO_FORM: SAT EFOS page is static XLS download, no search form",
-    "ec.ant_citaciones": "API_ERROR: ANT API returns HTTP 500 server error",
-    # Sites with specific blocking that needs more work
-    "ec.cne_padron": "CAPTCHA_GATE: Entire CNE site gated behind Imperva bot-detection CAPTCHA",
-    "mx.siem": "TERMS_WALL: Vue SPA requires accepting terms modal before search",
-    "mx.curp": "TIMEOUT: gob.mx API still times out even at 45s",
-    # SPA/timing issues
-    "co.consulta_procesos": "SPA_TIMING: Vue.js dynamic IDs, ElementHandle detaches",
-    "co.libreta_militar": "SPA_TIMING: ElementHandle.fill timeout (page loads but form elements detach)",
-    "pe.poder_judicial": "SELECTOR_STALE: PJ Peru form selectors need update",
-    "pe.osce_sancionados": "CAPTCHA: Image CAPTCHA + page wait timeout",
-    "ar.dnrpa": "SPA_TIMING: DNRPA ElementHandle.fill timeout",
-    "cl.pjud": "SPA_TIMING: PJUD ElementHandle timeout",
-    # Remaining selector issues (pages load, forms don't match)
-    "co.rnmc": "SPA_TIMING: ASP.NET __doPostBack causes page reload + element detach",
-    "co.tutelas": "SELECTOR_STALE: Rama Judicial form selectors outdated",
-    "co.rues": "RECAPTCHA: Detected by middleware — needs CAPSOLVER_API_KEY to solve",
-    "co.adres": "RECAPTCHA: Detected by middleware — needs CAPSOLVER_API_KEY to solve",
-    "co.seguridad_social": "SELECTOR_STALE: miseguridadsocial.gov.co form selectors outdated",
-    "co.mi_casa_ya": "SELECTOR_STALE: Mi Casa Ya form selectors outdated",
-    # ar.afip_cuit removed — LLM vision CAPTCHA middleware wired
-    "co.procuraduria": "CAPTCHA_INTERMITTENT: Knowledge CAPTCHA needs Ollama or LLM API key",
-    # New countries — blockers identified
-    "do.rnc": "WAF_BLOCKED: DGII Dominican Republic returns 403 to headless browsers",
-    "gt.nit": "WAF_BLOCKED: SAT Guatemala behind Cloudflare Turnstile",
-    # gt.banguat removed — SOAP parsing fixed
-    "py.datos": "API_REDIRECT: datos.gov.py CKAN API redirects to HTML page",
-    # py.ruc removed — reCAPTCHA middleware wired
-    # cl.sii_rut removed — testing again (intermittent)
-    # uy.sucive removed — reCAPTCHA middleware wired
-    "pa.ruc": "WAF_BLOCKED: DGI Panama WAF blocks automated requests + JS rendering required",
-    # co.afiliados_compensado removed — re-testing
+    # Source URL gone
+    "ec.senescyt": "URL_MOVED: Moved to educacionsuperior.gob.ec",
+    "ec.ant_citaciones": "API_ERROR: ANT API returns HTTP 500",
+    "ec.cne_padron": "CAPTCHA_GATE: Imperva bot-detection CAPTCHA",
+    "mx.siem": "TERMS_WALL: Vue SPA requires terms modal",
+    "mx.curp": "TIMEOUT: gob.mx API times out",
+    # reCAPTCHA / CAPTCHA needs API key
+    "co.rues": "RECAPTCHA: Needs CAPSOLVER_API_KEY",
+    "co.adres": "RECAPTCHA: Needs CAPSOLVER_API_KEY",
+    "ar.afip_cuit": "CAPTCHA: Needs ANTHROPIC_API_KEY for LLM vision",
+    "pe.osce_sancionados": "CAPTCHA: Image CAPTCHA + timeout",
+    # Persistent SPA timing / selector issues (pages load, elements detach)
+    "co.libreta_militar": "SPA_TIMING: ElementHandle detaches",
+    "co.rnmc": "SPA_TIMING: ASP.NET __doPostBack element detach",
+    "co.consulta_procesos": "SPA_TIMING: Vue.js dynamic IDs",
+    "co.tutelas": "SELECTOR_STALE: Form selectors outdated",
+    "co.seguridad_social": "SELECTOR_STALE: Form selectors outdated",
+    "co.mi_casa_ya": "SELECTOR_STALE: Form selectors outdated",
+    "pe.poder_judicial": "SELECTOR_STALE: PJ Peru selectors outdated",
+    "ar.dnrpa": "SPA_TIMING: ElementHandle detaches",
+    "cl.pjud": "SPA_TIMING: ElementHandle timeout",
+    "py.datos": "API_REDIRECT: CKAN API redirects to HTML",
+    # RUNT captcha intermittent
+    "co.runt": "CAPTCHA_INTERMITTENT: RUNT captcha API empty",
+    "co.runt_conductor": "CAPTCHA_INTERMITTENT: RUNT captcha empty",
+    "co.runt_soat": "CAPTCHA_INTERMITTENT: RUNT captcha fails",
+    "co.runt_rtm": "CAPTCHA_INTERMITTENT: RUNT captcha fails",
 }
 
 # ── Public test data (no personal data) ──────────────────────────────────
