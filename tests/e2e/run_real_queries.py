@@ -79,11 +79,11 @@ KNOWN_STATUS: dict[str, str] = {
     # Remaining selector issues (pages load, forms don't match)
     "co.rnmc": "SPA_TIMING: ASP.NET __doPostBack causes page reload + element detach",
     "co.tutelas": "SELECTOR_STALE: Rama Judicial form selectors outdated",
-    "co.rues": "RECAPTCHA: rues.org.co has reCAPTCHA v2 + ElementHandle timeout",
-    "co.adres": "RECAPTCHA: ADRES has reCAPTCHA Enterprise v3 + selector mismatch",
+    # co.rues removed — reCAPTCHA middleware wired
+    # co.adres removed — reCAPTCHA middleware wired
     "co.seguridad_social": "SELECTOR_STALE: miseguridadsocial.gov.co form selectors outdated",
     "co.mi_casa_ya": "SELECTOR_STALE: Mi Casa Ya form selectors outdated",
-    "ar.afip_cuit": "CAPTCHA: AFIP CAPTCHA OCR solving needs tuning (text distortion too complex)",
+    # ar.afip_cuit removed — LLM vision CAPTCHA middleware wired
     "co.einforma": "INTERMITTENT: eInforma sometimes times out on slow page load",
     "co.procuraduria": "CAPTCHA_INTERMITTENT: Knowledge CAPTCHA needs Ollama or LLM API key",
     # New countries — blockers identified
@@ -91,9 +91,9 @@ KNOWN_STATUS: dict[str, str] = {
     "gt.nit": "WAF_BLOCKED: SAT Guatemala behind Cloudflare Turnstile",
     # gt.banguat removed — SOAP parsing fixed
     "py.datos": "API_REDIRECT: datos.gov.py CKAN API redirects to HTML page",
-    "py.ruc": "RECAPTCHA: SET Paraguay has reCAPTCHA v2 on form",
+    # py.ruc removed — reCAPTCHA middleware wired
     # cl.sii_rut removed — testing again (intermittent)
-    "uy.sucive": "RECAPTCHA: SUCIVE has reCAPTCHA v2 Enterprise on consultation form",
+    # uy.sucive removed — reCAPTCHA middleware wired
     "pa.ruc": "WAF_BLOCKED: DGI Panama WAF blocks automated requests + JS rendering required",
     # co.afiliados_compensado removed — re-testing
 }

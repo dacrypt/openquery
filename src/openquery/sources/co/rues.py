@@ -91,6 +91,10 @@ class RuesSource(BaseSource):
                 search_input.fill(query)
                 logger.info("Searching RUES for: %s", query)
 
+                # Solve reCAPTCHA if present
+                from openquery.core.captcha_middleware import solve_page_captchas
+                solve_page_captchas(page)
+
                 if collector:
                     collector.screenshot(page, "form_filled")
 

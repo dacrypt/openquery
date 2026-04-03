@@ -106,6 +106,10 @@ class AdresSource(BaseSource):
                 num_input.fill(doc_number)
                 logger.info("Filled document number")
 
+                # Solve reCAPTCHA Enterprise v3 if present
+                from openquery.core.captcha_middleware import solve_page_captchas
+                solve_page_captchas(page)
+
                 if collector:
                     collector.screenshot(page, "form_filled")
 

@@ -80,6 +80,10 @@ class PyRucSource(BaseSource):
                 if collector:
                     collector.screenshot(page, "form_filled")
 
+                # Solve reCAPTCHA if present
+                from openquery.core.captcha_middleware import solve_page_captchas
+                solve_page_captchas(page)
+
                 # Submit — exact selector: button[name="btnBuscar"]
                 submit = page.query_selector(
                     'button[name="btnBuscar"], '
