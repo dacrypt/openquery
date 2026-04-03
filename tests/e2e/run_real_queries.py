@@ -131,6 +131,7 @@ QUERIES: list[dict] = [
     {"source": "co.simit_historico", "doc_type": "placa", "doc_number": "MIK715", "label": "SIMIT historico MIK715"},
     {"source": "co.secop_procesos", "doc_type": "nit", "doc_number": "899999068", "label": "SECOP procesos Ecopetrol"},
     {"source": "co.datos_catalogo", "doc_type": "custom", "doc_number": "transporte", "label": "CO datos catalogo", "extra": {"q": "transporte"}},
+    {"source": "co.secop_integrado", "doc_type": "nit", "doc_number": "899999068", "label": "SECOP integrado Ecopetrol"},
 
     # ── Colombia: Vehicles ──
     {"source": "co.simit", "doc_type": "cedula", "doc_number": "79940745", "label": "Iván Duque"},
