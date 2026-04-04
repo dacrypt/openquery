@@ -84,7 +84,8 @@ KNOWN_STATUS: dict[str, str] = {
     "co.runt_conductor": "CAPTCHA_INTERMITTENT: RUNT captcha empty",
     "co.runt_soat": "CAPTCHA_INTERMITTENT: RUNT captcha fails",
     "co.runt_rtm": "CAPTCHA_INTERMITTENT: RUNT captcha fails",
-    # co.garantias_mobiliarias + co.einforma removed — re-testing
+    "co.einforma": "INTERMITTENT: Sometimes times out",
+    "pe.sunarp_vehicular": "INTERMITTENT: SUNARP sometimes times out",
 }
 
 # ── Public test data (no personal data) ──────────────────────────────────
