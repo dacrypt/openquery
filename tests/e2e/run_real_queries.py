@@ -26,67 +26,19 @@ from openquery.sources.base import DocumentType, QueryInput
 # Update this dict when a source becomes testable or a new blocker appears.
 
 KNOWN_STATUS: dict[str, str] = {
-    # Auth/credentials required
-    "co.rne": "AUTH_REQUIRED: Needs CRC portal credentials",
-    "co.fasecolda": "AUTH_REQUIRED: Needs manual bearer token",
-    "co.fopep": "AUTH_REQUIRED: Login-gated with reCAPTCHA",
-    "co.soi": "AUTH_REQUIRED: Login-only platform",
-    # API removed / no form
-    "co.proveedores_ficticios": "API_REMOVED: Dataset removed from datos.gov.co",
-    "co.directorio_empresas": "API_REMOVED: Dataset API gone",
-    "co.jep": "NO_FORM: SharePoint, no search form",
-    "mx.sat_efos": "NO_FORM: Static XLS download page",
-    # WAF blocks even Patchright
-    "co.estado_cedula": "WAF_BLOCKED: Registraduría WAF",
-    "co.nombre_completo": "WAF_BLOCKED: Registraduría WAF",
-    "co.defuncion": "WAF_BLOCKED: Registraduría WAF",
-    "co.puesto_votacion": "WAF_BLOCKED: Registraduría WAF",
-    "co.estado_tramite_cedula": "WAF_BLOCKED: Registraduría WAF",
-    "co.registro_civil": "WAF_BLOCKED: Registraduría WAF",
-    "co.estado_cedula_extranjeria": "WAF_BLOCKED: Migración WAF",
-    "co.colpensiones": "WAF_BLOCKED: 403 even with Patchright",
-    "co.rethus": "WAF_BLOCKED: SISPRO WAF",
-    "co.ruaf": "WAF_BLOCKED: SISPRO WAF",
-    "co.supersociedades": "WAF_BLOCKED: WAF blocks Patchright",
-    "do.rnc": "WAF_BLOCKED: DGII returns 403",
-    "gt.nit": "WAF_BLOCKED: Cloudflare Turnstile",
-    "pa.ruc": "WAF_BLOCKED: DGI Panama WAF",
-    # Sites genuinely down
-    "co.certificado_tradicion": "SITE_DOWN: supernotariado.gov.co timeout",
-    "co.inpec": "SITE_DOWN: INPEC 504 Azure Gateway",
-    "pe.servir_sanciones": "SITE_DOWN: sanciones.gob.pe timeout",
-    "cl.fiscalizacion": "SITE_DOWN: Site timeout",
-    "mx.repuve": "SITE_DOWN: repuve.gob.mx timeout",
-    # Source URL gone
-    "ec.senescyt": "URL_MOVED: Moved to educacionsuperior.gob.ec",
-    "ec.ant_citaciones": "API_ERROR: ANT API returns HTTP 500",
-    "ec.cne_padron": "CAPTCHA_GATE: Imperva bot-detection CAPTCHA",
-    "mx.siem": "TERMS_WALL: Vue SPA requires terms modal",
-    "mx.curp": "TIMEOUT: gob.mx API times out",
-    # reCAPTCHA / CAPTCHA needs API key
-    "co.rues": "RECAPTCHA: Needs CAPSOLVER_API_KEY",
-    "co.adres": "RECAPTCHA: Needs CAPSOLVER_API_KEY",
-    "ar.afip_cuit": "CAPTCHA: Needs ANTHROPIC_API_KEY for LLM vision",
-    "pe.osce_sancionados": "CAPTCHA: Image CAPTCHA + timeout",
-    # Persistent SPA timing / selector issues (pages load, elements detach)
-    "co.libreta_militar": "SPA_TIMING: ElementHandle detaches",
-    "co.rnmc": "SPA_TIMING: ASP.NET __doPostBack element detach",
-    "co.consulta_procesos": "SPA_TIMING: Vue.js dynamic IDs",
-    "co.tutelas": "SELECTOR_STALE: Form selectors outdated",
-    "co.seguridad_social": "SELECTOR_STALE: Form selectors outdated",
-    "co.mi_casa_ya": "SELECTOR_STALE: Form selectors outdated",
-    "pe.poder_judicial": "SELECTOR_STALE: PJ Peru selectors outdated",
-    "ar.dnrpa": "SPA_TIMING: ElementHandle detaches",
-    "cl.pjud": "SPA_TIMING: ElementHandle timeout",
-    "py.datos": "API_REDIRECT: CKAN API redirects to HTML",
-    # RUNT captcha intermittent
-    "co.runt": "CAPTCHA_INTERMITTENT: RUNT captcha API empty",
-    "co.runt_conductor": "CAPTCHA_INTERMITTENT: RUNT captcha empty",
-    "co.runt_soat": "CAPTCHA_INTERMITTENT: RUNT captcha fails",
-    "co.runt_rtm": "CAPTCHA_INTERMITTENT: RUNT captcha fails",
-    "co.einforma": "INTERMITTENT: Sometimes times out",
-    "pe.sunarp_vehicular": "INTERMITTENT: SUNARP sometimes times out",
-    "intl.interpol": "GEOBLOCKED: Interpol API returns 403 from this IP/region",
+    # ABSOLUTE BLOCKERS — cannot work without external changes
+    "co.rne": "AUTH_REQUIRED: Needs CRC credentials",
+    "co.fasecolda": "AUTH_REQUIRED: Needs bearer token",
+    "co.fopep": "AUTH_REQUIRED: Login-gated",
+    "co.soi": "AUTH_REQUIRED: Login-only",
+    "co.proveedores_ficticios": "API_REMOVED: Dataset gone",
+    "co.directorio_empresas": "API_REMOVED: API gone",
+    "co.jep": "NO_FORM: SharePoint",
+    "mx.sat_efos": "NO_FORM: Static XLS",
+    "ec.senescyt": "URL_MOVED: Endpoint gone",
+    "ec.ant_citaciones": "API_ERROR: HTTP 500",
+    "py.datos": "API_REDIRECT: Redirects to HTML",
+    "intl.interpol": "GEOBLOCKED: 403 from this IP",
 }
 
 # ── Public test data (no personal data) ──────────────────────────────────
@@ -234,6 +186,7 @@ QUERIES: list[dict] = [
     {"source": "ar.series", "doc_type": "custom", "doc_number": "dolar", "label": "AR USD/ARS", "extra": {"serie": "dolar", "limit": "5"}},
 
     # ── Brazil ──
+    {"source": "br.cpf", "doc_type": "custom", "doc_number": "00000000000", "label": "Test BR CPF", "extra": {"cpf": "00000000000"}},
     {"source": "br.cnpj", "doc_type": "nit", "doc_number": "33000167000101", "label": "Petrobras CNPJ"},
     {"source": "br.datajud", "doc_type": "custom", "doc_number": "00008323520184013202", "label": "Test BR processo", "extra": {"processo": "00008323520184013202", "tribunal": "api_publica_tjsp"}},
     {"source": "br.fipe", "doc_type": "custom", "doc_number": "001267-0", "label": "FIPE Palio 1.0", "extra": {"codigo_fipe": "001267-0"}},

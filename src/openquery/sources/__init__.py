@@ -495,6 +495,10 @@ def _ensure_loaded() -> None:
         pass
     # Brazil
     try:
+        import openquery.sources.br.cpf  # noqa: F401
+    except ImportError:
+        pass
+    try:
         import openquery.sources.br.cnpj  # noqa: F401
     except ImportError:
         pass
