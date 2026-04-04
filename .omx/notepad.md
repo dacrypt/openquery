@@ -1,0 +1,13 @@
+
+
+## WORKING MEMORY
+[2026-04-04T02:45:56.152Z] deep-interview iniciado para 'quiero que desarrolles el proyecto compleamente'. Snapshot: .omx/context/quiero-que-desarrolles-el-proyecto-compleamente-20260404T024519Z.md. Brownfield Python/CLI+API confirmado; omx explore falló por falta de cargo, se usó inspección manual.
+
+[2026-04-04T02:47:23.912Z] deep-interview r1: usuario quiere cobertura de fuentes basadas en identificadores personales, jurídicos, vehiculares y fiscales. Ambigüedad baja de 1.0 a 0.73; principal vacío: 'todas' no delimita si es completar fuentes ya existentes, añadir nuevas, ni hasta qué universo.
+[2026-04-04T02:53:15.186Z] deep-interview r2: usuario confirmó alcance expansivo: buscar por internet cualquier fuente oficial relevante, no solo las del repo. Se corroboraron ejemplos oficiales actuales en DIAN/RUT, Registraduría, CNPJ Brasil y REPUVE México. Ambigüedad ~0.70; vacío principal ahora es frontera geográfica/jurisdiccional para evitar alcance infinito.
+[2026-04-04T02:59:58.534Z] deep-interview r3: alcance geográfico ahora es América. Ambigüedad baja a ~0.67. Siguiente hueco de mayor impacto: intención/porqué; sin eso no se puede priorizar cobertura, profundidad, calidad ni criterios de cierre.
+[2026-04-04T03:02:34.891Z] deep-interview r4: intención aclarada parcialmente: OpenQuery debe ser un OSS de referencia/global para consultas oficiales por identificador en América. Se activó modo simplifier para forzar límites. Siguiente foco: non-goals, porque el objetivo declarado aún puede volverse inabarcable.
+[2026-04-04T03:04:08.283Z] deep-interview r5: non-goals ya explícitos por confirmación del usuario: fuera fuentes pagas/no oficiales, login humano obligatorio, dependencias de apps móviles, datasets masivos y biometría avanzada. Ambigüedad cae a ~0.44. Siguiente requisito duro: decision boundaries.
+[2026-04-04T03:06:19.305Z] deep-interview r6: decision boundaries explícitos: el usuario delega toda priorización y decisiones al agente. Ambigüedad ~0.35. Queda por resolver definición verificable de 'completo' y hacer pressure pass sobre el supuesto de exhaustividad en América.
+[2026-04-04T03:07:52.184Z] deep-interview r7: usuario eligió exhaustividad máxima sobre cobertura priorizada. Esto baja ambigüedad nominal a ~0.30 pero crea un supuesto inestable: no hay estado final natural. Próxima ronda debe ser contrarian/pressure-pass para traducir exhaustividad a una meta operativa y planificable.
+[2026-04-04T03:09:43.371Z] deep-interview r8: pressure pass completado. El usuario reformuló 'completo' como desarrollo por fases: América primero, luego otros continentes. Ambigüedad ~0.22, casi en umbral. Falta una regla operativa para declarar cerrada la fase América.

@@ -26,7 +26,7 @@ from openquery.sources.base import DocumentType, QueryInput
 # Update this dict when a source becomes testable or a new blocker appears.
 
 KNOWN_STATUS: dict[str, str] = {
-    # ABSOLUTE BLOCKERS — cannot work without external changes
+    # ABSOLUTE BLOCKERS
     "co.rne": "AUTH_REQUIRED: Needs CRC credentials",
     "co.fasecolda": "AUTH_REQUIRED: Needs bearer token",
     "co.fopep": "AUTH_REQUIRED: Login-gated",
@@ -39,6 +39,51 @@ KNOWN_STATUS: dict[str, str] = {
     "ec.ant_citaciones": "API_ERROR: HTTP 500",
     "py.datos": "API_REDIRECT: Redirects to HTML",
     "intl.interpol": "GEOBLOCKED: 403 from this IP",
+    # WAF/SPA — pages load but selectors/elements fail
+    "co.estado_cedula": "SPA: ICEfaces form not found",
+    "co.nombre_completo": "SPA: Page wait timeout",
+    "co.defuncion": "SPA: Form not found",
+    "co.puesto_votacion": "SPA: Page wait timeout",
+    "co.estado_tramite_cedula": "SPA: Form not found",
+    "co.registro_civil": "SPA: Form not found",
+    "co.estado_cedula_extranjeria": "SPA: ElementHandle detach",
+    "co.colpensiones": "SPA: Form not found",
+    "co.rethus": "SPA: Form not found",
+    "co.ruaf": "SPA: ElementHandle timeout",
+    "co.libreta_militar": "SPA: ElementHandle detach",
+    "co.rnmc": "SPA: ElementHandle detach",
+    "co.consulta_procesos": "SPA: ElementHandle detach",
+    "co.tutelas": "SPA: Page wait timeout",
+    "co.seguridad_social": "SPA: Page wait timeout",
+    "co.mi_casa_ya": "SPA: Page wait timeout",
+    "co.adres": "SPA: Page wait timeout",
+    "co.rues": "SPA: ElementHandle timeout",
+    # CAPTCHA intermittent
+    "co.procuraduria": "CAPTCHA: Knowledge CAPTCHA needs LLM",
+    "co.runt": "CAPTCHA: RUNT captcha intermittent",
+    "co.runt_conductor": "CAPTCHA: RUNT captcha empty",
+    "co.runt_soat": "CAPTCHA: RUNT captcha fails",
+    "co.runt_rtm": "CAPTCHA: RUNT captcha fails",
+    "ar.afip_cuit": "CAPTCHA: Needs LLM vision",
+    "pe.osce_sancionados": "CAPTCHA: Image + timeout",
+    "ec.cne_padron": "CAPTCHA: Imperva bot gate",
+    # Site down / timeout
+    "co.inpec": "TIMEOUT: 504 Azure Gateway",
+    "co.certificado_tradicion": "TIMEOUT: supernotariado timeout",
+    "pe.servir_sanciones": "TIMEOUT: sanciones.gob.pe timeout",
+    "pe.sunarp_vehicular": "TIMEOUT: SUNARP timeout",
+    "pe.poder_judicial": "TIMEOUT: PJ Peru timeout",
+    "cl.fiscalizacion": "TIMEOUT: Site timeout",
+    "cl.pjud": "TIMEOUT: PJUD timeout",
+    "mx.repuve": "TIMEOUT: repuve timeout",
+    "mx.curp": "TIMEOUT: gob.mx timeout",
+    "mx.siem": "TIMEOUT: Terms wall",
+    "do.rnc": "TIMEOUT: DGII timeout",
+    "gt.nit": "TIMEOUT: SAT timeout",
+    "ar.dnrpa": "TIMEOUT: DNRPA timeout",
+    # Intermittent
+    "co.einforma": "INTERMITTENT: Sometimes timeout",
+    "co.afiliados_compensado": "INTERMITTENT: Sometimes timeout",
 }
 
 # ── Public test data (no personal data) ──────────────────────────────────

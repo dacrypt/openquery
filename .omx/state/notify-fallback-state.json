@@ -1,0 +1,64 @@
+{
+  "pid": 58273,
+  "parent_pid": 58238,
+  "started_at": "2026-04-04T02:40:03.975Z",
+  "cwd": "/Users/david/dev/dacrypt/openquery",
+  "notify_script": "/Users/david/.nvm/versions/node/v22.22.0/lib/node_modules/oh-my-codex/dist/scripts/notify-hook.js",
+  "poll_ms": 250,
+  "pid_file": "/Users/david/dev/dacrypt/openquery/.omx/state/notify-fallback.pid",
+  "max_lifetime_ms": 21600000,
+  "tracked_files": 1,
+  "seen_turns": 7,
+  "dispatch_drain": {
+    "enabled": true,
+    "max_per_tick": 5,
+    "run_count": 4903,
+    "leader_only": true,
+    "last_tick_at": "2026-04-04T03:12:24.319Z",
+    "last_result": {
+      "processed": 0,
+      "skipped": 0,
+      "failed": 0
+    },
+    "last_error": null
+  },
+  "leader_nudge": {
+    "enabled": true,
+    "leader_only": true,
+    "stale_threshold_ms": 180000,
+    "precomputed_leader_stale": false,
+    "last_tick_at": "2026-04-04T03:12:24.319Z",
+    "last_error": null,
+    "run_count": 4903
+  },
+  "ralph_continue_steer": {
+    "enabled": true,
+    "cadence_ms": 60000,
+    "message": "Ralph loop active continue",
+    "active": false,
+    "last_state_check_at": "2026-04-04T03:12:24.403Z",
+    "last_sent_at": "",
+    "cooldown_anchor_at": "",
+    "last_reason": "blocked_by_current_session",
+    "last_error": null,
+    "state_path": "",
+    "pane_id": "",
+    "pane_current_command": "",
+    "current_phase": "",
+    "shared_timestamp_path": "/Users/david/dev/dacrypt/openquery/.omx/state/ralph-last-steer-at",
+    "shared_last_sent_at": "",
+    "singleton_lock_path": "/Users/david/dev/dacrypt/openquery/.omx/state/ralph-continue-steer.lock"
+  },
+  "fallback_auto_nudge": {
+    "enabled": true,
+    "stall_ms": 5000,
+    "last_tick_at": "2026-04-04T03:12:24.393Z",
+    "last_turn_at": "2026-04-04T03:09:50.255Z",
+    "last_turn_count": 9,
+    "last_message": "Progreso:\n- Ambigüedad: **22%**\n- Intento: **70%**\n- Resultado: **80%**\n- Alcance: **85%**\n- Restric",
+    "last_reason": "eligible_but_not_sent",
+    "last_error": null,
+    "last_nudged_signature": "",
+    "last_nudged_at": ""
+  }
+}

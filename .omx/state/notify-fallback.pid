@@ -1,0 +1,8 @@
+{
+  "pid": 58273,
+  "parent_pid": 58238,
+  "cwd": "/Users/david/dev/dacrypt/openquery",
+  "started_at": "2026-04-04T02:40:03.975Z",
+  "max_lifetime_ms": 21600000,
+  "owner_token": "58273-1775270403975-1pglmvrp"
+}
