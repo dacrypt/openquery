@@ -86,6 +86,7 @@ KNOWN_STATUS: dict[str, str] = {
     "co.runt_rtm": "CAPTCHA_INTERMITTENT: RUNT captcha fails",
     "co.einforma": "INTERMITTENT: Sometimes times out",
     "pe.sunarp_vehicular": "INTERMITTENT: SUNARP sometimes times out",
+    "intl.interpol": "GEOBLOCKED: Interpol API returns 403 from this IP/region",
 }
 
 # ── Public test data (no personal data) ──────────────────────────────────
@@ -190,6 +191,7 @@ QUERIES: list[dict] = [
     # ── International ──
     {"source": "intl.onu", "doc_type": "custom", "doc_number": "Nicolas Maduro", "label": "Maduro UN sanctions"},
     {"source": "intl.ship_tracking", "doc_type": "custom", "doc_number": "MMSI:123456789", "label": "Test vessel"},
+    {"source": "intl.interpol", "doc_type": "custom", "doc_number": "Garcia", "label": "Interpol Red Notices", "extra": {"name": "Garcia"}},
 
     # ── Ecuador ──
     {"source": "ec.sri_ruc", "doc_type": "custom", "doc_number": "1768153530001", "label": "EP Petroecuador", "extra": {"ruc": "1768153530001"}},

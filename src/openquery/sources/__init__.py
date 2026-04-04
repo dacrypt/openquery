@@ -126,6 +126,10 @@ def _ensure_loaded() -> None:
     except ImportError:
         pass
     try:
+        import openquery.sources.intl.interpol  # noqa: F401
+    except ImportError:
+        pass
+    try:
         import openquery.sources.co.pep  # noqa: F401
     except ImportError:
         pass
