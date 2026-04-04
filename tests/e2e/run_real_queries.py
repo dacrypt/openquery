@@ -84,8 +84,7 @@ KNOWN_STATUS: dict[str, str] = {
     "co.runt_conductor": "CAPTCHA_INTERMITTENT: RUNT captcha empty",
     "co.runt_soat": "CAPTCHA_INTERMITTENT: RUNT captcha fails",
     "co.runt_rtm": "CAPTCHA_INTERMITTENT: RUNT captcha fails",
-    "co.garantias_mobiliarias": "INTERMITTENT: Sometimes times out on page load",
-    "co.einforma": "INTERMITTENT: Sometimes times out",
+    # co.garantias_mobiliarias + co.einforma removed — re-testing
 }
 
 # ── Public test data (no personal data) ──────────────────────────────────
@@ -242,6 +241,8 @@ QUERIES: list[dict] = [
 
     {"source": "br.ddd", "doc_type": "custom", "doc_number": "11", "label": "DDD São Paulo", "extra": {"ddd": "11"}},
     {"source": "br.ibge", "doc_type": "custom", "doc_number": "estados", "label": "BR 27 estados"},
+    {"source": "br.taxas", "doc_type": "custom", "doc_number": "taxas", "label": "BR Selic/CDI/IPCA"},
+    {"source": "br.feriados", "doc_type": "custom", "doc_number": "2026", "label": "BR feriados 2026", "extra": {"ano": "2026"}},
 
     # ── Costa Rica ──
     {"source": "cr.cedula", "doc_type": "cedula", "doc_number": "101110111", "label": "Test CR cedula"},
