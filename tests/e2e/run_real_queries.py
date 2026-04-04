@@ -244,6 +244,7 @@ QUERIES: list[dict] = [
     {"source": "br.ibge", "doc_type": "custom", "doc_number": "estados", "label": "BR 27 estados"},
     {"source": "br.taxas", "doc_type": "custom", "doc_number": "taxas", "label": "BR Selic/CDI/IPCA"},
     {"source": "br.feriados", "doc_type": "custom", "doc_number": "2026", "label": "BR feriados 2026", "extra": {"ano": "2026"}},
+    {"source": "br.ncm", "doc_type": "custom", "doc_number": "cafe", "label": "BR NCM café", "extra": {"q": "cafe"}},
 
     # ── Costa Rica ──
     {"source": "cr.cedula", "doc_type": "cedula", "doc_number": "101110111", "label": "Test CR cedula"},
