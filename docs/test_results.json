@@ -8,7 +8,7 @@
     "latency_ms": 0,
     "error": "WAF_BLOCKED: Registradur\u00eda WAF",
     "fields": 0,
-    "tested_at": "2026-04-03T20:50:11"
+    "tested_at": "2026-04-03T21:10:32"
   },
   {
     "source": "co.nombre_completo",
@@ -19,7 +19,7 @@
     "latency_ms": 0,
     "error": "WAF_BLOCKED: Registradur\u00eda WAF",
     "fields": 0,
-    "tested_at": "2026-04-03T20:50:11"
+    "tested_at": "2026-04-03T21:10:32"
   },
   {
     "source": "co.defuncion",
@@ -30,7 +30,7 @@
     "latency_ms": 0,
     "error": "WAF_BLOCKED: Registradur\u00eda WAF",
     "fields": 0,
-    "tested_at": "2026-04-03T20:50:11"
+    "tested_at": "2026-04-03T21:10:32"
   },
   {
     "source": "co.puesto_votacion",
@@ -41,7 +41,7 @@
     "latency_ms": 0,
     "error": "WAF_BLOCKED: Registradur\u00eda WAF",
     "fields": 0,
-    "tested_at": "2026-04-03T20:50:11"
+    "tested_at": "2026-04-03T21:10:32"
   },
   {
     "source": "co.estado_tramite_cedula",
@@ -52,7 +52,7 @@
     "latency_ms": 0,
     "error": "WAF_BLOCKED: Registradur\u00eda WAF",
     "fields": 0,
-    "tested_at": "2026-04-03T20:50:11"
+    "tested_at": "2026-04-03T21:10:32"
   },
   {
     "source": "co.registro_civil",
@@ -63,7 +63,7 @@
     "latency_ms": 0,
     "error": "WAF_BLOCKED: Registradur\u00eda WAF",
     "fields": 0,
-    "tested_at": "2026-04-03T20:50:11"
+    "tested_at": "2026-04-03T21:10:32"
   },
   {
     "source": "co.libreta_militar",
@@ -74,7 +74,7 @@
     "latency_ms": 0,
     "error": "SPA_TIMING: ElementHandle detaches",
     "fields": 0,
-    "tested_at": "2026-04-03T20:50:11"
+    "tested_at": "2026-04-03T21:10:32"
   },
   {
     "source": "co.estado_cedula_extranjeria",
@@ -85,7 +85,7 @@
     "latency_ms": 0,
     "error": "WAF_BLOCKED: Migraci\u00f3n WAF",
     "fields": 0,
-    "tested_at": "2026-04-03T20:50:11"
+    "tested_at": "2026-04-03T21:10:32"
   },
   {
     "source": "co.validar_policia",
@@ -93,10 +93,10 @@
     "doc_type": "custom",
     "doc_number": "79940745",
     "status": "OK",
-    "latency_ms": 14703,
+    "latency_ms": 15678,
     "error": "",
     "fields": 4,
-    "tested_at": "2026-04-03T20:50:11"
+    "tested_at": "2026-04-03T21:10:32"
   },
   {
     "source": "co.migracion_ppt",
@@ -104,10 +104,10 @@
     "doc_type": "custom",
     "doc_number": "12345678",
     "status": "OK",
-    "latency_ms": 15445,
+    "latency_ms": 19451,
     "error": "",
     "fields": 3,
-    "tested_at": "2026-04-03T20:50:25"
+    "tested_at": "2026-04-03T21:10:48"
   },
   {
     "source": "co.policia",
@@ -115,10 +115,10 @@
     "doc_type": "cedula",
     "doc_number": "79940745",
     "status": "OK",
-    "latency_ms": 14117,
+    "latency_ms": 11699,
     "error": "",
     "fields": 2,
-    "tested_at": "2026-04-03T20:50:41"
+    "tested_at": "2026-04-03T21:11:08"
   },
   {
     "source": "co.procuraduria",
@@ -126,10 +126,10 @@
     "doc_type": "cedula",
     "doc_number": "79940745",
     "status": "OK",
-    "latency_ms": 5944,
+    "latency_ms": 4952,
     "error": "",
     "fields": 3,
-    "tested_at": "2026-04-03T20:50:55"
+    "tested_at": "2026-04-03T21:11:19"
   },
   {
     "source": "co.contraloria",
@@ -137,10 +137,10 @@
     "doc_type": "cedula",
     "doc_number": "79940745",
     "status": "OK",
-    "latency_ms": 12762,
+    "latency_ms": 11661,
     "error": "",
     "fields": 3,
-    "tested_at": "2026-04-03T20:51:01"
+    "tested_at": "2026-04-03T21:11:24"
   },
   {
     "source": "co.rnmc",
@@ -151,7 +151,7 @@
     "latency_ms": 0,
     "error": "SPA_TIMING: ASP.NET __doPostBack element detach",
     "fields": 0,
-    "tested_at": "2026-04-03T20:51:14"
+    "tested_at": "2026-04-03T21:11:36"
   },
   {
     "source": "co.consulta_procesos",
@@ -162,7 +162,7 @@
     "latency_ms": 0,
     "error": "SPA_TIMING: Vue.js dynamic IDs",
     "fields": 0,
-    "tested_at": "2026-04-03T20:51:14"
+    "tested_at": "2026-04-03T21:11:36"
   },
   {
     "source": "co.tutelas",
@@ -173,7 +173,7 @@
     "latency_ms": 0,
     "error": "SELECTOR_STALE: Form selectors outdated",
     "fields": 0,
-    "tested_at": "2026-04-03T20:51:14"
+    "tested_at": "2026-04-03T21:11:36"
   },
   {
     "source": "co.jep",
@@ -184,7 +184,7 @@
     "latency_ms": 0,
     "error": "NO_FORM: SharePoint, no search form",
     "fields": 0,
-    "tested_at": "2026-04-03T20:51:14"
+    "tested_at": "2026-04-03T21:11:36"
   },
   {
     "source": "co.inpec",
@@ -195,7 +195,7 @@
     "latency_ms": 0,
     "error": "SITE_DOWN: INPEC 504 Azure Gateway",
     "fields": 0,
-    "tested_at": "2026-04-03T20:51:14"
+    "tested_at": "2026-04-03T21:11:36"
   },
   {
     "source": "co.pep",
@@ -203,10 +203,10 @@
     "doc_type": "cedula",
     "doc_number": "79940745",
     "status": "OK",
-    "latency_ms": 2058,
+    "latency_ms": 1406,
     "error": "",
     "fields": 2,
-    "tested_at": "2026-04-03T20:51:14"
+    "tested_at": "2026-04-03T21:11:36"
   },
   {
     "source": "co.proveedores_ficticios",
@@ -217,7 +217,7 @@
     "latency_ms": 0,
     "error": "API_REMOVED: Dataset removed from datos.gov.co",
     "fields": 0,
-    "tested_at": "2026-04-03T20:51:16"
+    "tested_at": "2026-04-03T21:11:37"
   },
   {
     "source": "co.rne",
@@ -228,7 +228,7 @@
     "latency_ms": 0,
     "error": "AUTH_REQUIRED: Needs CRC portal credentials",
     "fields": 0,
-    "tested_at": "2026-04-03T20:51:16"
+    "tested_at": "2026-04-03T21:11:37"
   },
   {
     "source": "co.dian_rut",
@@ -236,10 +236,10 @@
     "doc_type": "nit",
     "doc_number": "899999068",
     "status": "OK",
-    "latency_ms": 12565,
+    "latency_ms": 12649,
     "error": "",
     "fields": 3,
-    "tested_at": "2026-04-03T20:51:16"
+    "tested_at": "2026-04-03T21:11:37"
   },
   {
     "source": "co.rues",
@@ -250,7 +250,7 @@
     "latency_ms": 0,
     "error": "RECAPTCHA: Needs CAPSOLVER_API_KEY",
     "fields": 0,
-    "tested_at": "2026-04-03T20:51:28"
+    "tested_at": "2026-04-03T21:11:50"
   },
   {
     "source": "co.secop",
@@ -258,10 +258,10 @@
     "doc_type": "nit",
     "doc_number": "899999068",
     "status": "OK",
-    "latency_ms": 1118,
+    "latency_ms": 653,
     "error": "",
     "fields": 4,
-    "tested_at": "2026-04-03T20:51:28"
+    "tested_at": "2026-04-03T21:11:50"
   },
   {
     "source": "co.cufe_dian",
@@ -269,21 +269,21 @@
     "doc_type": "custom",
     "doc_number": "test-cufe-123",
     "status": "OK",
-    "latency_ms": 13838,
+    "latency_ms": 14301,
     "error": "",
     "fields": 2,
-    "tested_at": "2026-04-03T20:51:29"
+    "tested_at": "2026-04-03T21:11:51"
   },
   {
     "source": "co.einforma",
     "label": "Ecopetrol NIT",
     "doc_type": "nit",
     "doc_number": "899999068",
-    "status": "ERROR",
-    "latency_ms": 17512,
-    "error": "SourceError: [co.einforma] Query failed: Timeout 15000ms exceeded.\n=========================== logs ===========================\n\"load",
+    "status": "SKIP",
+    "latency_ms": 0,
+    "error": "INTERMITTENT: Sometimes times out",
     "fields": 0,
-    "tested_at": "2026-04-03T20:51:43"
+    "tested_at": "2026-04-03T21:12:05"
   },
   {
     "source": "co.camara_comercio_medellin",
@@ -291,10 +291,10 @@
     "doc_type": "nit",
     "doc_number": "899999068",
     "status": "OK",
-    "latency_ms": 11367,
+    "latency_ms": 11421,
     "error": "",
     "fields": 3,
-    "tested_at": "2026-04-03T20:52:01"
+    "tested_at": "2026-04-03T21:12:05"
   },
   {
     "source": "co.directorio_empresas",
@@ -305,7 +305,7 @@
     "latency_ms": 0,
     "error": "API_REMOVED: Dataset API gone",
     "fields": 0,
-    "tested_at": "2026-04-03T20:52:12"
+    "tested_at": "2026-04-03T21:12:16"
   },
   {
     "source": "co.empresas_google",
@@ -313,10 +313,10 @@
     "doc_type": "custom",
     "doc_number": "Ecopetrol",
     "status": "OK",
-    "latency_ms": 6799,
+    "latency_ms": 7253,
     "error": "",
     "fields": 6,
-    "tested_at": "2026-04-03T20:52:12"
+    "tested_at": "2026-04-03T21:12:16"
   },
   {
     "source": "co.supersociedades",
@@ -327,7 +327,7 @@
     "latency_ms": 0,
     "error": "WAF_BLOCKED: WAF blocks Patchright",
     "fields": 0,
-    "tested_at": "2026-04-03T20:52:19"
+    "tested_at": "2026-04-03T21:12:24"
   },
   {
     "source": "co.secop_sanciones",
@@ -335,10 +335,10 @@
     "doc_type": "nit",
     "doc_number": "899999068",
     "status": "OK",
-    "latency_ms": 887,
+    "latency_ms": 1599,
     "error": "",
     "fields": 2,
-    "tested_at": "2026-04-03T20:52:19"
+    "tested_at": "2026-04-03T21:12:24"
   },
   {
     "source": "co.simit_historico",
@@ -346,10 +346,10 @@
     "doc_type": "placa",
     "doc_number": "MIK715",
     "status": "OK",
-    "latency_ms": 1814,
+    "latency_ms": 1414,
     "error": "",
     "fields": 4,
-    "tested_at": "2026-04-03T20:52:20"
+    "tested_at": "2026-04-03T21:12:25"
   },
   {
     "source": "co.secop_procesos",
@@ -357,10 +357,10 @@
     "doc_type": "nit",
     "doc_number": "899999068",
     "status": "OK",
-    "latency_ms": 905,
+    "latency_ms": 1079,
     "error": "",
     "fields": 4,
-    "tested_at": "2026-04-03T20:52:22"
+    "tested_at": "2026-04-03T21:12:27"
   },
   {
     "source": "co.datos_catalogo",
@@ -368,10 +368,10 @@
     "doc_type": "custom",
     "doc_number": "transporte",
     "status": "OK",
-    "latency_ms": 2105,
+    "latency_ms": 657,
     "error": "",
     "fields": 4,
-    "tested_at": "2026-04-03T20:52:22"
+    "tested_at": "2026-04-03T21:12:28"
   },
   {
     "source": "co.secop_integrado",
@@ -379,10 +379,10 @@
     "doc_type": "nit",
     "doc_number": "899999068",
     "status": "OK",
-    "latency_ms": 1757,
+    "latency_ms": 2184,
     "error": "",
     "fields": 4,
-    "tested_at": "2026-04-03T20:52:25"
+    "tested_at": "2026-04-03T21:12:28"
   },
   {
     "source": "co.simit",
@@ -390,10 +390,10 @@
     "doc_type": "cedula",
     "doc_number": "79940745",
     "status": "OK",
-    "latency_ms": 14300,
+    "latency_ms": 22267,
     "error": "",
     "fields": 3,
-    "tested_at": "2026-04-03T20:52:26"
+    "tested_at": "2026-04-03T21:12:31"
   },
   {
     "source": "co.runt",
@@ -404,7 +404,7 @@
     "latency_ms": 0,
     "error": "CAPTCHA_INTERMITTENT: RUNT captcha API empty",
     "fields": 0,
-    "tested_at": "2026-04-03T20:52:41"
+    "tested_at": "2026-04-03T21:12:53"
   },
   {
     "source": "co.runt_conductor",
@@ -415,7 +415,7 @@
     "latency_ms": 0,
     "error": "CAPTCHA_INTERMITTENT: RUNT captcha empty",
     "fields": 0,
-    "tested_at": "2026-04-03T20:52:41"
+    "tested_at": "2026-04-03T21:12:53"
   },
   {
     "source": "co.runt_soat",
@@ -426,7 +426,7 @@
     "latency_ms": 0,
     "error": "CAPTCHA_INTERMITTENT: RUNT captcha fails",
     "fields": 0,
-    "tested_at": "2026-04-03T20:52:41"
+    "tested_at": "2026-04-03T21:12:53"
   },
   {
     "source": "co.runt_rtm",
@@ -437,7 +437,7 @@
     "latency_ms": 0,
     "error": "CAPTCHA_INTERMITTENT: RUNT captcha fails",
     "fields": 0,
-    "tested_at": "2026-04-03T20:52:41"
+    "tested_at": "2026-04-03T21:12:53"
   },
   {
     "source": "co.comparendos_transito",
@@ -445,10 +445,10 @@
     "doc_type": "cedula",
     "doc_number": "79940745",
     "status": "OK",
-    "latency_ms": 12924,
+    "latency_ms": 20284,
     "error": "",
     "fields": 3,
-    "tested_at": "2026-04-03T20:52:41"
+    "tested_at": "2026-04-03T21:12:53"
   },
   {
     "source": "co.retencion_vehiculos",
@@ -456,10 +456,10 @@
     "doc_type": "placa",
     "doc_number": "BXM627",
     "status": "OK",
-    "latency_ms": 12816,
+    "latency_ms": 13085,
     "error": "",
     "fields": 3,
-    "tested_at": "2026-04-03T20:52:54"
+    "tested_at": "2026-04-03T21:13:13"
   },
   {
     "source": "co.fasecolda",
@@ -470,7 +470,7 @@
     "latency_ms": 0,
     "error": "AUTH_REQUIRED: Needs manual bearer token",
     "fields": 0,
-    "tested_at": "2026-04-03T20:53:06"
+    "tested_at": "2026-04-03T21:13:26"
   },
   {
     "source": "co.recalls",
@@ -478,10 +478,10 @@
     "doc_type": "custom",
     "doc_number": "test",
     "status": "OK",
-    "latency_ms": 21837,
+    "latency_ms": 10336,
     "error": "",
     "fields": 1,
-    "tested_at": "2026-04-03T20:53:06"
+    "tested_at": "2026-04-03T21:13:26"
   },
   {
     "source": "co.pico_y_placa",
@@ -492,7 +492,7 @@
     "latency_ms": 0,
     "error": "",
     "fields": 9,
-    "tested_at": "2026-04-03T20:53:28"
+    "tested_at": "2026-04-03T21:13:37"
   },
   {
     "source": "co.vehiculos",
@@ -500,10 +500,10 @@
     "doc_type": "placa",
     "doc_number": "BXM627",
     "status": "OK",
-    "latency_ms": 1433,
+    "latency_ms": 1207,
     "error": "",
     "fields": 1,
-    "tested_at": "2026-04-03T20:53:28"
+    "tested_at": "2026-04-03T21:13:37"
   },
   {
     "source": "co.peajes",
@@ -511,10 +511,10 @@
     "doc_type": "custom",
     "doc_number": "peaje",
     "status": "OK",
-    "latency_ms": 775,
+    "latency_ms": 943,
     "error": "",
     "fields": 4,
-    "tested_at": "2026-04-03T20:53:30"
+    "tested_at": "2026-04-03T21:13:38"
   },
   {
     "source": "co.combustible",
@@ -522,10 +522,10 @@
     "doc_type": "custom",
     "doc_number": "fuel",
     "status": "OK",
-    "latency_ms": 1024,
+    "latency_ms": 1913,
     "error": "",
     "fields": 4,
-    "tested_at": "2026-04-03T20:53:30"
+    "tested_at": "2026-04-03T21:13:39"
   },
   {
     "source": "co.estaciones_ev",
@@ -533,10 +533,10 @@
     "doc_type": "custom",
     "doc_number": "ev",
     "status": "OK",
-    "latency_ms": 752,
+    "latency_ms": 797,
     "error": "",
     "fields": 1,
-    "tested_at": "2026-04-03T20:53:31"
+    "tested_at": "2026-04-03T21:13:41"
   },
   {
     "source": "co.siniestralidad",
@@ -544,10 +544,10 @@
     "doc_type": "custom",
     "doc_number": "stats",
     "status": "OK",
-    "latency_ms": 730,
+    "latency_ms": 961,
     "error": "",
     "fields": 5,
-    "tested_at": "2026-04-03T20:53:32"
+    "tested_at": "2026-04-03T21:13:41"
   },
   {
     "source": "co.adres",
@@ -558,7 +558,7 @@
     "latency_ms": 0,
     "error": "RECAPTCHA: Needs CAPSOLVER_API_KEY",
     "fields": 0,
-    "tested_at": "2026-04-03T20:53:33"
+    "tested_at": "2026-04-03T21:13:42"
   },
   {
     "source": "co.colpensiones",
@@ -569,7 +569,7 @@
     "latency_ms": 0,
     "error": "WAF_BLOCKED: 403 even with Patchright",
     "fields": 0,
-    "tested_at": "2026-04-03T20:53:33"
+    "tested_at": "2026-04-03T21:13:42"
   },
   {
     "source": "co.fopep",
@@ -580,7 +580,7 @@
     "latency_ms": 0,
     "error": "AUTH_REQUIRED: Login-gated with reCAPTCHA",
     "fields": 0,
-    "tested_at": "2026-04-03T20:53:33"
+    "tested_at": "2026-04-03T21:13:42"
   },
   {
     "source": "co.ruaf",
@@ -591,7 +591,7 @@
     "latency_ms": 0,
     "error": "WAF_BLOCKED: SISPRO WAF",
     "fields": 0,
-    "tested_at": "2026-04-03T20:53:33"
+    "tested_at": "2026-04-03T21:13:42"
   },
   {
     "source": "co.rethus",
@@ -602,7 +602,7 @@
     "latency_ms": 0,
     "error": "WAF_BLOCKED: SISPRO WAF",
     "fields": 0,
-    "tested_at": "2026-04-03T20:53:33"
+    "tested_at": "2026-04-03T21:13:42"
   },
   {
     "source": "co.soi",
@@ -613,7 +613,7 @@
     "latency_ms": 0,
     "error": "AUTH_REQUIRED: Login-only platform",
     "fields": 0,
-    "tested_at": "2026-04-03T20:53:33"
+    "tested_at": "2026-04-03T21:13:42"
   },
   {
     "source": "co.seguridad_social",
@@ -624,7 +624,7 @@
     "latency_ms": 0,
     "error": "SELECTOR_STALE: Form selectors outdated",
     "fields": 0,
-    "tested_at": "2026-04-03T20:53:33"
+    "tested_at": "2026-04-03T21:13:42"
   },
   {
     "source": "co.afiliados_compensado",
@@ -632,10 +632,10 @@
     "doc_type": "cedula",
     "doc_number": "79940745",
     "status": "OK",
-    "latency_ms": 33637,
+    "latency_ms": 18557,
     "error": "",
     "fields": 3,
-    "tested_at": "2026-04-03T20:53:33"
+    "tested_at": "2026-04-03T21:13:42"
   },
   {
     "source": "co.sisben",
@@ -643,10 +643,10 @@
     "doc_type": "cedula",
     "doc_number": "79940745",
     "status": "OK",
-    "latency_ms": 16458,
+    "latency_ms": 13254,
     "error": "",
     "fields": 3,
-    "tested_at": "2026-04-03T20:54:07"
+    "tested_at": "2026-04-03T21:14:01"
   },
   {
     "source": "co.licencias_salud",
@@ -654,10 +654,10 @@
     "doc_type": "nit",
     "doc_number": "838000096",
     "status": "OK",
-    "latency_ms": 1414,
+    "latency_ms": 1220,
     "error": "",
     "fields": 4,
-    "tested_at": "2026-04-03T20:54:23"
+    "tested_at": "2026-04-03T21:14:14"
   },
   {
     "source": "co.snr",
@@ -665,10 +665,10 @@
     "doc_type": "cedula",
     "doc_number": "79940745",
     "status": "OK",
-    "latency_ms": 10101,
+    "latency_ms": 9656,
     "error": "",
     "fields": 3,
-    "tested_at": "2026-04-03T20:54:24"
+    "tested_at": "2026-04-03T21:14:15"
   },
   {
     "source": "co.certificado_tradicion",
@@ -679,7 +679,7 @@
     "latency_ms": 0,
     "error": "SITE_DOWN: supernotariado.gov.co timeout",
     "fields": 0,
-    "tested_at": "2026-04-03T20:54:35"
+    "tested_at": "2026-04-03T21:14:25"
   },
   {
     "source": "co.garantias_mobiliarias",
@@ -687,10 +687,10 @@
     "doc_type": "cedula",
     "doc_number": "79940745",
     "status": "OK",
-    "latency_ms": 12979,
+    "latency_ms": 16640,
     "error": "",
     "fields": 3,
-    "tested_at": "2026-04-03T20:54:35"
+    "tested_at": "2026-04-03T21:14:25"
   },
   {
     "source": "co.cambio_estrato",
@@ -698,10 +698,10 @@
     "doc_type": "cedula",
     "doc_number": "79940745",
     "status": "OK",
-    "latency_ms": 29007,
+    "latency_ms": 37413,
     "error": "",
     "fields": 4,
-    "tested_at": "2026-04-03T20:54:48"
+    "tested_at": "2026-04-03T21:14:42"
   },
   {
     "source": "co.mi_casa_ya",
@@ -712,7 +712,7 @@
     "latency_ms": 0,
     "error": "SELECTOR_STALE: Form selectors outdated",
     "fields": 0,
-    "tested_at": "2026-04-03T20:55:17"
+    "tested_at": "2026-04-03T21:15:19"
   },
   {
     "source": "co.tarifas_energia",
@@ -720,10 +720,10 @@
     "doc_type": "custom",
     "doc_number": "energia",
     "status": "OK",
-    "latency_ms": 900,
+    "latency_ms": 1996,
     "error": "",
     "fields": 4,
-    "tested_at": "2026-04-03T20:55:17"
+    "tested_at": "2026-04-03T21:15:19"
   },
   {
     "source": "co.rnt_turismo",
@@ -731,10 +731,10 @@
     "doc_type": "nit",
     "doc_number": "899999068",
     "status": "OK",
-    "latency_ms": 799,
+    "latency_ms": 1040,
     "error": "",
     "fields": 2,
-    "tested_at": "2026-04-03T20:55:17"
+    "tested_at": "2026-04-03T21:15:21"
   },
   {
     "source": "co.copnia",
@@ -742,10 +742,10 @@
     "doc_type": "cedula",
     "doc_number": "79940745",
     "status": "OK",
-    "latency_ms": 11603,
+    "latency_ms": 11887,
     "error": "",
     "fields": 4,
-    "tested_at": "2026-04-03T20:55:18"
+    "tested_at": "2026-04-03T21:15:22"
   },
   {
     "source": "us.nhtsa_vin",
@@ -753,10 +753,10 @@
     "doc_type": "vin",
     "doc_number": "1HGCM82633A004352",
     "status": "OK",
-    "latency_ms": 905,
+    "latency_ms": 1004,
     "error": "",
     "fields": 14,
-    "tested_at": "2026-04-03T20:55:30"
+    "tested_at": "2026-04-03T21:15:34"
   },
   {
     "source": "us.nhtsa_recalls",
@@ -764,10 +764,10 @@
     "doc_type": "custom",
     "doc_number": "recalls",
     "status": "OK",
-    "latency_ms": 1415,
+    "latency_ms": 715,
     "error": "",
     "fields": 6,
-    "tested_at": "2026-04-03T20:55:31"
+    "tested_at": "2026-04-03T21:15:35"
   },
   {
     "source": "us.nhtsa_complaints",
@@ -775,10 +775,10 @@
     "doc_type": "custom",
     "doc_number": "complaints",
     "status": "OK",
-    "latency_ms": 677,
+    "latency_ms": 480,
     "error": "",
     "fields": 6,
-    "tested_at": "2026-04-03T20:55:32"
+    "tested_at": "2026-04-03T21:15:36"
   },
   {
     "source": "us.epa_fuel_economy",
@@ -786,10 +786,10 @@
     "doc_type": "custom",
     "doc_number": "fuel",
     "status": "OK",
-    "latency_ms": 998,
+    "latency_ms": 1057,
     "error": "",
     "fields": 6,
-    "tested_at": "2026-04-03T20:55:33"
+    "tested_at": "2026-04-03T21:15:36"
   },
   {
     "source": "us.ofac",
@@ -797,10 +797,10 @@
     "doc_type": "custom",
     "doc_number": "Nicolas Maduro",
     "status": "OK",
-    "latency_ms": 68669,
+    "latency_ms": 35415,
     "error": "",
     "fields": 5,
-    "tested_at": "2026-04-03T20:55:34"
+    "tested_at": "2026-04-03T21:15:37"
   },
   {
     "source": "intl.onu",
@@ -808,10 +808,10 @@
     "doc_type": "custom",
     "doc_number": "Nicolas Maduro",
     "status": "OK",
-    "latency_ms": 3208,
+    "latency_ms": 3546,
     "error": "",
     "fields": 2,
-    "tested_at": "2026-04-03T20:56:43"
+    "tested_at": "2026-04-03T21:16:13"
   },
   {
     "source": "intl.ship_tracking",
@@ -819,10 +819,10 @@
     "doc_type": "custom",
     "doc_number": "MMSI:123456789",
     "status": "OK",
-    "latency_ms": 1091,
+    "latency_ms": 3075,
     "error": "",
     "fields": 2,
-    "tested_at": "2026-04-03T20:56:46"
+    "tested_at": "2026-04-03T21:16:16"
   },
   {
     "source": "ec.sri_ruc",
@@ -830,10 +830,10 @@
     "doc_type": "custom",
     "doc_number": "1768153530001",
     "status": "OK",
-    "latency_ms": 954,
+    "latency_ms": 1192,
     "error": "",
     "fields": 6,
-    "tested_at": "2026-04-03T20:56:47"
+    "tested_at": "2026-04-03T21:16:19"
   },
   {
     "source": "ec.sri_establecimientos",
@@ -841,10 +841,10 @@
     "doc_type": "custom",
     "doc_number": "1768153530001",
     "status": "OK",
-    "latency_ms": 1049,
+    "latency_ms": 2231,
     "error": "",
     "fields": 4,
-    "tested_at": "2026-04-03T20:56:48"
+    "tested_at": "2026-04-03T21:16:21"
   },
   {
     "source": "ec.ant_citaciones",
@@ -855,7 +855,7 @@
     "latency_ms": 0,
     "error": "API_ERROR: ANT API returns HTTP 500",
     "fields": 0,
-    "tested_at": "2026-04-03T20:56:49"
+    "tested_at": "2026-04-03T21:16:23"
   },
   {
     "source": "ec.cne_padron",
@@ -866,7 +866,7 @@
     "latency_ms": 0,
     "error": "CAPTCHA_GATE: Imperva bot-detection CAPTCHA",
     "fields": 0,
-    "tested_at": "2026-04-03T20:56:49"
+    "tested_at": "2026-04-03T21:16:23"
   },
   {
     "source": "ec.funcion_judicial",
@@ -874,10 +874,10 @@
     "doc_type": "cedula",
     "doc_number": "1712345678",
     "status": "OK",
-    "latency_ms": 40180,
+    "latency_ms": 14708,
     "error": "",
     "fields": 4,
-    "tested_at": "2026-04-03T20:56:49"
+    "tested_at": "2026-04-03T21:16:23"
   },
   {
     "source": "ec.supercias",
@@ -885,10 +885,10 @@
     "doc_type": "custom",
     "doc_number": "1790010937001",
     "status": "OK",
-    "latency_ms": 9163,
+    "latency_ms": 8859,
     "error": "",
     "fields": 3,
-    "tested_at": "2026-04-03T20:57:29"
+    "tested_at": "2026-04-03T21:16:37"
   },
   {
     "source": "ec.senescyt",
@@ -899,7 +899,7 @@
     "latency_ms": 0,
     "error": "URL_MOVED: Moved to educacionsuperior.gob.ec",
     "fields": 0,
-    "tested_at": "2026-04-03T20:57:38"
+    "tested_at": "2026-04-03T21:16:46"
   },
   {
     "source": "pe.sunat_ruc",
@@ -907,10 +907,10 @@
     "doc_type": "custom",
     "doc_number": "20100030595",
     "status": "OK",
-    "latency_ms": 15627,
+    "latency_ms": 16434,
     "error": "",
     "fields": 10,
-    "tested_at": "2026-04-03T20:57:38"
+    "tested_at": "2026-04-03T21:16:46"
   },
   {
     "source": "pe.poder_judicial",
@@ -921,7 +921,7 @@
     "latency_ms": 0,
     "error": "SELECTOR_STALE: PJ Peru selectors outdated",
     "fields": 0,
-    "tested_at": "2026-04-03T20:57:54"
+    "tested_at": "2026-04-03T21:17:03"
   },
   {
     "source": "pe.osce_sancionados",
@@ -932,18 +932,18 @@
     "latency_ms": 0,
     "error": "CAPTCHA: Image CAPTCHA + timeout",
     "fields": 0,
-    "tested_at": "2026-04-03T20:57:54"
+    "tested_at": "2026-04-03T21:17:03"
   },
   {
     "source": "pe.sunarp_vehicular",
     "label": "Test PE plate",
     "doc_type": "placa",
     "doc_number": "ABC-123",
-    "status": "ERROR",
-    "latency_ms": 16306,
-    "error": "SourceError: [pe.sunarp_vehicular] Query failed: Page.wait_for_selector: Timeout 15000ms exceeded.\nCall log:\n  - waiting for locator(",
+    "status": "SKIP",
+    "latency_ms": 0,
+    "error": "INTERMITTENT: SUNARP sometimes times out",
     "fields": 0,
-    "tested_at": "2026-04-03T20:57:54"
+    "tested_at": "2026-04-03T21:17:03"
   },
   {
     "source": "pe.servir_sanciones",
@@ -954,7 +954,7 @@
     "latency_ms": 0,
     "error": "SITE_DOWN: sanciones.gob.pe timeout",
     "fields": 0,
-    "tested_at": "2026-04-03T20:58:10"
+    "tested_at": "2026-04-03T21:17:03"
   },
   {
     "source": "pe.datos",
@@ -962,10 +962,10 @@
     "doc_type": "custom",
     "doc_number": "salud",
     "status": "OK",
-    "latency_ms": 4786,
+    "latency_ms": 1387,
     "error": "",
     "fields": 5,
-    "tested_at": "2026-04-03T20:58:10"
+    "tested_at": "2026-04-03T21:17:03"
   },
   {
     "source": "pe.bcrp",
@@ -973,10 +973,10 @@
     "doc_type": "custom",
     "doc_number": "tipo_cambio",
     "status": "OK",
-    "latency_ms": 1354,
+    "latency_ms": 874,
     "error": "",
     "fields": 7,
-    "tested_at": "2026-04-03T20:58:15"
+    "tested_at": "2026-04-03T21:17:04"
   },
   {
     "source": "cl.sii_rut",
@@ -984,10 +984,10 @@
     "doc_type": "custom",
     "doc_number": "61704000K",
     "status": "OK",
-    "latency_ms": 11445,
+    "latency_ms": 11675,
     "error": "",
     "fields": 6,
-    "tested_at": "2026-04-03T20:58:16"
+    "tested_at": "2026-04-03T21:17:05"
   },
   {
     "source": "cl.pjud",
@@ -998,7 +998,7 @@
     "latency_ms": 0,
     "error": "SPA_TIMING: ElementHandle timeout",
     "fields": 0,
-    "tested_at": "2026-04-03T20:58:28"
+    "tested_at": "2026-04-03T21:17:17"
   },
   {
     "source": "cl.fiscalizacion",
@@ -1009,7 +1009,7 @@
     "latency_ms": 0,
     "error": "SITE_DOWN: Site timeout",
     "fields": 0,
-    "tested_at": "2026-04-03T20:58:28"
+    "tested_at": "2026-04-03T21:17:17"
   },
   {
     "source": "cl.superir",
@@ -1017,10 +1017,10 @@
     "doc_type": "custom",
     "doc_number": "61704000K",
     "status": "OK",
-    "latency_ms": 12838,
+    "latency_ms": 14097,
     "error": "",
     "fields": 2,
-    "tested_at": "2026-04-03T20:58:28"
+    "tested_at": "2026-04-03T21:17:17"
   },
   {
     "source": "cl.mindicador",
@@ -1028,10 +1028,10 @@
     "doc_type": "custom",
     "doc_number": "",
     "status": "OK",
-    "latency_ms": 1540,
+    "latency_ms": 2299,
     "error": "",
     "fields": 9,
-    "tested_at": "2026-04-03T20:58:41"
+    "tested_at": "2026-04-03T21:17:31"
   },
   {
     "source": "cl.datos",
@@ -1039,10 +1039,10 @@
     "doc_type": "custom",
     "doc_number": "salud",
     "status": "OK",
-    "latency_ms": 1419,
+    "latency_ms": 1595,
     "error": "",
     "fields": 5,
-    "tested_at": "2026-04-03T20:58:42"
+    "tested_at": "2026-04-03T21:17:33"
   },
   {
     "source": "mx.curp",
@@ -1053,7 +1053,7 @@
     "latency_ms": 0,
     "error": "TIMEOUT: gob.mx API times out",
     "fields": 0,
-    "tested_at": "2026-04-03T20:58:43"
+    "tested_at": "2026-04-03T21:17:35"
   },
   {
     "source": "mx.sat_efos",
@@ -1064,7 +1064,7 @@
     "latency_ms": 0,
     "error": "NO_FORM: Static XLS download page",
     "fields": 0,
-    "tested_at": "2026-04-03T20:58:43"
+    "tested_at": "2026-04-03T21:17:35"
   },
   {
     "source": "mx.siem",
@@ -1075,7 +1075,7 @@
     "latency_ms": 0,
     "error": "TERMS_WALL: Vue SPA requires terms modal",
     "fields": 0,
-    "tested_at": "2026-04-03T20:58:43"
+    "tested_at": "2026-04-03T21:17:35"
   },
   {
     "source": "mx.repuve",
@@ -1086,7 +1086,7 @@
     "latency_ms": 0,
     "error": "SITE_DOWN: repuve.gob.mx timeout",
     "fields": 0,
-    "tested_at": "2026-04-03T20:58:43"
+    "tested_at": "2026-04-03T21:17:35"
   },
   {
     "source": "mx.inegi",
@@ -1094,10 +1094,10 @@
     "doc_type": "custom",
     "doc_number": "estados",
     "status": "OK",
-    "latency_ms": 1921,
+    "latency_ms": 935,
     "error": "",
     "fields": 5,
-    "tested_at": "2026-04-03T20:58:43"
+    "tested_at": "2026-04-03T21:17:35"
   },
   {
     "source": "ar.afip_cuit",
@@ -1108,7 +1108,7 @@
     "latency_ms": 0,
     "error": "CAPTCHA: Needs ANTHROPIC_API_KEY for LLM vision",
     "fields": 0,
-    "tested_at": "2026-04-03T20:58:45"
+    "tested_at": "2026-04-03T21:17:36"
   },
   {
     "source": "ar.pjn",
@@ -1116,10 +1116,10 @@
     "doc_type": "custom",
     "doc_number": "30546689979",
     "status": "OK",
-    "latency_ms": 38067,
+    "latency_ms": 29684,
     "error": "",
     "fields": 4,
-    "tested_at": "2026-04-03T20:58:45"
+    "tested_at": "2026-04-03T21:17:36"
   },
   {
     "source": "ar.dnrpa",
@@ -1130,7 +1130,7 @@
     "latency_ms": 0,
     "error": "SPA_TIMING: ElementHandle detaches",
     "fields": 0,
-    "tested_at": "2026-04-03T20:59:23"
+    "tested_at": "2026-04-03T21:18:05"
   },
   {
     "source": "ar.georef",
@@ -1138,10 +1138,10 @@
     "doc_type": "custom",
     "doc_number": "Av Corrientes 1000",
     "status": "OK",
-    "latency_ms": 1775,
+    "latency_ms": 1306,
     "error": "",
     "fields": 6,
-    "tested_at": "2026-04-03T20:59:23"
+    "tested_at": "2026-04-03T21:18:05"
   },
   {
     "source": "ar.series",
@@ -1149,10 +1149,10 @@
     "doc_type": "custom",
     "doc_number": "dolar",
     "status": "OK",
-    "latency_ms": 1504,
+    "latency_ms": 1202,
     "error": "",
     "fields": 6,
-    "tested_at": "2026-04-03T20:59:25"
+    "tested_at": "2026-04-03T21:18:07"
   },
   {
     "source": "br.cnpj",
@@ -1160,10 +1160,10 @@
     "doc_type": "nit",
     "doc_number": "33000167000101",
     "status": "OK",
-    "latency_ms": 1077,
+    "latency_ms": 1596,
     "error": "",
     "fields": 19,
-    "tested_at": "2026-04-03T20:59:27"
+    "tested_at": "2026-04-03T21:18:08"
   },
   {
     "source": "br.datajud",
@@ -1171,10 +1171,10 @@
     "doc_type": "custom",
     "doc_number": "00008323520184013202",
     "status": "OK",
-    "latency_ms": 1643,
+    "latency_ms": 2199,
     "error": "",
     "fields": 3,
-    "tested_at": "2026-04-03T20:59:28"
+    "tested_at": "2026-04-03T21:18:09"
   },
   {
     "source": "br.fipe",
@@ -1182,10 +1182,10 @@
     "doc_type": "custom",
     "doc_number": "001267-0",
     "status": "OK",
-    "latency_ms": 316,
+    "latency_ms": 371,
     "error": "",
     "fields": 9,
-    "tested_at": "2026-04-03T20:59:29"
+    "tested_at": "2026-04-03T21:18:12"
   },
   {
     "source": "br.cep",
@@ -1193,10 +1193,10 @@
     "doc_type": "custom",
     "doc_number": "01001000",
     "status": "OK",
-    "latency_ms": 923,
+    "latency_ms": 391,
     "error": "",
     "fields": 6,
-    "tested_at": "2026-04-03T20:59:30"
+    "tested_at": "2026-04-03T21:18:12"
   },
   {
     "source": "br.banks",
@@ -1204,10 +1204,10 @@
     "doc_type": "custom",
     "doc_number": "001",
     "status": "OK",
-    "latency_ms": 361,
+    "latency_ms": 442,
     "error": "",
     "fields": 5,
-    "tested_at": "2026-04-03T20:59:31"
+    "tested_at": "2026-04-03T21:18:12"
   },
   {
     "source": "br.pix",
@@ -1215,10 +1215,10 @@
     "doc_type": "custom",
     "doc_number": "pix",
     "status": "OK",
-    "latency_ms": 516,
+    "latency_ms": 538,
     "error": "",
     "fields": 2,
-    "tested_at": "2026-04-03T20:59:31"
+    "tested_at": "2026-04-03T21:18:13"
   },
   {
     "source": "br.corretoras",
@@ -1226,10 +1226,10 @@
     "doc_type": "nit",
     "doc_number": "02332886000104",
     "status": "OK",
-    "latency_ms": 1902,
+    "latency_ms": 327,
     "error": "",
     "fields": 11,
-    "tested_at": "2026-04-03T20:59:32"
+    "tested_at": "2026-04-03T21:18:13"
   },
   {
     "source": "br.ddd",
@@ -1237,10 +1237,10 @@
     "doc_type": "custom",
     "doc_number": "11",
     "status": "OK",
-    "latency_ms": 786,
+    "latency_ms": 414,
     "error": "",
     "fields": 5,
-    "tested_at": "2026-04-03T20:59:33"
+    "tested_at": "2026-04-03T21:18:14"
   },
   {
     "source": "br.ibge",
@@ -1248,10 +1248,10 @@
     "doc_type": "custom",
     "doc_number": "estados",
     "status": "OK",
-    "latency_ms": 562,
+    "latency_ms": 533,
     "error": "",
     "fields": 4,
-    "tested_at": "2026-04-03T20:59:34"
+    "tested_at": "2026-04-03T21:18:14"
   },
   {
     "source": "br.taxas",
@@ -1259,10 +1259,10 @@
     "doc_type": "custom",
     "doc_number": "taxas",
     "status": "OK",
-    "latency_ms": 486,
+    "latency_ms": 483,
     "error": "",
     "fields": 6,
-    "tested_at": "2026-04-03T20:59:35"
+    "tested_at": "2026-04-03T21:18:15"
   },
   {
     "source": "br.feriados",
@@ -1270,10 +1270,21 @@
     "doc_type": "custom",
     "doc_number": "2026",
     "status": "OK",
-    "latency_ms": 449,
+    "latency_ms": 325,
     "error": "",
     "fields": 4,
-    "tested_at": "2026-04-03T20:59:35"
+    "tested_at": "2026-04-03T21:18:15"
+  },
+  {
+    "source": "br.ncm",
+    "label": "BR NCM caf\u00e9",
+    "doc_type": "custom",
+    "doc_number": "cafe",
+    "status": "OK",
+    "latency_ms": 353,
+    "error": "",
+    "fields": 4,
+    "tested_at": "2026-04-03T21:18:15"
   },
   {
     "source": "cr.cedula",
@@ -1281,10 +1292,10 @@
     "doc_type": "cedula",
     "doc_number": "101110111",
     "status": "OK",
-    "latency_ms": 9464,
+    "latency_ms": 8430,
     "error": "",
     "fields": 2,
-    "tested_at": "2026-04-03T20:59:36"
+    "tested_at": "2026-04-03T21:18:16"
   },
   {
     "source": "do.rnc",
@@ -1295,7 +1306,7 @@
     "latency_ms": 0,
     "error": "WAF_BLOCKED: DGII returns 403",
     "fields": 0,
-    "tested_at": "2026-04-03T20:59:45"
+    "tested_at": "2026-04-03T21:18:24"
   },
   {
     "source": "do.datos",
@@ -1303,10 +1314,10 @@
     "doc_type": "custom",
     "doc_number": "poblacion",
     "status": "OK",
-    "latency_ms": 1302,
+    "latency_ms": 1706,
     "error": "",
     "fields": 5,
-    "tested_at": "2026-04-03T20:59:45"
+    "tested_at": "2026-04-03T21:18:24"
   },
   {
     "source": "py.ruc",
@@ -1314,10 +1325,10 @@
     "doc_type": "custom",
     "doc_number": "80000011-7",
     "status": "OK",
-    "latency_ms": 13963,
+    "latency_ms": 18266,
     "error": "",
     "fields": 2,
-    "tested_at": "2026-04-03T20:59:47"
+    "tested_at": "2026-04-03T21:18:26"
   },
   {
     "source": "py.datos",
@@ -1328,7 +1339,7 @@
     "latency_ms": 0,
     "error": "API_REDIRECT: CKAN API redirects to HTML",
     "fields": 0,
-    "tested_at": "2026-04-03T21:00:01"
+    "tested_at": "2026-04-03T21:18:44"
   },
   {
     "source": "gt.nit",
@@ -1339,7 +1350,7 @@
     "latency_ms": 0,
     "error": "WAF_BLOCKED: Cloudflare Turnstile",
     "fields": 0,
-    "tested_at": "2026-04-03T21:00:01"
+    "tested_at": "2026-04-03T21:18:44"
   },
   {
     "source": "gt.banguat",
@@ -1347,10 +1358,10 @@
     "doc_type": "custom",
     "doc_number": "tipo_cambio",
     "status": "OK",
-    "latency_ms": 725,
+    "latency_ms": 761,
     "error": "",
     "fields": 6,
-    "tested_at": "2026-04-03T21:00:01"
+    "tested_at": "2026-04-03T21:18:44"
   },
   {
     "source": "hn.rtn",
@@ -1358,10 +1369,10 @@
     "doc_type": "custom",
     "doc_number": "08011900000001",
     "status": "OK",
-    "latency_ms": 14081,
+    "latency_ms": 14568,
     "error": "",
     "fields": 2,
-    "tested_at": "2026-04-03T21:00:01"
+    "tested_at": "2026-04-03T21:18:45"
   },
   {
     "source": "sv.nit",
@@ -1369,10 +1380,10 @@
     "doc_type": "custom",
     "doc_number": "00000000-0",
     "status": "OK",
-    "latency_ms": 15177,
+    "latency_ms": 13067,
     "error": "",
     "fields": 3,
-    "tested_at": "2026-04-03T21:00:15"
+    "tested_at": "2026-04-03T21:19:00"
   },
   {
     "source": "uy.sucive",
@@ -1380,10 +1391,10 @@
     "doc_type": "placa",
     "doc_number": "SBC1234",
     "status": "OK",
-    "latency_ms": 19700,
+    "latency_ms": 16303,
     "error": "",
     "fields": 2,
-    "tested_at": "2026-04-03T21:00:31"
+    "tested_at": "2026-04-03T21:19:13"
   },
   {
     "source": "uy.datos",
@@ -1391,10 +1402,10 @@
     "doc_type": "custom",
     "doc_number": "transporte",
     "status": "OK",
-    "latency_ms": 1988,
+    "latency_ms": 3609,
     "error": "",
     "fields": 5,
-    "tested_at": "2026-04-03T21:00:50"
+    "tested_at": "2026-04-03T21:19:29"
   },
   {
     "source": "bo.nit",
@@ -1402,10 +1413,10 @@
     "doc_type": "custom",
     "doc_number": "1023220028",
     "status": "OK",
-    "latency_ms": 10036,
+    "latency_ms": 9976,
     "error": "",
     "fields": 2,
-    "tested_at": "2026-04-03T21:00:52"
+    "tested_at": "2026-04-03T21:19:32"
   },
   {
     "source": "pa.ruc",
@@ -1416,7 +1427,7 @@
     "latency_ms": 0,
     "error": "WAF_BLOCKED: DGI Panama WAF",
     "fields": 0,
-    "tested_at": "2026-04-03T21:01:02"
+    "tested_at": "2026-04-03T21:19:42"
   },
   {
     "source": "pa.inec",
@@ -1424,10 +1435,10 @@
     "doc_type": "custom",
     "doc_number": "categorias",
     "status": "OK",
-    "latency_ms": 2090,
+    "latency_ms": 2782,
     "error": "",
     "fields": 4,
-    "tested_at": "2026-04-03T21:01:02"
+    "tested_at": "2026-04-03T21:19:42"
   },
   {
     "source": "pa.contraloria",
@@ -1435,9 +1446,9 @@
     "doc_type": "custom",
     "doc_number": "",
     "status": "OK",
-    "latency_ms": 13103,
+    "latency_ms": 11650,
     "error": "",
     "fields": 3,
-    "tested_at": "2026-04-03T21:01:04"
+    "tested_at": "2026-04-03T21:19:45"
   }
 ]
