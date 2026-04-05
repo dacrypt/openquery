@@ -38,14 +38,14 @@
     "PE": 7,
     "PY": 2,
     "SV": 1,
-    "US": 8,
+    "US": 18,
     "UY": 2
   },
   "status_counts": {
     "blocked": 8,
     "excluded": 2,
     "implemented": 70,
-    "queued": 77
+    "queued": 87
   },
   "sources": [
     {
@@ -4859,6 +4859,68 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "us.az_mvd",
+      "name": "us.az_mvd",
+      "country": "US",
+      "region_phase": "americas",
+      "official_name": "Arizona MVD — Title & Lien Status",
+      "display_name": "Arizona MVD — Title & Lien Status",
+      "official_url": "https://azmvdnow.gov/",
+      "url": "https://azmvdnow.gov/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "vin"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "us.az_mvd",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "us.co_stolen",
+      "name": "us.co_stolen",
+      "country": "US",
+      "region_phase": "americas",
+      "official_name": "Colorado MVVS — Stolen Vehicle Check",
+      "display_name": "Colorado MVVS — Stolen Vehicle Check",
+      "official_url": "https://secure.colorado.gov/apps/dps/mvvs/public/entry.jsf",
+      "url": "https://secure.colorado.gov/apps/dps/mvvs/public/entry.jsf",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "vin"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "us.co_stolen",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "us.epa_fuel_economy",
       "name": "us.epa_fuel_economy",
       "country": "US",
@@ -4888,6 +4950,169 @@
       "importance_tier": "medium",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "us.fl_dmv",
+      "name": "us.fl_dmv",
+      "country": "US",
+      "region_phase": "americas",
+      "official_name": "Florida DHSMV — Vehicle Title/Registration Check",
+      "display_name": "Florida DHSMV — Vehicle Title/Registration Check",
+      "official_url": "https://services.flhsmv.gov/mvcheckweb/",
+      "url": "https://services.flhsmv.gov/mvcheckweb/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "vin",
+        "placa"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "us.fl_dmv",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "us.ga_dmv",
+      "name": "us.ga_dmv",
+      "country": "US",
+      "region_phase": "americas",
+      "official_name": "Georgia DRIVES — Title & Insurance Status",
+      "display_name": "Georgia DRIVES — Title & Insurance Status",
+      "official_url": "https://eservices.drives.ga.gov/",
+      "url": "https://eservices.drives.ga.gov/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "vin",
+        "placa",
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom",
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "custom",
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "us.ga_dmv",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "us.id_dmv",
+      "name": "us.id_dmv",
+      "country": "US",
+      "region_phase": "americas",
+      "official_name": "Idaho DMV — Title & Registration Status",
+      "display_name": "Idaho DMV — Title & Registration Status",
+      "official_url": "https://dmvonline.itd.idaho.gov/OpenServices/OpenVehicleServices/CheckTitleStatus",
+      "url": "https://dmvonline.itd.idaho.gov/OpenServices/OpenVehicleServices/CheckTitleStatus",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "vin"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "us.id_dmv",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "us.il_sos",
+      "name": "us.il_sos",
+      "country": "US",
+      "region_phase": "americas",
+      "official_name": "Illinois SOS — Title/Registration Status",
+      "display_name": "Illinois SOS — Title/Registration Status",
+      "official_url": "https://apps.ilsos.gov/regstatus/",
+      "url": "https://apps.ilsos.gov/regstatus/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "vin"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "us.il_sos",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "us.la_title",
+      "name": "us.la_title",
+      "country": "US",
+      "region_phase": "americas",
+      "official_name": "Louisiana OMV — Title Verification",
+      "display_name": "Louisiana OMV — Title Verification",
+      "official_url": "https://la.accessgov.com/title-verification/Forms/Page/title-verification/check",
+      "url": "https://la.accessgov.com/title-verification/Forms/Page/title-verification/check",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "vin",
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom",
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "custom",
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "us.la_title",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
       "id": "us.nhtsa_complaints",
@@ -5076,6 +5301,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "us.ny_dmv",
+      "name": "us.ny_dmv",
+      "country": "US",
+      "region_phase": "americas",
+      "official_name": "New York DMV — Title/Lien Status",
+      "display_name": "New York DMV — Title/Lien Status",
+      "official_url": "https://process.dmv.ny.gov/titlestatus/",
+      "url": "https://process.dmv.ny.gov/titlestatus/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "vin"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "us.ny_dmv",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "us.ofac",
       "name": "us.ofac",
       "country": "US",
@@ -5114,6 +5370,71 @@
       "importance_tier": "critical",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "us.oh_bmv",
+      "name": "us.oh_bmv",
+      "country": "US",
+      "region_phase": "americas",
+      "official_name": "Ohio BMV — Title Search",
+      "display_name": "Ohio BMV — Title Search",
+      "official_url": "https://bmvonline.dps.ohio.gov/bmvonline/titles/titlesearch",
+      "url": "https://bmvonline.dps.ohio.gov/bmvonline/titles/titlesearch",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "vin"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "us.oh_bmv",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "us.tn_lien",
+      "name": "us.tn_lien",
+      "country": "US",
+      "region_phase": "americas",
+      "official_name": "Tennessee MVTL — Motor Vehicle Temporary Lien Search",
+      "display_name": "Tennessee MVTL — Motor Vehicle Temporary Lien Search",
+      "official_url": "https://tncab.tnsos.gov/portal/mvtl-search",
+      "url": "https://tncab.tnsos.gov/portal/mvtl-search",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "vin",
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom",
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "custom",
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "us.tn_lien",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
       "id": "uy.datos",
