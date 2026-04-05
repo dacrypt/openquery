@@ -29,8 +29,8 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-RUNT_PAGE = "https://ciudadano.runt.gov.co/consultaCiudadana/#/consultaConductor"
-BASE_URL = "https://runtproapi.runt.gov.co/CYRConsultaConductorMS"
+RUNT_PAGE = "https://portalpublico.runt.gov.co/#/consulta-vehiculo/consulta/consulta-ciudadana"
+BASE_URL = "https://runtproapi.runt.gov.co/CYRConsultaVehiculoMS"
 CAPTCHA_URL = f"{BASE_URL}/captcha/libre-captcha/generar"
 AUTH_URL = f"{BASE_URL}/auth"
 
@@ -219,14 +219,22 @@ class RuntConductorSource(BaseSource):
     def _execute_query(
         self, page, cedula: str, captcha_text: str, captcha_id: str,
     ) -> dict:
-        """POST auth query to RUNT conductor API via browser fetch."""
+        """POST auth query to RUNT vehicle API via browser fetch (conductor MS retired)."""
         body = {
+            "procedencia": "NACIONAL",
+            "tipoConsulta": "1",
+            "placa": None,
             "tipoDocumento": "C",
             "documento": cedula,
+            "vin": None,
+            "soat": None,
+            "aseguradora": "",
+            "rtm": None,
             "reCaptcha": None,
             "captcha": captcha_text,
             "valueCaptchaEncripted": "",
             "idLibreCaptcha": captcha_id,
+            "verBannerSoat": True,
             "configuracion": {
                 "tiempoInactividad": "900",
                 "tiempoCuentaRegresiva": "10",

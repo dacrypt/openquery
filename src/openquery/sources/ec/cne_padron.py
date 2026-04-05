@@ -74,7 +74,7 @@ class CnePadronSource(BaseSource):
                 if collector:
                     collector.attach(page)
 
-                page.wait_for_load_state("networkidle", timeout=30000)
+                page.wait_for_selector('input[type="text"]', timeout=15000)
                 page.wait_for_timeout(2000)
 
                 # Fill cedula
@@ -152,7 +152,7 @@ class CnePadronSource(BaseSource):
                 nombre = stripped.split(":", 1)[1].strip()
             elif "provincia" in lower and ":" in stripped:
                 provincia = stripped.split(":", 1)[1].strip()
-            elif ("canton" in lower or "cant\u00f3n" in lower) and ":" in stripped:
+            elif ("canton" in lower or "cantón" in lower) and ":" in stripped:
                 canton = stripped.split(":", 1)[1].strip()
             elif "parroquia" in lower and ":" in stripped:
                 parroquia = stripped.split(":", 1)[1].strip()

@@ -39,7 +39,7 @@ class TestHealthEndpoint:
 # ===========================================================================
 
 class TestSourcesEndpoint:
-    def test_all_13_sources_listed(self, client):
+    def test_many_sources_listed(self, client):
         resp = client.get("/api/v1/sources")
         data = resp.json()
         names = [s["name"] for s in data["sources"]]
@@ -57,7 +57,7 @@ class TestSourcesEndpoint:
     def test_all_sources_have_country(self, client):
         resp = client.get("/api/v1/sources")
         for src in resp.json()["sources"]:
-            assert src["country"] == "CO"
+            assert src["country"]
 
 
 # ===========================================================================

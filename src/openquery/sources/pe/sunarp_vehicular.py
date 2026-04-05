@@ -31,7 +31,7 @@ SUNARP_URL = "https://consultavehicular.sunarp.gob.pe/"
 class SunarpVehicularSource(BaseSource):
     """Query Peruvian vehicle registry (SUNARP)."""
 
-    def __init__(self, timeout: float = 30.0, headless: bool = True) -> None:
+    def __init__(self, timeout: float = 60.0, headless: bool = True) -> None:
         self._timeout = timeout
         self._headless = headless
 
@@ -70,19 +70,22 @@ class SunarpVehicularSource(BaseSource):
             from openquery.core.audit import AuditCollector
             collector = AuditCollector("pe.sunarp_vehicular", "placa", placa)
 
-        with browser.page(SUNARP_URL) as page:
+        with browser.page(SUNARP_URL, wait_until="commit") as page:
             try:
                 if collector:
                     collector.attach(page)
 
+                # Angular app — wait for the SPA to bootstrap and render
+                page.wait_for_load_state("domcontentloaded", timeout=45000)
+                # Wait for Angular to finish rendering the form
                 page.wait_for_selector(
-                    "input[type='text'], #txtPlaca, input[name*='placa']",
-                    timeout=15000,
+                    "input[placeholder='ABC123'], input[type='text'], #txtPlaca, input[name*='placa']",
+                    timeout=30000,
                 )
                 page.wait_for_timeout(2000)
 
                 plate_input = page.query_selector(
-                    "#txtPlaca, input[name*='placa'], input[type='text']"
+                    "input[placeholder='ABC123'], #txtPlaca, input[name*='placa'], input[type='text']"
                 )
                 if plate_input:
                     plate_input.fill(placa)
@@ -91,19 +94,26 @@ class SunarpVehicularSource(BaseSource):
                 if collector:
                     collector.screenshot(page, "form_filled")
 
+                # The "Realizar Busqueda" button may be disabled until security
+                # verification (image check) renders; wait briefly for it to enable.
+                page.wait_for_timeout(3000)
                 submit = page.query_selector(
+                    "button:has-text('Realizar Busqueda'), "
                     "#btnBuscar, input[value='Buscar'], "
                     "button:has-text('Buscar'), button:has-text('Consultar')"
                 )
-                if submit:
+                if submit and not submit.is_disabled():
+                    submit.click()
+                elif submit:
+                    logger.warning("Submit button still disabled — trying click anyway")
                     submit.click()
                 else:
                     page.keyboard.press("Enter")
 
                 page.wait_for_timeout(3000)
                 page.wait_for_selector(
-                    "table, .resultado, #divResultado, .card",
-                    timeout=15000,
+                    "table, .resultado, #divResultado, .card, app-resultado",
+                    timeout=20000,
                 )
 
                 if collector:

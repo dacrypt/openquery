@@ -2,12 +2,30 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+import importlib
+import pkgutil
+import sys
+from typing import TYPE_CHECKING, TypedDict
 
 if TYPE_CHECKING:
     from openquery.sources.base import BaseSource
 
+
+class RegistryDiagnostics(TypedDict):
+    loaded: bool
+    registered_count: int
+    loaded_modules: list[str]
+    import_failures: dict[str, str]
+
+
+class DuplicateSourceNameError(ValueError):
+    """Raised when two source classes register the same source name."""
+
+
 _REGISTRY: dict[str, type[BaseSource]] = {}
+_LOADED = False
+_LOADED_MODULES: list[str] = []
+_IMPORT_FAILURES: dict[str, str] = {}
 
 
 def register(source_cls: type[BaseSource]) -> type[BaseSource]:
@@ -16,8 +34,18 @@ def register(source_cls: type[BaseSource]) -> type[BaseSource]:
 
     if not issubclass(source_cls, BaseSource):
         raise TypeError(f"{source_cls} must be a subclass of BaseSource")
+
     instance = source_cls()
-    _REGISTRY[instance.meta().name] = source_cls
+    source_name = instance.meta().name
+    existing = _REGISTRY.get(source_name)
+    if existing is not None and existing is not source_cls:
+        raise DuplicateSourceNameError(
+            f"Duplicate source name '{source_name}' registered by "
+            f"{source_cls.__module__}.{source_cls.__name__}; already registered by "
+            f"{existing.__module__}.{existing.__name__}"
+        )
+
+    _REGISTRY[source_name] = source_cls
     return source_cls
 
 
@@ -36,582 +64,56 @@ def list_sources() -> list[BaseSource]:
     return [cls() for cls in _REGISTRY.values()]
 
 
+def get_registry_diagnostics() -> RegistryDiagnostics:
+    """Return structured diagnostics about registry discovery."""
+    _ensure_loaded()
+    return RegistryDiagnostics(
+        loaded=_LOADED,
+        registered_count=len(_REGISTRY),
+        loaded_modules=list(_LOADED_MODULES),
+        import_failures=dict(sorted(_IMPORT_FAILURES.items())),
+    )
+
+
+def _reset_registry_for_tests() -> None:
+    """Reset registry state for targeted tests."""
+    global _LOADED
+    _REGISTRY.clear()
+    _LOADED_MODULES.clear()
+    _IMPORT_FAILURES.clear()
+    for module_name in list(sys.modules):
+        if not module_name.startswith(f"{__name__}."):
+            continue
+        short_name = module_name.rsplit(".", 1)[-1]
+        if module_name.endswith(".base") or short_name.startswith("_"):
+            continue
+        sys.modules.pop(module_name, None)
+    _LOADED = False
+
+
 def _ensure_loaded() -> None:
     """Import source modules to trigger registration."""
-    if _REGISTRY:
+    global _LOADED
+
+    if _LOADED and _REGISTRY:
         return
-    # Import all source modules to trigger @register decorators
-    try:
-        import openquery.sources.co.simit  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.runt  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.procuraduria  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.policia  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.adres  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.peajes  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.combustible  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.estaciones_ev  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.siniestralidad  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.fasecolda  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.pico_y_placa  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.recalls  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.vehiculos  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.contraloria  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.us.ofac  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.intl.onu  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.us.nhtsa_vin  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.us.nhtsa_recalls  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.us.nhtsa_complaints  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.us.epa_fuel_economy  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.intl.ship_tracking  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.intl.interpol  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.pep  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.proveedores_ficticios  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.dian_rut  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.estado_cedula  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.sisben  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.rues  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.colpensiones  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.libreta_militar  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.rnmc  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.defuncion  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.inpec  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.secop  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.rethus  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.ruaf  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.fopep  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.snr  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.garantias_mobiliarias  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.copnia  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.runt_conductor  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.puesto_votacion  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.consejos_profesionales  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.migracion_ppt  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.soi  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.cambio_estrato  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.rnt_turismo  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.retencion_vehiculos  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.cufe_dian  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.nombre_completo  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.afiliados_compensado  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.mi_casa_ya  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.einforma  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.consulta_procesos  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.certificado_tradicion  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.runt_soat  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.runt_rtm  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.jep  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.tarifas_energia  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.estado_tramite_cedula  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.seguridad_social  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.registro_civil  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.tutelas  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.comparendos_transito  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.licencias_salud  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.estado_cedula_extranjeria  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.validar_policia  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.rne  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.camara_comercio_medellin  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.directorio_empresas  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.empresas_google  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.supersociedades  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.multas_bogota  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.multas_medellin  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.multas_itagui  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.secop_sanciones  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.multas_suiteneptuno  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.multas_quipux  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.simit_historico  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.datos_catalogo  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.secop_integrado  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.co.secop_procesos  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.ec.sri_ruc  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.ec.ant_citaciones  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.ec.sri_establecimientos  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.ec.cne_padron  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.ec.funcion_judicial  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.ec.supercias  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.ec.senescyt  # noqa: F401
-    except ImportError:
-        pass
-    # Peru
-    try:
-        import openquery.sources.pe.sunat_ruc  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.pe.poder_judicial  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.pe.osce_sancionados  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.pe.datos  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.pe.bcrp  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.pe.sunarp_vehicular  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.pe.servir_sanciones  # noqa: F401
-    except ImportError:
-        pass
-    # Chile
-    try:
-        import openquery.sources.cl.sii_rut  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.cl.mindicador  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.cl.datos  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.cl.pjud  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.cl.fiscalizacion  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.cl.superir  # noqa: F401
-    except ImportError:
-        pass
-    # Mexico
-    try:
-        import openquery.sources.mx.curp  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.mx.inegi  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.mx.sat_efos  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.mx.siem  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.mx.repuve  # noqa: F401
-    except ImportError:
-        pass
-    # Argentina
-    try:
-        import openquery.sources.ar.afip_cuit  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.ar.series  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.ar.pjn  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.ar.dnrpa  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.ar.georef  # noqa: F401
-    except ImportError:
-        pass
-    # Brazil
-    try:
-        import openquery.sources.br.cpf  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.br.cnpj  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.br.datajud  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.br.fipe  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.br.cep  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.br.banks  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.br.pix  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.br.corretoras  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.br.ddd  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.br.ibge  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.br.taxas  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.br.feriados  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.br.ncm  # noqa: F401
-    except ImportError:
-        pass
-    # Costa Rica
-    try:
-        import openquery.sources.cr.cedula  # noqa: F401
-    except ImportError:
-        pass
-    # Dominican Republic
-    try:
-        import openquery.sources.do.rnc  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.do.datos  # noqa: F401
-    except ImportError:
-        pass
-    # Paraguay
-    try:
-        import openquery.sources.py.ruc  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.py.datos  # noqa: F401
-    except ImportError:
-        pass
-    # Guatemala
-    try:
-        import openquery.sources.gt.nit  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.gt.banguat  # noqa: F401
-    except ImportError:
-        pass
-    # Honduras
-    try:
-        import openquery.sources.hn.rtn  # noqa: F401
-    except ImportError:
-        pass
-    # El Salvador
-    try:
-        import openquery.sources.sv.nit  # noqa: F401
-    except ImportError:
-        pass
-    # Uruguay
-    try:
-        import openquery.sources.uy.sucive  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.uy.datos  # noqa: F401
-    except ImportError:
-        pass
-    # Bolivia
-    try:
-        import openquery.sources.bo.nit  # noqa: F401
-    except ImportError:
-        pass
-    # Panama
-    try:
-        import openquery.sources.pa.ruc  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.pa.inec  # noqa: F401
-    except ImportError:
-        pass
-    try:
-        import openquery.sources.pa.contraloria  # noqa: F401
-    except ImportError:
-        pass
+
+    _LOADED_MODULES.clear()
+    _IMPORT_FAILURES.clear()
+
+    for module_info in pkgutil.walk_packages(__path__, prefix=f"{__name__}."):
+        module_name = module_info.name
+        short_name = module_name.rsplit(".", 1)[-1]
+
+        if module_name.endswith(".base") or short_name.startswith("_"):
+            continue
+
+        try:
+            importlib.import_module(module_name)
+        except ImportError as exc:
+            _IMPORT_FAILURES[module_name] = str(exc)
+            continue
+        else:
+            _LOADED_MODULES.append(module_name)
+
+    _LOADED = True

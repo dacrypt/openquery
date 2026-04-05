@@ -31,7 +31,7 @@ SSF_URL = "https://www.ssf.gov.co/"
 class AfiliadosCompensadoSource(BaseSource):
     """Query Colombian compensation fund affiliation (SSF)."""
 
-    def __init__(self, timeout: float = 30.0, headless: bool = True) -> None:
+    def __init__(self, timeout: float = 60.0, headless: bool = True) -> None:
         self._timeout = timeout
         self._headless = headless
 
@@ -67,15 +67,18 @@ class AfiliadosCompensadoSource(BaseSource):
             from openquery.core.audit import AuditCollector
             collector = AuditCollector("co.afiliados_compensado", tipo, documento)
 
-        with browser.page(SSF_URL) as page:
+        with browser.page(SSF_URL, wait_until="commit") as page:
             try:
                 if collector:
                     collector.attach(page)
 
+                # Wait for page to fully render (Liferay is JS-heavy)
+                page.wait_for_load_state("domcontentloaded", timeout=45000)
+
                 # Wait for form to load
                 page.wait_for_selector(
                     'input[type="text"], select',
-                    timeout=15000,
+                    timeout=30000,
                 )
                 page.wait_for_timeout(2000)
 

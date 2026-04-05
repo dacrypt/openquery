@@ -249,7 +249,8 @@ class TestMxCurp:
         meta = CurpSource().meta()
         assert meta.name == "mx.curp"
         assert meta.country == "MX"
-        assert meta.requires_captcha is False  # Uses JSON API, no CAPTCHA
+        assert meta.requires_captcha is False  # No CAPTCHA (Akamai challenge handled by browser)
+        assert meta.requires_browser is True
 
     def test_model_roundtrip(self):
         from openquery.models.mx.curp import CurpResult

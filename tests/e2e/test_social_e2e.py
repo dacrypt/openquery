@@ -38,7 +38,7 @@ def _safe_query(source_name: str, doc_type: DocumentType = DocumentType.CEDULA,
     except SourceError as e:
         msg = str(e).lower()
         if any(k in msg for k in ("timeout", "ssl", "certificate", "http 404", "http 403",
-                                   "could not")):
+                                   "could not", "deprecated")):
             pytest.skip(f"Transient failure for {source_name}: {e}")
         raise
     except Exception as e:

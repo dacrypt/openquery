@@ -26,7 +26,7 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-RUNT_PAGE = "https://www.runt.gov.co/consultaCiudadana/#/consultaVehiculo"
+RUNT_PAGE = "https://portalpublico.runt.gov.co/#/consulta-vehiculo/consulta/consulta-ciudadana"
 BASE_URL = "https://runtproapi.runt.gov.co/CYRConsultaVehiculoMS"
 CAPTCHA_URL = f"{BASE_URL}/captcha/libre-captcha/generar"
 AUTH_URL = f"{BASE_URL}/auth"
@@ -310,9 +310,9 @@ class RuntSource(BaseSource):
         """Parse RUNT API response into RuntResult model."""
         vehicle = data
         if "infoVehiculo" in data:
-            vehicle = data["infoVehiculo"]
+            vehicle = data["infoVehiculo"] or {}
         elif "vehiculo" in data:
-            vehicle = data["vehiculo"]
+            vehicle = data["vehiculo"] or {}
 
         def g(keys: list[str], default: str = "") -> str:
             for k in keys:

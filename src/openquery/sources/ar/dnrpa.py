@@ -24,7 +24,7 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-DNRPA_URL = "https://www.dnrpa.gov.ar/"
+DNRPA_URL = "https://www.dnrpa.gov.ar/portal_dnrpa/radicacion2.php"
 
 
 @register
@@ -71,23 +71,59 @@ class DnrpaSource(BaseSource):
                 page.wait_for_load_state("networkidle", timeout=30000)
                 page.wait_for_timeout(2000)
 
-                # Fill dominio (plate)
-                plate_input = page.query_selector(
-                    'input[name*="dominio"], input[name*="patente"], input[name*="placa"], '
-                    'input[type="text"]'
-                )
-                if not plate_input:
-                    raise SourceError("ar.dnrpa", "Could not find dominio input field")
+                # The radicacion2.php page has a table with two textboxes:
+                # 1st textbox = Dominio (plate), 2nd textbox = Código verificador (CAPTCHA)
+                all_inputs = page.query_selector_all('input[type="text"], input:not([type])')
+                if not all_inputs:
+                    raise SourceError("ar.dnrpa", "Could not find input fields on radicacion page")
+
+                # First input is the dominio field
+                plate_input = all_inputs[0]
                 plate_input.fill(dominio.upper())
                 logger.info("Filled dominio: %s", dominio)
+
+                # Solve CAPTCHA if present — second textbox is the captcha code field
+                captcha_input = all_inputs[1] if len(all_inputs) > 1 else None
+                if captcha_input:
+                    # The CAPTCHA image is in the same table — find it and solve via LLM/OCR
+                    captcha_img = page.query_selector('img[alt*="verificador" i], img[alt*="captcha" i], table img')
+                    if captcha_img:
+                        from openquery.core.captcha import (
+                            ChainedSolver,
+                            LLMCaptchaSolver,
+                            OCRSolver,
+                        )
+                        solvers = []
+                        try:
+                            solvers.append(LLMCaptchaSolver())
+                        except Exception:
+                            pass
+                        solvers.append(OCRSolver(max_chars=6))
+                        chain = ChainedSolver(solvers)
+                        for attempt in range(1, 4):
+                            try:
+                                image_bytes = captcha_img.screenshot()
+                                if image_bytes and len(image_bytes) >= 100:
+                                    text = chain.solve(image_bytes)
+                                    if text:
+                                        captcha_input.fill(text)
+                                        logger.info("CAPTCHA solved (attempt %d): %s", attempt, text)
+                                        break
+                            except Exception as e:
+                                logger.warning("CAPTCHA attempt %d failed: %s", attempt, e)
+                            # Refresh CAPTCHA
+                            refresh = page.query_selector('a[href*="history.go"], a:has-text("Cargar nuevo")')
+                            if refresh:
+                                refresh.click()
+                                page.wait_for_timeout(1000)
 
                 if collector:
                     collector.screenshot(page, "form_filled")
 
-                # Submit
+                # Submit via "Consultar" button
                 submit = page.query_selector(
-                    'button[type="submit"], input[type="submit"], '
-                    "button:has-text('Buscar'), button:has-text('Consultar')"
+                    'button:has-text("Consultar"), input[value*="Consultar" i], '
+                    'button[type="submit"], input[type="submit"]'
                 )
                 if submit:
                     submit.click()
@@ -116,7 +152,6 @@ class DnrpaSource(BaseSource):
         from datetime import datetime
 
         body_text = page.inner_text("body")
-        body_lower = body_text.lower()
 
         result = DnrpaResult(queried_at=datetime.now(), dominio=dominio.upper())
 

@@ -78,13 +78,22 @@ class RuesSource(BaseSource):
                 page.wait_for_load_state("networkidle", timeout=15000)
                 page.wait_for_timeout(2000)
 
-                # Fill search input — exact ID from site inspection: #search
-                search_input = page.query_selector(
-                    '#search, #search2, '
-                    'input[type="text"][id*="search"], '
-                    'input[type="text"][placeholder*="busqueda"], '
-                    'input[type="text"]'
-                )
+                # Dismiss phishing warning dialog if present
+                try:
+                    close_btn = page.query_selector(
+                        'button[aria-label*="Close"], button:has-text("×")'
+                    )
+                    if close_btn and close_btn.is_visible():
+                        close_btn.click()
+                        page.wait_for_timeout(500)
+                except Exception:
+                    pass
+
+                # Fill search input (placeholder: "Digite su búsqueda")
+                search_input = page.locator(
+                    'input[placeholder*="búsqueda"], input[placeholder*="busqueda"], '
+                    '#search, input[type="text"]'
+                ).first
                 if not search_input:
                     raise SourceError("co.rues", "Could not find search input field")
 
@@ -98,16 +107,9 @@ class RuesSource(BaseSource):
                 if collector:
                     collector.screenshot(page, "form_filled")
 
-                # Submit — exact ID: #btn-busqueda or generic submit
-                submit_btn = page.query_selector(
-                    '#btn-busqueda, '
-                    'button[type="submit"], '
-                    'button.btn-busqueda'
-                )
-                if submit_btn:
-                    submit_btn.click()
-                else:
-                    search_input.press("Enter")
+                # Submit via "Buscar" button
+                submit_btn = page.get_by_role("button", name="Buscar")
+                submit_btn.click()
 
                 page.wait_for_timeout(5000)
 

@@ -49,6 +49,7 @@ class RepuveSource(BaseSource):
         )
 
     def query(self, input: QueryInput) -> BaseModel:
+        raise SourceError("mx.repuve", "Source deprecated: site unreachable since 2026-04")
         if input.document_type not in (DocumentType.PLATE, DocumentType.VIN):
             raise SourceError("mx.repuve", f"Unsupported document type: {input.document_type}")
         return self._query(

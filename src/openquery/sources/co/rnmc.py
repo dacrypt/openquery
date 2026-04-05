@@ -73,24 +73,28 @@ class RnmcSource(BaseSource):
                 page.wait_for_load_state("networkidle", timeout=30000)
                 page.wait_for_timeout(3000)
 
-                # Select document type — exact ASP.NET IDs from site inspection
+                # Select document type from the "Consultar por" combobox
+                doc_type_label = {
+                    DocumentType.CEDULA: "CEDULA DE CIUDADANIA",
+                    DocumentType.PASSPORT: "PASAPORTE",
+                }.get(doc_type, "CEDULA DE CIUDADANIA")
+
                 doc_select = page.query_selector(
-                    '#ctl00_ContentPlaceHolder3_ddlTipoDoc, '
-                    'select[id*="TipoDoc"], select[id*="tipo"]'
+                    'select[id*="TipoDoc"], select[id*="tipo"], '
+                    '#ctl00_ContentPlaceHolder3_ddlTipoDoc'
                 )
                 if doc_select:
-                    select_value = "55" if doc_type == DocumentType.CEDULA else "58"
                     page.select_option(
-                        '#ctl00_ContentPlaceHolder3_ddlTipoDoc, '
-                        'select[id*="TipoDoc"], select[id*="tipo"]',
-                        value=select_value,
+                        'select[id*="TipoDoc"], select[id*="tipo"], '
+                        '#ctl00_ContentPlaceHolder3_ddlTipoDoc',
+                        label=doc_type_label,
                         timeout=5000,
                     )
 
-                # Fill document number — exact ID from site inspection
+                # Fill document number
                 doc_input = page.query_selector(
-                    '#ctl00_ContentPlaceHolder3_txtExpediente, '
                     'input[id*="txtExpediente"], '
+                    '#ctl00_ContentPlaceHolder3_txtExpediente, '
                     'input[type="text"]'
                 )
                 if not doc_input:
@@ -98,28 +102,36 @@ class RnmcSource(BaseSource):
 
                 doc_input.fill(documento)
 
+                # Wait for any loader overlay to disappear
+                try:
+                    page.wait_for_selector(
+                        ".loader_decad", state="hidden", timeout=10000,
+                    )
+                except Exception:
+                    pass
+
                 if collector:
                     collector.screenshot(page, "form_filled")
 
-                # Submit via direct __doPostBack JavaScript call
-                # ASP.NET WebForms uses __doPostBack for <a> links — calling it
-                # directly avoids ElementHandle detach issues
+                # Submit via the search icon link next to the input
+                submit_link = page.query_selector(
+                    'a[href*="btnConsultar"], '
+                    '#ctl00_ContentPlaceHolder3_btnConsultar'
+                )
+                if submit_link:
+                    submit_link.dispatch_event("click")
+                else:
+                    doc_input.press("Enter")
+
+                # Wait for loader to appear and disappear (page postback)
+                page.wait_for_timeout(2000)
                 try:
-                    page.evaluate(
-                        "__doPostBack('ctl00$ContentPlaceHolder3$btnConsultar','')"
+                    page.wait_for_selector(
+                        ".loader_decad", state="hidden", timeout=15000,
                     )
                 except Exception:
-                    # Fallback: try clicking the element
-                    submit_btn = page.query_selector(
-                        '#ctl00_ContentPlaceHolder3_btnConsultar, '
-                        'a[id*="btnConsultar"]'
-                    )
-                    if submit_btn:
-                        submit_btn.click()
-                    else:
-                        doc_input.press("Enter")
-
-                page.wait_for_timeout(5000)
+                    pass
+                page.wait_for_timeout(3000)
 
                 if collector:
                     collector.screenshot(page, "result")

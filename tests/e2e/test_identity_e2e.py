@@ -46,7 +46,8 @@ def _safe_query(source_name: str, **kwargs):
     except SourceError as e:
         msg = str(e).lower()
         if any(k in msg for k in ("timeout", "navegación", "ssl", "certificate",
-                                   "http 404", "http 403", "could not")):
+                                   "http 404", "http 403", "could not",
+                                   "deprecated")):
             pytest.skip(f"Transient failure for {source_name}: {e}")
         raise
     except Exception as e:

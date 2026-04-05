@@ -1,6 +1,18 @@
 # Sources Guide
 
-OpenQuery includes **98 built-in sources across 14 countries** (CO, EC, PE, CL, MX, AR, US, INTL). Sources are organized by country with categories like identity, judicial, tax/business, vehicles, and compliance.
+For the current America-first rollout, the machine-readable inventory/status snapshot is tracked in
+`docs/americas-source-inventory.json`. It currently tracks **157** Americas runtime connectors
+across **17** countries, with explicit rollout statuses (`implemented`, `broken`, `blocked`, `excluded`, `queued`). Use it to see current America coverage and to keep
+future source-expansion work explicit.
+
+Public inventory counts in this guide are derived from the America snapshot. Callable `INTL`
+runtime connectors remain outside the America completeness contract until a separate global
+inventory contract is introduced. `docs/test_results.md` is a live accountability report and is not
+the source of truth for inventory counts.
+
+OpenQuery includes built-in runtime sources across the Americas plus callable `INTL` connectors.
+Sources are organized by country with categories like identity, judicial, tax/business, vehicles,
+and compliance.
 
 ## co.simit — Traffic Fines
 
@@ -33,7 +45,7 @@ openquery query co.simit --placa ABC123
 
 ## co.runt — Vehicle Registry
 
-**Website:** [runt.gov.co](https://www.runt.gov.co/)
+**Website:** [portalpublico.runt.gov.co](https://portalpublico.runt.gov.co/)
 
 Queries the RUNT (Registro Unico Nacional de Transito) for vehicle information, SOAT insurance, RTM inspection, and ownership.
 
@@ -119,30 +131,13 @@ openquery query co.policia --cedula 12345678
 
 ---
 
-## co.adres — Health System Enrollment
+## co.adres — Health System Enrollment (**Deprecated**)
+
+> **Deprecated (2026-04):** aplicaciones.adres.gov.co returns 403 Forbidden — blocked by WAF.
 
 **Website:** [adres.gov.co](https://www.adres.gov.co/)
 
-Queries ADRES (Administradora de los Recursos del SGSS) for health system enrollment status, including EPS affiliation and coverage regime.
-
-```bash
-openquery query co.adres --cedula 12345678
-```
-
-**Response fields:**
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `cedula` | str | Document number queried |
-| `tipo_documento` | str | Document type (CC, NI, PA) |
-| `nombre` | str | Full name |
-| `estado_afiliacion` | str | Enrollment status (ACTIVO, RETIRADO) |
-| `eps` | str | EPS name (health insurer) |
-| `regimen` | str | Coverage regime (CONTRIBUTIVO/SUBSIDIADO) |
-| `tipo_afiliado` | str | Affiliation type (COTIZANTE/BENEFICIARIO) |
-| `municipio` | str | Municipality |
-| `departamento` | str | Department |
-| `fecha_afiliacion` | str | Affiliation date |
+Previously queried ADRES for health system enrollment status. This source is currently non-functional due to WAF blocking.
 
 **Requirements:** None
 

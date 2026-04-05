@@ -1,0 +1,5184 @@
+{
+  "scope": "americas",
+  "last_reviewed_at": "2026-04-04",
+  "status_source": "docs/test_results.md",
+  "statuses": [
+    "blocked",
+    "broken",
+    "discovered",
+    "excluded",
+    "implemented",
+    "queued"
+  ],
+  "source_types": [
+    "api",
+    "browser",
+    "dataset",
+    "hybrid"
+  ],
+  "importance_tiers": [
+    "critical",
+    "high",
+    "long_tail",
+    "medium"
+  ],
+  "countries": {
+    "AR": 5,
+    "BO": 1,
+    "BR": 13,
+    "CL": 6,
+    "CO": 91,
+    "CR": 1,
+    "DO": 2,
+    "EC": 7,
+    "GT": 2,
+    "HN": 1,
+    "MX": 5,
+    "PA": 3,
+    "PE": 7,
+    "PY": 2,
+    "SV": 1,
+    "US": 8,
+    "UY": 2
+  },
+  "status_counts": {
+    "blocked": 8,
+    "excluded": 2,
+    "implemented": 70,
+    "queued": 77
+  },
+  "sources": [
+    {
+      "id": "ar.afip_cuit",
+      "name": "ar.afip_cuit",
+      "country": "AR",
+      "region_phase": "americas",
+      "official_name": "AFIP — Constancia de CUIT",
+      "display_name": "AFIP — Constancia de CUIT",
+      "official_url": "https://seti.afip.gob.ar/padron-puc-constancia-internet/jsp/Constancia.jsp",
+      "url": "https://seti.afip.gob.ar/padron-puc-constancia-internet/jsp/Constancia.jsp",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "ar.afip_cuit",
+      "blocker_reason": null,
+      "importance_score": 61,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "ar.dnrpa",
+      "name": "ar.dnrpa",
+      "country": "AR",
+      "region_phase": "americas",
+      "official_name": "DNRPA — Registro Automotor",
+      "display_name": "DNRPA — Registro Automotor",
+      "official_url": "https://www.dnrpa.gov.ar/portal_dnrpa/radicacion2.php",
+      "url": "https://www.dnrpa.gov.ar/portal_dnrpa/radicacion2.php",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "placa"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "ar.dnrpa",
+      "blocker_reason": null,
+      "importance_score": 81,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "ar.georef",
+      "name": "ar.georef",
+      "country": "AR",
+      "region_phase": "americas",
+      "official_name": "GeoRef — Normalización de Direcciones",
+      "display_name": "GeoRef — Normalización de Direcciones",
+      "official_url": "https://apis.datos.gob.ar/georef/",
+      "url": "https://apis.datos.gob.ar/georef/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "dataset",
+      "officiality": "official",
+      "implemented_source_name": "ar.georef",
+      "blocker_reason": null,
+      "importance_score": 61,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "ar.pjn",
+      "name": "ar.pjn",
+      "country": "AR",
+      "region_phase": "americas",
+      "official_name": "PJN — Causas Judiciales Federales",
+      "display_name": "PJN — Causas Judiciales Federales",
+      "official_url": "https://scw.pjn.gov.ar/scw/home.seam",
+      "url": "https://scw.pjn.gov.ar/scw/home.seam",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "ar.pjn",
+      "blocker_reason": null,
+      "importance_score": 61,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "ar.series",
+      "name": "ar.series",
+      "country": "AR",
+      "region_phase": "americas",
+      "official_name": "Series de Tiempo — Indicadores Económicos",
+      "display_name": "Series de Tiempo — Indicadores Económicos",
+      "official_url": "https://apis.datos.gob.ar/series/",
+      "url": "https://apis.datos.gob.ar/series/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "dataset",
+      "officiality": "official",
+      "implemented_source_name": "ar.series",
+      "blocker_reason": null,
+      "importance_score": 61,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "bo.nit",
+      "name": "bo.nit",
+      "country": "BO",
+      "region_phase": "americas",
+      "official_name": "SIN — Consulta NIT",
+      "display_name": "SIN — Consulta NIT",
+      "official_url": "https://ov.impuestos.gob.bo/paginas/publico/consultaspublicas.aspx",
+      "url": "https://ov.impuestos.gob.bo/paginas/publico/consultaspublicas.aspx",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "nit",
+        "custom"
+      ],
+      "identifier_classes": [
+        "company",
+        "custom",
+        "fiscal"
+      ],
+      "identifier_categories": [
+        "company",
+        "custom",
+        "fiscal"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "bo.nit",
+      "blocker_reason": null,
+      "importance_score": 78,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "br.banks",
+      "name": "br.banks",
+      "country": "BR",
+      "region_phase": "americas",
+      "official_name": "Bancos — Consulta de Bancos",
+      "display_name": "Bancos — Consulta de Bancos",
+      "official_url": "https://brasilapi.com.br/",
+      "url": "https://brasilapi.com.br/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "br.banks",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "br.cep",
+      "name": "br.cep",
+      "country": "BR",
+      "region_phase": "americas",
+      "official_name": "CEP — Consulta de CEP",
+      "display_name": "CEP — Consulta de CEP",
+      "official_url": "https://brasilapi.com.br/",
+      "url": "https://brasilapi.com.br/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "br.cep",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "br.cnpj",
+      "name": "br.cnpj",
+      "country": "BR",
+      "region_phase": "americas",
+      "official_name": "CNPJ — Cadastro Nacional da Pessoa Jurídica",
+      "display_name": "CNPJ — Cadastro Nacional da Pessoa Jurídica",
+      "official_url": "https://brasilapi.com.br/",
+      "url": "https://brasilapi.com.br/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "nit",
+        "custom"
+      ],
+      "identifier_classes": [
+        "company",
+        "custom",
+        "fiscal"
+      ],
+      "identifier_categories": [
+        "company",
+        "custom",
+        "fiscal"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "br.cnpj",
+      "blocker_reason": null,
+      "importance_score": 84,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "br.corretoras",
+      "name": "br.corretoras",
+      "country": "BR",
+      "region_phase": "americas",
+      "official_name": "CVM — Corretoras de Valores",
+      "display_name": "CVM — Corretoras de Valores",
+      "official_url": "https://brasilapi.com.br/",
+      "url": "https://brasilapi.com.br/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "nit",
+        "custom"
+      ],
+      "identifier_classes": [
+        "company",
+        "custom",
+        "fiscal"
+      ],
+      "identifier_categories": [
+        "company",
+        "custom",
+        "fiscal"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "br.corretoras",
+      "blocker_reason": null,
+      "importance_score": 84,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "br.cpf",
+      "name": "br.cpf",
+      "country": "BR",
+      "region_phase": "americas",
+      "official_name": "CPF — Cadastro de Pessoas Físicas",
+      "display_name": "CPF — Cadastro de Pessoas Físicas",
+      "official_url": "https://servicos.receita.fazenda.gov.br/servicos/cpf/consultasituacao/consultapublica.asp",
+      "url": "https://servicos.receita.fazenda.gov.br/servicos/cpf/consultasituacao/consultapublica.asp",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "ssn",
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom",
+        "person"
+      ],
+      "identifier_categories": [
+        "custom",
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "br.cpf",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "br.datajud",
+      "name": "br.datajud",
+      "country": "BR",
+      "region_phase": "americas",
+      "official_name": "DataJud — Consulta Processual (CNJ)",
+      "display_name": "DataJud — Consulta Processual (CNJ)",
+      "official_url": "https://datajud-wiki.cnj.jus.br/api-publica/",
+      "url": "https://datajud-wiki.cnj.jus.br/api-publica/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "br.datajud",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "br.ddd",
+      "name": "br.ddd",
+      "country": "BR",
+      "region_phase": "americas",
+      "official_name": "DDD — Código de Área",
+      "display_name": "DDD — Código de Área",
+      "official_url": "https://brasilapi.com.br/",
+      "url": "https://brasilapi.com.br/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "br.ddd",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "br.feriados",
+      "name": "br.feriados",
+      "country": "BR",
+      "region_phase": "americas",
+      "official_name": "Feriados — Feriados Nacionais",
+      "display_name": "Feriados — Feriados Nacionais",
+      "official_url": "https://brasilapi.com.br/",
+      "url": "https://brasilapi.com.br/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "br.feriados",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "br.fipe",
+      "name": "br.fipe",
+      "country": "BR",
+      "region_phase": "americas",
+      "official_name": "FIPE — Preço de Veículos",
+      "display_name": "FIPE — Preço de Veículos",
+      "official_url": "https://brasilapi.com.br/",
+      "url": "https://brasilapi.com.br/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "br.fipe",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "br.ibge",
+      "name": "br.ibge",
+      "country": "BR",
+      "region_phase": "americas",
+      "official_name": "IBGE — Estados e Regiões",
+      "display_name": "IBGE — Estados e Regiões",
+      "official_url": "https://brasilapi.com.br/",
+      "url": "https://brasilapi.com.br/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "br.ibge",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "br.ncm",
+      "name": "br.ncm",
+      "country": "BR",
+      "region_phase": "americas",
+      "official_name": "NCM — Nomenclatura Comum do Mercosul",
+      "display_name": "NCM — Nomenclatura Comum do Mercosul",
+      "official_url": "https://brasilapi.com.br/",
+      "url": "https://brasilapi.com.br/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "br.ncm",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "br.pix",
+      "name": "br.pix",
+      "country": "BR",
+      "region_phase": "americas",
+      "official_name": "PIX — Participantes do Sistema de Pagamentos",
+      "display_name": "PIX — Participantes do Sistema de Pagamentos",
+      "official_url": "https://brasilapi.com.br/",
+      "url": "https://brasilapi.com.br/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "br.pix",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "br.taxas",
+      "name": "br.taxas",
+      "country": "BR",
+      "region_phase": "americas",
+      "official_name": "Taxas — Selic, CDI, IPCA",
+      "display_name": "Taxas — Selic, CDI, IPCA",
+      "official_url": "https://brasilapi.com.br/",
+      "url": "https://brasilapi.com.br/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "br.taxas",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "cl.datos",
+      "name": "cl.datos",
+      "country": "CL",
+      "region_phase": "americas",
+      "official_name": "Datos Abiertos CL — Portal de Datos",
+      "display_name": "Datos Abiertos CL — Portal de Datos",
+      "official_url": "https://datos.gob.cl/",
+      "url": "https://datos.gob.cl/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "dataset",
+      "officiality": "official",
+      "implemented_source_name": "cl.datos",
+      "blocker_reason": null,
+      "importance_score": 61,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "cl.fiscalizacion",
+      "name": "cl.fiscalizacion",
+      "country": "CL",
+      "region_phase": "americas",
+      "official_name": "Fiscalizacion — Infracciones de Transito",
+      "display_name": "Fiscalizacion — Infracciones de Transito",
+      "official_url": "https://rrvv.fiscalizacion.cl/",
+      "url": "https://rrvv.fiscalizacion.cl/",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "placa"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "cl.fiscalizacion",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "cl.mindicador",
+      "name": "cl.mindicador",
+      "country": "CL",
+      "region_phase": "americas",
+      "official_name": "Mindicador — Indicadores Económicos Chile",
+      "display_name": "Mindicador — Indicadores Económicos Chile",
+      "official_url": "https://mindicador.cl/",
+      "url": "https://mindicador.cl/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "cl.mindicador",
+      "blocker_reason": null,
+      "importance_score": 61,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "cl.pjud",
+      "name": "cl.pjud",
+      "country": "CL",
+      "region_phase": "americas",
+      "official_name": "PJUD — Causas Judiciales",
+      "display_name": "PJUD — Causas Judiciales",
+      "official_url": "https://oficinajudicialvirtual.pjud.cl/",
+      "url": "https://oficinajudicialvirtual.pjud.cl/",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "cl.pjud",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "cl.sii_rut",
+      "name": "cl.sii_rut",
+      "country": "CL",
+      "region_phase": "americas",
+      "official_name": "SII — Verificacion de RUT",
+      "display_name": "SII — Verificacion de RUT",
+      "official_url": "https://www2.sii.cl/stc/noauthz",
+      "url": "https://www2.sii.cl/stc/noauthz",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "cl.sii_rut",
+      "blocker_reason": null,
+      "importance_score": 61,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "cl.superir",
+      "name": "cl.superir",
+      "country": "CL",
+      "region_phase": "americas",
+      "official_name": "Superir — Insolvencia y Reemprendimiento",
+      "display_name": "Superir — Insolvencia y Reemprendimiento",
+      "official_url": "https://www.superir.gob.cl/consulta-de-procedimientos/",
+      "url": "https://www.superir.gob.cl/consulta-de-procedimientos/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "cl.superir",
+      "blocker_reason": null,
+      "importance_score": 61,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.adres",
+      "name": "co.adres",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "ADRES — Afiliacion Salud (EPS)",
+      "display_name": "ADRES — Afiliacion Salud (EPS)",
+      "official_url": "https://aplicaciones.adres.gov.co/BDUA_Internet/Pages/ConsultarAfiliadoWeb_2.aspx",
+      "url": "https://aplicaciones.adres.gov.co/BDUA_Internet/Pages/ConsultarAfiliadoWeb_2.aspx",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula",
+        "nit",
+        "pasaporte"
+      ],
+      "identifier_classes": [
+        "company",
+        "fiscal",
+        "person"
+      ],
+      "identifier_categories": [
+        "company",
+        "fiscal",
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.adres",
+      "blocker_reason": null,
+      "importance_score": 89,
+      "importance_tier": "critical",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.afiliados_compensado",
+      "name": "co.afiliados_compensado",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Cajas de Compensación — Afiliados",
+      "display_name": "Cajas de Compensación — Afiliados",
+      "official_url": "https://www.ssf.gov.co/",
+      "url": "https://www.ssf.gov.co/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula",
+        "pasaporte"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.afiliados_compensado",
+      "blocker_reason": null,
+      "importance_score": 81,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.camara_comercio_medellin",
+      "name": "co.camara_comercio_medellin",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Cámara Medellín — Consulta Expedientes",
+      "display_name": "Cámara Medellín — Consulta Expedientes",
+      "official_url": "https://tramites.camaramedellin.com.co/tramites-virtuales/consulta-de-expedientes",
+      "url": "https://tramites.camaramedellin.com.co/tramites-virtuales/consulta-de-expedientes",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "nit",
+        "custom"
+      ],
+      "identifier_classes": [
+        "company",
+        "custom",
+        "fiscal"
+      ],
+      "identifier_categories": [
+        "company",
+        "custom",
+        "fiscal"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.camara_comercio_medellin",
+      "blocker_reason": null,
+      "importance_score": 91,
+      "importance_tier": "critical",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.cambio_estrato",
+      "name": "co.cambio_estrato",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Estratificación — Certificado de Estrato",
+      "display_name": "Estratificación — Certificado de Estrato",
+      "official_url": "https://www.bucaramanga.gov.co/",
+      "url": "https://www.bucaramanga.gov.co/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.cambio_estrato",
+      "blocker_reason": null,
+      "importance_score": 81,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.certificado_tradicion",
+      "name": "co.certificado_tradicion",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "SNR — Certificado de Tradición y Libertad",
+      "display_name": "SNR — Certificado de Tradición y Libertad",
+      "official_url": "https://certificados.supernotariado.gov.co/certificado",
+      "url": "https://certificados.supernotariado.gov.co/certificado",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.certificado_tradicion",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.colpensiones",
+      "name": "co.colpensiones",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Colpensiones — Afiliación a Pensiones",
+      "display_name": "Colpensiones — Afiliación a Pensiones",
+      "official_url": "https://www.colpensiones.gov.co/afiliados-y-pensionados/afiliados/consulta-de-afiliacion/",
+      "url": "https://www.colpensiones.gov.co/afiliados-y-pensionados/afiliados/consulta-de-afiliacion/",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.colpensiones",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.combustible",
+      "name": "co.combustible",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Combustible — Precios de Combustible",
+      "display_name": "Combustible — Precios de Combustible",
+      "official_url": "https://www.datos.gov.co/resource/gjy9-tpph.json",
+      "url": "https://www.datos.gov.co/resource/gjy9-tpph.json",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "dataset",
+      "officiality": "official",
+      "implemented_source_name": "co.combustible",
+      "blocker_reason": null,
+      "importance_score": 61,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.comparendos_transito",
+      "name": "co.comparendos_transito",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "SIMIT — Comparendos de Tránsito",
+      "display_name": "SIMIT — Comparendos de Tránsito",
+      "official_url": "https://www.fcm.org.co/simit/#/estado-cuenta",
+      "url": "https://www.fcm.org.co/simit/#/estado-cuenta",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula",
+        "placa"
+      ],
+      "identifier_classes": [
+        "person",
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "person",
+        "vehicle"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.comparendos_transito",
+      "blocker_reason": null,
+      "importance_score": 91,
+      "importance_tier": "critical",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.conaltel",
+      "name": "co.conaltel",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "CONALTEL — Tecnólogos en Electricidad",
+      "display_name": "CONALTEL — Tecnólogos en Electricidad",
+      "official_url": "https://www.conaltel.gov.co/",
+      "url": "https://www.conaltel.gov.co/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.conaltel",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.consejo_mecanica",
+      "name": "co.consejo_mecanica",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "CPIEM — Ing. Mecánica y Electrónica",
+      "display_name": "CPIEM — Ing. Mecánica y Electrónica",
+      "official_url": "https://www.consejoprofesional.org.co/",
+      "url": "https://www.consejoprofesional.org.co/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.consejo_mecanica",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.consulta_procesos",
+      "name": "co.consulta_procesos",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Rama Judicial — Consulta de Procesos",
+      "display_name": "Rama Judicial — Consulta de Procesos",
+      "official_url": "https://consultaprocesos.ramajudicial.gov.co/Procesos/NombreRazonSocial",
+      "url": "https://consultaprocesos.ramajudicial.gov.co/Procesos/NombreRazonSocial",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula",
+        "nit",
+        "custom"
+      ],
+      "identifier_classes": [
+        "company",
+        "custom",
+        "fiscal",
+        "person"
+      ],
+      "identifier_categories": [
+        "company",
+        "custom",
+        "fiscal",
+        "person"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.consulta_procesos",
+      "blocker_reason": null,
+      "importance_score": 96,
+      "importance_tier": "critical",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.contraloria",
+      "name": "co.contraloria",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Contraloría — Antecedentes Fiscales",
+      "display_name": "Contraloría — Antecedentes Fiscales",
+      "official_url": "https://cfiscal.contraloria.gov.co/Certificados/CertificadoPersonaNatural.aspx",
+      "url": "https://cfiscal.contraloria.gov.co/Certificados/CertificadoPersonaNatural.aspx",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "cedula",
+        "nit",
+        "pasaporte"
+      ],
+      "identifier_classes": [
+        "company",
+        "fiscal",
+        "person"
+      ],
+      "identifier_categories": [
+        "company",
+        "fiscal",
+        "person"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.contraloria",
+      "blocker_reason": null,
+      "importance_score": 96,
+      "importance_tier": "critical",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.copnia",
+      "name": "co.copnia",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "COPNIA — Consejo Prof. de Ingeniería",
+      "display_name": "COPNIA — Consejo Prof. de Ingeniería",
+      "official_url": "https://tramites.copnia.gov.co/Copnia_Microsite/CertificateOfGoodStanding/CertificateOfGoodStandingStart",
+      "url": "https://tramites.copnia.gov.co/Copnia_Microsite/CertificateOfGoodStanding/CertificateOfGoodStandingStart",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula",
+        "nit",
+        "pasaporte"
+      ],
+      "identifier_classes": [
+        "company",
+        "fiscal",
+        "person"
+      ],
+      "identifier_categories": [
+        "company",
+        "fiscal",
+        "person"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.copnia",
+      "blocker_reason": null,
+      "importance_score": 96,
+      "importance_tier": "critical",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.cpae",
+      "name": "co.cpae",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "CPAE — Administradores de Empresas",
+      "display_name": "CPAE — Administradores de Empresas",
+      "official_url": "https://www.cpae.gov.co/",
+      "url": "https://www.cpae.gov.co/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.cpae",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.cpbiol",
+      "name": "co.cpbiol",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "CPBiol — Biología",
+      "display_name": "CPBiol — Biología",
+      "official_url": "https://www.cpbiol.gov.co/",
+      "url": "https://www.cpbiol.gov.co/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.cpbiol",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.cpip",
+      "name": "co.cpip",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "CPIP — Ing. de Petróleos",
+      "display_name": "CPIP — Ing. de Petróleos",
+      "official_url": "https://www.cpip.gov.co/",
+      "url": "https://www.cpip.gov.co/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.cpip",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.cpiq",
+      "name": "co.cpiq",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "CPIQ — Ing. Química",
+      "display_name": "CPIQ — Ing. Química",
+      "official_url": "https://www.cpiq.gov.co/",
+      "url": "https://www.cpiq.gov.co/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.cpiq",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.cpnaa",
+      "name": "co.cpnaa",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "CPNAA — Arquitectura",
+      "display_name": "CPNAA — Arquitectura",
+      "official_url": "https://www.cpnaa.gov.co/",
+      "url": "https://www.cpnaa.gov.co/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula",
+        "pasaporte"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.cpnaa",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.cpnt",
+      "name": "co.cpnt",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "CPNT — Topografía",
+      "display_name": "CPNT — Topografía",
+      "official_url": "https://www.cpnt.gov.co/",
+      "url": "https://www.cpnt.gov.co/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.cpnt",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.cufe_dian",
+      "name": "co.cufe_dian",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "DIAN — Verificación de Factura Electrónica",
+      "display_name": "DIAN — Verificación de Factura Electrónica",
+      "official_url": "https://catalogo-vpfe.dian.gov.co/",
+      "url": "https://catalogo-vpfe.dian.gov.co/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.cufe_dian",
+      "blocker_reason": null,
+      "importance_score": 61,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.datos_catalogo",
+      "name": "co.datos_catalogo",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Datos Abiertos CO — Catálogo de Datos",
+      "display_name": "Datos Abiertos CO — Catálogo de Datos",
+      "official_url": "https://www.datos.gov.co/",
+      "url": "https://www.datos.gov.co/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "dataset",
+      "officiality": "official",
+      "implemented_source_name": "co.datos_catalogo",
+      "blocker_reason": null,
+      "importance_score": 61,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.defuncion",
+      "name": "co.defuncion",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Registraduría — Vigencia de Cédula",
+      "display_name": "Registraduría — Vigencia de Cédula",
+      "official_url": "https://consultasrc.registraduria.gov.co/ProyectoSCCRC/",
+      "url": "https://consultasrc.registraduria.gov.co/ProyectoSCCRC/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.defuncion",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.dian_rut",
+      "name": "co.dian_rut",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "DIAN — Estado del RUT",
+      "display_name": "DIAN — Estado del RUT",
+      "official_url": "https://muisca.dian.gov.co/WebRutMuisca/DefConsultaEstadoRUT.faces",
+      "url": "https://muisca.dian.gov.co/WebRutMuisca/DefConsultaEstadoRUT.faces",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "cedula",
+        "nit"
+      ],
+      "identifier_classes": [
+        "company",
+        "fiscal",
+        "person"
+      ],
+      "identifier_categories": [
+        "company",
+        "fiscal",
+        "person"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.dian_rut",
+      "blocker_reason": null,
+      "importance_score": 96,
+      "importance_tier": "critical",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.directorio_empresas",
+      "name": "co.directorio_empresas",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Directorio Empresas — datos.gov.co",
+      "display_name": "Directorio Empresas — datos.gov.co",
+      "official_url": "https://www.datos.gov.co/resource/6q7c-bkcg.json",
+      "url": "https://www.datos.gov.co/resource/6q7c-bkcg.json",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "nit",
+        "custom"
+      ],
+      "identifier_classes": [
+        "company",
+        "custom",
+        "fiscal"
+      ],
+      "identifier_categories": [
+        "company",
+        "custom",
+        "fiscal"
+      ],
+      "runtime_status": "excluded",
+      "status": "excluded",
+      "source_type": "dataset",
+      "officiality": "official",
+      "implemented_source_name": "co.directorio_empresas",
+      "blocker_reason": "API_REMOVED: API gone",
+      "importance_score": 84,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report skip: API_REMOVED: API gone"
+    },
+    {
+      "id": "co.einforma",
+      "name": "co.einforma",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "eInforma — Inteligencia Empresarial",
+      "display_name": "eInforma — Inteligencia Empresarial",
+      "official_url": "https://www.einforma.co/",
+      "url": "https://www.einforma.co/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "nit",
+        "custom"
+      ],
+      "identifier_classes": [
+        "company",
+        "custom",
+        "fiscal"
+      ],
+      "identifier_categories": [
+        "company",
+        "custom",
+        "fiscal"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.einforma",
+      "blocker_reason": null,
+      "importance_score": 84,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.empresas_google",
+      "name": "co.empresas_google",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Google Maps — Búsqueda Empresas",
+      "display_name": "Google Maps — Búsqueda Empresas",
+      "official_url": "https://www.google.com/maps",
+      "url": "https://www.google.com/maps",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.empresas_google",
+      "blocker_reason": null,
+      "importance_score": 61,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.estaciones_ev",
+      "name": "co.estaciones_ev",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Estaciones EV — Electrolineras Colombia",
+      "display_name": "Estaciones EV — Electrolineras Colombia",
+      "official_url": "https://www.datos.gov.co/resource/qqm3-dw2u.json",
+      "url": "https://www.datos.gov.co/resource/qqm3-dw2u.json",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "dataset",
+      "officiality": "official",
+      "implemented_source_name": "co.estaciones_ev",
+      "blocker_reason": null,
+      "importance_score": 61,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.estado_cedula",
+      "name": "co.estado_cedula",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Registraduría — Estado de Cédula",
+      "display_name": "Registraduría — Estado de Cédula",
+      "official_url": "https://consultasrc.registraduria.gov.co/ProyectoSCCRC/",
+      "url": "https://consultasrc.registraduria.gov.co/ProyectoSCCRC/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.estado_cedula",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.estado_cedula_extranjeria",
+      "name": "co.estado_cedula_extranjeria",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Migración Colombia — Cédula de Extranjería",
+      "display_name": "Migración Colombia — Cédula de Extranjería",
+      "official_url": "https://apps.migracioncolombia.gov.co/consultaCedulas/pages/home.jsf",
+      "url": "https://apps.migracioncolombia.gov.co/consultaCedulas/pages/home.jsf",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.estado_cedula_extranjeria",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.estado_tramite_cedula",
+      "name": "co.estado_tramite_cedula",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Registraduría — Estado de Trámite de Cédula",
+      "display_name": "Registraduría — Estado de Trámite de Cédula",
+      "official_url": "https://wsp.registraduria.gov.co/",
+      "url": "https://wsp.registraduria.gov.co/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.estado_tramite_cedula",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.fasecolda",
+      "name": "co.fasecolda",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Fasecolda — Guía de Valores de Vehículos",
+      "display_name": "Fasecolda — Guía de Valores de Vehículos",
+      "official_url": "https://guiadevalores.fasecolda.com/ConsultaExplorador/",
+      "url": "https://guiadevalores.fasecolda.com/ConsultaExplorador/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "blocked",
+      "status": "blocked",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.fasecolda",
+      "blocker_reason": "AUTH_REQUIRED: Needs bearer token",
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report skip: AUTH_REQUIRED: Needs bearer token"
+    },
+    {
+      "id": "co.fopep",
+      "name": "co.fopep",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "FOPEP — Nómina de Pensionados",
+      "display_name": "FOPEP — Nómina de Pensionados",
+      "official_url": "https://www.fopep.gov.co/",
+      "url": "https://www.fopep.gov.co/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "blocked",
+      "status": "blocked",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.fopep",
+      "blocker_reason": "AUTH_REQUIRED: Login-gated",
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report skip: AUTH_REQUIRED: Login-gated"
+    },
+    {
+      "id": "co.garantias_mobiliarias",
+      "name": "co.garantias_mobiliarias",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Garantías Mobiliarias — Registro de Garantías",
+      "display_name": "Garantías Mobiliarias — Registro de Garantías",
+      "official_url": "https://www.garantiasmobiliarias.com.co/",
+      "url": "https://www.garantiasmobiliarias.com.co/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.garantias_mobiliarias",
+      "blocker_reason": null,
+      "importance_score": 81,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.inpec",
+      "name": "co.inpec",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "INPEC — Población Privada de la Libertad",
+      "display_name": "INPEC — Población Privada de la Libertad",
+      "official_url": "https://www.inpec.gov.co/",
+      "url": "https://www.inpec.gov.co/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.inpec",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.jep",
+      "name": "co.jep",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "JEP — Jurisdicción Especial para la Paz",
+      "display_name": "JEP — Jurisdicción Especial para la Paz",
+      "official_url": "https://www.jep.gov.co/",
+      "url": "https://www.jep.gov.co/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula",
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom",
+        "person"
+      ],
+      "identifier_categories": [
+        "custom",
+        "person"
+      ],
+      "runtime_status": "blocked",
+      "status": "blocked",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.jep",
+      "blocker_reason": "NO_FORM: SharePoint",
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report skip: NO_FORM: SharePoint"
+    },
+    {
+      "id": "co.libreta_militar",
+      "name": "co.libreta_militar",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Ejército — Libreta Militar",
+      "display_name": "Ejército — Libreta Militar",
+      "official_url": "https://www.libretamilitar.mil.co/",
+      "url": "https://www.libretamilitar.mil.co/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.libreta_militar",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.licencias_salud",
+      "name": "co.licencias_salud",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "REPS — Prestadores de Servicios de Salud",
+      "display_name": "REPS — Prestadores de Servicios de Salud",
+      "official_url": "https://www.datos.gov.co/Salud-y-Protecci-n-Social/Prestadores-de-Servicios-de-Salud/c36g-9fc2",
+      "url": "https://www.datos.gov.co/Salud-y-Protecci-n-Social/Prestadores-de-Servicios-de-Salud/c36g-9fc2",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "nit",
+        "custom"
+      ],
+      "identifier_classes": [
+        "company",
+        "custom",
+        "fiscal"
+      ],
+      "identifier_categories": [
+        "company",
+        "custom",
+        "fiscal"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "dataset",
+      "officiality": "official",
+      "implemented_source_name": "co.licencias_salud",
+      "blocker_reason": null,
+      "importance_score": 91,
+      "importance_tier": "critical",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.mi_casa_ya",
+      "name": "co.mi_casa_ya",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Mi Casa Ya — Subsidios de Vivienda",
+      "display_name": "Mi Casa Ya — Subsidios de Vivienda",
+      "official_url": "https://www.minvivienda.gov.co/",
+      "url": "https://www.minvivienda.gov.co/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.mi_casa_ya",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.migracion_ppt",
+      "name": "co.migracion_ppt",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Migración — Permiso por Protección Temporal",
+      "display_name": "Migración — Permiso por Protección Temporal",
+      "official_url": "https://www.migracioncolombia.gov.co/",
+      "url": "https://www.migracioncolombia.gov.co/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.migracion_ppt",
+      "blocker_reason": null,
+      "importance_score": 61,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.multas_apartado",
+      "name": "co.multas_apartado",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Tránsito Apartadó — Multas y Comparendos",
+      "display_name": "Tránsito Apartadó — Multas y Comparendos",
+      "official_url": "https://apartado.portal-siotweb.suiteneptuno.com/Comparendos/Consultas",
+      "url": "https://apartado.portal-siotweb.suiteneptuno.com/Comparendos/Consultas",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.multas_apartado",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.multas_barrancabermeja",
+      "name": "co.multas_barrancabermeja",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Tránsito Barrancabermeja — Multas y Comparendos",
+      "display_name": "Tránsito Barrancabermeja — Multas y Comparendos",
+      "official_url": "https://tramitesittb.siotweb.com/Comparendos/Consultas",
+      "url": "https://tramitesittb.siotweb.com/Comparendos/Consultas",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.multas_barrancabermeja",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.multas_bello",
+      "name": "co.multas_bello",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Tránsito Bello — Multas y Comparendos",
+      "display_name": "Tránsito Bello — Multas y Comparendos",
+      "official_url": "https://serviciosdigitales.movilidadavanzadabello.com.co/portal-servicios/",
+      "url": "https://serviciosdigitales.movilidadavanzadabello.com.co/portal-servicios/",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "cedula",
+        "placa"
+      ],
+      "identifier_classes": [
+        "person",
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "person",
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.multas_bello",
+      "blocker_reason": null,
+      "importance_score": 84,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.multas_bogota",
+      "name": "co.multas_bogota",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Tránsito Bogotá — Multas y Comparendos",
+      "display_name": "Tránsito Bogotá — Multas y Comparendos",
+      "official_url": "https://webfenix.movilidadbogota.gov.co/#/consulta-pagos",
+      "url": "https://webfenix.movilidadbogota.gov.co/#/consulta-pagos",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula",
+        "placa"
+      ],
+      "identifier_classes": [
+        "person",
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "person",
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.multas_bogota",
+      "blocker_reason": null,
+      "importance_score": 84,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.multas_cali",
+      "name": "co.multas_cali",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Tránsito Cali — Multas y Comparendos",
+      "display_name": "Tránsito Cali — Multas y Comparendos",
+      "official_url": "https://movilidadcali.com.co/portal-servicios/",
+      "url": "https://movilidadcali.com.co/portal-servicios/",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "cedula",
+        "placa"
+      ],
+      "identifier_classes": [
+        "person",
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "person",
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.multas_cali",
+      "blocker_reason": null,
+      "importance_score": 84,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.multas_envigado",
+      "name": "co.multas_envigado",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Tránsito Envigado — Multas y Comparendos",
+      "display_name": "Tránsito Envigado — Multas y Comparendos",
+      "official_url": "https://movilidad.envigado.gov.co/portal-servicios/",
+      "url": "https://movilidad.envigado.gov.co/portal-servicios/",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "cedula",
+        "placa"
+      ],
+      "identifier_classes": [
+        "person",
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "person",
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.multas_envigado",
+      "blocker_reason": null,
+      "importance_score": 84,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.multas_floridablanca",
+      "name": "co.multas_floridablanca",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Tránsito Floridablanca — Multas y Comparendos",
+      "display_name": "Tránsito Floridablanca — Multas y Comparendos",
+      "official_url": "https://tramitesdttf.siotweb.suiteneptuno.com/Comparendos/Consultas",
+      "url": "https://tramitesdttf.siotweb.suiteneptuno.com/Comparendos/Consultas",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.multas_floridablanca",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.multas_itagui",
+      "name": "co.multas_itagui",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Tránsito Itagüí — Multas y Comparendos",
+      "display_name": "Tránsito Itagüí — Multas y Comparendos",
+      "official_url": "https://comp.transitoitagui.gov.co/portal/qits/",
+      "url": "https://comp.transitoitagui.gov.co/portal/qits/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.multas_itagui",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.multas_los_patios",
+      "name": "co.multas_los_patios",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Tránsito Los Patios — Multas y Comparendos",
+      "display_name": "Tránsito Los Patios — Multas y Comparendos",
+      "official_url": "https://patios.siotportal.suiteneptuno.com/Comparendos/Consultas",
+      "url": "https://patios.siotportal.suiteneptuno.com/Comparendos/Consultas",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.multas_los_patios",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.multas_manizales",
+      "name": "co.multas_manizales",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Tránsito Manizales — Multas y Comparendos",
+      "display_name": "Tránsito Manizales — Multas y Comparendos",
+      "official_url": "https://www.movilidadmanizales.com.co/portal-servicios/",
+      "url": "https://www.movilidadmanizales.com.co/portal-servicios/",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "cedula",
+        "placa"
+      ],
+      "identifier_classes": [
+        "person",
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "person",
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.multas_manizales",
+      "blocker_reason": null,
+      "importance_score": 84,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.multas_medellin",
+      "name": "co.multas_medellin",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Tránsito Medellín — Multas y Comparendos",
+      "display_name": "Tránsito Medellín — Multas y Comparendos",
+      "official_url": "https://www.medellin.gov.co/portal-movilidad/",
+      "url": "https://www.medellin.gov.co/portal-movilidad/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula",
+        "placa"
+      ],
+      "identifier_classes": [
+        "person",
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "person",
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.multas_medellin",
+      "blocker_reason": null,
+      "importance_score": 84,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.multas_popayan",
+      "name": "co.multas_popayan",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Tránsito Popayán — Multas y Comparendos",
+      "display_name": "Tránsito Popayán — Multas y Comparendos",
+      "official_url": "https://www.transitopopayan.com.co/portal-servicios/",
+      "url": "https://www.transitopopayan.com.co/portal-servicios/",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "cedula",
+        "placa"
+      ],
+      "identifier_classes": [
+        "person",
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "person",
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.multas_popayan",
+      "blocker_reason": null,
+      "importance_score": 84,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.multas_rionegro",
+      "name": "co.multas_rionegro",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Tránsito Rionegro — Multas y Comparendos",
+      "display_name": "Tránsito Rionegro — Multas y Comparendos",
+      "official_url": "https://movilidad.rionegro.gov.co/portal-servicios/",
+      "url": "https://movilidad.rionegro.gov.co/portal-servicios/",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "cedula",
+        "placa"
+      ],
+      "identifier_classes": [
+        "person",
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "person",
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.multas_rionegro",
+      "blocker_reason": null,
+      "importance_score": 84,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.nombre_completo",
+      "name": "co.nombre_completo",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Nombre Completo — Consulta de Nombre",
+      "display_name": "Nombre Completo — Consulta de Nombre",
+      "official_url": "https://consultasrc.registraduria.gov.co/ProyectoSCCRC/",
+      "url": "https://consultasrc.registraduria.gov.co/ProyectoSCCRC/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.nombre_completo",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.peajes",
+      "name": "co.peajes",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Peajes — Tarifas de Peajes",
+      "display_name": "Peajes — Tarifas de Peajes",
+      "official_url": "https://www.datos.gov.co/resource/7gj8-j6i3.json",
+      "url": "https://www.datos.gov.co/resource/7gj8-j6i3.json",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "dataset",
+      "officiality": "official",
+      "implemented_source_name": "co.peajes",
+      "blocker_reason": null,
+      "importance_score": 61,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.pep",
+      "name": "co.pep",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "PEP — Personas Expuestas Políticamente",
+      "display_name": "PEP — Personas Expuestas Políticamente",
+      "official_url": "https://www.funcionpublica.gov.co/fdci/consultaCiudadana/consultaPEP",
+      "url": "https://www.funcionpublica.gov.co/fdci/consultaCiudadana/consultaPEP",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula",
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom",
+        "person"
+      ],
+      "identifier_categories": [
+        "custom",
+        "person"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "co.pep",
+      "blocker_reason": null,
+      "importance_score": 81,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.pico_y_placa",
+      "name": "co.pico_y_placa",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Pico y Placa — Restricción Vehicular",
+      "display_name": "Pico y Placa — Restricción Vehicular",
+      "official_url": "https://www.movilidadbogota.gov.co/web/pico-y-placa",
+      "url": "https://www.movilidadbogota.gov.co/web/pico-y-placa",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "placa"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "co.pico_y_placa",
+      "blocker_reason": null,
+      "importance_score": 81,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.policia",
+      "name": "co.policia",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Policia Nacional — Antecedentes Judiciales",
+      "display_name": "Policia Nacional — Antecedentes Judiciales",
+      "official_url": "https://antecedentes.policia.gov.co:7005/WebJudicial/",
+      "url": "https://antecedentes.policia.gov.co:7005/WebJudicial/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.policia",
+      "blocker_reason": null,
+      "importance_score": 81,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.procuraduria",
+      "name": "co.procuraduria",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Procuraduria — Antecedentes Disciplinarios",
+      "display_name": "Procuraduria — Antecedentes Disciplinarios",
+      "official_url": "https://apps.procuraduria.gov.co/webcert/inicio.aspx?tpo=2",
+      "url": "https://apps.procuraduria.gov.co/webcert/inicio.aspx?tpo=2",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "cedula",
+        "nit",
+        "pasaporte"
+      ],
+      "identifier_classes": [
+        "company",
+        "fiscal",
+        "person"
+      ],
+      "identifier_categories": [
+        "company",
+        "fiscal",
+        "person"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.procuraduria",
+      "blocker_reason": null,
+      "importance_score": 96,
+      "importance_tier": "critical",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.proveedores_ficticios",
+      "name": "co.proveedores_ficticios",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "DIAN — Proveedores Ficticios",
+      "display_name": "DIAN — Proveedores Ficticios",
+      "official_url": "https://www.datos.gov.co/Hacienda/Proveedores-Ficticios/9kgd-yzwq",
+      "url": "https://www.datos.gov.co/Hacienda/Proveedores-Ficticios/9kgd-yzwq",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "nit",
+        "custom"
+      ],
+      "identifier_classes": [
+        "company",
+        "custom",
+        "fiscal"
+      ],
+      "identifier_categories": [
+        "company",
+        "custom",
+        "fiscal"
+      ],
+      "runtime_status": "excluded",
+      "status": "excluded",
+      "source_type": "dataset",
+      "officiality": "official",
+      "implemented_source_name": "co.proveedores_ficticios",
+      "blocker_reason": "API_REMOVED: Dataset gone",
+      "importance_score": 84,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report skip: API_REMOVED: Dataset gone"
+    },
+    {
+      "id": "co.puesto_votacion",
+      "name": "co.puesto_votacion",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Registraduría — Puesto de Votación",
+      "display_name": "Registraduría — Puesto de Votación",
+      "official_url": "https://wsp.registraduria.gov.co/",
+      "url": "https://wsp.registraduria.gov.co/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.puesto_votacion",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.recalls",
+      "name": "co.recalls",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "SIC — Campañas de Seguridad Automotores",
+      "display_name": "SIC — Campañas de Seguridad Automotores",
+      "official_url": "https://sedeelectronica.sic.gov.co/temas/proteccion-al-consumidor/consumo-seguro/campanas-de-seguridad/automotores",
+      "url": "https://sedeelectronica.sic.gov.co/temas/proteccion-al-consumidor/consumo-seguro/campanas-de-seguridad/automotores",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.recalls",
+      "blocker_reason": null,
+      "importance_score": 61,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.registro_civil",
+      "name": "co.registro_civil",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Registraduría — Certificado Registro Civil",
+      "display_name": "Registraduría — Certificado Registro Civil",
+      "official_url": "https://consultasrc.registraduria.gov.co/",
+      "url": "https://consultasrc.registraduria.gov.co/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula",
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom",
+        "person"
+      ],
+      "identifier_categories": [
+        "custom",
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.registro_civil",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.retencion_vehiculos",
+      "name": "co.retencion_vehiculos",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Tránsito — Retención de Vehículos",
+      "display_name": "Tránsito — Retención de Vehículos",
+      "official_url": "https://portal.barranquilla.gov.co:8181/mov_estadoVehiculo/",
+      "url": "https://portal.barranquilla.gov.co:8181/mov_estadoVehiculo/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "placa"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.retencion_vehiculos",
+      "blocker_reason": null,
+      "importance_score": 81,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.rethus",
+      "name": "co.rethus",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "RETHUS — Talento Humano en Salud",
+      "display_name": "RETHUS — Talento Humano en Salud",
+      "official_url": "https://web.sispro.gov.co/ReTHUS/",
+      "url": "https://web.sispro.gov.co/ReTHUS/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula",
+        "pasaporte"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.rethus",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.rne",
+      "name": "co.rne",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "RNE — Registro Números Excluidos",
+      "display_name": "RNE — Registro Números Excluidos",
+      "official_url": "https://tramitescrcom.gov.co/tramites/publico/rne/loginRNE.xhtml",
+      "url": "https://tramitescrcom.gov.co/tramites/publico/rne/loginRNE.xhtml",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "blocked",
+      "status": "blocked",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "co.rne",
+      "blocker_reason": "AUTH_REQUIRED: Needs CRC credentials",
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report skip: AUTH_REQUIRED: Needs CRC credentials"
+    },
+    {
+      "id": "co.rnmc",
+      "name": "co.rnmc",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "RNMC — Medidas Correctivas",
+      "display_name": "RNMC — Medidas Correctivas",
+      "official_url": "https://srvcnpc.policia.gov.co/PSC/frm_cnp_consulta.aspx",
+      "url": "https://srvcnpc.policia.gov.co/PSC/frm_cnp_consulta.aspx",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula",
+        "pasaporte"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.rnmc",
+      "blocker_reason": null,
+      "importance_score": 81,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.rnt_turismo",
+      "name": "co.rnt_turismo",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "RNT — Registro Nacional de Turismo",
+      "display_name": "RNT — Registro Nacional de Turismo",
+      "official_url": "https://www.datos.gov.co/Comercio-Industria-y-Turismo/Registro-Nacional-de-Turismo-RNT-/thwd-ivmp",
+      "url": "https://www.datos.gov.co/Comercio-Industria-y-Turismo/Registro-Nacional-de-Turismo-RNT-/thwd-ivmp",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "nit",
+        "custom"
+      ],
+      "identifier_classes": [
+        "company",
+        "custom",
+        "fiscal"
+      ],
+      "identifier_categories": [
+        "company",
+        "custom",
+        "fiscal"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "dataset",
+      "officiality": "official",
+      "implemented_source_name": "co.rnt_turismo",
+      "blocker_reason": null,
+      "importance_score": 91,
+      "importance_tier": "critical",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.ruaf",
+      "name": "co.ruaf",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "RUAF — Registro Único de Afiliados",
+      "display_name": "RUAF — Registro Único de Afiliados",
+      "official_url": "https://ruaf.sispro.gov.co/AfiliadosRP.aspx",
+      "url": "https://ruaf.sispro.gov.co/AfiliadosRP.aspx",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "cedula",
+        "pasaporte"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.ruaf",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.rues",
+      "name": "co.rues",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "RUES — Registro Único Empresarial",
+      "display_name": "RUES — Registro Único Empresarial",
+      "official_url": "https://www.rues.org.co/",
+      "url": "https://www.rues.org.co/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula",
+        "nit",
+        "custom"
+      ],
+      "identifier_classes": [
+        "company",
+        "custom",
+        "fiscal",
+        "person"
+      ],
+      "identifier_categories": [
+        "company",
+        "custom",
+        "fiscal",
+        "person"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.rues",
+      "blocker_reason": null,
+      "importance_score": 96,
+      "importance_tier": "critical",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.runt",
+      "name": "co.runt",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "RUNT — Registro Único Nacional de Tránsito",
+      "display_name": "RUNT — Registro Único Nacional de Tránsito",
+      "official_url": "https://portalpublico.runt.gov.co/#/consulta-vehiculo/consulta/consulta-ciudadana",
+      "url": "https://portalpublico.runt.gov.co/#/consulta-vehiculo/consulta/consulta-ciudadana",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "vin",
+        "placa",
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person",
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "person",
+        "vehicle"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.runt",
+      "blocker_reason": null,
+      "importance_score": 91,
+      "importance_tier": "critical",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.runt_conductor",
+      "name": "co.runt_conductor",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "RUNT — Información de Conductor",
+      "display_name": "RUNT — Información de Conductor",
+      "official_url": "https://portalpublico.runt.gov.co/#/consulta-vehiculo/consulta/consulta-ciudadana",
+      "url": "https://portalpublico.runt.gov.co/#/consulta-vehiculo/consulta/consulta-ciudadana",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.runt_conductor",
+      "blocker_reason": null,
+      "importance_score": 81,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.runt_rtm",
+      "name": "co.runt_rtm",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "RUNT — Revisión Técnico-Mecánica",
+      "display_name": "RUNT — Revisión Técnico-Mecánica",
+      "official_url": "https://portalpublico.runt.gov.co/#/consulta-vehiculo/consulta/consulta-ciudadana",
+      "url": "https://portalpublico.runt.gov.co/#/consulta-vehiculo/consulta/consulta-ciudadana",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "placa"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.runt_rtm",
+      "blocker_reason": null,
+      "importance_score": 81,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.runt_soat",
+      "name": "co.runt_soat",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "RUNT — Estado del SOAT",
+      "display_name": "RUNT — Estado del SOAT",
+      "official_url": "https://portalpublico.runt.gov.co/#/consulta-vehiculo/consulta/consulta-ciudadana",
+      "url": "https://portalpublico.runt.gov.co/#/consulta-vehiculo/consulta/consulta-ciudadana",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "placa"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.runt_soat",
+      "blocker_reason": null,
+      "importance_score": 81,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.secop",
+      "name": "co.secop",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "SECOP — Contratación Pública",
+      "display_name": "SECOP — Contratación Pública",
+      "official_url": "https://www.datos.gov.co/Gastos-Gubernamentales/SECOP-II-Contratos/jbjy-vk9h",
+      "url": "https://www.datos.gov.co/Gastos-Gubernamentales/SECOP-II-Contratos/jbjy-vk9h",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "nit",
+        "cedula",
+        "custom"
+      ],
+      "identifier_classes": [
+        "company",
+        "custom",
+        "fiscal",
+        "person"
+      ],
+      "identifier_categories": [
+        "company",
+        "custom",
+        "fiscal",
+        "person"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "dataset",
+      "officiality": "official",
+      "implemented_source_name": "co.secop",
+      "blocker_reason": null,
+      "importance_score": 96,
+      "importance_tier": "critical",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.secop_integrado",
+      "name": "co.secop_integrado",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "SECOP Integrado — Contratación Unificada",
+      "display_name": "SECOP Integrado — Contratación Unificada",
+      "official_url": "https://www.datos.gov.co/Gastos-Gubernamentales/SECOP-Integrado/rpmr-utcd",
+      "url": "https://www.datos.gov.co/Gastos-Gubernamentales/SECOP-Integrado/rpmr-utcd",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "nit",
+        "cedula",
+        "custom"
+      ],
+      "identifier_classes": [
+        "company",
+        "custom",
+        "fiscal",
+        "person"
+      ],
+      "identifier_categories": [
+        "company",
+        "custom",
+        "fiscal",
+        "person"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "dataset",
+      "officiality": "official",
+      "implemented_source_name": "co.secop_integrado",
+      "blocker_reason": null,
+      "importance_score": 96,
+      "importance_tier": "critical",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.secop_procesos",
+      "name": "co.secop_procesos",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "SECOP — Procesos de Contratación",
+      "display_name": "SECOP — Procesos de Contratación",
+      "official_url": "https://www.datos.gov.co/Gastos-Gubernamentales/SECOP-II-Procesos/p6dx-8zbt",
+      "url": "https://www.datos.gov.co/Gastos-Gubernamentales/SECOP-II-Procesos/p6dx-8zbt",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "nit",
+        "cedula",
+        "custom"
+      ],
+      "identifier_classes": [
+        "company",
+        "custom",
+        "fiscal",
+        "person"
+      ],
+      "identifier_categories": [
+        "company",
+        "custom",
+        "fiscal",
+        "person"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "dataset",
+      "officiality": "official",
+      "implemented_source_name": "co.secop_procesos",
+      "blocker_reason": null,
+      "importance_score": 96,
+      "importance_tier": "critical",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.secop_sanciones",
+      "name": "co.secop_sanciones",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "SECOP — Multas y Sanciones a Contratistas",
+      "display_name": "SECOP — Multas y Sanciones a Contratistas",
+      "official_url": "https://www.datos.gov.co/Gastos-Gubernamentales/Multas-y-Sanciones/4n4q-k399",
+      "url": "https://www.datos.gov.co/Gastos-Gubernamentales/Multas-y-Sanciones/4n4q-k399",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "nit",
+        "cedula",
+        "custom"
+      ],
+      "identifier_classes": [
+        "company",
+        "custom",
+        "fiscal",
+        "person"
+      ],
+      "identifier_categories": [
+        "company",
+        "custom",
+        "fiscal",
+        "person"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "dataset",
+      "officiality": "official",
+      "implemented_source_name": "co.secop_sanciones",
+      "blocker_reason": null,
+      "importance_score": 96,
+      "importance_tier": "critical",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.seguridad_social",
+      "name": "co.seguridad_social",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "PILA — Seguridad Social Integral",
+      "display_name": "PILA — Seguridad Social Integral",
+      "official_url": "https://www.miseguridadsocial.gov.co/",
+      "url": "https://www.miseguridadsocial.gov.co/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula",
+        "nit"
+      ],
+      "identifier_classes": [
+        "company",
+        "fiscal",
+        "person"
+      ],
+      "identifier_categories": [
+        "company",
+        "fiscal",
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.seguridad_social",
+      "blocker_reason": null,
+      "importance_score": 89,
+      "importance_tier": "critical",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.simit",
+      "name": "co.simit",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "SIMIT — Multas de Tránsito",
+      "display_name": "SIMIT — Multas de Tránsito",
+      "official_url": "https://www.fcm.org.co/simit/#/estado-cuenta",
+      "url": "https://www.fcm.org.co/simit/#/estado-cuenta",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula",
+        "placa"
+      ],
+      "identifier_classes": [
+        "person",
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "person",
+        "vehicle"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.simit",
+      "blocker_reason": null,
+      "importance_score": 91,
+      "importance_tier": "critical",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.simit_historico",
+      "name": "co.simit_historico",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "SIMIT Histórico — Multas de Tránsito",
+      "display_name": "SIMIT Histórico — Multas de Tránsito",
+      "official_url": "https://www.datos.gov.co/Transporte/SIMIT/72nf-y4v3",
+      "url": "https://www.datos.gov.co/Transporte/SIMIT/72nf-y4v3",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "placa",
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom",
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "custom",
+        "vehicle"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "dataset",
+      "officiality": "official",
+      "implemented_source_name": "co.simit_historico",
+      "blocker_reason": null,
+      "importance_score": 81,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.siniestralidad",
+      "name": "co.siniestralidad",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Siniestralidad — Puntos Críticos Viales",
+      "display_name": "Siniestralidad — Puntos Críticos Viales",
+      "official_url": "https://www.datos.gov.co/resource/rs3u-8r4q.json",
+      "url": "https://www.datos.gov.co/resource/rs3u-8r4q.json",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "dataset",
+      "officiality": "official",
+      "implemented_source_name": "co.siniestralidad",
+      "blocker_reason": null,
+      "importance_score": 61,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.sisben",
+      "name": "co.sisben",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "SISBEN — Clasificación Socioeconómica",
+      "display_name": "SISBEN — Clasificación Socioeconómica",
+      "official_url": "https://reportes.sisben.gov.co/dnp_sisbenconsulta",
+      "url": "https://reportes.sisben.gov.co/dnp_sisbenconsulta",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "cedula",
+        "pasaporte"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.sisben",
+      "blocker_reason": null,
+      "importance_score": 81,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.snr",
+      "name": "co.snr",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "SNR — Índice de Propietarios",
+      "display_name": "SNR — Índice de Propietarios",
+      "official_url": "https://radicacion.supernotariado.gov.co/app/inicio.dma",
+      "url": "https://radicacion.supernotariado.gov.co/app/inicio.dma",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula",
+        "nit"
+      ],
+      "identifier_classes": [
+        "company",
+        "fiscal",
+        "person"
+      ],
+      "identifier_categories": [
+        "company",
+        "fiscal",
+        "person"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.snr",
+      "blocker_reason": null,
+      "importance_score": 96,
+      "importance_tier": "critical",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.soi",
+      "name": "co.soi",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "SOI — Pago de Seguridad Social",
+      "display_name": "SOI — Pago de Seguridad Social",
+      "official_url": "https://www.soi.com.co/",
+      "url": "https://www.soi.com.co/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula",
+        "nit"
+      ],
+      "identifier_classes": [
+        "company",
+        "fiscal",
+        "person"
+      ],
+      "identifier_categories": [
+        "company",
+        "fiscal",
+        "person"
+      ],
+      "runtime_status": "blocked",
+      "status": "blocked",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.soi",
+      "blocker_reason": "AUTH_REQUIRED: Login-only",
+      "importance_score": 89,
+      "importance_tier": "critical",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report skip: AUTH_REQUIRED: Login-only"
+    },
+    {
+      "id": "co.supersociedades",
+      "name": "co.supersociedades",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Supersociedades — Procesos de Insolvencia",
+      "display_name": "Supersociedades — Procesos de Insolvencia",
+      "official_url": "https://www.supersociedades.gov.co/delegatura-procedimientos-de-insolvencia/consulta-de-procesos",
+      "url": "https://www.supersociedades.gov.co/delegatura-procedimientos-de-insolvencia/consulta-de-procesos",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "nit",
+        "cedula",
+        "custom"
+      ],
+      "identifier_classes": [
+        "company",
+        "custom",
+        "fiscal",
+        "person"
+      ],
+      "identifier_categories": [
+        "company",
+        "custom",
+        "fiscal",
+        "person"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.supersociedades",
+      "blocker_reason": null,
+      "importance_score": 96,
+      "importance_tier": "critical",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.tarifas_energia",
+      "name": "co.tarifas_energia",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "SUI — Tarifas de Energía Eléctrica",
+      "display_name": "SUI — Tarifas de Energía Eléctrica",
+      "official_url": "https://www.datos.gov.co/",
+      "url": "https://www.datos.gov.co/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "dataset",
+      "officiality": "official",
+      "implemented_source_name": "co.tarifas_energia",
+      "blocker_reason": null,
+      "importance_score": 61,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.tutelas",
+      "name": "co.tutelas",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Rama Judicial — Consulta de Tutelas",
+      "display_name": "Rama Judicial — Consulta de Tutelas",
+      "official_url": "https://consultaprocesos.ramajudicial.gov.co/Procesos/NombreRazonSocial",
+      "url": "https://consultaprocesos.ramajudicial.gov.co/Procesos/NombreRazonSocial",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula",
+        "nit",
+        "custom"
+      ],
+      "identifier_classes": [
+        "company",
+        "custom",
+        "fiscal",
+        "person"
+      ],
+      "identifier_categories": [
+        "company",
+        "custom",
+        "fiscal",
+        "person"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.tutelas",
+      "blocker_reason": null,
+      "importance_score": 96,
+      "importance_tier": "critical",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.urna",
+      "name": "co.urna",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "CSJ — Profesionales del Derecho",
+      "display_name": "CSJ — Profesionales del Derecho",
+      "official_url": "https://www.ramajudicial.gov.co/",
+      "url": "https://www.ramajudicial.gov.co/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula",
+        "nit"
+      ],
+      "identifier_classes": [
+        "company",
+        "fiscal",
+        "person"
+      ],
+      "identifier_categories": [
+        "company",
+        "fiscal",
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.urna",
+      "blocker_reason": null,
+      "importance_score": 89,
+      "importance_tier": "critical",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.validar_policia",
+      "name": "co.validar_policia",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Policía Nacional — Validar Policía",
+      "display_name": "Policía Nacional — Validar Policía",
+      "official_url": "https://srvcnpc.policia.gov.co/PSC/frm_cnp_consulta.aspx",
+      "url": "https://srvcnpc.policia.gov.co/PSC/frm_cnp_consulta.aspx",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.validar_policia",
+      "blocker_reason": null,
+      "importance_score": 61,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.vehiculos",
+      "name": "co.vehiculos",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Datos.gov.co — Parque Automotor Nacional",
+      "display_name": "Datos.gov.co — Parque Automotor Nacional",
+      "official_url": "https://www.datos.gov.co/resource/g7i9-xkxz.json",
+      "url": "https://www.datos.gov.co/resource/g7i9-xkxz.json",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "placa",
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom",
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "custom",
+        "vehicle"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "dataset",
+      "officiality": "official",
+      "implemented_source_name": "co.vehiculos",
+      "blocker_reason": null,
+      "importance_score": 81,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.veterinario",
+      "name": "co.veterinario",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "COMVEZCOL — Medicina Veterinaria",
+      "display_name": "COMVEZCOL — Medicina Veterinaria",
+      "official_url": "https://www.comvezcol.org/",
+      "url": "https://www.comvezcol.org/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.veterinario",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "cr.cedula",
+      "name": "cr.cedula",
+      "country": "CR",
+      "region_phase": "americas",
+      "official_name": "TSE — Consulta de Cédula",
+      "display_name": "TSE — Consulta de Cédula",
+      "official_url": "https://servicioselectorales.tse.go.cr/chc/consulta_cedula.aspx",
+      "url": "https://servicioselectorales.tse.go.cr/chc/consulta_cedula.aspx",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula",
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom",
+        "person"
+      ],
+      "identifier_categories": [
+        "custom",
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "cr.cedula",
+      "blocker_reason": null,
+      "importance_score": 68,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "do.datos",
+      "name": "do.datos",
+      "country": "DO",
+      "region_phase": "americas",
+      "official_name": "Datos Abiertos RD — Portal de Datos",
+      "display_name": "Datos Abiertos RD — Portal de Datos",
+      "official_url": "https://datos.gob.do/",
+      "url": "https://datos.gob.do/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "dataset",
+      "officiality": "official",
+      "implemented_source_name": "do.datos",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "do.rnc",
+      "name": "do.rnc",
+      "country": "DO",
+      "region_phase": "americas",
+      "official_name": "DGII — Consulta RNC",
+      "display_name": "DGII — Consulta RNC",
+      "official_url": "https://dgii.gov.do/herramientas/consultas/Paginas/RNC.aspx",
+      "url": "https://dgii.gov.do/herramientas/consultas/Paginas/RNC.aspx",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula",
+        "nit",
+        "custom"
+      ],
+      "identifier_classes": [
+        "company",
+        "custom",
+        "fiscal",
+        "person"
+      ],
+      "identifier_categories": [
+        "company",
+        "custom",
+        "fiscal",
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "do.rnc",
+      "blocker_reason": null,
+      "importance_score": 83,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "ec.ant_citaciones",
+      "name": "ec.ant_citaciones",
+      "country": "EC",
+      "region_phase": "americas",
+      "official_name": "ANT — Citaciones de Transito",
+      "display_name": "ANT — Citaciones de Transito",
+      "official_url": "https://consultaweb.ant.gob.ec/PortalWEB/paginas/clientes/clp_json_consulta_persona.jsp",
+      "url": "https://consultaweb.ant.gob.ec/PortalWEB/paginas/clientes/clp_json_consulta_persona.jsp",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula",
+        "placa",
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom",
+        "person",
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "custom",
+        "person",
+        "vehicle"
+      ],
+      "runtime_status": "blocked",
+      "status": "blocked",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "ec.ant_citaciones",
+      "blocker_reason": "API_ERROR: HTTP 500",
+      "importance_score": 78,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report skip: API_ERROR: HTTP 500"
+    },
+    {
+      "id": "ec.cne_padron",
+      "name": "ec.cne_padron",
+      "country": "EC",
+      "region_phase": "americas",
+      "official_name": "CNE — Padron Electoral",
+      "display_name": "CNE — Padron Electoral",
+      "official_url": "https://lugarvotacion.cne.gob.ec/",
+      "url": "https://lugarvotacion.cne.gob.ec/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "ec.cne_padron",
+      "blocker_reason": null,
+      "importance_score": 68,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "ec.funcion_judicial",
+      "name": "ec.funcion_judicial",
+      "country": "EC",
+      "region_phase": "americas",
+      "official_name": "Funcion Judicial — Procesos Judiciales",
+      "display_name": "Funcion Judicial — Procesos Judiciales",
+      "official_url": "https://procesosjudiciales.funcionjudicial.gob.ec/",
+      "url": "https://procesosjudiciales.funcionjudicial.gob.ec/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula",
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom",
+        "person"
+      ],
+      "identifier_categories": [
+        "custom",
+        "person"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "ec.funcion_judicial",
+      "blocker_reason": null,
+      "importance_score": 75,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "ec.senescyt",
+      "name": "ec.senescyt",
+      "country": "EC",
+      "region_phase": "americas",
+      "official_name": "SENESCYT — Titulos Profesionales",
+      "display_name": "SENESCYT — Titulos Profesionales",
+      "official_url": "https://www.senescyt.gob.ec/web/guest/consultas",
+      "url": "https://www.senescyt.gob.ec/web/guest/consultas",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula",
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom",
+        "person"
+      ],
+      "identifier_categories": [
+        "custom",
+        "person"
+      ],
+      "runtime_status": "blocked",
+      "status": "blocked",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "ec.senescyt",
+      "blocker_reason": "URL_MOVED: Endpoint gone",
+      "importance_score": 68,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report skip: URL_MOVED: Endpoint gone"
+    },
+    {
+      "id": "ec.sri_establecimientos",
+      "name": "ec.sri_establecimientos",
+      "country": "EC",
+      "region_phase": "americas",
+      "official_name": "SRI — Establecimientos por RUC",
+      "display_name": "SRI — Establecimientos por RUC",
+      "official_url": "https://srienlinea.sri.gob.ec/sri-catastro-sujeto-servicio-internet/rest/Establecimiento/consultarPorNumeroRuc",
+      "url": "https://srienlinea.sri.gob.ec/sri-catastro-sujeto-servicio-internet/rest/Establecimiento/consultarPorNumeroRuc",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "ec.sri_establecimientos",
+      "blocker_reason": null,
+      "importance_score": 55,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "ec.sri_ruc",
+      "name": "ec.sri_ruc",
+      "country": "EC",
+      "region_phase": "americas",
+      "official_name": "SRI — Registro Unico de Contribuyentes",
+      "display_name": "SRI — Registro Unico de Contribuyentes",
+      "official_url": "https://srienlinea.sri.gob.ec/sri-catastro-sujeto-servicio-internet/rest/ConsolidadoContribuyente/obtenerPorNumerosRuc",
+      "url": "https://srienlinea.sri.gob.ec/sri-catastro-sujeto-servicio-internet/rest/ConsolidadoContribuyente/obtenerPorNumerosRuc",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "ec.sri_ruc",
+      "blocker_reason": null,
+      "importance_score": 55,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "ec.supercias",
+      "name": "ec.supercias",
+      "country": "EC",
+      "region_phase": "americas",
+      "official_name": "Supercias — Superintendencia de Companias",
+      "display_name": "Supercias — Superintendencia de Companias",
+      "official_url": "https://appscvsgen.supercias.gob.ec/",
+      "url": "https://appscvsgen.supercias.gob.ec/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "ec.supercias",
+      "blocker_reason": null,
+      "importance_score": 55,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "gt.banguat",
+      "name": "gt.banguat",
+      "country": "GT",
+      "region_phase": "americas",
+      "official_name": "Banguat — Tipo de Cambio",
+      "display_name": "Banguat — Tipo de Cambio",
+      "official_url": "https://www.banguat.gob.gt/",
+      "url": "https://www.banguat.gob.gt/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "gt.banguat",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "gt.nit",
+      "name": "gt.nit",
+      "country": "GT",
+      "region_phase": "americas",
+      "official_name": "SAT — Consulta NIT",
+      "display_name": "SAT — Consulta NIT",
+      "official_url": "https://portal.sat.gob.gt/portal/consulta-cui-nit/",
+      "url": "https://portal.sat.gob.gt/portal/consulta-cui-nit/",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "nit",
+        "custom"
+      ],
+      "identifier_classes": [
+        "company",
+        "custom",
+        "fiscal"
+      ],
+      "identifier_categories": [
+        "company",
+        "custom",
+        "fiscal"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "gt.nit",
+      "blocker_reason": null,
+      "importance_score": 78,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "hn.rtn",
+      "name": "hn.rtn",
+      "country": "HN",
+      "region_phase": "americas",
+      "official_name": "SAR — Verificador RTN",
+      "display_name": "SAR — Verificador RTN",
+      "official_url": "https://enlacertn.sar.gob.hn/index.aspx",
+      "url": "https://enlacertn.sar.gob.hn/index.aspx",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "hn.rtn",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "mx.curp",
+      "name": "mx.curp",
+      "country": "MX",
+      "region_phase": "americas",
+      "official_name": "CURP — Consulta de CURP",
+      "display_name": "CURP — Consulta de CURP",
+      "official_url": "https://www.gob.mx/curp/",
+      "url": "https://www.gob.mx/curp/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "mx.curp",
+      "blocker_reason": null,
+      "importance_score": 61,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "mx.inegi",
+      "name": "mx.inegi",
+      "country": "MX",
+      "region_phase": "americas",
+      "official_name": "INEGI — Catálogo Geoestadístico",
+      "display_name": "INEGI — Catálogo Geoestadístico",
+      "official_url": "https://www.inegi.org.mx/",
+      "url": "https://www.inegi.org.mx/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "mx.inegi",
+      "blocker_reason": null,
+      "importance_score": 61,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "mx.repuve",
+      "name": "mx.repuve",
+      "country": "MX",
+      "region_phase": "americas",
+      "official_name": "REPUVE — Registro Vehicular",
+      "display_name": "REPUVE — Registro Vehicular",
+      "official_url": "https://www2.repuve.gob.mx/",
+      "url": "https://www2.repuve.gob.mx/",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "placa",
+        "vin"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "mx.repuve",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "mx.sat_efos",
+      "name": "mx.sat_efos",
+      "country": "MX",
+      "region_phase": "americas",
+      "official_name": "SAT — Listado 69-B (EFOS)",
+      "display_name": "SAT — Listado 69-B (EFOS)",
+      "official_url": "http://omawww.sat.gob.mx/cifras_sat/Paginas/DatosAbiertos/contribuyentes_publicados.html",
+      "url": "http://omawww.sat.gob.mx/cifras_sat/Paginas/DatosAbiertos/contribuyentes_publicados.html",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "blocked",
+      "status": "blocked",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "mx.sat_efos",
+      "blocker_reason": "NO_FORM: Static XLS",
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report skip: NO_FORM: Static XLS"
+    },
+    {
+      "id": "mx.siem",
+      "name": "mx.siem",
+      "country": "MX",
+      "region_phase": "americas",
+      "official_name": "SIEM — Directorio Empresarial",
+      "display_name": "SIEM — Directorio Empresarial",
+      "official_url": "https://siem.economia.gob.mx/",
+      "url": "https://siem.economia.gob.mx/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "mx.siem",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "pa.contraloria",
+      "name": "pa.contraloria",
+      "country": "PA",
+      "region_phase": "americas",
+      "official_name": "Contraloría — Noticias y Reportes",
+      "display_name": "Contraloría — Noticias y Reportes",
+      "official_url": "https://www.contraloria.gob.pa/",
+      "url": "https://www.contraloria.gob.pa/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "pa.contraloria",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "pa.inec",
+      "name": "pa.inec",
+      "country": "PA",
+      "region_phase": "americas",
+      "official_name": "INEC — Estadísticas Nacionales",
+      "display_name": "INEC — Estadísticas Nacionales",
+      "official_url": "https://www.inec.gob.pa/",
+      "url": "https://www.inec.gob.pa/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "pa.inec",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "pa.ruc",
+      "name": "pa.ruc",
+      "country": "PA",
+      "region_phase": "americas",
+      "official_name": "DGI — Consulta RUC / CCIC",
+      "display_name": "DGI — Consulta RUC / CCIC",
+      "official_url": "https://dgi.mef.gob.pa/CCIC/Lis-CC.php",
+      "url": "https://dgi.mef.gob.pa/CCIC/Lis-CC.php",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "nit",
+        "custom"
+      ],
+      "identifier_classes": [
+        "company",
+        "custom",
+        "fiscal"
+      ],
+      "identifier_categories": [
+        "company",
+        "custom",
+        "fiscal"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "pa.ruc",
+      "blocker_reason": null,
+      "importance_score": 78,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "pe.bcrp",
+      "name": "pe.bcrp",
+      "country": "PE",
+      "region_phase": "americas",
+      "official_name": "BCRP — Tipo de Cambio y Estadísticas",
+      "display_name": "BCRP — Tipo de Cambio y Estadísticas",
+      "official_url": "https://estadisticas.bcrp.gob.pe/",
+      "url": "https://estadisticas.bcrp.gob.pe/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "pe.bcrp",
+      "blocker_reason": null,
+      "importance_score": 61,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "pe.datos",
+      "name": "pe.datos",
+      "country": "PE",
+      "region_phase": "americas",
+      "official_name": "Datos Abiertos PE — Portal de Datos",
+      "display_name": "Datos Abiertos PE — Portal de Datos",
+      "official_url": "https://www.datosabiertos.gob.pe/",
+      "url": "https://www.datosabiertos.gob.pe/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "pe.datos",
+      "blocker_reason": null,
+      "importance_score": 61,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "pe.osce_sancionados",
+      "name": "pe.osce_sancionados",
+      "country": "PE",
+      "region_phase": "americas",
+      "official_name": "OSCE — Proveedores Sancionados",
+      "display_name": "OSCE — Proveedores Sancionados",
+      "official_url": "https://www.rnp.gob.pe/consultasenlinea/inhabilitados/busqueda.asp",
+      "url": "https://www.rnp.gob.pe/consultasenlinea/inhabilitados/busqueda.asp",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "pe.osce_sancionados",
+      "blocker_reason": null,
+      "importance_score": 61,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "pe.poder_judicial",
+      "name": "pe.poder_judicial",
+      "country": "PE",
+      "region_phase": "americas",
+      "official_name": "Poder Judicial — Consulta de Expedientes",
+      "display_name": "Poder Judicial — Consulta de Expedientes",
+      "official_url": "https://cej.pj.gob.pe/cej/forms/busquedaform.html",
+      "url": "https://cej.pj.gob.pe/cej/forms/busquedaform.html",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "pe.poder_judicial",
+      "blocker_reason": null,
+      "importance_score": 61,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "pe.servir_sanciones",
+      "name": "pe.servir_sanciones",
+      "country": "PE",
+      "region_phase": "americas",
+      "official_name": "SERVIR — Sanciones a Servidores Publicos",
+      "display_name": "SERVIR — Sanciones a Servidores Publicos",
+      "official_url": "https://www.sanciones.gob.pe/",
+      "url": "https://www.sanciones.gob.pe/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "pe.servir_sanciones",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "pe.sunarp_vehicular",
+      "name": "pe.sunarp_vehicular",
+      "country": "PE",
+      "region_phase": "americas",
+      "official_name": "SUNARP — Consulta Vehicular",
+      "display_name": "SUNARP — Consulta Vehicular",
+      "official_url": "https://consultavehicular.sunarp.gob.pe/",
+      "url": "https://consultavehicular.sunarp.gob.pe/",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "placa"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "pe.sunarp_vehicular",
+      "blocker_reason": null,
+      "importance_score": 81,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "pe.sunat_ruc",
+      "name": "pe.sunat_ruc",
+      "country": "PE",
+      "region_phase": "americas",
+      "official_name": "SUNAT — Consulta RUC",
+      "display_name": "SUNAT — Consulta RUC",
+      "official_url": "https://e-consultaruc.sunat.gob.pe/cl-ti-itmrconsruc/FrameCriterioBusquedaMovil.jsp",
+      "url": "https://e-consultaruc.sunat.gob.pe/cl-ti-itmrconsruc/FrameCriterioBusquedaMovil.jsp",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "pe.sunat_ruc",
+      "blocker_reason": null,
+      "importance_score": 61,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "py.datos",
+      "name": "py.datos",
+      "country": "PY",
+      "region_phase": "americas",
+      "official_name": "Datos Abiertos PY — Portal de Datos",
+      "display_name": "Datos Abiertos PY — Portal de Datos",
+      "official_url": "https://www.datos.gov.py/",
+      "url": "https://www.datos.gov.py/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "dataset",
+      "officiality": "official",
+      "implemented_source_name": "py.datos",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "py.ruc",
+      "name": "py.ruc",
+      "country": "PY",
+      "region_phase": "americas",
+      "official_name": "SET — Consulta RUC",
+      "display_name": "SET — Consulta RUC",
+      "official_url": "https://servicios.set.gov.py/eset-publico/perfilPublicoContribIService.do",
+      "url": "https://servicios.set.gov.py/eset-publico/perfilPublicoContribIService.do",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "py.ruc",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "sv.nit",
+      "name": "sv.nit",
+      "country": "SV",
+      "region_phase": "americas",
+      "official_name": "DGII — Consulta DUI/NIT",
+      "display_name": "DGII — Consulta DUI/NIT",
+      "official_url": "https://portaldgii.mh.gob.sv/ssc/serviciosinclave/consulta/duinit/",
+      "url": "https://portaldgii.mh.gob.sv/ssc/serviciosinclave/consulta/duinit/",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "cedula",
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom",
+        "person"
+      ],
+      "identifier_categories": [
+        "custom",
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "sv.nit",
+      "blocker_reason": null,
+      "importance_score": 68,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "us.epa_fuel_economy",
+      "name": "us.epa_fuel_economy",
+      "country": "US",
+      "region_phase": "americas",
+      "official_name": "EPA — Fuel Economy",
+      "display_name": "EPA — Fuel Economy",
+      "official_url": "https://www.fueleconomy.gov/",
+      "url": "https://www.fueleconomy.gov/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "us.epa_fuel_economy",
+      "blocker_reason": null,
+      "importance_score": 61,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "us.nhtsa_complaints",
+      "name": "us.nhtsa_complaints",
+      "country": "US",
+      "region_phase": "americas",
+      "official_name": "NHTSA — Vehicle Complaints",
+      "display_name": "NHTSA — Vehicle Complaints",
+      "official_url": "https://api.nhtsa.gov/complaints/",
+      "url": "https://api.nhtsa.gov/complaints/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "us.nhtsa_complaints",
+      "blocker_reason": null,
+      "importance_score": 61,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "us.nhtsa_investigations",
+      "name": "us.nhtsa_investigations",
+      "country": "US",
+      "region_phase": "americas",
+      "official_name": "NHTSA — Defect Investigations",
+      "display_name": "NHTSA — Defect Investigations",
+      "official_url": "https://api.nhtsa.gov/investigations",
+      "url": "https://api.nhtsa.gov/investigations",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "us.nhtsa_investigations",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "us.nhtsa_recalls",
+      "name": "us.nhtsa_recalls",
+      "country": "US",
+      "region_phase": "americas",
+      "official_name": "NHTSA — Vehicle Recalls",
+      "display_name": "NHTSA — Vehicle Recalls",
+      "official_url": "https://api.nhtsa.gov/recalls/",
+      "url": "https://api.nhtsa.gov/recalls/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "us.nhtsa_recalls",
+      "blocker_reason": null,
+      "importance_score": 61,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "us.nhtsa_safety_ratings",
+      "name": "us.nhtsa_safety_ratings",
+      "country": "US",
+      "region_phase": "americas",
+      "official_name": "NHTSA — NCAP Safety Ratings",
+      "display_name": "NHTSA — NCAP Safety Ratings",
+      "official_url": "https://api.nhtsa.gov/SafetyRatings/",
+      "url": "https://api.nhtsa.gov/SafetyRatings/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "us.nhtsa_safety_ratings",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "us.nhtsa_vin",
+      "name": "us.nhtsa_vin",
+      "country": "US",
+      "region_phase": "americas",
+      "official_name": "NHTSA — VIN Decode",
+      "display_name": "NHTSA — VIN Decode",
+      "official_url": "https://vpic.nhtsa.dot.gov/api/",
+      "url": "https://vpic.nhtsa.dot.gov/api/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "vin"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "dataset",
+      "officiality": "official",
+      "implemented_source_name": "us.nhtsa_vin",
+      "blocker_reason": null,
+      "importance_score": 81,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "us.nicb_vincheck",
+      "name": "us.nicb_vincheck",
+      "country": "US",
+      "region_phase": "americas",
+      "official_name": "NICB VINCheck — Stolen/Salvage Check",
+      "display_name": "NICB VINCheck — Stolen/Salvage Check",
+      "official_url": "https://www.nicb.org/vincheck",
+      "url": "https://www.nicb.org/vincheck",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "vin"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "us.nicb_vincheck",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "us.ofac",
+      "name": "us.ofac",
+      "country": "US",
+      "region_phase": "americas",
+      "official_name": "OFAC — US Treasury Sanctions (SDN List)",
+      "display_name": "OFAC — US Treasury Sanctions (SDN List)",
+      "official_url": "https://sanctionssearch.ofac.treas.gov/",
+      "url": "https://sanctionssearch.ofac.treas.gov/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula",
+        "nit",
+        "pasaporte",
+        "custom"
+      ],
+      "identifier_classes": [
+        "company",
+        "custom",
+        "fiscal",
+        "person"
+      ],
+      "identifier_categories": [
+        "company",
+        "custom",
+        "fiscal",
+        "person"
+      ],
+      "runtime_status": "implemented",
+      "status": "implemented",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "us.ofac",
+      "blocker_reason": null,
+      "importance_score": 96,
+      "importance_tier": "critical",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "uy.datos",
+      "name": "uy.datos",
+      "country": "UY",
+      "region_phase": "americas",
+      "official_name": "Datos Abiertos UY — Catálogo de Datos",
+      "display_name": "Datos Abiertos UY — Catálogo de Datos",
+      "official_url": "https://catalogodatos.gub.uy/",
+      "url": "https://catalogodatos.gub.uy/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "dataset",
+      "officiality": "official",
+      "implemented_source_name": "uy.datos",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "uy.sucive",
+      "name": "uy.sucive",
+      "country": "UY",
+      "region_phase": "americas",
+      "official_name": "SUCIVE — Patente Vehicular",
+      "display_name": "SUCIVE — Patente Vehicular",
+      "official_url": "https://sucive.gub.uy/consulta_patente",
+      "url": "https://sucive.gub.uy/consulta_patente",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "placa",
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom",
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "custom",
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "uy.sucive",
+      "blocker_reason": null,
+      "importance_score": 68,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    }
+  ]
+}

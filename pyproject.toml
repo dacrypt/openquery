@@ -72,8 +72,9 @@ select = ["E", "F", "I", "UP"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+addopts = "-m 'not integration'"
 markers = [
-    "integration: marks tests that hit real external services (deselect with '-m \"not integration\"')",
+    "integration: marks tests that hit real external services (excluded from default pytest runs)",
 ]
 
 [dependency-groups]

@@ -2,7 +2,11 @@
 
 Queries SIEM for registered businesses by name, RFC, or economic activity.
 
-Flow:
+NOTE: As of 2025, siem.economia.gob.mx is protected by Akamai bot-detection
+and all known query paths return HTTP 404. This source is marked deprecated
+until the portal is restored or a new endpoint is identified.
+
+Flow (when available):
 1. Navigate to SIEM search portal
 2. Enter search criteria (nombre, RFC, or actividad)
 3. Submit and parse business list
@@ -37,7 +41,11 @@ class SiemSource(BaseSource):
         return SourceMeta(
             name="mx.siem",
             display_name="SIEM — Directorio Empresarial",
-            description="Mexican business registry: company info, RFC, address, and economic activity",
+            description=(
+                "Mexican business registry: company info, RFC, address, and economic activity. "
+                "Currently unavailable — siem.economia.gob.mx is Akamai-protected and all "
+                "known query paths return HTTP 404."
+            ),
             country="MX",
             url=SIEM_URL,
             supported_inputs=[DocumentType.CUSTOM],
@@ -47,16 +55,12 @@ class SiemSource(BaseSource):
         )
 
     def query(self, input: QueryInput) -> BaseModel:
-        nombre = input.extra.get("nombre", "")
-        rfc = input.extra.get("rfc", "")
-        actividad = input.extra.get("actividad", "")
-        consulta = nombre or rfc or actividad or input.document_number
-        if not consulta:
-            raise SourceError(
-                "mx.siem",
-                "nombre, rfc, or actividad is required (pass via extra.nombre, extra.rfc, or extra.actividad)",
-            )
-        return self._query(consulta, audit=input.audit)
+        raise SourceError(
+            "mx.siem",
+            "Source unavailable: siem.economia.gob.mx is currently inaccessible "
+            "(Akamai bot-protection, HTTP 404 on all known query paths). "
+            "Check https://siem.economia.gob.mx/ manually for restoration.",
+        )
 
     def _query(self, consulta: str, audit: bool = False) -> SiemResult:
         from openquery.core.browser import BrowserManager

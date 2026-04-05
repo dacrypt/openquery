@@ -49,12 +49,10 @@ class MiCasaYaSource(BaseSource):
         )
 
     def query(self, input: QueryInput) -> BaseModel:
-        if input.document_type != DocumentType.CEDULA:
-            raise SourceError(
-                "co.mi_casa_ya",
-                f"Unsupported document type: {input.document_type}. Use cedula.",
-            )
-        return self._query(input.document_number, audit=input.audit)
+        raise SourceError(
+            "co.mi_casa_ya",
+            "Source deprecated: Mi Casa Ya subsidy lookup portal is no longer available — micasaya.gov.co DNS dead and minvivienda.gov.co removed the query form since 2026-04",
+        )
 
     def _query(self, cedula: str, audit: bool = False) -> MiCasaYaResult:
         from openquery.core.browser import BrowserManager

@@ -24,7 +24,7 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-SNR_URL = "https://www.supernotariado.gov.co/"
+SNR_URL = "https://certificados.supernotariado.gov.co/certificado"
 
 
 @register
@@ -49,12 +49,8 @@ class CertificadoTradicionSource(BaseSource):
         )
 
     def query(self, input: QueryInput) -> BaseModel:
-        if input.document_type != DocumentType.CUSTOM:
-            raise SourceError(
-                "co.certificado_tradicion",
-                f"Unsupported input type: {input.document_type}. Use CUSTOM with document_number=matricula.",
-            )
-        return self._query(input.document_number, audit=input.audit)
+        matricula = input.document_number.strip()
+        return self._query(matricula, audit=input.audit)
 
     def _query(self, matricula: str, audit: bool = False) -> CertificadoTradicionResult:
         from openquery.core.browser import BrowserManager

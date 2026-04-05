@@ -127,9 +127,11 @@ class ProcuraduriaSource(BaseSource):
                 page.fill("#txtNumID", doc_number)
                 logger.info("Filled document number")
 
-                # Solve captcha (math or name-based)
+                # Solve captcha (math, name-based, document-digits, or QA)
                 captcha_text = page.inner_text("#lblPregunta")
-                answer = self._solve_captcha(captcha_text, nombre)
+                answer = self._solve_captcha(
+                    captcha_text, nombre=nombre, doc_number=doc_number,
+                )
                 page.fill("#txtRespuestaPregunta", str(answer))
                 logger.info("Captcha: '%s' -> '%s'", captcha_text, answer)
 
@@ -158,13 +160,16 @@ class ProcuraduriaSource(BaseSource):
                 raise SourceError("co.procuraduria", f"Query failed: {e}") from e
 
     @staticmethod
-    def _solve_captcha(text: str, nombre: str = "") -> str:
+    def _solve_captcha(
+        text: str, nombre: str = "", doc_number: str = "",
+    ) -> str:
         """Solve Procuraduria captcha using pattern matching or LLM fallback.
 
         Types seen:
         - Math: "¿ Cuanto es 3 X 3 ?"
         - Geography: "¿ Cual es la Capital de Antioquia (sin tilde)?"
         - Name: "¿Escriba las dos primeras letras del primer nombre...?"
+        - Document digits: "¿Escriba los dos ultimos digitos del documento?"
         - Other knowledge questions
         """
         # Try math captcha first (cheapest, no LLM needed)
@@ -180,7 +185,20 @@ class ProcuraduriaSource(BaseSource):
         if match:
             return str(int(match.group(1)) - int(match.group(2)))
 
-        # Name-based captcha
+        # "Last N digits of document" captcha — extract from doc_number
+        # Pattern: "los dos ultimos digitos" or "los 2 últimos dígitos"
+        digits_match = re.search(
+            r"(\w+)\s+(?:ultimos|últimos)\s+d[ií]gitos", text.lower(),
+        )
+        if digits_match and doc_number:
+            word = digits_match.group(1)
+            digit_count_map = {
+                "dos": 2, "tres": 3, "cuatro": 4, "2": 2, "3": 3, "4": 4,
+            }
+            n = digit_count_map.get(word, 2)
+            return doc_number.strip()[-n:]
+
+        # "First N letters of name" captcha
         if "primeras letras" in text.lower() and nombre:
             first_name = nombre.strip().split()[0] if nombre.strip() else ""
             if len(first_name) >= 2:

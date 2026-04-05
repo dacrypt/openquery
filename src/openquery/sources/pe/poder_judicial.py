@@ -31,7 +31,7 @@ CEJ_URL = "https://cej.pj.gob.pe/cej/forms/busquedaform.html"
 class PoderJudicialSource(BaseSource):
     """Query Peruvian judicial case records (Poder Judicial CEJ)."""
 
-    def __init__(self, timeout: float = 30.0, headless: bool = True) -> None:
+    def __init__(self, timeout: float = 60.0, headless: bool = True) -> None:
         self._timeout = timeout
         self._headless = headless
 
@@ -75,14 +75,26 @@ class PoderJudicialSource(BaseSource):
                 "pe.poder_judicial", "custom", nombre or expediente
             )
 
-        with browser.page(CEJ_URL) as page:
+        with browser.page(CEJ_URL, wait_until="commit") as page:
             try:
                 if collector:
                     collector.attach(page)
 
+                # Radware bot manager may redirect to a challenge page first,
+                # then auto-redirect back to the real page after setting cookies.
+                # Wait for the final page to fully load (up to 50s to handle bot challenge).
+                page.wait_for_load_state("domcontentloaded", timeout=50000)
+
+                # If still on a bot challenge page after domcontentloaded, wait
+                # for navigation to complete (challenge auto-resolves via JS).
+                current_url = page.url
+                if "validate.perfdrive.com" in current_url or "radware" in current_url.lower():
+                    logger.info("Bot challenge at %s — waiting for auto-redirect", current_url)
+                    page.wait_for_load_state("domcontentloaded", timeout=30000)
+
                 page.wait_for_selector(
-                    "input[type='text'], #txtNombre, #txtExpediente",
-                    timeout=15000,
+                    "input[type='text'], #txtNombre, #txtExpediente, form",
+                    timeout=30000,
                 )
                 page.wait_for_timeout(2000)
 
@@ -116,10 +128,17 @@ class PoderJudicialSource(BaseSource):
                     page.keyboard.press("Enter")
 
                 page.wait_for_timeout(3000)
-                page.wait_for_selector(
-                    "table, .resultado, #divResultado, .grid",
-                    timeout=15000,
-                )
+                # CEJ result may appear in a table, alert div, or plain body text;
+                # fall back to waiting for body (always present) to avoid timeout.
+                try:
+                    page.wait_for_selector(
+                        "table, .resultado, #divResultado, .grid, "
+                        "#tblResultado, .dataTable",
+                        timeout=30000,
+                    )
+                except Exception:
+                    # No specific result container found — parse whatever body has
+                    page.wait_for_timeout(3000)
 
                 if collector:
                     collector.screenshot(page, "result")

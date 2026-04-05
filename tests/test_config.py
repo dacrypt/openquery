@@ -14,7 +14,7 @@ class TestSettings:
         assert s.cache_backend == "memory"
         assert s.cache_ttl_default == 3600
         assert s.browser_headless is True
-        assert s.browser_timeout == 30.0
+        assert s.browser_timeout == 60.0
         assert s.rate_limit_enabled is True
         assert s.rate_limit_default_rpm == 10
         assert s.log_level == "INFO"

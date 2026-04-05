@@ -115,6 +115,16 @@ This single decorator:
 - Makes it available via the REST API
 - Makes it appear in `openquery sources`
 
+OpenQuery now auto-discovers source modules under `src/openquery/sources/<country>/`,
+so you no longer need to maintain a long manual import list for each new source file.
+The `@register` decorator is still required because discovery imports modules and the
+decorator adds the source class to the runtime registry.
+
+Wave 1 source work should keep the America inventory snapshot in sync with contributor guidance.
+The America inventory contract lives in `docs/americas-source-inventory.json`, and it applies only
+to Americas-country sources. Callable `INTL` runtime connectors remain outside that America
+inventory contract until a separate global inventory exists.
+
 ### Don't forget `__init__.py`
 
 ```python
@@ -226,7 +236,16 @@ answer = qa.answer("What is 5 + 3?")
 
 1. Add to the sources table in `README.md`
 2. Add a section in `docs/sources.md`
-3. Add to the CHANGELOG
+3. Update `docs/americas-source-inventory.json` if the source is part of the America inventory
+4. Keep `docs/test_results.md` separate as a live accountability report, not the inventory source of truth
+5. Add to the CHANGELOG
+
+### Wave 1 verification note
+
+Wave 1 intentionally does **not** add a new repo-wide typecheck gate. Keep the baseline verification
+contract to the documented `ruff` + `pytest` + live accountability workflow, and record the
+typecheck deferral in the same wave's ADR/docs update instead of adding a new `mypy`/`pyright`
+command now.
 
 ## API Sources (no browser)
 

@@ -49,12 +49,9 @@ class PjudSource(BaseSource):
         )
 
     def query(self, input: QueryInput) -> BaseModel:
-        rut = input.extra.get("rut", "")
-        nombre = input.extra.get("nombre", "")
-        consulta = rut or nombre or input.document_number
-        if not consulta:
-            raise SourceError("cl.pjud", "RUT or nombre is required (pass via extra.rut or extra.nombre)")
-        return self._query(consulta, is_rut=bool(rut), audit=input.audit)
+        consulta = input.document_number.strip()
+        is_rut = input.document_type == DocumentType.RUT
+        return self._query(consulta, is_rut=is_rut, audit=input.audit)
 
     def _query(self, consulta: str, is_rut: bool = True, audit: bool = False) -> PjudResult:
         from openquery.core.browser import BrowserManager

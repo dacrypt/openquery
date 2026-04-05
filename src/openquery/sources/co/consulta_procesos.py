@@ -82,43 +82,25 @@ class ConsultaProcesosSource(BaseSource):
                 if collector:
                     collector.attach(page)
 
-                page.wait_for_selector(
-                    'input[type="text"], input[type="number"]',
-                    timeout=15000,
+                # Wait for the SPA form — ARIA textboxes rendered by Angular/React
+                search_input = page.get_by_role(
+                    "textbox", name="Nombre"
                 )
+                search_input.wait_for(state="visible", timeout=15000)
                 page.wait_for_timeout(2000)
 
-                # Fill search input
-                search_input = page.query_selector(
-                    'input[type="text"][id*="nombre"], '
-                    'input[type="text"][id*="razon"], '
-                    'input[type="text"][id*="search"], '
-                    'input[type="text"][id*="buscar"], '
-                    'input[type="text"][name*="nombre"], '
-                    'input[type="text"]'
-                )
-                if not search_input:
-                    raise SourceError(
-                        "co.consulta_procesos", "Could not find search input field"
-                    )
-
+                # Fill "Nombre(s) Apellido o Razón Social" textbox
                 search_input.fill(query)
                 logger.info("Searching Rama Judicial for: %s (type=%s)", query, tipo)
 
                 if collector:
                     collector.screenshot(page, "form_filled")
 
-                # Submit
-                submit_btn = page.query_selector(
-                    'button[type="submit"], input[type="submit"], '
-                    'button[id*="consultar"], button[id*="buscar"], '
-                    'a[id*="consultar"], a[id*="buscar"], '
-                    'input[type="button"][id*="consultar"]'
+                # Submit — target the elevated submit button, not the nav icon
+                submit_btn = page.locator(
+                    'button.v-btn--has-bg[aria-label*="onsultar"]'
                 )
-                if submit_btn:
-                    submit_btn.click()
-                else:
-                    search_input.press("Enter")
+                submit_btn.click()
 
                 page.wait_for_timeout(5000)
 

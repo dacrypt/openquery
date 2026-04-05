@@ -48,6 +48,7 @@ class ServirSancionesSource(BaseSource):
         )
 
     def query(self, input: QueryInput) -> BaseModel:
+        raise SourceError("pe.servir_sanciones", "Source deprecated: site unreachable since 2026-04")
         nombre = input.extra.get("nombre", "")
         dni = input.extra.get("dni", "")
         if not nombre and not dni:

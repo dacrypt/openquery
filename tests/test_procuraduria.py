@@ -55,6 +55,27 @@ class TestCaptchaSolver:
         )
         assert result == "MA"
 
+    def test_last_two_digits(self):
+        result = ProcuraduriaSource._solve_captcha(
+            "¿Escriba los dos ultimos digitos del documento a consultar?",
+            doc_number="12345678",
+        )
+        assert result == "78"
+
+    def test_last_three_digits(self):
+        result = ProcuraduriaSource._solve_captcha(
+            "¿Escriba los tres ultimos dígitos del documento a consultar?",
+            doc_number="12345678",
+        )
+        assert result == "678"
+
+    def test_last_digits_with_accent(self):
+        result = ProcuraduriaSource._solve_captcha(
+            "¿Escriba los dos últimos dígitos del documento a consultar?",
+            doc_number="98765432",
+        )
+        assert result == "32"
+
     def test_invalid_without_llm_raises(self):
         """Without LLM API keys and Ollama, unsolvable captcha should raise."""
         import os

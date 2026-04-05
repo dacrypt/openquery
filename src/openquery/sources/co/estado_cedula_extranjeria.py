@@ -55,7 +55,9 @@ class EstadoCedulaExtranjeriaSource(BaseSource):
         fecha = input.extra.get("fecha_expedicion", "").strip()
         return self._query(cedula, fecha, audit=input.audit)
 
-    def _query(self, cedula: str, fecha_expedicion: str = "", audit: bool = False) -> EstadoCedulaExtranjeriaResult:
+    def _query(
+        self, cedula: str, fecha_expedicion: str = "", audit: bool = False,
+    ) -> EstadoCedulaExtranjeriaResult:
         from openquery.core.browser import BrowserManager
 
         browser = BrowserManager(headless=self._headless, timeout=self._timeout)

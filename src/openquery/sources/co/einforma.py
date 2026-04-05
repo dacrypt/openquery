@@ -48,14 +48,10 @@ class EinformaSource(BaseSource):
         )
 
     def query(self, input: QueryInput) -> BaseModel:
-        search_term = input.document_number.strip()
-        name = input.extra.get("name", "").strip()
-        if not search_term and not name:
-            raise SourceError("co.einforma", "Provide a NIT or company name (extra.name)")
-
-        query_term = search_term if search_term else name
-        tipo = "nit" if input.document_type == DocumentType.NIT else "nombre"
-        return self._query(query_term, tipo, audit=input.audit)
+        raise SourceError(
+            "co.einforma",
+            "Source deprecated: einforma.co search results redirect to an unrelated third-party site — automated access broken since 2026-04",
+        )
 
     def _query(self, query: str, tipo: str, audit: bool = False) -> EinformaResult:
         from openquery.core.browser import BrowserManager

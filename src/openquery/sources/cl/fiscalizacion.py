@@ -49,6 +49,7 @@ class FiscalizacionSource(BaseSource):
         )
 
     def query(self, input: QueryInput) -> BaseModel:
+        raise SourceError("cl.fiscalizacion", "Source deprecated: site unreachable since 2026-04")
         if input.document_type != DocumentType.PLATE:
             raise SourceError("cl.fiscalizacion", f"Unsupported document type: {input.document_type}")
         return self._query(input.document_number, audit=input.audit)

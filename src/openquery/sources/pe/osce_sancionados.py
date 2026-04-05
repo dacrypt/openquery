@@ -82,32 +82,80 @@ class OsceSancionadosSource(BaseSource):
                 page.wait_for_load_state("networkidle", timeout=30000)
                 page.wait_for_timeout(2000)
 
-                # Fill RUC or name — exact IDs from rnp.gob.pe
-                if ruc:
-                    ruc_input = page.query_selector('#ruc, input[name="ruc"]')
-                    if ruc_input:
-                        ruc_input.fill(ruc)
-                        logger.info("Filled RUC: %s", ruc)
-                elif name:
-                    name_input = page.query_selector('#rz, input[name="rz"]')
-                    if name_input:
-                        name_input.fill(name)
-                        logger.info("Filled name: %s", name)
+                # The page has two separate search sections, each with a plain textbox
+                # and its own "Buscar" button (no id/name attrs on the inputs):
+                #   Section 1: Buscar por Nombre/Razón o Denominación Social
+                #   Section 2: Buscar por RUC/Código de Proveedor Extranjero
+                # Below both sections is the image CAPTCHA with a separate code input.
+                all_inputs = page.query_selector_all('input[type="text"], input:not([type])')
+                # Expected layout: [name_input, ruc_input, captcha_input]
 
-                # Solve image CAPTCHA using universal middleware (LLM vision chain)
-                from openquery.core.captcha_middleware import solve_page_captchas
-                solve_page_captchas(page)
+                search_btn = None
+                filled_input = None
+
+                if ruc and len(all_inputs) >= 2:
+                    # RUC input is the second textbox
+                    all_inputs[1].fill(ruc)
+                    filled_input = all_inputs[1]
+                    logger.info("Filled RUC: %s", ruc)
+                    # Find the second "Buscar" button (next to RUC field)
+                    buscar_buttons = page.query_selector_all('button:has-text("Buscar")')
+                    if len(buscar_buttons) >= 2:
+                        search_btn = buscar_buttons[1]
+                    elif buscar_buttons:
+                        search_btn = buscar_buttons[0]
+                elif name and len(all_inputs) >= 1:
+                    # Name input is the first textbox
+                    all_inputs[0].fill(name)
+                    filled_input = all_inputs[0]
+                    logger.info("Filled name: %s", name)
+                    # Find the first "Buscar" button (next to name field)
+                    buscar_buttons = page.query_selector_all('button:has-text("Buscar")')
+                    if buscar_buttons:
+                        search_btn = buscar_buttons[0]
+
+                # Solve image CAPTCHA — the CAPTCHA image is not marked with captcha
+                # attributes; identify it as the img above "Ingrese el Código de la imagen"
+                captcha_input = all_inputs[2] if len(all_inputs) >= 3 else None
+                captcha_img = page.query_selector('img[src*="captcha" i], img + a + * img, table img')
+                # Fallback: any img that precedes a "Ingrese" label
+                if not captcha_img:
+                    captcha_img = page.query_selector('img')
+
+                if captcha_img and captcha_input:
+                    from openquery.core.captcha import ChainedSolver, LLMCaptchaSolver, OCRSolver
+                    solvers = []
+                    try:
+                        solvers.append(LLMCaptchaSolver())
+                    except Exception:
+                        pass
+                    solvers.append(OCRSolver(max_chars=6))
+                    chain = ChainedSolver(solvers)
+                    for attempt in range(1, 4):
+                        try:
+                            image_bytes = captcha_img.screenshot()
+                            if image_bytes and len(image_bytes) >= 100:
+                                text = chain.solve(image_bytes)
+                                if text:
+                                    captcha_input.fill(text)
+                                    logger.info("CAPTCHA solved (attempt %d): %s", attempt, text)
+                                    break
+                        except Exception as e:
+                            logger.warning("CAPTCHA attempt %d failed: %s", attempt, e)
+                        # Refresh CAPTCHA via the "Refrescar código" link
+                        refresh = page.query_selector('a:has-text("Refrescar"), a[href*="refrescar" i]')
+                        if refresh:
+                            refresh.click()
+                            page.wait_for_timeout(1000)
 
                 if collector:
                     collector.screenshot(page, "form_filled")
 
-                # Submit — use the appropriate button
-                submit = page.query_selector(
-                    'button.btn-warning, '
-                    'input[type="submit"]'
-                )
-                if submit:
-                    submit.click()
+                # Submit via the appropriate Buscar button
+                if search_btn:
+                    search_btn.click()
+                elif filled_input:
+                    filled_input.press("Enter")
                 else:
                     page.keyboard.press("Enter")
 

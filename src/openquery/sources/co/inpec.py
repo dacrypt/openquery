@@ -48,9 +48,8 @@ class InpecSource(BaseSource):
         )
 
     def query(self, input: QueryInput) -> BaseModel:
-        if input.document_type != DocumentType.CEDULA:
-            raise SourceError("co.inpec", f"Only cedula supported, got: {input.document_type}")
-        return self._query(input.document_number, audit=input.audit)
+        cedula = input.document_number.strip()
+        return self._query(cedula, audit=input.audit)
 
     def _query(self, cedula: str, audit: bool = False) -> InpecResult:
         from openquery.core.browser import BrowserManager

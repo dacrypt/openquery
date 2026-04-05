@@ -90,15 +90,19 @@ class TestBrowserFetch:
 class TestBrowserPage:
     """Test the page() context manager with mocked Playwright."""
 
-    @patch("playwright.sync_api.sync_playwright")
+    @patch("openquery.core.browser._get_sync_playwright")
     def test_page_context_manager_no_url(self, mock_pw_factory):
         mock_pw = MagicMock()
         mock_browser = MagicMock()
+        mock_context = MagicMock()
         mock_page = MagicMock()
-        mock_pw_factory.return_value.__enter__ = MagicMock(return_value=mock_pw)
-        mock_pw_factory.return_value.__exit__ = MagicMock(return_value=False)
+        sync_playwright = mock_pw_factory.return_value
+        sync_playwright_cm = sync_playwright.return_value
+        sync_playwright_cm.__enter__ = MagicMock(return_value=mock_pw)
+        sync_playwright_cm.__exit__ = MagicMock(return_value=False)
         mock_pw.chromium.launch.return_value = mock_browser
-        mock_browser.new_page.return_value = mock_page
+        mock_browser.new_context.return_value = mock_context
+        mock_context.new_page.return_value = mock_page
 
         bm = BrowserManager(headless=True, timeout=10.0)
         with bm.page() as page:
@@ -109,15 +113,19 @@ class TestBrowserPage:
 
         mock_browser.close.assert_called_once()
 
-    @patch("playwright.sync_api.sync_playwright")
+    @patch("openquery.core.browser._get_sync_playwright")
     def test_page_context_manager_with_url(self, mock_pw_factory):
         mock_pw = MagicMock()
         mock_browser = MagicMock()
+        mock_context = MagicMock()
         mock_page = MagicMock()
-        mock_pw_factory.return_value.__enter__ = MagicMock(return_value=mock_pw)
-        mock_pw_factory.return_value.__exit__ = MagicMock(return_value=False)
+        sync_playwright = mock_pw_factory.return_value
+        sync_playwright_cm = sync_playwright.return_value
+        sync_playwright_cm.__enter__ = MagicMock(return_value=mock_pw)
+        sync_playwright_cm.__exit__ = MagicMock(return_value=False)
         mock_pw.chromium.launch.return_value = mock_browser
-        mock_browser.new_page.return_value = mock_page
+        mock_browser.new_context.return_value = mock_context
+        mock_context.new_page.return_value = mock_page
 
         bm = BrowserManager(headless=True, timeout=15.0)
         with bm.page(url="https://example.com") as page:
@@ -127,15 +135,19 @@ class TestBrowserPage:
                 timeout=15000,
             )
 
-    @patch("playwright.sync_api.sync_playwright")
+    @patch("openquery.core.browser._get_sync_playwright")
     def test_browser_closes_on_exception(self, mock_pw_factory):
         mock_pw = MagicMock()
         mock_browser = MagicMock()
+        mock_context = MagicMock()
         mock_page = MagicMock()
-        mock_pw_factory.return_value.__enter__ = MagicMock(return_value=mock_pw)
-        mock_pw_factory.return_value.__exit__ = MagicMock(return_value=False)
+        sync_playwright = mock_pw_factory.return_value
+        sync_playwright_cm = sync_playwright.return_value
+        sync_playwright_cm.__enter__ = MagicMock(return_value=mock_pw)
+        sync_playwright_cm.__exit__ = MagicMock(return_value=False)
         mock_pw.chromium.launch.return_value = mock_browser
-        mock_browser.new_page.return_value = mock_page
+        mock_browser.new_context.return_value = mock_context
+        mock_context.new_page.return_value = mock_page
 
         bm = BrowserManager()
         with pytest.raises(RuntimeError):

@@ -9,6 +9,11 @@ Query public data sources worldwide through a unified CLI and REST API.
 
 OpenQuery provides a plugin-based framework for scraping government websites, public registries, and open data APIs. It handles the hard parts — browser automation, CAPTCHA solving, WAF bypass, caching, and rate limiting — so you can focus on the data.
 
+Current rollout note: wave 1 is America-first. The machine-readable America inventory lives in
+`docs/americas-source-inventory.json`, and `docs/sources.md` derives public inventory counts from
+that snapshot. Callable `INTL` runtime connectors remain outside the America completeness contract
+for this wave, and the repo intentionally defers a new typecheck gate until a later wave.
+
 ## Features
 
 - **Unified interface** — one CLI and one API endpoint for all data sources
@@ -27,9 +32,15 @@ OpenQuery provides a plugin-based framework for scraping government websites, pu
 - **Extensible** — add new data sources by implementing a single class
 - **Country-organized** — sources grouped by country code (`co`, `us`, etc.)
 
-## Built-in Sources — 128 sources across 18 countries
+## Built-in Sources — 160 sources across 18 country and region namespaces
 
-### Colombia (73 sources)
+For current America rollout status, use `docs/sources.md` and
+`docs/americas-source-inventory.json` as the source of truth. Public inventory counts there are
+derived from the America snapshot; `docs/test_results.md` is a live accountability report and can
+include callable runtime connectors that are outside the America inventory contract (for example,
+`INTL`).
+
+### Colombia
 
 #### Antecedentes y Justicia
 | Source | Description | Inputs | Browser |
@@ -41,20 +52,20 @@ OpenQuery provides a plugin-based framework for scraping government websites, pu
 | `co.consulta_procesos` | Judicial processes (Rama Judicial) | cedula, nit | Yes |
 | `co.tutelas` | Constitutional protection actions (Tutelas) | cedula, nit | Yes |
 | `co.jep` | Transitional justice (JEP) | cedula | Yes |
-| `co.inpec` | Prison population (INPEC) | cedula | Yes |
+| `co.inpec` | ~~Prison population (INPEC)~~ **Deprecated** | cedula | Yes |
 
 #### Identidad y Registro Civil
 | Source | Description | Inputs | Browser |
 |--------|-------------|--------|---------|
-| `co.estado_cedula` | Cédula status (Registraduría) | cedula | Yes |
-| `co.estado_tramite_cedula` | ID card processing status | cedula | Yes |
-| `co.defuncion` | Cédula vigency — alive/deceased | cedula | Yes |
-| `co.puesto_votacion` | Voting station lookup | cedula | Yes |
-| `co.registro_civil` | Civil registry certificate | cedula | Yes |
-| `co.nombre_completo` | Full name lookup by document | cedula | Yes |
-| `co.libreta_militar` | Military service status | cedula | Yes |
+| `co.estado_cedula` | ~~Cédula status (Registraduría)~~ **Deprecated** | cedula | Yes |
+| `co.estado_tramite_cedula` | ~~ID card processing status~~ **Deprecated** | cedula | Yes |
+| `co.defuncion` | ~~Cédula vigency — alive/deceased~~ **Deprecated** | cedula | Yes |
+| `co.puesto_votacion` | ~~Voting station lookup~~ **Deprecated** | cedula | Yes |
+| `co.registro_civil` | ~~Civil registry certificate~~ **Deprecated** | cedula | Yes |
+| `co.nombre_completo` | ~~Full name lookup by document~~ **Deprecated** | cedula | Yes |
+| `co.libreta_militar` | ~~Military service status~~ **Deprecated** | cedula | Yes |
 | `co.migracion_ppt` | PPT temporary protection permit | custom | Yes |
-| `co.estado_cedula_extranjeria` | Foreign ID card status (Migración) | custom | Yes |
+| `co.estado_cedula_extranjeria` | ~~Foreign ID card status (Migración)~~ **Deprecated** | custom | Yes |
 | `co.validar_policia` | Police officer validation | custom | Yes |
 
 #### Compliance y AML
@@ -67,13 +78,13 @@ OpenQuery provides a plugin-based framework for scraping government websites, pu
 #### Seguridad Social
 | Source | Description | Inputs | Browser |
 |--------|-------------|--------|---------|
-| `co.adres` | Health system enrollment (EPS/BDUA) | cedula | Yes |
-| `co.colpensiones` | Pension affiliation (Colpensiones) | cedula | Yes |
+| `co.adres` | ~~Health system enrollment (EPS/BDUA)~~ **Deprecated** | cedula | Yes |
+| `co.colpensiones` | ~~Pension affiliation (Colpensiones)~~ **Deprecated** | cedula | Yes |
 | `co.fopep` | Pensioners payroll (FOPEP) | cedula | Yes |
-| `co.ruaf` | Unified affiliates registry (SISPRO) | cedula | Yes |
-| `co.rethus` | Health workforce registry (RETHUS) | cedula | Yes |
+| `co.ruaf` | ~~Unified affiliates registry (SISPRO)~~ **Deprecated** | cedula | Yes |
+| `co.rethus` | ~~Health workforce registry (RETHUS)~~ **Deprecated** | cedula | Yes |
 | `co.soi` | Social security payments (SOI/PILA) | cedula, nit | Yes |
-| `co.seguridad_social` | Integrated social security status | cedula, nit | Yes |
+| `co.seguridad_social` | ~~Integrated social security status~~ **Deprecated** | cedula, nit | Yes |
 | `co.afiliados_compensado` | Compensation fund affiliation | cedula | Yes |
 | `co.sisben` | Socioeconomic classification (SISBEN) | cedula | Yes |
 
@@ -84,7 +95,7 @@ OpenQuery provides a plugin-based framework for scraping government websites, pu
 | `co.rues` | Business registry (RUES/Confecámaras) | cedula, nit | Yes |
 | `co.secop` | Public procurement (SECOP) | nit | No |
 | `co.cufe_dian` | Electronic invoice verification (CUFE) | custom | Yes |
-| `co.einforma` | Business intelligence (eInforma) | nit | Yes |
+| `co.einforma` | ~~Business intelligence (eInforma)~~ **Deprecated** | nit | Yes |
 | `co.camara_comercio_medellin` | Medellín Chamber of Commerce | nit, custom | Yes |
 | `co.directorio_empresas` | Business directory (datos.gov.co) | nit, custom | No |
 | `co.empresas_google` | Business search (Google Maps) | custom | Yes |
@@ -94,7 +105,7 @@ OpenQuery provides a plugin-based framework for scraping government websites, pu
 | Source | Description | Inputs | Browser |
 |--------|-------------|--------|---------|
 | `co.snr` | Property owner index (SNR) | cedula, nit | Yes |
-| `co.certificado_tradicion` | Property title certificate (SNR) | custom | Yes |
+| `co.certificado_tradicion` | ~~Property title certificate (SNR)~~ **Deprecated** | custom | Yes |
 | `co.garantias_mobiliarias` | Movable collateral registry | cedula | Yes |
 | `co.cambio_estrato` | Socioeconomic stratum certification | cedula | Yes |
 
@@ -120,7 +131,7 @@ OpenQuery provides a plugin-based framework for scraping government websites, pu
 #### Vivienda y Servicios
 | Source | Description | Inputs | Browser |
 |--------|-------------|--------|---------|
-| `co.mi_casa_ya` | Housing subsidies (Mi Casa Ya) | cedula | Yes |
+| `co.mi_casa_ya` | ~~Housing subsidies (Mi Casa Ya)~~ **Deprecated** | cedula | Yes |
 | `co.tarifas_energia` | Electricity tariffs (SUI) | custom | No |
 
 #### Turismo
@@ -133,7 +144,7 @@ OpenQuery provides a plugin-based framework for scraping government websites, pu
 |--------|-------------|--------|---------|
 | `co.licencias_salud` | Health service providers (REPS) | nit | No |
 
-#### Consejos Profesionales (11 sources)
+#### Consejos Profesionales
 | Source | Description | Inputs | Browser |
 |--------|-------------|--------|---------|
 | `co.copnia` | Engineering (COPNIA) | cedula, nit | Yes |
@@ -148,7 +159,7 @@ OpenQuery provides a plugin-based framework for scraping government websites, pu
 | `co.veterinario` | Veterinary medicine (COMVEZCOL) | cedula | Yes |
 | `co.urna` | Law professionals (CSJ) | cedula, nit | Yes |
 
-### United States (5 sources)
+### United States
 
 | Source | Description | Inputs | Browser |
 |--------|-------------|--------|---------|
@@ -158,18 +169,18 @@ OpenQuery provides a plugin-based framework for scraping government websites, pu
 | `us.nhtsa_complaints` | Vehicle safety complaints (NHTSA) | custom | No |
 | `us.epa_fuel_economy` | EPA fuel economy ratings | custom | No |
 
-### Ecuador (6 sources)
+### Ecuador
 
 | Source | Description | Inputs | Browser |
 |--------|-------------|--------|---------|
 | `ec.sri_ruc` | Tax registry RUC (SRI) | custom | No |
 | `ec.ant_citaciones` | Traffic fines (ANT) | cedula, placa, custom | No |
-| `ec.cne_padron` | Voter registry (CNE) | cedula | Yes |
+| `ec.cne_padron` | ~~Voter registry (CNE)~~ **Deprecated** | cedula | Yes |
 | `ec.funcion_judicial` | Judicial processes (Función Judicial) | cedula, custom | Yes |
 | `ec.supercias` | Company registry (Superintendencia) | custom | Yes |
 | `ec.senescyt` | Professional degrees (SENESCYT) | cedula, custom | Yes |
 
-### Peru (5 sources)
+### Peru
 
 | Source | Description | Inputs | Browser |
 |--------|-------------|--------|---------|
@@ -177,27 +188,27 @@ OpenQuery provides a plugin-based framework for scraping government websites, pu
 | `pe.poder_judicial` | Judicial case search (CEJ) | custom | Yes |
 | `pe.osce_sancionados` | Sanctioned gov contractors (OSCE) | custom | Yes |
 | `pe.sunarp_vehicular` | Vehicle registry (SUNARP) | placa | Yes |
-| `pe.servir_sanciones` | Public servant sanctions (SERVIR) | custom | Yes |
+| `pe.servir_sanciones` | ~~Public servant sanctions (SERVIR)~~ **Deprecated** | custom | Yes |
 
-### Chile (4 sources)
+### Chile
 
 | Source | Description | Inputs | Browser |
 |--------|-------------|--------|---------|
 | `cl.sii_rut` | Tax registry RUT (SII) | custom | Yes |
-| `cl.pjud` | Judicial case search (PJUD) | custom | Yes |
-| `cl.fiscalizacion` | Traffic infractions | placa | Yes |
+| `cl.pjud` | ~~Judicial case search (PJUD)~~ **Deprecated** | custom | Yes |
+| `cl.fiscalizacion` | ~~Traffic infractions~~ **Deprecated** | placa | Yes |
 | `cl.superir` | Insolvency/bankruptcy (Superir) | custom | Yes |
 
-### Mexico (4 sources)
+### Mexico
 
 | Source | Description | Inputs | Browser |
 |--------|-------------|--------|---------|
 | `mx.curp` | Population registry CURP (RENAPO) | custom | Yes |
 | `mx.sat_efos` | SAT blacklist EFOS/EDOS | custom | Yes |
-| `mx.siem` | Business directory SIEM | custom | Yes |
-| `mx.repuve` | Stolen vehicle check (REPUVE) | placa, vin | Yes |
+| `mx.siem` | ~~Business directory SIEM~~ **Deprecated** | custom | Yes |
+| `mx.repuve` | ~~Stolen vehicle check (REPUVE)~~ **Deprecated** | placa, vin | Yes |
 
-### Argentina (3 sources)
+### Argentina
 
 | Source | Description | Inputs | Browser |
 |--------|-------------|--------|---------|
@@ -241,7 +252,7 @@ OpenQuery provides a plugin-based framework for scraping government websites, pu
 |--------|-------------|--------|---------|
 | `hn.rtn` | Tax registry RTN (SAR) | custom | Yes |
 
-### International (2 sources)
+### International
 
 | Source | Description | Inputs | Browser |
 |--------|-------------|--------|---------|
@@ -498,14 +509,14 @@ openquery/
 │   └── rate_limit.py # Token-bucket rate limiting
 ├── sources/          # Data source plugins, organized by country
 │   ├── base.py       # BaseSource ABC — implement this to add sources
-│   ├── co/           # Colombia (72 sources)
-│   ├── ec/           # Ecuador (6 sources)
-│   ├── pe/           # Peru (5 sources)
-│   ├── cl/           # Chile (3 sources)
-│   ├── mx/           # Mexico (4 sources)
-│   ├── ar/           # Argentina (3 sources)
-│   ├── us/           # United States (5 sources)
-│   └── intl/         # International (2 sources)
+│   ├── co/           # Colombia
+│   ├── ec/           # Ecuador
+│   ├── pe/           # Peru
+│   ├── cl/           # Chile
+│   ├── mx/           # Mexico
+│   ├── ar/           # Argentina
+│   ├── us/           # United States
+│   └── intl/         # International
 ├── models/           # Pydantic response models, organized by country
 ├── server/           # FastAPI REST API
 └── commands/         # Typer CLI commands
