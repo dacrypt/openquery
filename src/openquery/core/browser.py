@@ -42,11 +42,18 @@ class BrowserManager:
 
     Uses Patchright (patched Playwright) to bypass WAF/bot detection.
     Falls back to standard Playwright if Patchright is not available.
+
+    Proxy support: set OPENQUERY_PROXY_URL to route traffic through a
+    residential/rotating proxy for WAF bypass. Example:
+        OPENQUERY_PROXY_URL=http://user:pass@proxy.example.com:8080
     """
 
-    def __init__(self, headless: bool = True, timeout: float = 30.0) -> None:
+    def __init__(
+        self, headless: bool = True, timeout: float = 30.0, proxy: str = "",
+    ) -> None:
         self._headless = headless
         self._timeout = timeout
+        self._proxy = proxy
 
     @contextmanager
     def page(self, url: str | None = None, wait_until: str = "domcontentloaded"):
@@ -61,11 +68,22 @@ class BrowserManager:
         """
         sync_playwright = _get_sync_playwright()
 
+        # Resolve proxy: explicit > config > none
+        proxy_url = self._proxy
+        if not proxy_url:
+            from openquery.config import get_settings
+            proxy_url = get_settings().proxy_url
+
+        launch_kwargs: dict[str, Any] = {
+            "headless": self._headless,
+            "args": _STEALTH_ARGS,
+        }
+        if proxy_url:
+            launch_kwargs["proxy"] = {"server": proxy_url}
+            logger.info("Using proxy: %s", proxy_url.split("@")[-1] if "@" in proxy_url else proxy_url)
+
         with sync_playwright() as pw:
-            browser = pw.chromium.launch(
-                headless=self._headless,
-                args=_STEALTH_ARGS,
-            )
+            browser = pw.chromium.launch(**launch_kwargs)
             try:
                 context = browser.new_context(
                     user_agent=(

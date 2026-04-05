@@ -46,6 +46,10 @@ class Settings(BaseSettings):
     browser_headless: bool = True
     browser_timeout: float = 60.0
 
+    # Proxy — residential/rotating proxy for WAF bypass
+    proxy_url: str = ""  # e.g. http://user:pass@proxy.example.com:8080
+    proxy_country: str = ""  # ISO country code for geo-targeting (if proxy supports)
+
     # Circuit breaker
     circuit_breaker_threshold: int = 5
     circuit_breaker_cooldown: float = 60.0

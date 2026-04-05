@@ -78,33 +78,26 @@ class IdDmvSource(BaseSource):
 
         result = IdDmvResult(vin=vin)
 
-        with browser.sync_context() as ctx:
-            try:
-                # --- Title status ---
-                page = ctx.new_page()
+        try:
+            # --- Title status ---
+            with browser.page(TITLE_URL) as page:
                 if collector:
                     collector.attach(page)
 
-                logger.info("Navigating to title status page for VIN: %s", vin)
-                ms = int(self._timeout * 1000)
-                page.goto(TITLE_URL, wait_until="domcontentloaded", timeout=ms)
-
+                logger.info("Checking title status for VIN: %s", vin)
                 self._fill_and_submit(page, vin, "title")
 
                 if collector:
                     collector.screenshot(page, "title_result")
 
                 self._parse_title(page, result)
-                page.close()
 
-                # --- Registration status ---
-                page = ctx.new_page()
+            # --- Registration status ---
+            with browser.page(REGISTRATION_URL) as page:
                 if collector:
                     collector.attach(page)
 
-                logger.info("Navigating to registration status page for VIN: %s", vin)
-                page.goto(REGISTRATION_URL, wait_until="domcontentloaded", timeout=ms)
-
+                logger.info("Checking registration status for VIN: %s", vin)
                 self._fill_and_submit(page, vin, "registration")
 
                 if collector:
@@ -116,12 +109,10 @@ class IdDmvSource(BaseSource):
                     result_json = result.model_dump_json()
                     result.audit = collector.generate_pdf(page, result_json)
 
-                page.close()
-
-            except SourceError:
-                raise
-            except Exception as e:
-                raise SourceError("us.id_dmv", f"Query failed: {e}") from e
+        except SourceError:
+            raise
+        except Exception as e:
+            raise SourceError("us.id_dmv", f"Query failed: {e}") from e
 
         logger.info(
             "Idaho DMV results — vin=%s, title=%s, registration=%s",
