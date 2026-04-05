@@ -84,11 +84,11 @@ class TestNicbVincheckSourceMeta:
     def test_meta_requires_captcha(self):
         source = NicbVincheckSource()
         meta = source.meta()
-        assert meta.requires_captcha is False
+        assert meta.requires_captcha is True
 
     def test_default_timeout(self):
         source = NicbVincheckSource()
-        assert source._timeout == 30.0
+        assert source._timeout == 60.0
 
     def test_custom_timeout(self):
         source = NicbVincheckSource(timeout=60.0)
@@ -96,69 +96,65 @@ class TestNicbVincheckSourceMeta:
 
 
 class TestParseResult:
-    """Test _parse_results parsing logic with mocked page."""
+    """Test _parse_results parsing logic with API data dicts."""
 
-    def _make_page(self, body_text: str, heading: str = "") -> MagicMock:
+    def _make_page(self, body_text: str = "") -> MagicMock:
         mock_page = MagicMock()
         mock_page.inner_text.return_value = body_text
-        if heading:
-            mock_el = MagicMock()
-            mock_el.inner_text.return_value = heading
-            mock_page.query_selector.return_value = mock_el
-        else:
-            mock_page.query_selector.return_value = None
         return mock_page
 
     def test_parse_no_theft_no_salvage(self):
         source = NicbVincheckSource()
-        page = self._make_page(
-            "VINCheck Results\n"
-            "No theft record found for this VIN.\n"
-            "No salvage record found for this VIN.\n",
-            heading="No records found",
-        )
-        result = source._parse_results(page, "1HGCM82633A004352")
+        api_data = {"result": {"theft": False, "totalloss": False, "totalloss_items": []}}
+        result = source._parse_results("1HGCM82633A004352", api_data, self._make_page())
         assert result.vin == "1HGCM82633A004352"
         assert result.theft_records_found is False
         assert result.salvage_records_found is False
 
     def test_parse_theft_found(self):
         source = NicbVincheckSource()
-        page = self._make_page(
-            "VINCheck Results\n"
-            "A theft record has been reported for this vehicle.\n"
-            "No salvage record found.\n",
-            heading="Theft record found",
-        )
-        result = source._parse_results(page, "1HGCM82633A004352")
+        api_data = {"result": {"theft": True, "totalloss": False, "totalloss_items": []}}
+        result = source._parse_results("1HGCM82633A004352", api_data, self._make_page())
         assert result.theft_records_found is True
         assert result.salvage_records_found is False
 
     def test_parse_salvage_found(self):
         source = NicbVincheckSource()
-        page = self._make_page(
-            "VINCheck Results\n"
-            "No theft record found.\n"
-            "A salvage record has been reported for this vehicle.\n",
-            heading="Salvage record found",
-        )
-        result = source._parse_results(page, "1HGCM82633A004352")
+        api_data = {
+            "result": {
+                "theft": False,
+                "totalloss": True,
+                "totalloss_items": [{"date": "2022-01-15", "cause": "Collision"}],
+            }
+        }
+        result = source._parse_results("1HGCM82633A004352", api_data, self._make_page())
         assert result.theft_records_found is False
         assert result.salvage_records_found is True
 
     def test_parse_both_found(self):
         source = NicbVincheckSource()
-        page = self._make_page(
-            "VINCheck Results\n"
-            "A theft record has been reported for this vehicle.\n"
-            "A salvage record has been reported for this vehicle.\n",
-        )
-        result = source._parse_results(page, "1HGCM82633A004352")
+        api_data = {"result": {"theft": True, "totalloss": True, "totalloss_items": []}}
+        result = source._parse_results("1HGCM82633A004352", api_data, self._make_page())
         assert result.theft_records_found is True
         assert result.salvage_records_found is True
 
     def test_parse_vin_preserved(self):
         source = NicbVincheckSource()
-        page = self._make_page("No records found.")
-        result = source._parse_results(page, "TESTVIN123")
+        api_data = {"result": {"theft": False, "totalloss": False, "totalloss_items": []}}
+        result = source._parse_results("TESTVIN123", api_data, self._make_page())
         assert result.vin == "TESTVIN123"
+
+    def test_parse_fallback_no_api_data(self):
+        """When api_data is empty, fall back to page body text."""
+        source = NicbVincheckSource()
+        page = self._make_page("VIN has not been identified as a vehicle listed")
+        result = source._parse_results("TESTVIN123", {}, page)
+        assert result.theft_records_found is False
+        assert result.salvage_records_found is False
+
+    def test_parse_details_populated(self):
+        source = NicbVincheckSource()
+        api_data = {"result": {"theft": False, "totalloss": False, "totalloss_items": []}}
+        result = source._parse_results("1HGCM82633A004352", api_data, self._make_page())
+        assert len(result.details) == 2
+        assert any("no theft" in d.lower() for d in result.details)

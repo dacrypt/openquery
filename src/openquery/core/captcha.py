@@ -606,7 +606,8 @@ class LLMCaptchaSolver(CaptchaSolver):
             raise CaptchaError("llm_openai", f"OpenAI API failed: {e}") from e
 
 
-
+class TwoCaptchaSolver(CaptchaSolver):
+    """Solve image CAPTCHAs using the 2captcha.com paid service."""
 
     def __init__(self, api_key: str) -> None:
         self._api_key = api_key

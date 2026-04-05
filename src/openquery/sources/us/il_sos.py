@@ -76,31 +76,25 @@ class IlSosSource(BaseSource):
                 if collector:
                     collector.attach(page)
 
-                # Wait for the VIN input to appear
+                # Wait for the VIN input to appear — id="nbr", name="nbr"
                 logger.info("Waiting for IL SOS form...")
-                vin_input = page.locator(
-                    "input[name*='vin' i], "
-                    "input[id*='vin' i], "
-                    "input[placeholder*='VIN' i], "
-                    "input[type='text']"
-                ).first
+                vin_input = page.locator("input#nbr, input[name='nbr']").first
                 vin_input.wait_for(state="visible", timeout=15000)
 
                 # Fill VIN
                 vin_input.fill(vin)
                 logger.info("Filled VIN: %s", vin)
 
+                # Wait for JS to enable the submit button (it loads with disabled attr)
+                submit_btn = page.locator("input[type='submit'][name='submit']").first
+                page.wait_for_function(
+                    "() => !document.querySelector(\"input[type='submit'][name='submit']\")?.disabled",
+                    timeout=5000,
+                )
+
                 if collector:
                     collector.screenshot(page, "form_filled")
 
-                # Click submit button
-                submit_btn = page.locator(
-                    "button[type='submit'], "
-                    "input[type='submit'], "
-                    "button:has-text('Search'), "
-                    "button:has-text('Submit'), "
-                    "button:has-text('Check')"
-                ).first
                 submit_btn.click()
                 logger.info("Clicked submit button")
 

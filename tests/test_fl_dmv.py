@@ -95,7 +95,7 @@ class TestFlDmvSourceMeta:
     def test_meta_requires_captcha(self):
         source = FlDmvSource()
         meta = source.meta()
-        assert meta.requires_captcha is False
+        assert meta.requires_captcha is True
 
     def test_default_timeout(self):
         source = FlDmvSource()

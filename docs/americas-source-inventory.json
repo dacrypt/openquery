@@ -24,7 +24,7 @@
   ],
   "countries": {
     "AR": 5,
-    "BO": 1,
+    "BO": 3,
     "BR": 13,
     "CL": 6,
     "CO": 91,
@@ -34,7 +34,7 @@
     "GT": 2,
     "HN": 1,
     "MX": 5,
-    "PA": 3,
+    "PA": 5,
     "PE": 7,
     "PY": 2,
     "SV": 1,
@@ -45,7 +45,7 @@
     "blocked": 8,
     "excluded": 2,
     "implemented": 70,
-    "queued": 87
+    "queued": 91
   },
   "sources": [
     {
@@ -236,6 +236,68 @@
       "blocker_reason": null,
       "importance_score": 78,
       "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "bo.oep_padron",
+      "name": "bo.oep_padron",
+      "country": "BO",
+      "region_phase": "americas",
+      "official_name": "OEP — Padrón Electoral",
+      "display_name": "OEP — Padrón Electoral",
+      "official_url": "https://yoparticipo.oep.org.bo/",
+      "url": "https://yoparticipo.oep.org.bo/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "bo.oep_padron",
+      "blocker_reason": null,
+      "importance_score": 68,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "bo.seprec",
+      "name": "bo.seprec",
+      "country": "BO",
+      "region_phase": "americas",
+      "official_name": "SEPREC — Registro de Comercio",
+      "display_name": "SEPREC — Registro de Comercio",
+      "official_url": "https://miempresa.seprec.gob.bo/",
+      "url": "https://miempresa.seprec.gob.bo/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "bo.seprec",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
@@ -4510,6 +4572,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "pa.panamacompra",
+      "name": "pa.panamacompra",
+      "country": "PA",
+      "region_phase": "americas",
+      "official_name": "PanamaCompra — Contratos de Gobierno",
+      "display_name": "PanamaCompra — Contratos de Gobierno",
+      "official_url": "https://ocdsv2dev.panamacompraencifras.gob.pa/",
+      "url": "https://ocdsv2dev.panamacompraencifras.gob.pa/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "pa.panamacompra",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "pa.ruc",
       "name": "pa.ruc",
       "country": "PA",
@@ -4542,6 +4635,37 @@
       "blocker_reason": null,
       "importance_score": 78,
       "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "pa.tribunal_electoral",
+      "name": "pa.tribunal_electoral",
+      "country": "PA",
+      "region_phase": "americas",
+      "official_name": "Tribunal Electoral — Verificación de Cédula",
+      "display_name": "Tribunal Electoral — Verificación de Cédula",
+      "official_url": "https://verificate.te.gob.pa/",
+      "url": "https://verificate.te.gob.pa/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "pa.tribunal_electoral",
+      "blocker_reason": null,
+      "importance_score": 68,
+      "importance_tier": "medium",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
@@ -4961,7 +5085,7 @@
       "official_url": "https://services.flhsmv.gov/mvcheckweb/",
       "url": "https://services.flhsmv.gov/mvcheckweb/",
       "requires_browser": true,
-      "requires_captcha": false,
+      "requires_captcha": true,
       "supported_inputs": [
         "vin",
         "placa"
@@ -5279,7 +5403,7 @@
       "official_url": "https://www.nicb.org/vincheck",
       "url": "https://www.nicb.org/vincheck",
       "requires_browser": true,
-      "requires_captcha": false,
+      "requires_captcha": true,
       "supported_inputs": [
         "vin"
       ],

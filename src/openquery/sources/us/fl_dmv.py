@@ -4,14 +4,14 @@ Queries the Florida Department of Highway Safety and Motor Vehicles (DHSMV)
 Motor Vehicle Check portal for title status, brand history, odometer reading,
 and registration events.
 
-Free public service — no login or CAPTCHA required.
+Free public service — no login required. BotDetect image CAPTCHA present.
 
 Flow:
 1. Navigate to https://services.flhsmv.gov/mvcheckweb/
-2. Select search type (VIN or license plate)
-3. Fill the input field
-4. Submit the form
-5. Wait for results
+2. Fill #VehicleIdentificationNumber (VIN) or #TitleNumber (plate/title)
+3. Solve BotDetect image CAPTCHA via LLM vision → OCR chain
+4. Submit form via #continueButton
+5. Wait for page load
 6. Parse title status, brand history, odometer, registration, and vehicle info
 """
 
@@ -51,7 +51,7 @@ class FlDmvSource(BaseSource):
             country="US",
             url=FL_DMV_URL,
             supported_inputs=[DocumentType.VIN, DocumentType.PLATE],
-            requires_captcha=False,
+            requires_captcha=True,
             requires_browser=True,
             rate_limit_rpm=10,
         )
@@ -73,7 +73,7 @@ class FlDmvSource(BaseSource):
         return self._query(value, search_type=search_type, audit=input.audit)
 
     def _query(self, value: str, search_type: str = "vin", audit: bool = False) -> FlDmvResult:
-        """Full flow: launch browser, fill form, parse results."""
+        """Full flow: launch browser, fill form, solve CAPTCHA, parse results."""
         from openquery.core.browser import BrowserManager
 
         browser = BrowserManager(headless=self._headless, timeout=self._timeout)
@@ -90,63 +90,36 @@ class FlDmvSource(BaseSource):
 
                 logger.info("Waiting for FL DMV form to load...")
 
-                # Select search type radio (VIN or plate)
+                # The form has two text fields: TitleNumber and VehicleIdentificationNumber.
+                # No radio buttons — just fill the appropriate field.
                 if search_type == "vin":
-                    vin_radio = page.locator(
-                        "input[type='radio'][value*='VIN'], "
-                        "input[type='radio'][id*='vin'], "
-                        "input[type='radio'][name*='vin']"
-                    ).first
-                    try:
-                        if vin_radio.is_visible(timeout=5000):
-                            vin_radio.check()
-                            logger.info("Selected VIN search type")
-                    except Exception:
-                        logger.debug("VIN radio not found, proceeding with default")
+                    field = page.locator("#VehicleIdentificationNumber")
                 else:
-                    plate_radio = page.locator(
-                        "input[type='radio'][value*='plate'], "
-                        "input[type='radio'][value*='Plate'], "
-                        "input[type='radio'][id*='plate'], "
-                        "input[type='radio'][name*='plate']"
-                    ).first
-                    try:
-                        if plate_radio.is_visible(timeout=5000):
-                            plate_radio.check()
-                            logger.info("Selected plate search type")
-                    except Exception:
-                        logger.debug("Plate radio not found, proceeding with default")
+                    # plate search uses TitleNumber field (closest available match)
+                    field = page.locator("#TitleNumber")
 
-                # Fill the search input
-                search_input = page.locator(
-                    "input[type='text'], input[name*='vin'], input[name*='plate'], "
-                    "input[id*='vin'], input[id*='plate']"
-                ).first
-                search_input.wait_for(state="visible", timeout=15000)
-                search_input.fill(value)
-                logger.info("Filled search field: %s (%s)", value, search_type)
+                field.wait_for(state="visible", timeout=15000)
+                field.fill(value)
+                logger.info("Filled %s field: %s", search_type, value)
 
                 if collector:
                     collector.screenshot(page, "form_filled")
 
-                # Click submit
-                submit_btn = page.locator(
-                    "button[type='submit'], "
-                    "input[type='submit'], "
-                    "button:has-text('Search'), "
-                    "button:has-text('Submit'), "
-                    "button:has-text('Check')"
-                ).first
+                # Solve BotDetect image CAPTCHA — fill #CaptchaCode directly
+                self._solve_captcha(page)
+
+                if collector:
+                    collector.screenshot(page, "captcha_solved")
+
+                # Click submit (id="continueButton")
+                submit_btn = page.locator("#continueButton")
+                submit_btn.wait_for(state="visible", timeout=10000)
                 submit_btn.click()
                 logger.info("Clicked submit button")
 
-                # Wait for results
-                page.wait_for_selector(
-                    "[class*='result'], [class*='Result'], [id*='result'], "
-                    "table, dl, .vehicle-info, h2, h3",
-                    timeout=20000,
-                )
-                page.wait_for_timeout(2000)
+                # Wait for page to finish loading after form submission
+                page.wait_for_load_state("networkidle", timeout=20000)
+                page.wait_for_timeout(1500)
 
                 if collector:
                     collector.screenshot(page, "result")
@@ -163,6 +136,52 @@ class FlDmvSource(BaseSource):
                 raise
             except Exception as e:
                 raise SourceError("us.fl_dmv", f"Query failed: {e}") from e
+
+    def _solve_captcha(self, page) -> None:
+        """Solve BotDetect image CAPTCHA using vision chain, filling #CaptchaCode."""
+        from openquery.core.captcha import ChainedSolver, LLMCaptchaSolver, OCRSolver
+
+        # CAPTCHA image: .LBD_CaptchaImage
+        captcha_img = page.query_selector(".LBD_CaptchaImage, #mvCheckCaptcha_CaptchaImage")
+        if not captcha_img:
+            logger.debug("No CAPTCHA image found — skipping CAPTCHA solve")
+            return
+
+        # Build solver chain: LLM vision first (most accurate for distorted text), then OCR
+        solvers: list = []
+        try:
+            solvers.append(LLMCaptchaSolver(max_chars=6))
+        except Exception:
+            pass
+        solvers.append(OCRSolver(max_chars=6))
+        chain = ChainedSolver(solvers)
+
+        # #CaptchaCode is the visible text input (not the hidden LBD_VCID_ field)
+        captcha_input = page.locator("#CaptchaCode")
+
+        for attempt in range(1, 4):
+            try:
+                image_bytes = captcha_img.screenshot()
+                if not image_bytes or len(image_bytes) < 100:
+                    logger.warning("CAPTCHA screenshot too small on attempt %d", attempt)
+                    continue
+                text = chain.solve(image_bytes)
+                if text:
+                    captcha_input.fill(text.strip().upper())
+                    logger.info("CAPTCHA solved (attempt %d): %s", attempt, text)
+                    return
+            except Exception as e:
+                logger.warning("CAPTCHA solve attempt %d failed: %s", attempt, e)
+
+            # Refresh CAPTCHA image for next attempt
+            refresh = page.query_selector(
+                "#mvCheckCaptcha_ReloadIcon, a[onclick*='mvCheckCaptcha']"
+            )
+            if refresh:
+                refresh.click()
+                page.wait_for_timeout(800)
+
+        logger.warning("All CAPTCHA solve attempts failed — submitting anyway")
 
     def _parse_results(self, page, value: str, search_type: str) -> FlDmvResult:
         """Parse the DHSMV results page."""
@@ -214,20 +233,23 @@ class FlDmvSource(BaseSource):
                 details["registration_raw"] = snippet
                 break
 
-        # Vehicle description — year/make/model typically near top
+        # Vehicle description — year/make/model typically near top.
+        # Exclude modal headings (id contains "Modal") to avoid picking up "Warning".
         for selector in (
+            ".panel-body h2",
+            ".panel-body h3",
             "[class*='vehicle'] h2",
             "[class*='vehicle'] h3",
             "[class*='result'] h2",
             "[class*='result'] h3",
-            "h2",
-            "h3",
+            "h2:not([id*='Modal'])",
+            "h3:not([id*='Modal']):not(.modal-title)",
         ):
             try:
                 el = page.query_selector(selector)
                 if el:
                     text = (el.inner_text() or "").strip()
-                    if text and len(text) < 200:
+                    if text and text.lower() != "warning" and len(text) < 200:
                         result.vehicle_description = text
                         break
             except Exception:
