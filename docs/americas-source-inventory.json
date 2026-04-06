@@ -1257,9 +1257,9 @@
       "region_phase": "americas",
       "official_name": "TCU — Licitantes Inidôneos (Sanções a Empresas)",
       "display_name": "TCU — Licitantes Inidôneos (Sanções a Empresas)",
-      "official_url": "https://inidoneidade.tcu.gov.br/",
-      "url": "https://inidoneidade.tcu.gov.br/",
-      "requires_browser": false,
+      "official_url": "https://portal.tcu.gov.br/licitantes-inidoneos",
+      "url": "https://portal.tcu.gov.br/licitantes-inidoneos",
+      "requires_browser": true,
       "requires_captcha": false,
       "supported_inputs": [
         "custom"
@@ -1272,7 +1272,7 @@
       ],
       "runtime_status": "queued",
       "status": "queued",
-      "source_type": "api",
+      "source_type": "browser",
       "officiality": "official",
       "implemented_source_name": "br.tcu",
       "blocker_reason": null,

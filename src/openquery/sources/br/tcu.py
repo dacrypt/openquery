@@ -1,17 +1,15 @@
 """Brazil TCU source — government audit sanctions (licitantes inidôneos).
 
-Queries the TCU (Tribunal de Contas da União) API for companies/individuals
+Queries the TCU (Tribunal de Contas da União) portal for companies/individuals
 declared ineligible for government contracting.
 
-API: https://inidoneidade.tcu.gov.br/api/ (public REST API)
+Portal: https://portal.tcu.gov.br/licitantes-inidoneos
 """
 
 from __future__ import annotations
 
 import logging
-from datetime import datetime
 
-import httpx
 from pydantic import BaseModel
 
 from openquery.exceptions import SourceError
@@ -21,15 +19,16 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-TCU_API_URL = "https://inidoneidade.tcu.gov.br/api/licitante"
+TCU_URL = "https://portal.tcu.gov.br/licitantes-inidoneos"
 
 
 @register
 class BrTcuSource(BaseSource):
     """Query TCU inidoneidade (government sanctions) by company name or CNPJ."""
 
-    def __init__(self, timeout: float = 30.0) -> None:
+    def __init__(self, timeout: float = 30.0, headless: bool = True) -> None:
         self._timeout = timeout
+        self._headless = headless
 
     def meta(self) -> SourceMeta:
         return SourceMeta(
@@ -37,84 +36,103 @@ class BrTcuSource(BaseSource):
             display_name="TCU — Licitantes Inidôneos (Sanções a Empresas)",
             description="TCU government sanctions registry — companies/persons ineligible for contracts",  # noqa: E501
             country="BR",
-            url="https://inidoneidade.tcu.gov.br/",
+            url=TCU_URL,
             supported_inputs=[DocumentType.CUSTOM],
             requires_captcha=False,
-            requires_browser=False,
+            requires_browser=True,
             rate_limit_rpm=10,
         )
 
     def query(self, input: QueryInput) -> BaseModel:
         search = (
-            input.extra.get("name", "") or input.extra.get("cnpj", "") or input.document_number
+            input.extra.get("company_name", "")
+            or input.extra.get("cnpj", "")
+            or input.document_number
         ).strip()
         if not search:
             raise SourceError("br.tcu", "Company name or CNPJ is required")
-        return self._query(search)
+        return self._query(search, audit=input.audit)
 
-    def _query(self, search: str) -> BrTcuResult:
-        try:
-            logger.info("Querying TCU sanctions: %s", search)
-            params: dict[str, str] = {"search": search, "size": "10", "page": "0"}
-            headers = {
-                "User-Agent": "Mozilla/5.0 (compatible; OpenQuery/1.0)",
-                "Accept": "application/json",
-            }
-            with httpx.Client(
-                timeout=self._timeout, headers=headers, follow_redirects=True
-            ) as client:  # noqa: E501
-                resp = client.get(TCU_API_URL, params=params)
-                if resp.status_code in (404, 422):
-                    return BrTcuResult(
-                        queried_at=datetime.now(),
-                        search_term=search,
-                        sanction_status="not_found",
-                        details={"message": "No sanctions found"},
-                    )
-                resp.raise_for_status()
-                data = resp.json()
+    def _query(self, search: str, audit: bool = False) -> BrTcuResult:
+        from openquery.core.browser import BrowserManager
 
-            return self._parse_response(data, search)
+        browser = BrowserManager(headless=self._headless, timeout=self._timeout)
+        collector = None
 
-        except httpx.HTTPStatusError as e:
-            raise SourceError("br.tcu", f"API returned HTTP {e.response.status_code}") from e
-        except httpx.RequestError as e:
-            raise SourceError("br.tcu", f"Request failed: {e}") from e
-        except SourceError:
-            raise
-        except Exception as e:
-            raise SourceError("br.tcu", f"Query failed: {e}") from e
+        if audit:
+            from openquery.core.audit import AuditCollector
 
-    def _parse_response(self, data: dict | list, search: str) -> BrTcuResult:
-        # The API may return a list or a paginated dict
-        items: list = []
-        if isinstance(data, list):
-            items = data
-        elif isinstance(data, dict):
-            items = data.get("content", data.get("data", data.get("items", [])))
+            collector = AuditCollector("br.tcu", "search", search)
 
-        if not items:
-            return BrTcuResult(
-                queried_at=datetime.now(),
-                search_term=search,
-                sanction_status="clear",
-                details={"message": "No active sanctions found", "total": 0},
-            )
+        with browser.page(TCU_URL) as page:
+            try:
+                if collector:
+                    collector.attach(page)
 
-        first = items[0] if isinstance(items[0], dict) else {}
-        company_name = (
-            first.get("nome", "")
-            or first.get("nomeRazaoSocial", "")
-            or first.get("razaoSocial", "")
-        )
-        cnpj = first.get("cpfCnpj", first.get("cnpj", first.get("cpf", "")))
-        status = first.get("situacao", first.get("status", "ineligible"))
+                page.wait_for_load_state("networkidle", timeout=15000)
+
+                # Find search input and fill
+                search_input = page.query_selector(
+                    'input[type="text"], input[type="search"], '
+                    'input[name*="busca"], input[name*="search"], '
+                    'input[id*="busca"], input[id*="search"]'
+                )
+                if search_input:
+                    search_input.fill(search)
+                    search_input.press("Enter")
+                    page.wait_for_timeout(3000)
+
+                if collector:
+                    collector.screenshot(page, "result")
+
+                result = self._parse_result(page, search)
+
+                if collector:
+                    result.audit = collector.generate_pdf(page, result.model_dump_json())
+
+                return result
+
+            except SourceError:
+                raise
+            except Exception as e:
+                raise SourceError("br.tcu", f"Query failed: {e}") from e
+
+    def _parse_result(self, page, search: str) -> BrTcuResult:
+        from datetime import datetime
+
+        body_text = page.inner_text("body")
+        body_lower = body_text.lower()
+
+        company_name = ""
+        cnpj = ""
+        sanction_status = "clear"
+
+        if any(
+            phrase in body_lower
+            for phrase in ["inidôneo", "inidoneo", "declarad", "sancionad", "impedid"]
+        ):
+            sanction_status = "sanctioned"
+
+        if "não foram encontrad" in body_lower or "nenhum resultado" in body_lower:
+            sanction_status = "clear"
+
+        # Try to extract company name and CNPJ from results
+        for line in body_text.split("\n"):
+            stripped = line.strip()
+            lower = stripped.lower()
+            if ("razão social" in lower or "nome" in lower) and ":" in stripped:
+                val = stripped.split(":", 1)[1].strip()
+                if val and not company_name:
+                    company_name = val
+            elif ("cnpj" in lower or "cpf" in lower) and ":" in stripped:
+                val = stripped.split(":", 1)[1].strip()
+                if val and not cnpj:
+                    cnpj = val
 
         return BrTcuResult(
             queried_at=datetime.now(),
             search_term=search,
             company_name=company_name,
             cnpj=cnpj,
-            sanction_status=str(status),
-            details={"total_results": len(items), "first_record": first},
+            sanction_status=sanction_status,
         )

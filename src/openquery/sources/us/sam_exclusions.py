@@ -60,8 +60,12 @@ class SamExclusionsSource(BaseSource):
         return self._query(search_term.strip())
 
     def _query(self, search_term: str) -> SamExclusionsResult:
+        from openquery.config import get_settings
+
+        api_key = get_settings().sam_api_key or "DEMO_KEY"
+
         params = {
-            "api_key": "DEMO_KEY",
+            "api_key": api_key,
             "q": search_term,
             "limit": "10",
         }

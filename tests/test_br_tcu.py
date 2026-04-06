@@ -3,16 +3,12 @@
 from __future__ import annotations
 
 from datetime import datetime
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
 import pytest
 
 from openquery.exceptions import SourceError
 from openquery.sources.base import DocumentType, QueryInput
-
-# ===========================================================================
-# TestBrTcuResult — model tests
-# ===========================================================================
 
 
 class TestBrTcuResult:
@@ -35,22 +31,17 @@ class TestBrTcuResult:
             search_term="Empresa Teste",
             company_name="Empresa Teste Ltda",
             cnpj="12345678000195",
-            sanction_status="ineligible",
+            sanction_status="sanctioned",
         )
         restored = BrTcuResult.model_validate_json(r.model_dump_json())
         assert restored.company_name == "Empresa Teste Ltda"
-        assert restored.sanction_status == "ineligible"
+        assert restored.sanction_status == "sanctioned"
 
     def test_audit_excluded_from_json(self):
         from openquery.models.br.tcu import BrTcuResult
 
         r = BrTcuResult(audit="evidence")
         assert "audit" not in r.model_dump()
-
-
-# ===========================================================================
-# TestBrTcuSourceMeta
-# ===========================================================================
 
 
 class TestBrTcuSourceMeta:
@@ -64,10 +55,10 @@ class TestBrTcuSourceMeta:
 
         assert BrTcuSource().meta().country == "BR"
 
-    def test_meta_no_browser(self):
+    def test_meta_requires_browser(self):
         from openquery.sources.br.tcu import BrTcuSource
 
-        assert BrTcuSource().meta().requires_browser is False
+        assert BrTcuSource().meta().requires_browser is True
 
     def test_meta_no_captcha(self):
         from openquery.sources.br.tcu import BrTcuSource
@@ -80,11 +71,6 @@ class TestBrTcuSourceMeta:
         assert BrTcuSource().meta().rate_limit_rpm == 10
 
 
-# ===========================================================================
-# TestBrTcuParseResult — parsing logic
-# ===========================================================================
-
-
 class TestBrTcuParseResult:
     def test_missing_search_raises(self):
         from openquery.sources.br.tcu import BrTcuSource
@@ -93,64 +79,40 @@ class TestBrTcuParseResult:
         with pytest.raises(SourceError, match="required"):
             src.query(QueryInput(document_type=DocumentType.CUSTOM, document_number=""))
 
-    def test_parse_empty_list(self):
+    def test_parse_sanctioned(self):
         from openquery.sources.br.tcu import BrTcuSource
 
         src = BrTcuSource()
-        result = src._parse_response([], "test")
-        assert result.sanction_status == "clear"
-
-    def test_parse_list_response(self):
-        from openquery.sources.br.tcu import BrTcuSource
-
-        src = BrTcuSource()
-        data = [
-            {
-                "nome": "Empresa Corrupta SA",
-                "cpfCnpj": "12345678000195",
-                "situacao": "INIDÔNEO",
-            }
-        ]
-        result = src._parse_response(data, "Empresa Corrupta SA")
+        page = MagicMock()
+        page.inner_text.return_value = (
+            "Resultado da consulta\n"
+            "Razão Social: Empresa Corrupta SA\n"
+            "CNPJ: 12345678000195\n"
+            "Declarado inidôneo pelo TCU"
+        )
+        result = src._parse_result(page, "Empresa Corrupta SA")
         assert result.company_name == "Empresa Corrupta SA"
         assert result.cnpj == "12345678000195"
-        assert "INIDÔNEO" in result.sanction_status
+        assert result.sanction_status == "sanctioned"
 
-    def test_parse_paginated_dict(self):
+    def test_parse_clear(self):
         from openquery.sources.br.tcu import BrTcuSource
 
         src = BrTcuSource()
-        data = {
-            "content": [
-                {
-                    "nomeRazaoSocial": "Empresa XYZ",
-                    "cpfCnpj": "98765432000100",
-                    "situacao": "active",
-                }
-            ]
-        }
-        result = src._parse_response(data, "XYZ")
-        assert result.company_name == "Empresa XYZ"
+        page = MagicMock()
+        page.inner_text.return_value = "Não foram encontrados resultados para a busca."
+        result = src._parse_result(page, "Empresa Limpa")
+        assert result.sanction_status == "clear"
 
-    def test_http_404_returns_not_found(self):
+    def test_parse_no_details(self):
         from openquery.sources.br.tcu import BrTcuSource
 
         src = BrTcuSource()
-        mock_resp = MagicMock()
-        mock_resp.status_code = 404
-
-        with patch("httpx.Client") as mock_client:
-            mock_client.return_value.__enter__ = MagicMock(return_value=mock_client.return_value)
-            mock_client.return_value.__exit__ = MagicMock(return_value=False)
-            mock_client.return_value.get.return_value = mock_resp
-            result = src._query("unknown")
-
-        assert result.sanction_status == "not_found"
-
-
-# ===========================================================================
-# Integration
-# ===========================================================================
+        page = MagicMock()
+        page.inner_text.return_value = "Página de consulta de licitantes"
+        result = src._parse_result(page, "test")
+        assert result.company_name == ""
+        assert result.sanction_status == "clear"
 
 
 @pytest.mark.integration

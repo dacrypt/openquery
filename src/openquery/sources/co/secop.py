@@ -71,22 +71,32 @@ class SecopSource(BaseSource):
         return self._build_result(data, documento=documento)
 
     def _query_by_nombre(self, nombre: str) -> SecopResult:
-        """Query contracts by provider name (partial match)."""
-        nombre_upper = nombre.upper()
-        where = f"upper(nombre_del_proveedor) like '%{nombre_upper}%'"
-        logger.info("Querying SECOP by nombre_del_proveedor~%s", nombre_upper)
-        data = self._fetch(where)
+        """Query contracts by provider name (full-text search)."""
+        logger.info("Querying SECOP by nombre=%s", nombre)
+        data = self._fetch_q(nombre)
         return self._build_result(data, nombre_proveedor=nombre)
 
     def _fetch(self, where: str) -> list[dict]:
         """Execute Socrata API query with $where filter."""
-        try:
-            params: dict[str, str] = {
-                "$where": where,
-                "$limit": "200",
-                "$order": "fecha_de_firma DESC",
-            }
+        params: dict[str, str] = {
+            "$where": where,
+            "$limit": "200",
+            "$order": "fecha_de_firma DESC",
+        }
+        return self._do_fetch(params)
 
+    def _fetch_q(self, q: str) -> list[dict]:
+        """Execute Socrata API full-text search with $q parameter."""
+        params: dict[str, str] = {
+            "$q": q,
+            "$limit": "200",
+            "$order": "fecha_de_firma DESC",
+        }
+        return self._do_fetch(params)
+
+    def _do_fetch(self, params: dict[str, str]) -> list[dict]:
+        """Execute Socrata API query."""
+        try:
             with httpx.Client(timeout=self._timeout) as client:
                 resp = client.get(API_URL, params=params)
                 resp.raise_for_status()

@@ -56,6 +56,8 @@ class Settings(BaseSettings):
 
     # External API keys
     wto_api_key: str = ""  # WTO Timeseries API (register at apiportal.wto.org)
+    sam_api_key: str = ""  # SAM.gov API (register at api.sam.gov)
+    br_transparencia_api_key: str = ""  # Brazil Portal Transparencia
 
     # Logging
     log_level: str = "INFO"
