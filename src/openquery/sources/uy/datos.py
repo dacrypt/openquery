@@ -62,15 +62,17 @@ class UyDatosSource(BaseSource):
             datasets = []
             for r in results:
                 org = r.get("organization", {})
-                datasets.append(CkanDataset(
-                    id=r.get("id", ""),
-                    title=r.get("title", ""),
-                    name=r.get("name", ""),
-                    notes=(r.get("notes", "") or "")[:200],
-                    organization=org.get("title", "") if isinstance(org, dict) else "",
-                    num_resources=r.get("num_resources", 0),
-                    url=f"https://catalogodatos.gub.uy/dataset/{r.get('name', '')}",
-                ))
+                datasets.append(
+                    CkanDataset(
+                        id=r.get("id", ""),
+                        title=r.get("title", ""),
+                        name=r.get("name", ""),
+                        notes=(r.get("notes", "") or "")[:200],
+                        organization=org.get("title", "") if isinstance(org, dict) else "",
+                        num_resources=r.get("num_resources", 0),
+                        url=f"https://catalogodatos.gub.uy/dataset/{r.get('name', '')}",
+                    )
+                )
 
             return CkanSearchResult(
                 queried_at=datetime.now(),

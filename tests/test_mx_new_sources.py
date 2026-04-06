@@ -2,17 +2,17 @@
 
 from __future__ import annotations
 
-from openquery.models.mx.sat_rfc import SatRfcResult
 from openquery.models.mx.condusef import CondusefResult
 from openquery.models.mx.profeco import ProfecoResult
-from openquery.sources.mx.sat_rfc import SatRfcSource
+from openquery.models.mx.sat_rfc import SatRfcResult
 from openquery.sources.mx.condusef import CondusefSource
 from openquery.sources.mx.profeco import ProfecoSource
-
+from openquery.sources.mx.sat_rfc import SatRfcSource
 
 # ---------------------------------------------------------------------------
 # mx.sat_rfc
 # ---------------------------------------------------------------------------
+
 
 class TestSatRfcResult:
     def test_default_values(self):
@@ -45,6 +45,7 @@ class TestSatRfcResult:
         r = SatRfcResult(rfc="XAXX010101000")
         r.audit = b"pdf_bytes"
         import json
+
         data = json.loads(r.model_dump_json())
         assert "audit" not in data
 
@@ -70,7 +71,6 @@ class TestSatRfcParseResult:
     def test_parse_not_found(self):
         """Source should return 'No registrado' status when RFC not found."""
         from unittest.mock import MagicMock
-        from datetime import datetime
 
         page = MagicMock()
         page.inner_text.return_value = "El RFC no existe en el padrón del SAT"
@@ -103,6 +103,7 @@ class TestSatRfcParseResult:
 # ---------------------------------------------------------------------------
 # mx.condusef
 # ---------------------------------------------------------------------------
+
 
 class TestCondusefResult:
     def test_default_values(self):
@@ -156,9 +157,7 @@ class TestCondusefParseResult:
 
         page = MagicMock()
         page.inner_text.return_value = (
-            "BBVA MEXICO\n"
-            "Total de quejas: 1,500\n"
-            "Resolución favorable: 72.5%\n"
+            "BBVA MEXICO\nTotal de quejas: 1,500\nResolución favorable: 72.5%\n"
         )
         page.query_selector_all.return_value = []
 
@@ -185,6 +184,7 @@ class TestCondusefParseResult:
 # ---------------------------------------------------------------------------
 # mx.profeco
 # ---------------------------------------------------------------------------
+
 
 class TestProfecoResult:
     def test_default_values(self):
@@ -260,9 +260,7 @@ class TestProfecoParseResult:
 
         page = MagicMock()
         page.inner_text.return_value = (
-            "Empresa: CFE\n"
-            "Sector: Energía eléctrica\n"
-            "Quejas: 500 quejas\n"
+            "Empresa: CFE\nSector: Energía eléctrica\nQuejas: 500 quejas\n"
         )
 
         src = ProfecoSource()
@@ -276,9 +274,7 @@ class TestProfecoParseResult:
 
         page = MagicMock()
         page.inner_text.return_value = (
-            "Proveedor: AMAZON\n"
-            "Conciliación: 45.2%\n"
-            "Quejas: 200 quejas\n"
+            "Proveedor: AMAZON\nConciliación: 45.2%\nQuejas: 200 quejas\n"
         )
 
         src = ProfecoSource()

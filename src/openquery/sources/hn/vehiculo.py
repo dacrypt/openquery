@@ -59,6 +59,7 @@ class HnVehiculoSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("hn.vehiculo", "placa", placa)
 
         with browser.page(VEHICULO_URL) as page:

@@ -3,13 +3,12 @@
 from __future__ import annotations
 
 from datetime import datetime
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
 import pytest
 
 from openquery.exceptions import SourceError
 from openquery.sources.base import DocumentType, QueryInput
-
 
 # ===========================================================================
 # TestIntlWipoResult — model tests
@@ -34,7 +33,9 @@ class TestIntlWipoResult:
             search_term="APPLE",
             total=100,
             trademarks=[
-                WipoTrademark(name="APPLE", owner="Apple Inc.", jurisdiction="US", status="registered")
+                WipoTrademark(
+                    name="APPLE", owner="Apple Inc.", jurisdiction="US", status="registered"
+                )
             ],
         )
         restored = IntlWipoResult.model_validate_json(r.model_dump_json())
@@ -129,8 +130,8 @@ class TestIntlWipoParseResult:
         assert result.trademarks == []
 
     def test_extra_name_used(self):
-        from openquery.sources.intl.wipo import IntlWipoSource
         from openquery.models.intl.wipo import IntlWipoResult
+        from openquery.sources.intl.wipo import IntlWipoSource
 
         src = IntlWipoSource()
         called_with: list[str] = []
@@ -140,11 +141,13 @@ class TestIntlWipoParseResult:
             return IntlWipoResult(search_term=name)
 
         src._query = fake_query
-        src.query(QueryInput(
-            document_type=DocumentType.CUSTOM,
-            document_number="",
-            extra={"name": "SAMSUNG"},
-        ))
+        src.query(
+            QueryInput(
+                document_type=DocumentType.CUSTOM,
+                document_number="",
+                extra={"name": "SAMSUNG"},
+            )
+        )
         assert called_with[0] == "SAMSUNG"
 
 
@@ -159,9 +162,11 @@ class TestIntlWipoIntegration:
         from openquery.sources.intl.wipo import IntlWipoSource
 
         src = IntlWipoSource(headless=True)
-        result = src.query(QueryInput(
-            document_type=DocumentType.CUSTOM,
-            extra={"name": "GOOGLE"},
-        ))
+        result = src.query(
+            QueryInput(
+                document_type=DocumentType.CUSTOM,
+                extra={"name": "GOOGLE"},
+            )
+        )
         assert isinstance(result.search_term, str)
         assert result.total >= 0

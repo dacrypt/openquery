@@ -72,10 +72,12 @@ class PeBcrpSource(BaseSource):
             datos = []
             for p in periods[-30:]:
                 valores = p.get("values", [])
-                datos.append(BcrpDataPoint(
-                    fecha=p.get("name", ""),
-                    valor=valores[0] if valores else "",
-                ))
+                datos.append(
+                    BcrpDataPoint(
+                        fecha=p.get("name", ""),
+                        valor=valores[0] if valores else "",
+                    )
+                )
 
             ultimo = datos[-1] if datos else BcrpDataPoint()
 

@@ -16,6 +16,7 @@ from openquery.sources.base import DocumentType, QueryInput
 # Helpers
 # ---------------------------------------------------------------------------
 
+
 def _mock_httpx_response(json_data, status_code=200):
     """Create a mock httpx.Response."""
     resp = MagicMock()
@@ -24,6 +25,7 @@ def _mock_httpx_response(json_data, status_code=200):
     resp.raise_for_status.return_value = None
     if status_code >= 400:
         import httpx
+
         resp.raise_for_status.side_effect = httpx.HTTPStatusError(
             f"HTTP {status_code}", request=MagicMock(), response=resp
         )
@@ -58,19 +60,22 @@ def _plate_input(plate):
 # co.vehiculos
 # ===========================================================================
 
+
 class TestVehiculosSource:
     @patch("httpx.Client")
     def test_query_by_plate(self, mock_client_cls):
         from openquery.sources.co.vehiculos import VehiculosSource
 
-        data = [{
-            "placa": "ABC123",
-            "clase": "AUTOMOVIL",
-            "marca": "CHEVROLET",
-            "modelo": "2020",
-            "servicio": "PARTICULAR",
-            "cilindraje": "1500",
-        }]
+        data = [
+            {
+                "placa": "ABC123",
+                "clase": "AUTOMOVIL",
+                "marca": "CHEVROLET",
+                "modelo": "2020",
+                "servicio": "PARTICULAR",
+                "cilindraje": "1500",
+            }
+        ]
         mock_client_cls.return_value = _mock_client(_mock_httpx_response(data))
 
         src = VehiculosSource()
@@ -109,10 +114,12 @@ class TestVehiculosSource:
 
         src = VehiculosSource()
         with pytest.raises(SourceError, match="Unsupported"):
-            src.query(QueryInput(
-                document_type=DocumentType.CEDULA,
-                document_number="123",
-            ))
+            src.query(
+                QueryInput(
+                    document_type=DocumentType.CEDULA,
+                    document_number="123",
+                )
+            )
 
     def test_empty_brand_raises(self):
         from openquery.sources.co.vehiculos import VehiculosSource
@@ -125,9 +132,7 @@ class TestVehiculosSource:
     def test_http_error(self, mock_client_cls):
         from openquery.sources.co.vehiculos import VehiculosSource
 
-        mock_client_cls.return_value = _mock_client(
-            _mock_httpx_response(None, status_code=500)
-        )
+        mock_client_cls.return_value = _mock_client(_mock_httpx_response(None, status_code=500))
         src = VehiculosSource()
         with pytest.raises(SourceError, match="HTTP 500"):
             src.query(_plate_input("ABC123"))
@@ -159,6 +164,7 @@ class TestVehiculosSource:
 # ===========================================================================
 # co.peajes
 # ===========================================================================
+
 
 class TestPeajesSource:
     @patch("openquery.sources.co.peajes.httpx.Client")
@@ -219,6 +225,7 @@ class TestPeajesSource:
 # co.combustible
 # ===========================================================================
 
+
 class TestCombustibleSource:
     @patch("openquery.sources.co.combustible.httpx.Client")
     def test_query_by_municipio(self, mock_client_cls):
@@ -265,9 +272,7 @@ class TestCombustibleSource:
     def test_http_error(self, mock_client_cls):
         from openquery.sources.co.combustible import CombustibleSource
 
-        mock_client_cls.return_value = _mock_client(
-            _mock_httpx_response(None, status_code=503)
-        )
+        mock_client_cls.return_value = _mock_client(_mock_httpx_response(None, status_code=503))
         src = CombustibleSource()
         with pytest.raises(SourceError, match="HTTP 503"):
             src.query(_custom_input(municipio="X"))
@@ -283,6 +288,7 @@ class TestCombustibleSource:
 # ===========================================================================
 # co.estaciones_ev
 # ===========================================================================
+
 
 class TestEstacionesEVSource:
     @patch("openquery.sources.co.estaciones_ev.httpx.Client")
@@ -346,15 +352,18 @@ class TestEstacionesEVSource:
 class TestFixCoord:
     def test_comma_to_dot(self):
         from openquery.sources.co.estaciones_ev import _fix_coord
+
         assert _fix_coord("6,21194987") == "6.21194987"
         assert _fix_coord("-75,574") == "-75.574"
 
     def test_already_dot(self):
         from openquery.sources.co.estaciones_ev import _fix_coord
+
         assert _fix_coord("6.211") == "6.211"
 
     def test_non_string(self):
         from openquery.sources.co.estaciones_ev import _fix_coord
+
         assert _fix_coord(123) == "123"  # type: ignore[arg-type]
 
 
@@ -362,16 +371,27 @@ class TestFixCoord:
 # co.siniestralidad
 # ===========================================================================
 
+
 class TestSiniestralidadSource:
     @patch("openquery.sources.co.siniestralidad.httpx.Client")
     def test_query_by_departamento(self, mock_client_cls):
         from openquery.sources.co.siniestralidad import SiniestralidadSource
 
         data = [
-            {"tramo": "Ruta 40", "fallecidos": "5",
-             "latitud": "4.0", "longitud": "-74.0", "pr": "10"},
-            {"tramo": "Ruta 50", "fallecidos": "3",
-             "latitud": "4.1", "longitud": "-74.1", "pr": "20"},
+            {
+                "tramo": "Ruta 40",
+                "fallecidos": "5",
+                "latitud": "4.0",
+                "longitud": "-74.0",
+                "pr": "10",
+            },
+            {
+                "tramo": "Ruta 50",
+                "fallecidos": "3",
+                "latitud": "4.1",
+                "longitud": "-74.1",
+                "pr": "20",
+            },
         ]
         mock_client_cls.return_value = _mock_client(_mock_httpx_response(data))
 

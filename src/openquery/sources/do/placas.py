@@ -56,6 +56,7 @@ class DoPlacasSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("do.placas", "plate", placa)
 
         with browser.page(PLACAS_URL) as page:

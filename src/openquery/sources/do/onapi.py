@@ -46,9 +46,7 @@ class DoOnapiSource(BaseSource):
 
     def query(self, input: QueryInput) -> BaseModel:
         search_term = (
-            input.document_number
-            or input.extra.get("marca", "")
-            or input.extra.get("term", "")
+            input.document_number or input.extra.get("marca", "") or input.extra.get("term", "")
         )
         if not search_term:
             raise SourceError("do.onapi", "Trademark name or search term is required")
@@ -62,6 +60,7 @@ class DoOnapiSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("do.onapi", "marca", search_term)
 
         with browser.page(ONAPI_URL) as page:

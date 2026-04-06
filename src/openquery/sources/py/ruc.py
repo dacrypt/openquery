@@ -34,7 +34,7 @@ class PyRucSource(BaseSource):
         return SourceMeta(
             name="py.ruc",
             display_name="SET — Consulta RUC",
-            description="Paraguayan tax registry: business name, status, economic activity (SET/DNIT)",
+            description="Paraguayan tax registry: business name, status, economic activity (SET/DNIT)",  # noqa: E501
             country="PY",
             url=SET_URL,
             supported_inputs=[DocumentType.CUSTOM],
@@ -57,6 +57,7 @@ class PyRucSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("py.ruc", "ruc", ruc)
 
         with browser.page(SET_URL) as page:
@@ -68,9 +69,7 @@ class PyRucSource(BaseSource):
                 page.wait_for_timeout(2000)
 
                 # Fill RUC — exact selector: input[name="ruc"]
-                ruc_input = page.query_selector(
-                    'input[name="ruc"], #ruc'
-                )
+                ruc_input = page.query_selector('input[name="ruc"], #ruc')
                 if not ruc_input:
                     raise SourceError("py.ruc", "Could not find RUC input field")
 
@@ -82,13 +81,11 @@ class PyRucSource(BaseSource):
 
                 # Solve reCAPTCHA if present
                 from openquery.core.captcha_middleware import solve_page_captchas
+
                 solve_page_captchas(page)
 
                 # Submit — exact selector: button[name="btnBuscar"]
-                submit = page.query_selector(
-                    'button[name="btnBuscar"], '
-                    'button[type="submit"]'
-                )
+                submit = page.query_selector('button[name="btnBuscar"], button[type="submit"]')
                 if submit:
                     submit.click()
                 else:

@@ -114,8 +114,7 @@ class SQLiteCache(CacheBackend):
         os.makedirs(os.path.dirname(expanded), exist_ok=True)
         self._conn = sqlite3.connect(expanded)
         self._conn.execute(
-            "CREATE TABLE IF NOT EXISTS cache "
-            "(key TEXT PRIMARY KEY, value TEXT, expires_at REAL)"
+            "CREATE TABLE IF NOT EXISTS cache (key TEXT PRIMARY KEY, value TEXT, expires_at REAL)"
         )
         self._conn.commit()
 

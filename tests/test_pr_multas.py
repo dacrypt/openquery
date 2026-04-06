@@ -119,9 +119,7 @@ class TestParseResult:
 
     def test_parse_violation_count(self):
         result = self._parse(
-            "Multa #1: Exceso de velocidad\n"
-            "Multa #2: Luz roja\n"
-            "Multa #3: Estacionamiento\n"
+            "Multa #1: Exceso de velocidad\nMulta #2: Luz roja\nMulta #3: Estacionamiento\n"
         )
         assert result.total_fines == 3
 

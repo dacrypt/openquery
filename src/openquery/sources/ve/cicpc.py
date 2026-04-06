@@ -65,6 +65,7 @@ class CicpcSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("ve.cicpc", "cedula", cedula)
 
         with browser.page(CICPC_URL) as page:

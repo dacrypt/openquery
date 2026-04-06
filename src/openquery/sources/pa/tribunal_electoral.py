@@ -64,6 +64,7 @@ class TribunalElectoralSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("pa.tribunal_electoral", "cedula", cedula)
 
         with browser.page(PORTAL_URL) as page:
@@ -95,7 +96,7 @@ class TribunalElectoralSource(BaseSource):
                     'button[type="submit"], input[type="submit"], '
                     'button[id*="consultar"], button[id*="buscar"], '
                     'button[id*="verificar"], button[class*="btn-primary"], '
-                    'button'
+                    "button"
                 )
                 if submit_btn:
                     submit_btn.click()

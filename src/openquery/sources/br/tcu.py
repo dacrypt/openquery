@@ -46,9 +46,7 @@ class BrTcuSource(BaseSource):
 
     def query(self, input: QueryInput) -> BaseModel:
         search = (
-            input.extra.get("name", "")
-            or input.extra.get("cnpj", "")
-            or input.document_number
+            input.extra.get("name", "") or input.extra.get("cnpj", "") or input.document_number
         ).strip()
         if not search:
             raise SourceError("br.tcu", "Company name or CNPJ is required")
@@ -62,7 +60,9 @@ class BrTcuSource(BaseSource):
                 "User-Agent": "Mozilla/5.0 (compatible; OpenQuery/1.0)",
                 "Accept": "application/json",
             }
-            with httpx.Client(timeout=self._timeout, headers=headers, follow_redirects=True) as client:  # noqa: E501
+            with httpx.Client(
+                timeout=self._timeout, headers=headers, follow_redirects=True
+            ) as client:  # noqa: E501
                 resp = client.get(TCU_API_URL, params=params)
                 if resp.status_code in (404, 422):
                     return BrTcuResult(

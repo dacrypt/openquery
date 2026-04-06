@@ -93,7 +93,7 @@ class TestHnEmpresaSourceMeta:
     def test_company_name_extra_used(self):
         from openquery.sources.hn.empresa import HnEmpresaSource
 
-        src = HnEmpresaSource()
+        HnEmpresaSource()
         inp = QueryInput(
             document_type=DocumentType.CUSTOM,
             document_number="",

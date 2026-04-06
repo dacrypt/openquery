@@ -16,7 +16,7 @@ import httpx
 from pydantic import BaseModel
 
 from openquery.exceptions import SourceError
-from openquery.models.intl.interpol import IntlInterpolResult, InterpolNotice
+from openquery.models.intl.interpol import InterpolNotice, IntlInterpolResult
 from openquery.sources import register
 from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceMeta
 
@@ -36,7 +36,7 @@ class InterpolSource(BaseSource):
         return SourceMeta(
             name="intl.interpol",
             display_name="Interpol — Red Notices (Personas Buscadas)",
-            description="Interpol Red Notices: internationally wanted persons search (free public API)",
+            description="Interpol Red Notices: internationally wanted persons search (free public API)",  # noqa: E501
             country="INTL",
             url="https://www.interpol.int/en/How-we-work/Notices/Red-Notices",
             supported_inputs=[DocumentType.CEDULA, DocumentType.PASSPORT, DocumentType.CUSTOM],
@@ -105,17 +105,19 @@ class InterpolSource(BaseSource):
                 links = n.get("_links", {})
                 self_link = links.get("self", {}).get("href", "")
 
-                notices.append(InterpolNotice(
-                    entity_id=n.get("entity_id", ""),
-                    name=n.get("name", ""),
-                    forename=n.get("forename", ""),
-                    date_of_birth=n.get("date_of_birth", ""),
-                    nationalities=nationalities,
-                    sex=n.get("sex_id", ""),
-                    charge=charge,
-                    issuing_country=n.get("issuing_country_id", ""),
-                    url=self_link,
-                ))
+                notices.append(
+                    InterpolNotice(
+                        entity_id=n.get("entity_id", ""),
+                        name=n.get("name", ""),
+                        forename=n.get("forename", ""),
+                        date_of_birth=n.get("date_of_birth", ""),
+                        nationalities=nationalities,
+                        sex=n.get("sex_id", ""),
+                        charge=charge,
+                        issuing_country=n.get("issuing_country_id", ""),
+                        url=self_link,
+                    )
+                )
 
             return IntlInterpolResult(
                 queried_at=datetime.now(),

@@ -61,6 +61,7 @@ class NiRegistroPublicoSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("ni.registro_publico", "company_name", search_term)
 
         with browser.page(SINARE_URL) as page:
@@ -77,9 +78,7 @@ class NiRegistroPublicoSource(BaseSource):
                     'input[placeholder*="empresa"], input[placeholder*="nombre"]'
                 )
                 if not search_input:
-                    raise SourceError(
-                        "ni.registro_publico", "Could not find search input field"
-                    )
+                    raise SourceError("ni.registro_publico", "Could not find search input field")
 
                 search_input.fill(search_term)
                 logger.info("Filled search term: %s", search_term)
@@ -118,9 +117,7 @@ class NiRegistroPublicoSource(BaseSource):
         from datetime import datetime
 
         body_text = page.inner_text("body")
-        result = NiRegistroPublicoResult(
-            queried_at=datetime.now(), search_term=search_term
-        )
+        result = NiRegistroPublicoResult(queried_at=datetime.now(), search_term=search_term)
 
         field_map = {
             "nombre": "company_name",

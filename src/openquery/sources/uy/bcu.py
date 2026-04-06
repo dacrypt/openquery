@@ -34,7 +34,7 @@ class BcuSource(BaseSource):
         return SourceMeta(
             name="uy.bcu",
             display_name="BCU — Entidades Supervisadas (UY)",
-            description="Uruguay BCU central bank: supervised entity status and type by entity name",
+            description="Uruguay BCU central bank: supervised entity status and type by entity name",  # noqa: E501
             country="UY",
             url=BCU_URL,
             supported_inputs=[DocumentType.CUSTOM],
@@ -57,6 +57,7 @@ class BcuSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("uy.bcu", "entity_name", search_term)
 
         with browser.page(BCU_URL) as page:

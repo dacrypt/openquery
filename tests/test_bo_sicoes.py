@@ -41,10 +41,7 @@ class TestSicoesParseResult:
         assert result.contracts[0].status == "Vigente"
 
     def test_text_parse_multiple_contracts(self):
-        body = (
-            "Código: CONT-001\nEntidad: Entidad A\n"
-            "Código: CONT-002\nEntidad: Entidad B\n"
-        )
+        body = "Código: CONT-001\nEntidad: Entidad A\nCódigo: CONT-002\nEntidad: Entidad B\n"
         result = self._parse(body)
         assert len(result.contracts) == 2
         assert result.total == 2
@@ -61,7 +58,9 @@ class TestSicoesParseResult:
             return row
 
         header = make_row(["Código", "Entidad", "Descripción", "Monto", "Estado", "Fecha"])
-        data_row = make_row(["CONT-001", "Min. Educación", "Construcción", "100000", "Adjudicado", "2024-01-15"])
+        data_row = make_row(
+            ["CONT-001", "Min. Educación", "Construcción", "100000", "Adjudicado", "2024-01-15"]
+        )
 
         result = self._parse("", rows=[header, data_row])
         assert len(result.contracts) == 1
@@ -71,7 +70,7 @@ class TestSicoesParseResult:
         assert result.contracts[0].date == "2024-01-15"
 
     def test_model_roundtrip(self):
-        from openquery.models.bo.sicoes import SicoesResult, SicoesContract
+        from openquery.models.bo.sicoes import SicoesContract, SicoesResult
 
         r = SicoesResult(
             search_term="YPFB",
@@ -111,7 +110,7 @@ class TestSicoesSourceMeta:
     def test_entity_name_extra(self):
         from openquery.sources.bo.sicoes import SicoesSource
 
-        src = SicoesSource()
+        SicoesSource()
         # Verify extra key is accepted (query would proceed, not raise)
         input_ = QueryInput(
             document_type=DocumentType.CUSTOM,

@@ -52,6 +52,7 @@ class TestCrVehiculoResult:
 class TestCrVehiculoSourceMeta:
     def test_meta(self):
         from openquery.sources.cr.vehiculo import CrVehiculoSource
+
         meta = CrVehiculoSource().meta()
         assert meta.name == "cr.vehiculo"
         assert meta.country == "CR"
@@ -62,6 +63,7 @@ class TestCrVehiculoSourceMeta:
 
     def test_missing_placa_raises(self):
         from openquery.sources.cr.vehiculo import CrVehiculoSource
+
         src = CrVehiculoSource()
         with pytest.raises(SourceError, match="Placa is required"):
             src.query(QueryInput(document_type=DocumentType.PLATE, document_number=""))
@@ -72,6 +74,7 @@ class TestCrVehiculoParseResult:
 
     def _parse(self, body_text: str, placa: str = "ABC123") -> CrVehiculoResult:
         from openquery.sources.cr.vehiculo import CrVehiculoSource
+
         page = MagicMock()
         page.inner_text.return_value = body_text
         src = CrVehiculoSource()
@@ -133,7 +136,8 @@ class TestCrVehiculoParseResult:
 
     def test_placa_uppercased_in_query(self):
         from openquery.sources.cr.vehiculo import CrVehiculoSource
-        src = CrVehiculoSource()
+
+        CrVehiculoSource()
         inp = QueryInput(document_type=DocumentType.PLATE, document_number="abc123")
         # Verify upper() is called — check via extra kwarg path too
         inp2 = QueryInput(

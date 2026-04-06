@@ -76,7 +76,10 @@ class FasecoldaSource(BaseSource):
         return self._query(marca, modelo, audit=input.audit)
 
     def _query(
-        self, marca: str, modelo: int | None = None, audit: bool = False,
+        self,
+        marca: str,
+        modelo: int | None = None,
+        audit: bool = False,
     ) -> FasecoldaResult:
         """Navigate to Fasecolda, intercept bearer token, and query API."""
         from openquery.core.browser import BrowserManager
@@ -86,6 +89,7 @@ class FasecoldaSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.fasecolda", "marca", marca)
 
         captured_token: dict[str, str] = {}
@@ -145,7 +149,11 @@ class FasecoldaSource(BaseSource):
                 raise SourceError("co.fasecolda", f"Query failed: {e}") from e
 
     def _cascade_api(
-        self, page, token: str, marca: str, modelo: int | None,
+        self,
+        page,
+        token: str,
+        marca: str,
+        modelo: int | None,
     ) -> list[dict]:
         """Cascade through Fasecolda API endpoints to find vehicle data."""
         cat_id = DEFAULT_CATEGORY_ID
@@ -153,7 +161,8 @@ class FasecoldaSource(BaseSource):
 
         # Step 1: Get available model years
         models_data = self._api_fetch(
-            page, token,
+            page,
+            token,
             f"{API_BASE}/modelo/getmodelo/{cat_id}/{state_id}",
         )
 
@@ -178,7 +187,8 @@ class FasecoldaSource(BaseSource):
 
         # Step 2: Get brands for this category/state/year
         brands_data = self._api_fetch(
-            page, token,
+            page,
+            token,
             f"{API_BASE}/marca/getmarca/{cat_id}/{state_id}/{model_id}",
         )
 
@@ -186,9 +196,7 @@ class FasecoldaSource(BaseSource):
         brand_id = None
         if isinstance(brands_data, list):
             for b in brands_data:
-                brand_name = (
-                    b.get("marca") or b.get("nombre") or b.get("name") or ""
-                ).upper()
+                brand_name = (b.get("marca") or b.get("nombre") or b.get("name") or "").upper()
                 if marca in brand_name or brand_name in marca:
                     brand_id = b.get("id") or b.get("idMarca")
                     break
@@ -201,7 +209,8 @@ class FasecoldaSource(BaseSource):
 
         # Step 3: Get references for this brand
         refs_data = self._api_fetch(
-            page, token,
+            page,
+            token,
             f"{API_BASE}/referenciauno/getgeferenciauno/{cat_id}/{state_id}/{model_id}/{brand_id}",
         )
 
@@ -216,7 +225,8 @@ class FasecoldaSource(BaseSource):
                 continue
             try:
                 detail = self._api_fetch(
-                    page, token,
+                    page,
+                    token,
                     f"{API_BASE}/listacodigos/getbuscabasica/"
                     f"{cat_id}/{state_id}/{model_id}/{brand_id}/{ref_id}/1",
                 )
@@ -243,13 +253,17 @@ class FasecoldaSource(BaseSource):
             status = result.get("status", 0)
             text = result.get("text", "")[:200]
             raise SourceError(
-                "co.fasecolda", f"API returned {status}: {text}",
+                "co.fasecolda",
+                f"API returned {status}: {text}",
             )
 
         return result
 
     def _build_result(
-        self, marca: str, modelo: int | None, results: list[dict],
+        self,
+        marca: str,
+        modelo: int | None,
+        results: list[dict],
     ) -> FasecoldaResult:
         """Build FasecoldaResult from API data."""
         first = results[0] if results else {}

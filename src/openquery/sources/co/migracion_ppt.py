@@ -64,6 +64,7 @@ class MigracionPptSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.migracion_ppt", "custom", documento)
 
         with browser.page(MIGRACION_URL) as page:
@@ -141,9 +142,14 @@ class MigracionPptSource(BaseSource):
         elif "en trámite" in body_lower or "en tramite" in body_lower:
             result.tiene_ppt = True
             result.estado_ppt = "En trámite"
-        elif any(phrase in body_lower for phrase in [
-            "no registra", "no se encontr", "sin registro",
-        ]):
+        elif any(
+            phrase in body_lower
+            for phrase in [
+                "no registra",
+                "no se encontr",
+                "sin registro",
+            ]
+        ):
             result.tiene_ppt = False
             result.estado_ppt = "No registra"
 

@@ -45,7 +45,10 @@ def retry[T](
             delay = min(base_delay * (2 ** (attempt - 1)), max_delay)
             logger.warning(
                 "Attempt %d/%d failed: %s. Retrying in %.1fs",
-                attempt, max_attempts, e, delay,
+                attempt,
+                max_attempts,
+                e,
+                delay,
             )
             if on_retry:
                 on_retry(attempt, e)

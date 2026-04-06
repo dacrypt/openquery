@@ -64,6 +64,7 @@ class HnRnpSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("hn.rnp", "dni", dni)
 
         with browser.page(RNP_URL) as page:

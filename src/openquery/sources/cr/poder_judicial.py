@@ -60,6 +60,7 @@ class CrPoderJudicialSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("cr.poder_judicial", "search_value", search_value)
 
         with browser.page(PODER_JUDICIAL_URL) as page:

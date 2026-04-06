@@ -37,7 +37,7 @@ class ImpiSource(BaseSource):
         return SourceMeta(
             name="mx.impi",
             display_name="IMPI Marcanet — Búsqueda de Marcas",
-            description="Mexico trademark search: status, owner, and class from IMPI Marcanet portal",
+            description="Mexico trademark search: status, owner, and class from IMPI Marcanet portal",  # noqa: E501
             country="MX",
             url=IMPI_URL,
             supported_inputs=[DocumentType.CUSTOM],
@@ -67,6 +67,7 @@ class ImpiSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("mx.impi", "trademark_name", search_term)
 
         with browser.page(IMPI_URL) as page:

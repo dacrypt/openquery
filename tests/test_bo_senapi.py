@@ -116,7 +116,7 @@ class TestSenapiSourceMeta:
     def test_trademark_name_extra(self):
         from openquery.sources.bo.senapi import SenapiSource
 
-        src = SenapiSource()
+        SenapiSource()
         input_ = QueryInput(
             document_type=DocumentType.CUSTOM,
             document_number="",
@@ -127,7 +127,7 @@ class TestSenapiSourceMeta:
     def test_document_number_used_as_fallback(self):
         from openquery.sources.bo.senapi import SenapiSource
 
-        src = SenapiSource()
+        SenapiSource()
         input_ = QueryInput(
             document_type=DocumentType.CUSTOM,
             document_number="ADIDAS",

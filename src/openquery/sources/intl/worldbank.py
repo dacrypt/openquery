@@ -36,7 +36,7 @@ class WorldBankSource(BaseSource):
         return SourceMeta(
             name="intl.worldbank",
             display_name="World Bank — Country Indicators",
-            description="World Bank public API for country development indicators (GDP, population, etc.)",
+            description="World Bank public API for country development indicators (GDP, population, etc.)",  # noqa: E501
             country="INTL",
             url="https://data.worldbank.org/",
             supported_inputs=[DocumentType.CUSTOM],
@@ -50,9 +50,13 @@ class WorldBankSource(BaseSource):
         indicator = input.extra.get("indicator", "").strip()
 
         if not country:
-            raise SourceError("intl.worldbank", "Provide a country ISO2 code (extra.country or document_number)")
+            raise SourceError(
+                "intl.worldbank", "Provide a country ISO2 code (extra.country or document_number)"
+            )
         if not indicator:
-            raise SourceError("intl.worldbank", "Provide an indicator code (extra.indicator), e.g. NY.GDP.MKTP.CD")
+            raise SourceError(
+                "intl.worldbank", "Provide an indicator code (extra.indicator), e.g. NY.GDP.MKTP.CD"
+            )
 
         return self._fetch(country, indicator)
 
@@ -85,17 +89,21 @@ class WorldBankSource(BaseSource):
             for record in records:
                 if not country_name:
                     country_info = record.get("country", {})
-                    country_name = country_info.get("value", "") if isinstance(country_info, dict) else ""
+                    country_name = (
+                        country_info.get("value", "") if isinstance(country_info, dict) else ""
+                    )
                 if not indicator_name:
                     ind_info = record.get("indicator", {})
                     indicator_name = ind_info.get("value", "") if isinstance(ind_info, dict) else ""
 
                 raw_value = record.get("value")
                 value_str = str(raw_value) if raw_value is not None else ""
-                data_points.append(WorldBankDataPoint(
-                    year=record.get("date", ""),
-                    value=value_str,
-                ))
+                data_points.append(
+                    WorldBankDataPoint(
+                        year=record.get("date", ""),
+                        value=value_str,
+                    )
+                )
 
             return WorldBankResult(
                 queried_at=datetime.now(),
@@ -107,7 +115,9 @@ class WorldBankSource(BaseSource):
             )
 
         except httpx.HTTPStatusError as e:
-            raise SourceError("intl.worldbank", f"API returned HTTP {e.response.status_code}") from e
+            raise SourceError(
+                "intl.worldbank", f"API returned HTTP {e.response.status_code}"
+            ) from e
         except httpx.RequestError as e:
             raise SourceError("intl.worldbank", f"Request failed: {e}") from e
         except SourceError:

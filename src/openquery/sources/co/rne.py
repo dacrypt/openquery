@@ -41,7 +41,7 @@ class RneSource(BaseSource):
         return SourceMeta(
             name="co.rne",
             display_name="RNE — Registro Números Excluidos",
-            description="Colombian Do Not Call registry (Ley 2300/2023) — check if a phone/email is excluded",
+            description="Colombian Do Not Call registry (Ley 2300/2023) — check if a phone/email is excluded",  # noqa: E501
             country="CO",
             url="https://tramitescrcom.gov.co/tramites/publico/rne/loginRNE.xhtml",
             supported_inputs=[DocumentType.CUSTOM],
@@ -59,7 +59,9 @@ class RneSource(BaseSource):
         if not telefono and not email:
             raise SourceError("co.rne", "Must provide extra['telefono'] or extra['email']")
         if not usuario or not password:
-            raise SourceError("co.rne", "Must provide extra['usuario'] and extra['password'] (CRC credentials)")
+            raise SourceError(
+                "co.rne", "Must provide extra['usuario'] and extra['password'] (CRC credentials)"
+            )
 
         consulta = telefono or email
         tipo = "TEL" if telefono else "COR"
@@ -71,10 +73,13 @@ class RneSource(BaseSource):
         try:
             with httpx.Client(timeout=self._timeout) as client:
                 # Step 1: Authenticate to get JWT
-                login_resp = client.post(LOGIN_URL, json={
-                    "usuario": usuario,
-                    "contrasena": password,
-                })
+                login_resp = client.post(
+                    LOGIN_URL,
+                    json={
+                        "usuario": usuario,
+                        "contrasena": password,
+                    },
+                )
                 login_resp.raise_for_status()
                 login_data = login_resp.json()
 

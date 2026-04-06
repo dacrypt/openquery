@@ -106,7 +106,9 @@ class ShipTrackingSource(BaseSource):
             )
 
             if not pattern:
-                logger.warning("No vessel data found in shipinfo.net response (length=%d)", len(text))
+                logger.warning(
+                    "No vessel data found in shipinfo.net response (length=%d)", len(text)
+                )
 
             vessels: list[Vessel] = []
 
@@ -117,18 +119,20 @@ class ShipTrackingSource(BaseSource):
 
                 tracking_url = f"https://www.marinetraffic.com/en/ais/details/ships/imo:{v_imo}"
 
-                vessels.append(Vessel(
-                    name=name,
-                    imo=v_imo,
-                    mmsi=v_mmsi,
-                    position=VesselPosition(
-                        latitude=float(lat),
-                        longitude=float(lon),
-                        speed_knots=float(speed),
-                        course=float(course),
-                    ),
-                    tracking_url=tracking_url,
-                ))
+                vessels.append(
+                    Vessel(
+                        name=name,
+                        imo=v_imo,
+                        mmsi=v_mmsi,
+                        position=VesselPosition(
+                            latitude=float(lat),
+                            longitude=float(lon),
+                            speed_knots=float(speed),
+                            course=float(course),
+                        ),
+                        tracking_url=tracking_url,
+                    )
+                )
 
             return ShipTrackingResult(
                 queried_at=datetime.now(),

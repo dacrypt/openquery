@@ -67,6 +67,7 @@ class TestRuntCedulaSupport:
     def test_soat_fields_in_model(self):
         """RuntResult should have SOAT/RTM fields."""
         from openquery.models.co.runt import RuntResult
+
         r = RuntResult(
             soat_vigente=True,
             soat_aseguradora="SURA",
@@ -82,6 +83,7 @@ class TestRuntCedulaSupport:
 class TestSourceRegistry:
     def test_all_sources_registered(self):
         from openquery.sources import list_sources
+
         sources = list_sources()
         names = [s.meta().name for s in sources]
         assert "co.simit" in names

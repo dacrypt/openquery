@@ -156,7 +156,8 @@ class DocumentOCR:
         # Place of birth
         lugar_match = re.search(
             r"(?:LUGAR\s*DE\s*NACIMIENTO|BIRTH\s*PLACE)\s*[:\-]?\s*([A-ZÁÉÍÓÚÑ ,]{3,})",
-            text, re.IGNORECASE,
+            text,
+            re.IGNORECASE,
         )
         if lugar_match:
             fields["lugar_nacimiento"] = lugar_match.group(1).strip()
@@ -221,7 +222,8 @@ class DocumentOCR:
         ]:
             match = re.search(
                 rf"(?:{label})\s*[:\-]?\s*([A-ZÁÉÍÓÚÑ ]{{2,}})",
-                text, re.IGNORECASE,
+                text,
+                re.IGNORECASE,
             )
             if match:
                 fields[key] = match.group(1).strip()
@@ -239,7 +241,8 @@ class DocumentOCR:
         # Department
         dept_match = re.search(
             r"(?:DEPARTAMENTO|UBIGEO)\s*[:\-]?\s*([A-ZÁÉÍÓÚÑ ]{2,})",
-            text, re.IGNORECASE,
+            text,
+            re.IGNORECASE,
         )
         if dept_match:
             fields["departamento"] = dept_match.group(1).strip()
@@ -257,13 +260,17 @@ class DocumentOCR:
 
         # Names
         apellidos_match = re.search(
-            r"APELLIDOS?\s*[:\-]?\s*([A-ZÁÉÍÓÚÑ ]{3,})", text, re.IGNORECASE,
+            r"APELLIDOS?\s*[:\-]?\s*([A-ZÁÉÍÓÚÑ ]{3,})",
+            text,
+            re.IGNORECASE,
         )
         if apellidos_match:
             fields["apellidos"] = apellidos_match.group(1).strip()
 
         nombres_match = re.search(
-            r"NOMBRES?\s*[:\-]?\s*([A-ZÁÉÍÓÚÑ ]{3,})", text, re.IGNORECASE,
+            r"NOMBRES?\s*[:\-]?\s*([A-ZÁÉÍÓÚÑ ]{3,})",
+            text,
+            re.IGNORECASE,
         )
         if nombres_match:
             fields["nombres"] = nombres_match.group(1).strip()
@@ -275,7 +282,9 @@ class DocumentOCR:
 
         # Nationality
         nac_match = re.search(
-            r"NACIONALIDAD\s*[:\-]?\s*([A-ZÁÉÍÓÚÑ ]{3,})", text, re.IGNORECASE,
+            r"NACIONALIDAD\s*[:\-]?\s*([A-ZÁÉÍÓÚÑ ]{3,})",
+            text,
+            re.IGNORECASE,
         )
         if nac_match:
             fields["nacionalidad"] = nac_match.group(1).strip()

@@ -47,7 +47,9 @@ class BrBanksSource(BaseSource):
     def query(self, input: QueryInput) -> BaseModel:
         code = input.extra.get("code", "") or input.document_number
         if not code:
-            raise SourceError("br.banks", "Bank COMPE code is required (e.g., '001' for Banco do Brasil)")
+            raise SourceError(
+                "br.banks", "Bank COMPE code is required (e.g., '001' for Banco do Brasil)"
+            )
         return self._query(code.strip())
 
     def _query(self, code: str) -> BrBankResult:

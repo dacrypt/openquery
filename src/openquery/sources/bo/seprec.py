@@ -63,6 +63,7 @@ class SeprecSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("bo.seprec", "search_term", search_term)
 
         with browser.page(SEPREC_URL) as page:

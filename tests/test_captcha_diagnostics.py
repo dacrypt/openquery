@@ -47,6 +47,7 @@ SOLVER = OCRSolver(max_chars=5)
 # 1. Character-level confusion matrix
 # ---------------------------------------------------------------------------
 
+
 @pytest.mark.skipif(len(SAMPLES) == 0, reason="No captcha fixtures")
 class TestConfusionMatrix:
     """Build a confusion matrix to identify which character pairs the OCR confuses."""
@@ -132,6 +133,7 @@ def _classify_confusion(expected: str, got: str) -> str:
 # 2. Pipeline comparison — which preprocessing variant wins?
 # ---------------------------------------------------------------------------
 
+
 @pytest.mark.skipif(len(SAMPLES) == 0, reason="No captcha fixtures")
 class TestPipelineComparison:
     """Compare individual preprocessing pipelines to find which is best."""
@@ -161,10 +163,10 @@ class TestPipelineComparison:
                 text = re.sub(r"[^a-zA-Z0-9]", "", text)[:5]
                 elapsed = (time.monotonic() - start) * 1000
 
-                pipeline_stats[f"pipeline_{i+1}"]["total"] += 1
-                pipeline_stats[f"pipeline_{i+1}"]["times"].append(elapsed)
+                pipeline_stats[f"pipeline_{i + 1}"]["total"] += 1
+                pipeline_stats[f"pipeline_{i + 1}"]["times"].append(elapsed)
                 if text == truth:
-                    pipeline_stats[f"pipeline_{i+1}"]["correct"] += 1
+                    pipeline_stats[f"pipeline_{i + 1}"]["correct"] += 1
 
         print("\n" + "=" * 60)
         print("PIPELINE ACCURACY BREAKDOWN")
@@ -174,13 +176,12 @@ class TestPipelineComparison:
         for name, stats in sorted(pipeline_stats.items()):
             acc = stats["correct"] / stats["total"] if stats["total"] > 0 else 0
             avg_ms = sum(stats["times"]) / len(stats["times"]) if stats["times"] else 0
-            print(f"{name:<15} {stats['correct']:<10} {stats['total']:<8} "
-                  f"{acc:<10.0%} {avg_ms:.1f}")
+            print(
+                f"{name:<15} {stats['correct']:<10} {stats['total']:<8} {acc:<10.0%} {avg_ms:.1f}"
+            )
 
         # Determine which pipelines are underperforming
-        best_acc = max(
-            s["correct"] / s["total"] for s in pipeline_stats.values() if s["total"] > 0
-        )
+        best_acc = max(s["correct"] / s["total"] for s in pipeline_stats.values() if s["total"] > 0)
         for name, stats in pipeline_stats.items():
             acc = stats["correct"] / stats["total"] if stats["total"] > 0 else 0
             if acc < best_acc * 0.7:
@@ -192,6 +193,7 @@ class TestPipelineComparison:
 # ---------------------------------------------------------------------------
 # 3. Confidence calibration — is confidence a good predictor of correctness?
 # ---------------------------------------------------------------------------
+
 
 @pytest.mark.skipif(len(SAMPLES) == 0, reason="No captcha fixtures")
 class TestConfidenceCalibration:
@@ -222,7 +224,9 @@ class TestConfidenceCalibration:
 
                 try:
                     data = pytesseract.image_to_data(
-                        preprocessed, config=ocr_config, output_type=pytesseract.Output.DICT,
+                        preprocessed,
+                        config=ocr_config,
+                        output_type=pytesseract.Output.DICT,
                     )
                     confidences = [int(c) for c in data["conf"] if int(c) > 0]
                     avg_conf = sum(confidences) / len(confidences) if confidences else 0
@@ -268,6 +272,7 @@ class TestConfidenceCalibration:
 # 4. Case sensitivity analysis
 # ---------------------------------------------------------------------------
 
+
 @pytest.mark.skipif(len(SAMPLES) == 0, reason="No captcha fixtures")
 class TestCaseSensitivity:
     """Analyze how much accuracy improves if we ignore case."""
@@ -300,13 +305,15 @@ class TestCaseSensitivity:
         print("\n" + "=" * 60)
         print("CASE SENSITIVITY ANALYSIS")
         print("=" * 60)
-        print(f"Case-sensitive accuracy:   {exact_correct}/{total} = {exact_correct/total:.0%}")
-        print(f"Case-insensitive accuracy: {ci_correct}/{total} = {ci_correct/total:.0%}")
+        print(f"Case-sensitive accuracy:   {exact_correct}/{total} = {exact_correct / total:.0%}")
+        print(f"Case-insensitive accuracy: {ci_correct}/{total} = {ci_correct / total:.0%}")
         print(f"Case-only errors:          {case_only_errors}")
 
         if case_only_errors > 0:
-            print(f"\nIf RUNT were case-insensitive, accuracy would improve by "
-                  f"{(ci_correct - exact_correct) / total:.0%}")
+            print(
+                f"\nIf RUNT were case-insensitive, accuracy would improve by "
+                f"{(ci_correct - exact_correct) / total:.0%}"
+            )
             print("\nCase-only errors:")
             for truth, result, _ in details:
                 print(f"  Truth: {truth!r}  Got: {result!r}")
@@ -317,6 +324,7 @@ class TestCaseSensitivity:
 # ---------------------------------------------------------------------------
 # 5. Character position analysis — which position has worst accuracy?
 # ---------------------------------------------------------------------------
+
 
 @pytest.mark.skipif(len(SAMPLES) == 0, reason="No captcha fixtures")
 class TestPositionAnalysis:
@@ -356,8 +364,10 @@ class TestPositionAnalysis:
         if weakest_pos:
             print(f"\nWeakest position: {weakest_pos} ({weakest_acc:.0%})")
             if weakest_pos in (1, 5):
-                print("INSIGHT: Edge characters are weaker — consider padding the image "
-                      "or cropping margins before OCR.")
+                print(
+                    "INSIGHT: Edge characters are weaker — consider padding the image "
+                    "or cropping margins before OCR."
+                )
 
         assert True
 
@@ -365,6 +375,7 @@ class TestPositionAnalysis:
 # ---------------------------------------------------------------------------
 # 6. Character class breakdown (digits vs lowercase vs uppercase)
 # ---------------------------------------------------------------------------
+
 
 @pytest.mark.skipif(len(SAMPLES) == 0, reason="No captcha fixtures")
 class TestCharacterClassAccuracy:
@@ -412,6 +423,7 @@ class TestCharacterClassAccuracy:
 # 7. Timing analysis — where is time spent?
 # ---------------------------------------------------------------------------
 
+
 @pytest.mark.skipif(len(SAMPLES) == 0, reason="No captcha fixtures")
 class TestTimingAnalysis:
     """Profile where time is spent in the OCR pipeline."""
@@ -446,8 +458,10 @@ class TestTimingAnalysis:
             print(f"\nLarge images (>8KB):  avg {avg_large:.0f}ms  (n={len(large)})")
             print(f"Small images (<=5KB): avg {avg_small:.0f}ms  (n={len(small)})")
             if avg_large > avg_small * 2:
-                print("INSIGHT: Large images are significantly slower. Consider resizing "
-                      "to a fixed dimension before preprocessing.")
+                print(
+                    "INSIGHT: Large images are significantly slower. Consider resizing "
+                    "to a fixed dimension before preprocessing."
+                )
 
         # Flag if any captcha takes >500ms
         slow = [(cid, t) for cid, t, _ in times if t > 500]
@@ -462,6 +476,7 @@ class TestTimingAnalysis:
 # ---------------------------------------------------------------------------
 # 8. Stability test — does the same image give the same result?
 # ---------------------------------------------------------------------------
+
 
 @pytest.mark.skipif(len(SAMPLES) == 0, reason="No captcha fixtures")
 class TestStability:
@@ -487,9 +502,11 @@ class TestStability:
             print(f"WARNING: {len(unstable)} images gave inconsistent results:")
             for cid, results in unstable:
                 print(f"  {cid}: {results}")
-            print("\nINSIGHT: Non-deterministic results suggest the confidence-based "
-                  "pipeline selection is sensitive to minor variations. Consider "
-                  "majority voting across pipelines instead of max-confidence.")
+            print(
+                "\nINSIGHT: Non-deterministic results suggest the confidence-based "
+                "pipeline selection is sensitive to minor variations. Consider "
+                "majority voting across pipelines instead of max-confidence."
+            )
         else:
             print("All images gave consistent results across 3 runs.")
 
@@ -499,6 +516,7 @@ class TestStability:
 # ---------------------------------------------------------------------------
 # 9. Preprocessing gap analysis — what characters have NO good pipeline?
 # ---------------------------------------------------------------------------
+
 
 @pytest.mark.skipif(len(SAMPLES) == 0, reason="No captcha fixtures")
 class TestPreprocessingGaps:
@@ -562,18 +580,18 @@ class TestPreprocessingGaps:
             for e in unsolvable:
                 print(f"  {e['id']}: truth={e['truth']!r}")
                 for i, p in enumerate(e["pipelines"]):
-                    print(f"           pipeline_{i+1}: {p!r}")
+                    print(f"           pipeline_{i + 1}: {p!r}")
 
         if partially_solved:
-            print(f"\nPARTIALLY SOLVED ({len(partially_solved)} captchas — some chars right, "
-                  "no exact match):")
+            print(
+                f"\nPARTIALLY SOLVED ({len(partially_solved)} captchas — some chars right, "
+                "no exact match):"
+            )
             for e in partially_solved:
                 print(f"  {e['id']}: truth={e['truth']!r}  best_char_acc={e['best_char_acc']:.0%}")
                 for i, p in enumerate(e["pipelines"]):
-                    match = "  " + "".join(
-                        "^" if a != b else " " for a, b in zip(p, e["truth"])
-                    )
-                    print(f"           pipeline_{i+1}: {p!r}{match}")
+                    match = "  " + "".join("^" if a != b else " " for a, b in zip(p, e["truth"]))
+                    print(f"           pipeline_{i + 1}: {p!r}{match}")
 
         total_unsolvable = len(unsolvable) + len(partially_solved)
         total = len(SAMPLES)
@@ -591,6 +609,7 @@ class TestPreprocessingGaps:
 # ---------------------------------------------------------------------------
 # 10. Ensemble voting potential — could combining pipelines do better?
 # ---------------------------------------------------------------------------
+
 
 @pytest.mark.skipif(len(SAMPLES) == 0, reason="No captcha fixtures")
 class TestEnsembleVoting:
@@ -625,7 +644,9 @@ class TestEnsembleVoting:
 
                 try:
                     data = pytesseract.image_to_data(
-                        preprocessed, config=ocr_config, output_type=pytesseract.Output.DICT,
+                        preprocessed,
+                        config=ocr_config,
+                        output_type=pytesseract.Output.DICT,
                     )
                     confidences = [int(c) for c in data["conf"] if int(c) > 0]
                     avg_conf = sum(confidences) / len(confidences) if confidences else 0
@@ -658,16 +679,19 @@ class TestEnsembleVoting:
         print("\n" + "=" * 60)
         print("ENSEMBLE VOTING vs CONFIDENCE SELECTION")
         print("=" * 60)
-        print(f"Max-confidence accuracy: {confidence_correct}/{total} = "
-              f"{confidence_correct/total:.0%}")
-        print(f"Majority-voting accuracy: {voting_correct}/{total} = "
-              f"{voting_correct/total:.0%}")
+        print(
+            f"Max-confidence accuracy: {confidence_correct}/{total} = "
+            f"{confidence_correct / total:.0%}"
+        )
+        print(f"Majority-voting accuracy: {voting_correct}/{total} = {voting_correct / total:.0%}")
 
         diff = voting_correct - confidence_correct
         if diff > 0:
-            print(f"\nINSIGHT: Majority voting improves accuracy by {diff} captchas "
-                  f"({diff/total:.0%}). Consider switching from confidence-based to "
-                  "character-level voting.")
+            print(
+                f"\nINSIGHT: Majority voting improves accuracy by {diff} captchas "
+                f"({diff / total:.0%}). Consider switching from confidence-based to "
+                "character-level voting."
+            )
         elif diff < 0:
             print(f"\nConfidence selection is better by {-diff} captchas.")
         else:
@@ -679,6 +703,7 @@ class TestEnsembleVoting:
 # ---------------------------------------------------------------------------
 # 11. Procuraduria QA coverage — math patterns not yet tested
 # ---------------------------------------------------------------------------
+
 
 class TestProcuraduriaQACoverage:
     """Test edge cases in the Procuraduria captcha solver that aren't covered."""
@@ -759,6 +784,7 @@ class TestProcuraduriaQACoverage:
 # ---------------------------------------------------------------------------
 # 12. Image complexity correlation
 # ---------------------------------------------------------------------------
+
 
 @pytest.mark.skipif(len(SAMPLES) == 0, reason="No captcha fixtures")
 class TestImageComplexity:

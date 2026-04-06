@@ -64,6 +64,7 @@ class HnCneSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("hn.cne", "dni", dni)
 
         with browser.page(CNE_URL) as page:

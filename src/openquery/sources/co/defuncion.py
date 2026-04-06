@@ -60,6 +60,7 @@ class DefuncionSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.defuncion", "cedula", cedula)
 
         with browser.page(REGISTRADURIA_URL) as page:

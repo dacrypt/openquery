@@ -73,6 +73,7 @@ class TestRegistroCivilSourceMeta:
 
     def test_meta_supported_inputs(self):
         from openquery.sources.base import DocumentType
+
         source = RegistroCivilSource()
         assert DocumentType.CUSTOM in source.meta().supported_inputs
 
@@ -80,7 +81,9 @@ class TestRegistroCivilSourceMeta:
 class TestParseResult:
     """Test _parse_result parsing logic with mocked page."""
 
-    def _make_page(self, body_text: str, table_rows: list[tuple[str, str]] | None = None) -> MagicMock:
+    def _make_page(
+        self, body_text: str, table_rows: list[tuple[str, str]] | None = None
+    ) -> MagicMock:
         mock_page = MagicMock()
         mock_page.inner_text.return_value = body_text
 
@@ -104,9 +107,7 @@ class TestParseResult:
     def test_parse_vigente(self):
         source = RegistroCivilSource()
         page = self._make_page(
-            "Consulta de Documentos\n"
-            "RUN: 12.345.678-9\n"
-            "Estado del Documento: VIGENTE\n"
+            "Consulta de Documentos\nRUN: 12.345.678-9\nEstado del Documento: VIGENTE\n"
         )
         result = source._parse_result(page, "12345678-9", "A123456789")
         assert result.run == "12345678-9"
@@ -116,9 +117,7 @@ class TestParseResult:
     def test_parse_no_vigente(self):
         source = RegistroCivilSource()
         page = self._make_page(
-            "Consulta de Documentos\n"
-            "Estado: NO VIGENTE\n"
-            "El documento se encuentra bloqueado.\n"
+            "Consulta de Documentos\nEstado: NO VIGENTE\nEl documento se encuentra bloqueado.\n"
         )
         result = source._parse_result(page, "12345678-9", "A123456789")
         assert result.document_status == "NO VIGENTE"

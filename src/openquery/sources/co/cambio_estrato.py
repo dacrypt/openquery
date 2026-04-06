@@ -64,6 +64,7 @@ class CambioEstratoSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.cambio_estrato", "cedula", documento)
 
         with browser.page(ESTRATO_URL) as page:

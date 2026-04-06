@@ -68,6 +68,7 @@ class CneSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("ve.cne", "cedula", cedula)
 
         with browser.page(CNE_URL) as page:

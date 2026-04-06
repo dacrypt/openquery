@@ -74,6 +74,7 @@ class RecallsSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.recalls", "marca", marca)
 
         try:
@@ -118,10 +119,18 @@ class RecallsSource(BaseSource):
             raise
         except Exception as e:
             error_msg = str(e)
-            if any(keyword in error_msg.lower() for keyword in [
-                "ssl", "certificate", "tls", "connection refused",
-                "timeout", "err_connection", "net::err",
-            ]):
+            if any(
+                keyword in error_msg.lower()
+                for keyword in [
+                    "ssl",
+                    "certificate",
+                    "tls",
+                    "connection refused",
+                    "timeout",
+                    "err_connection",
+                    "net::err",
+                ]
+            ):
                 raise SourceError(
                     "co.recalls",
                     f"Cannot connect to SIC website (SSL/connection error: {error_msg}). "
@@ -139,10 +148,7 @@ class RecallsSource(BaseSource):
         if not links:
             # Try case-insensitive search via evaluate
             links = page.query_selector_all("a")
-            links = [
-                link for link in links
-                if marca.lower() in (link.inner_text() or "").lower()
-            ]
+            links = [link for link in links if marca.lower() in (link.inner_text() or "").lower()]
 
         if not links:
             # Try table rows
@@ -150,12 +156,14 @@ class RecallsSource(BaseSource):
             for row in rows:
                 text = row.inner_text() or ""
                 if marca.lower() in text.lower():
-                    campanias.append({
-                        "componente": "",
-                        "descripcion": text.strip()[:500],
-                        "anos_afectados": "",
-                        "url": SIC_URL,
-                    })
+                    campanias.append(
+                        {
+                            "componente": "",
+                            "descripcion": text.strip()[:500],
+                            "anos_afectados": "",
+                            "url": SIC_URL,
+                        }
+                    )
 
         for link in links[:20]:
             text = link.inner_text() or ""
@@ -170,12 +178,14 @@ class RecallsSource(BaseSource):
                 else:
                     detail_url = SIC_URL
 
-                campanias.append({
-                    "componente": "",
-                    "descripcion": text.strip()[:500],
-                    "anos_afectados": "",
-                    "url": detail_url,
-                })
+                campanias.append(
+                    {
+                        "componente": "",
+                        "descripcion": text.strip()[:500],
+                        "anos_afectados": "",
+                        "url": detail_url,
+                    }
+                )
             except Exception as e:
                 logger.warning("Failed to extract recall detail: %s", e)
 

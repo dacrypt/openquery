@@ -61,6 +61,7 @@ class NiCseSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("ni.cse", "cedula", cedula)
 
         with browser.page(CSE_URL) as page:

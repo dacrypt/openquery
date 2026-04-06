@@ -10,14 +10,15 @@ import pytest
 from openquery.exceptions import SourceError
 from openquery.sources.base import DocumentType, QueryInput
 
-
 # ===========================================================================
 # DOMINICAN REPUBLIC — do.jce
 # ===========================================================================
 
+
 class TestDoJceResult:
     def test_default_values(self):
         from openquery.models.do.jce import DoJceResult
+
         r = DoJceResult(cedula="00100000001")
         assert r.cedula == "00100000001"
         assert r.nombre == ""
@@ -26,6 +27,7 @@ class TestDoJceResult:
 
     def test_roundtrip(self):
         from openquery.models.do.jce import DoJceResult
+
         r = DoJceResult(cedula="00100000001", nombre="JUAN PEREZ", estado="ACTIVO")
         r2 = DoJceResult.model_validate_json(r.model_dump_json())
         assert r2.cedula == "00100000001"
@@ -34,6 +36,7 @@ class TestDoJceResult:
 
     def test_audit_excluded_from_dump(self):
         from openquery.models.do.jce import DoJceResult
+
         r = DoJceResult(cedula="00100000001")
         r.audit = b"pdf_bytes"
         data = r.model_dump()
@@ -43,6 +46,7 @@ class TestDoJceResult:
 class TestDoJceSourceMeta:
     def test_meta(self):
         from openquery.sources.do.jce import DoJceSource
+
         meta = DoJceSource().meta()
         assert meta.name == "do.jce"
         assert meta.country == "DO"
@@ -52,6 +56,7 @@ class TestDoJceSourceMeta:
 
     def test_query_requires_cedula(self):
         from openquery.sources.do.jce import DoJceSource
+
         src = DoJceSource()
         with pytest.raises(SourceError, match="Cédula is required"):
             src.query(QueryInput(document_type=DocumentType.CEDULA, document_number="", extra={}))
@@ -61,9 +66,11 @@ class TestDoJceSourceMeta:
 # DOMINICAN REPUBLIC — do.placas
 # ===========================================================================
 
+
 class TestDoPlacasResult:
     def test_default_values(self):
         from openquery.models.do.placas import DoPlacasResult
+
         r = DoPlacasResult(placa="A123456")
         assert r.placa == "A123456"
         assert r.owner == ""
@@ -73,6 +80,7 @@ class TestDoPlacasResult:
 
     def test_roundtrip(self):
         from openquery.models.do.placas import DoPlacasResult
+
         r = DoPlacasResult(
             placa="A123456",
             owner="MARIA GOMEZ",
@@ -86,6 +94,7 @@ class TestDoPlacasResult:
 
     def test_audit_excluded_from_dump(self):
         from openquery.models.do.placas import DoPlacasResult
+
         r = DoPlacasResult(placa="A123456")
         r.audit = b"pdf_bytes"
         data = r.model_dump()
@@ -95,6 +104,7 @@ class TestDoPlacasResult:
 class TestDoPlacasSourceMeta:
     def test_meta(self):
         from openquery.sources.do.placas import DoPlacasSource
+
         meta = DoPlacasSource().meta()
         assert meta.name == "do.placas"
         assert meta.country == "DO"
@@ -104,6 +114,7 @@ class TestDoPlacasSourceMeta:
 
     def test_query_requires_plate(self):
         from openquery.sources.do.placas import DoPlacasSource
+
         src = DoPlacasSource()
         with pytest.raises(SourceError, match="Plate number is required"):
             src.query(QueryInput(document_type=DocumentType.PLATE, document_number="", extra={}))
@@ -113,9 +124,11 @@ class TestDoPlacasSourceMeta:
 # PARAGUAY — py.tsje
 # ===========================================================================
 
+
 class TestPyTsjeResult:
     def test_default_values(self):
         from openquery.models.py.tsje import PyTsjeResult
+
         r = PyTsjeResult(ci="1234567")
         assert r.ci == "1234567"
         assert r.nombre == ""
@@ -125,6 +138,7 @@ class TestPyTsjeResult:
 
     def test_roundtrip(self):
         from openquery.models.py.tsje import PyTsjeResult
+
         r = PyTsjeResult(
             ci="1234567",
             nombre="CARLOS LOPEZ",
@@ -138,6 +152,7 @@ class TestPyTsjeResult:
 
     def test_audit_excluded_from_dump(self):
         from openquery.models.py.tsje import PyTsjeResult
+
         r = PyTsjeResult(ci="1234567")
         r.audit = b"pdf_bytes"
         data = r.model_dump()
@@ -147,6 +162,7 @@ class TestPyTsjeResult:
 class TestPyTsjeSourceMeta:
     def test_meta(self):
         from openquery.sources.py.tsje import PyTsjeSource
+
         meta = PyTsjeSource().meta()
         assert meta.name == "py.tsje"
         assert meta.country == "PY"
@@ -156,6 +172,7 @@ class TestPyTsjeSourceMeta:
 
     def test_query_requires_ci(self):
         from openquery.sources.py.tsje import PyTsjeSource
+
         src = PyTsjeSource()
         with pytest.raises(SourceError, match="CI"):
             src.query(QueryInput(document_type=DocumentType.CEDULA, document_number="", extra={}))
@@ -165,9 +182,11 @@ class TestPyTsjeSourceMeta:
 # PARAGUAY — py.antsv
 # ===========================================================================
 
+
 class TestPyAntsvResult:
     def test_default_values(self):
         from openquery.models.py.antsv import PyAntsvResult
+
         r = PyAntsvResult(brand="TOYOTA", model="COROLLA", year="2020")
         assert r.brand == "TOYOTA"
         assert r.model == "COROLLA"
@@ -178,6 +197,7 @@ class TestPyAntsvResult:
 
     def test_roundtrip(self):
         from openquery.models.py.antsv import PyAntsvResult
+
         r = PyAntsvResult(
             brand="TOYOTA",
             model="COROLLA",
@@ -191,6 +211,7 @@ class TestPyAntsvResult:
 
     def test_audit_excluded_from_dump(self):
         from openquery.models.py.antsv import PyAntsvResult
+
         r = PyAntsvResult()
         r.audit = b"pdf_bytes"
         data = r.model_dump()
@@ -200,6 +221,7 @@ class TestPyAntsvResult:
 class TestPyAntsvSourceMeta:
     def test_meta(self):
         from openquery.sources.py.antsv import PyAntsvSource
+
         meta = PyAntsvSource().meta()
         assert meta.name == "py.antsv"
         assert meta.country == "PY"
@@ -209,6 +231,7 @@ class TestPyAntsvSourceMeta:
 
     def test_query_requires_at_least_one_field(self):
         from openquery.sources.py.antsv import PyAntsvSource
+
         src = PyAntsvSource()
         with pytest.raises(SourceError, match="required"):
             src.query(QueryInput(document_type=DocumentType.CUSTOM, document_number="", extra={}))
@@ -218,9 +241,11 @@ class TestPyAntsvSourceMeta:
 # URUGUAY — uy.corteelectoral
 # ===========================================================================
 
+
 class TestUyCorteElectoralResult:
     def test_default_values(self):
         from openquery.models.uy.corteelectoral import UyCorteElectoralResult
+
         r = UyCorteElectoralResult(credencial="ABC123456")
         assert r.credencial == "ABC123456"
         assert r.nombre == ""
@@ -230,6 +255,7 @@ class TestUyCorteElectoralResult:
 
     def test_roundtrip(self):
         from openquery.models.uy.corteelectoral import UyCorteElectoralResult
+
         r = UyCorteElectoralResult(
             credencial="ABC123456",
             nombre="ANA MARTINEZ",
@@ -243,6 +269,7 @@ class TestUyCorteElectoralResult:
 
     def test_audit_excluded_from_dump(self):
         from openquery.models.uy.corteelectoral import UyCorteElectoralResult
+
         r = UyCorteElectoralResult(credencial="ABC123456")
         r.audit = b"pdf_bytes"
         data = r.model_dump()
@@ -252,6 +279,7 @@ class TestUyCorteElectoralResult:
 class TestUyCorteElectoralSourceMeta:
     def test_meta(self):
         from openquery.sources.uy.corteelectoral import UyCorteElectoralSource
+
         meta = UyCorteElectoralSource().meta()
         assert meta.name == "uy.corteelectoral"
         assert meta.country == "UY"
@@ -261,6 +289,7 @@ class TestUyCorteElectoralSourceMeta:
 
     def test_query_requires_credencial(self):
         from openquery.sources.uy.corteelectoral import UyCorteElectoralSource
+
         src = UyCorteElectoralSource()
         with pytest.raises(SourceError, match="Credencial"):
             src.query(QueryInput(document_type=DocumentType.CUSTOM, document_number="", extra={}))
@@ -270,9 +299,11 @@ class TestUyCorteElectoralSourceMeta:
 # URUGUAY — uy.pj
 # ===========================================================================
 
+
 class TestUyPjResult:
     def test_default_values(self):
         from openquery.models.uy.pj import UyPjResult
+
         r = UyPjResult(sui="2-23456/2024")
         assert r.sui == "2-23456/2024"
         assert r.case_status == ""
@@ -281,6 +312,7 @@ class TestUyPjResult:
 
     def test_roundtrip(self):
         from openquery.models.uy.pj import UyPjResult
+
         r = UyPjResult(
             sui="2-23456/2024",
             case_status="EN TRAMITE",
@@ -293,6 +325,7 @@ class TestUyPjResult:
 
     def test_audit_excluded_from_dump(self):
         from openquery.models.uy.pj import UyPjResult
+
         r = UyPjResult(sui="2-23456/2024")
         r.audit = b"pdf_bytes"
         data = r.model_dump()
@@ -302,6 +335,7 @@ class TestUyPjResult:
 class TestUyPjSourceMeta:
     def test_meta(self):
         from openquery.sources.uy.pj import UyPjSource
+
         meta = UyPjSource().meta()
         assert meta.name == "uy.pj"
         assert meta.country == "UY"
@@ -311,6 +345,7 @@ class TestUyPjSourceMeta:
 
     def test_query_requires_sui(self):
         from openquery.sources.uy.pj import UyPjSource
+
         src = UyPjSource()
         with pytest.raises(SourceError, match="SUI"):
             src.query(QueryInput(document_type=DocumentType.CUSTOM, document_number="", extra={}))
@@ -320,9 +355,11 @@ class TestUyPjSourceMeta:
 # Registry integration
 # ===========================================================================
 
+
 class TestNewSourcesRegistry:
     def test_all_six_registered(self):
         from openquery.sources import list_sources
+
         names = [s.meta().name for s in list_sources()]
         assert "do.jce" in names
         assert "do.placas" in names

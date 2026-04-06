@@ -40,7 +40,7 @@ class PepSource(BaseSource):
         return SourceMeta(
             name="co.pep",
             display_name="PEP — Personas Expuestas Políticamente",
-            description="Colombian Politically Exposed Persons screening (SIGEP public officials directory)",
+            description="Colombian Politically Exposed Persons screening (SIGEP public officials directory)",  # noqa: E501
             country="CO",
             url=PEP_PAGE_URL,
             supported_inputs=[DocumentType.CEDULA, DocumentType.CUSTOM],
@@ -77,13 +77,19 @@ class PepSource(BaseSource):
 
             registros = []
             for entry in data:
-                registros.append(PepEntry(
-                    nombre=entry.get("nombre_pep", ""),
-                    cargo=entry.get("denominacion_cargo", entry.get("nombre_del_cargo", "")),
-                    entidad=entry.get("nombre_entidad", ""),
-                    fecha_vinculacion=entry.get("fecha_vinculacion", entry.get("fecha_de_vinculaci_n", "")),
-                    estado=entry.get("fecha_desvinculacion", entry.get("tipo_de_vinculaci_n", "")),
-                ))
+                registros.append(
+                    PepEntry(
+                        nombre=entry.get("nombre_pep", ""),
+                        cargo=entry.get("denominacion_cargo", entry.get("nombre_del_cargo", "")),
+                        entidad=entry.get("nombre_entidad", ""),
+                        fecha_vinculacion=entry.get(
+                            "fecha_vinculacion", entry.get("fecha_de_vinculaci_n", "")
+                        ),
+                        estado=entry.get(
+                            "fecha_desvinculacion", entry.get("tipo_de_vinculaci_n", "")
+                        ),
+                    )
+                )
 
             return PepResult(
                 queried_at=datetime.now(),

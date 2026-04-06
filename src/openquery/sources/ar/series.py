@@ -44,7 +44,7 @@ class ArSeriesSource(BaseSource):
         return SourceMeta(
             name="ar.series",
             display_name="Series de Tiempo — Indicadores Económicos",
-            description="Argentine economic time series: exchange rates, inflation, GDP (datos.gob.ar API)",
+            description="Argentine economic time series: exchange rates, inflation, GDP (datos.gob.ar API)",  # noqa: E501
             country="AR",
             url="https://apis.datos.gob.ar/series/",
             supported_inputs=[DocumentType.CUSTOM],
@@ -74,7 +74,7 @@ class ArSeriesSource(BaseSource):
 
             datos = data.get("data", [])
             meta = data.get("meta", [{}])
-            serie_meta = meta[0] if meta else {} if not isinstance(meta, list) else {}
+            meta[0] if meta else {} if not isinstance(meta, list) else {}
 
             # Extract serie metadata from nested structure
             titulo = ""

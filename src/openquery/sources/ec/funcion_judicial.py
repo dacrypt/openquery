@@ -50,7 +50,9 @@ class FuncionJudicialSource(BaseSource):
 
     def query(self, input: QueryInput) -> BaseModel:
         if input.document_type not in (DocumentType.CEDULA, DocumentType.CUSTOM):
-            raise SourceError("ec.funcion_judicial", f"Unsupported input type: {input.document_type}")
+            raise SourceError(
+                "ec.funcion_judicial", f"Unsupported input type: {input.document_type}"
+            )
 
         documento = input.document_number.strip()
         nombre = input.extra.get("nombre", "").strip()
@@ -78,7 +80,10 @@ class FuncionJudicialSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
-            collector = AuditCollector("ec.funcion_judicial", "cedula", documento or nombre or numero_causa)
+
+            collector = AuditCollector(
+                "ec.funcion_judicial", "cedula", documento or nombre or numero_causa
+            )
 
         with browser.page(JUDICIAL_URL) as page:
             try:
@@ -155,15 +160,17 @@ class FuncionJudicialSource(BaseSource):
             try:
                 cells = row.query_selector_all("td, .campo")
                 if len(cells) >= 3:
-                    procesos.append(ProcesoJudicial(
-                        numero_causa=cells[0].inner_text().strip() if len(cells) > 0 else "",
-                        tipo=cells[1].inner_text().strip() if len(cells) > 1 else "",
-                        estado=cells[2].inner_text().strip() if len(cells) > 2 else "",
-                        fecha=cells[3].inner_text().strip() if len(cells) > 3 else "",
-                        juzgado=cells[4].inner_text().strip() if len(cells) > 4 else "",
-                        demandante=cells[5].inner_text().strip() if len(cells) > 5 else "",
-                        demandado=cells[6].inner_text().strip() if len(cells) > 6 else "",
-                    ))
+                    procesos.append(
+                        ProcesoJudicial(
+                            numero_causa=cells[0].inner_text().strip() if len(cells) > 0 else "",
+                            tipo=cells[1].inner_text().strip() if len(cells) > 1 else "",
+                            estado=cells[2].inner_text().strip() if len(cells) > 2 else "",
+                            fecha=cells[3].inner_text().strip() if len(cells) > 3 else "",
+                            juzgado=cells[4].inner_text().strip() if len(cells) > 4 else "",
+                            demandante=cells[5].inner_text().strip() if len(cells) > 5 else "",
+                            demandado=cells[6].inner_text().strip() if len(cells) > 6 else "",
+                        )
+                    )
             except Exception:
                 continue
 
@@ -172,11 +179,15 @@ class FuncionJudicialSource(BaseSource):
             lines = body_text.split("\n")
             for line in lines:
                 stripped = line.strip()
-                if stripped and any(kw in stripped.lower() for kw in ["causa", "juicio", "proceso"]):
+                if stripped and any(
+                    kw in stripped.lower() for kw in ["causa", "juicio", "proceso"]
+                ):
                     if ":" in stripped:
-                        procesos.append(ProcesoJudicial(
-                            numero_causa=stripped.split(":", 1)[1].strip(),
-                        ))
+                        procesos.append(
+                            ProcesoJudicial(
+                                numero_causa=stripped.split(":", 1)[1].strip(),
+                            )
+                        )
 
         return FuncionJudicialResult(
             queried_at=datetime.now(),

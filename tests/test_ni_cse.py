@@ -64,9 +64,7 @@ class TestNiCseSourceMeta:
             src.query(QueryInput(document_type=DocumentType.CEDULA, document_number=""))
 
     def test_cedula_from_document_number(self):
-        inp = QueryInput(
-            document_type=DocumentType.CEDULA, document_number="001-010190-0001A"
-        )
+        inp = QueryInput(document_type=DocumentType.CEDULA, document_number="001-010190-0001A")
         assert inp.document_number == "001-010190-0001A"
 
     def test_cedula_from_extra(self):

@@ -61,6 +61,7 @@ class SisbenSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.sisben", doc_type.value, documento)
 
         with browser.page(SISBEN_URL) as page:
@@ -84,9 +85,7 @@ class SisbenSource(BaseSource):
 
                 # Fill document number — exact ID: #documento (type=search, not text)
                 doc_input = page.query_selector(
-                    '#documento, '
-                    'input[type="search"], '
-                    'input[id*="documento"]'
+                    '#documento, input[type="search"], input[id*="documento"]'
                 )
                 if not doc_input:
                     raise SourceError("co.sisben", "Could not find document input field")
@@ -95,6 +94,7 @@ class SisbenSource(BaseSource):
 
                 # Solve reCAPTCHA invisible if present
                 from openquery.core.captcha_middleware import solve_page_captchas
+
                 solve_page_captchas(page)
 
                 if collector:
@@ -102,9 +102,7 @@ class SisbenSource(BaseSource):
 
                 # Submit — exact ID: #botonenvio
                 submit_btn = page.query_selector(
-                    '#botonenvio, '
-                    'button[type="submit"], '
-                    'input[type="submit"]'
+                    '#botonenvio, button[type="submit"], input[type="submit"]'
                 )
                 if submit_btn:
                     submit_btn.click()

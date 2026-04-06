@@ -7,14 +7,15 @@ import pytest
 from openquery.exceptions import SourceError
 from openquery.sources.base import DocumentType, QueryInput
 
-
 # ===========================================================================
 # TestResult
 # ===========================================================================
 
+
 class TestResult:
     def test_default_values(self):
         from openquery.models.pa.attt_placa import AtttPlacaResult
+
         r = AtttPlacaResult()
         assert r.search_value == ""
         assert r.plate == ""
@@ -26,6 +27,7 @@ class TestResult:
 
     def test_audit_excluded_from_json(self):
         from openquery.models.pa.attt_placa import AtttPlacaResult
+
         r = AtttPlacaResult(search_value="ABC-123", plate="ABC-123")
         r.audit = {"evidence": "data"}
         data = r.model_dump_json()
@@ -33,6 +35,7 @@ class TestResult:
 
     def test_model_roundtrip(self):
         from openquery.models.pa.attt_placa import AtttPlacaResult
+
         r = AtttPlacaResult(
             search_value="ABC-123",
             plate="ABC-123",
@@ -52,35 +55,42 @@ class TestResult:
 # TestSourceMeta
 # ===========================================================================
 
+
 class TestSourceMeta:
     def test_meta_name(self):
         from openquery.sources.pa.attt_placa import AtttPlacaSource
+
         meta = AtttPlacaSource().meta()
         assert meta.name == "pa.attt_placa"
 
     def test_meta_country(self):
         from openquery.sources.pa.attt_placa import AtttPlacaSource
+
         meta = AtttPlacaSource().meta()
         assert meta.country == "PA"
 
     def test_meta_requires_browser(self):
         from openquery.sources.pa.attt_placa import AtttPlacaSource
+
         meta = AtttPlacaSource().meta()
         assert meta.requires_browser is True
         assert meta.requires_captcha is False
 
     def test_meta_supports_plate(self):
         from openquery.sources.pa.attt_placa import AtttPlacaSource
+
         meta = AtttPlacaSource().meta()
         assert DocumentType.PLATE in meta.supported_inputs
 
     def test_meta_supports_cedula(self):
         from openquery.sources.pa.attt_placa import AtttPlacaSource
+
         meta = AtttPlacaSource().meta()
         assert DocumentType.CEDULA in meta.supported_inputs
 
     def test_meta_rate_limit(self):
         from openquery.sources.pa.attt_placa import AtttPlacaSource
+
         meta = AtttPlacaSource().meta()
         assert meta.rate_limit_rpm == 10
 
@@ -89,13 +99,16 @@ class TestSourceMeta:
 # TestParseResult
 # ===========================================================================
 
+
 class TestParseResult:
     def _make_source(self):
         from openquery.sources.pa.attt_placa import AtttPlacaSource
+
         return AtttPlacaSource()
 
     def _make_page(self, text: str):
         from unittest.mock import MagicMock
+
         page = MagicMock()
         page.inner_text.return_value = text
         page.query_selector_all.return_value = []
@@ -111,12 +124,7 @@ class TestParseResult:
 
     def test_parse_plate_data(self):
         src = self._make_source()
-        text = (
-            "Placa: ABC-123\n"
-            "Estado: Al Dia\n"
-            "Total: 150.00\n"
-            "Cantidad: 2\n"
-        )
+        text = "Placa: ABC-123\nEstado: Al Dia\nTotal: 150.00\nCantidad: 2\n"
         page = self._make_page(text)
         result = src._parse_result(page, "ABC-123")
         assert result.plate == "ABC-123"
@@ -137,8 +145,10 @@ class TestParseResult:
 
     def test_query_uses_document_number(self):
         from unittest.mock import patch
+
         src = self._make_source()
         from openquery.models.pa.attt_placa import AtttPlacaResult
+
         mock_result = AtttPlacaResult(search_value="ABC-123", plate="ABC-123")
         with patch.object(src, "_query", return_value=mock_result) as m:
             src.query(QueryInput(document_type=DocumentType.PLATE, document_number="ABC-123"))
@@ -146,13 +156,17 @@ class TestParseResult:
 
     def test_query_uses_extra_plate(self):
         from unittest.mock import patch
+
         src = self._make_source()
         from openquery.models.pa.attt_placa import AtttPlacaResult
+
         mock_result = AtttPlacaResult(search_value="ABC-123", plate="ABC-123")
         with patch.object(src, "_query", return_value=mock_result) as m:
-            src.query(QueryInput(
-                document_type=DocumentType.CUSTOM,
-                document_number="",
-                extra={"plate": "ABC-123"},
-            ))
+            src.query(
+                QueryInput(
+                    document_type=DocumentType.CUSTOM,
+                    document_number="",
+                    extra={"plate": "ABC-123"},
+                )
+            )
             m.assert_called_once_with("ABC-123", audit=False)

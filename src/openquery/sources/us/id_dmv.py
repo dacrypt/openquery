@@ -27,7 +27,9 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 logger = logging.getLogger(__name__)
 
 TITLE_URL = "https://dmvonline.itd.idaho.gov/OpenServices/OpenVehicleServices/CheckTitleStatus"
-REGISTRATION_URL = "https://dmvonline.itd.idaho.gov/OpenServices/OpenVehicleServices/CheckRegistration"
+REGISTRATION_URL = (
+    "https://dmvonline.itd.idaho.gov/OpenServices/OpenVehicleServices/CheckRegistration"
+)
 
 
 @register
@@ -74,6 +76,7 @@ class IdDmvSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("us.id_dmv", "vin", vin)
 
         result = IdDmvResult(vin=vin)

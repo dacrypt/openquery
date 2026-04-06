@@ -42,7 +42,7 @@ class CamaraComercioMedellinSource(BaseSource):
         return SourceMeta(
             name="co.camara_comercio_medellin",
             display_name="Cámara Medellín — Consulta Expedientes",
-            description="Business registry lookup from Cámara de Comercio de Medellín para Antioquia",
+            description="Business registry lookup from Cámara de Comercio de Medellín para Antioquia",  # noqa: E501
             country="CO",
             url=CAMARA_URL,
             supported_inputs=[DocumentType.NIT, DocumentType.CUSTOM],
@@ -55,7 +55,9 @@ class CamaraComercioMedellinSource(BaseSource):
         search_term = input.document_number.strip()
         name = input.extra.get("name", "").strip()
         if not search_term and not name:
-            raise SourceError("co.camara_comercio_medellin", "Provide a NIT or company name (extra.name)")
+            raise SourceError(
+                "co.camara_comercio_medellin", "Provide a NIT or company name (extra.name)"
+            )
 
         query_term = search_term if search_term else name
         tipo = "nit" if input.document_type == DocumentType.NIT else "nombre"
@@ -69,6 +71,7 @@ class CamaraComercioMedellinSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.camara_comercio_medellin", tipo, query)
 
         with browser.page(CAMARA_URL) as page:
@@ -92,7 +95,9 @@ class CamaraComercioMedellinSource(BaseSource):
                     'input[type="text"]'
                 )
                 if not search_input:
-                    raise SourceError("co.camara_comercio_medellin", "Could not find search input field")
+                    raise SourceError(
+                        "co.camara_comercio_medellin", "Could not find search input field"
+                    )
 
                 search_input.fill(query)
                 logger.info("Searching Cámara Medellín for: %s (type=%s)", query, tipo)
@@ -135,12 +140,15 @@ class CamaraComercioMedellinSource(BaseSource):
         body_text = page.inner_text("body")
         body_lower = body_text.lower()
 
-        no_records = any(phrase in body_lower for phrase in [
-            "no se encontr",
-            "sin resultados",
-            "no hay resultados",
-            "0 resultados",
-        ])
+        no_records = any(
+            phrase in body_lower
+            for phrase in [
+                "no se encontr",
+                "sin resultados",
+                "no hay resultados",
+                "0 resultados",
+            ]
+        )
 
         # Parse table rows for expedientes
         expedientes = []
@@ -149,13 +157,15 @@ class CamaraComercioMedellinSource(BaseSource):
             cells = row.query_selector_all("td")
             if len(cells) >= 3:
                 cell_texts = [c.inner_text().strip() for c in cells]
-                expedientes.append(ExpedienteMedellin(
-                    matricula=cell_texts[0] if cell_texts else "",
-                    razon_social=cell_texts[1] if len(cell_texts) > 1 else "",
-                    estado=cell_texts[2] if len(cell_texts) > 2 else "",
-                    tipo=cell_texts[3] if len(cell_texts) > 3 else "",
-                    fecha_matricula=cell_texts[4] if len(cell_texts) > 4 else "",
-                ))
+                expedientes.append(
+                    ExpedienteMedellin(
+                        matricula=cell_texts[0] if cell_texts else "",
+                        razon_social=cell_texts[1] if len(cell_texts) > 1 else "",
+                        estado=cell_texts[2] if len(cell_texts) > 2 else "",
+                        tipo=cell_texts[3] if len(cell_texts) > 3 else "",
+                        fecha_matricula=cell_texts[4] if len(cell_texts) > 4 else "",
+                    )
+                )
 
         if no_records:
             mensaje = "No se encontraron expedientes"

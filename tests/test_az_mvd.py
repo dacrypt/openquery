@@ -67,6 +67,7 @@ class TestAzMvdSourceMeta:
 
     def test_meta_supported_inputs(self):
         from openquery.sources.base import DocumentType
+
         source = AzMvdSource()
         meta = source.meta()
         assert DocumentType.VIN in meta.supported_inputs
@@ -112,9 +113,7 @@ class TestParseResult:
     def test_parse_clear_no_lien(self):
         source = AzMvdSource()
         page = self._make_page(
-            "Title Check Results\n"
-            "Title Status: Clear\n"
-            "No lien reported for this vehicle.\n",
+            "Title Check Results\nTitle Status: Clear\nNo lien reported for this vehicle.\n",
         )
         result = source._parse_results(page, "1HGCM82633A004352")
         assert result.vin == "1HGCM82633A004352"
@@ -124,9 +123,7 @@ class TestParseResult:
     def test_parse_lien_reported(self):
         source = AzMvdSource()
         page = self._make_page(
-            "Title Check Results\n"
-            "Title Status: Clear\n"
-            "Lien: First National Bank\n",
+            "Title Check Results\nTitle Status: Clear\nLien: First National Bank\n",
         )
         result = source._parse_results(page, "1HGCM82633A004352")
         assert result.lien_status == "Lien Reported"
@@ -134,9 +131,7 @@ class TestParseResult:
     def test_parse_salvage_title(self):
         source = AzMvdSource()
         page = self._make_page(
-            "Title Check Results\n"
-            "Title Status: Salvage\n"
-            "No liens on record.\n",
+            "Title Check Results\nTitle Status: Salvage\nNo liens on record.\n",
         )
         result = source._parse_results(page, "1HGCM82633A004352")
         assert result.title_status == "Salvage"
@@ -144,9 +139,7 @@ class TestParseResult:
     def test_parse_rebuilt_title(self):
         source = AzMvdSource()
         page = self._make_page(
-            "Title Check Results\n"
-            "This vehicle has a rebuilt title.\n"
-            "No lien found.\n",
+            "Title Check Results\nThis vehicle has a rebuilt title.\nNo lien found.\n",
         )
         result = source._parse_results(page, "1HGCM82633A004352")
         assert result.title_status == "Rebuilt"
@@ -160,9 +153,7 @@ class TestParseResult:
     def test_parse_vehicle_description(self):
         source = AzMvdSource()
         page = self._make_page(
-            "Title Check Results\n"
-            "Clear title.\n"
-            "No lien.\n",
+            "Title Check Results\nClear title.\nNo lien.\n",
             selector_text="2003 HONDA ACCORD EX",
         )
         result = source._parse_results(page, "1HGCM82633A004352")

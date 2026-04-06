@@ -67,6 +67,7 @@ class RegistroCivilSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("cl.registro_civil", "run", run)
 
         with browser.page(REGISTRO_CIVIL_URL) as page:

@@ -19,8 +19,8 @@ from pydantic import BaseModel
 
 from openquery.exceptions import SourceError
 from openquery.models.co.proveedores_ficticios import (
-    ProveedorFicticioEntry,
     ProveedoresFicticiosResult,
+    ProveedorFicticioEntry,
 )
 from openquery.sources import register
 from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceMeta
@@ -79,13 +79,15 @@ class ProveedoresFicticiosSource(BaseSource):
 
             registros = []
             for entry in data:
-                registros.append(ProveedorFicticioEntry(
-                    nit=entry.get("nit", ""),
-                    razon_social=entry.get("razon_social", entry.get("nombre", "")),
-                    resolucion=entry.get("resolucion", entry.get("numero_resolucion", "")),
-                    fecha_resolucion=entry.get("fecha_resolucion", entry.get("fecha", "")),
-                    estado=entry.get("estado", ""),
-                ))
+                registros.append(
+                    ProveedorFicticioEntry(
+                        nit=entry.get("nit", ""),
+                        razon_social=entry.get("razon_social", entry.get("nombre", "")),
+                        resolucion=entry.get("resolucion", entry.get("numero_resolucion", "")),
+                        fecha_resolucion=entry.get("fecha_resolucion", entry.get("fecha", "")),
+                        estado=entry.get("estado", ""),
+                    )
+                )
 
             return ProveedoresFicticiosResult(
                 queried_at=datetime.now(),
@@ -96,7 +98,9 @@ class ProveedoresFicticiosSource(BaseSource):
             )
 
         except httpx.HTTPStatusError as e:
-            raise SourceError("co.proveedores_ficticios", f"API returned HTTP {e.response.status_code}") from e
+            raise SourceError(
+                "co.proveedores_ficticios", f"API returned HTTP {e.response.status_code}"
+            ) from e
         except httpx.RequestError as e:
             raise SourceError("co.proveedores_ficticios", f"Request failed: {e}") from e
         except Exception as e:

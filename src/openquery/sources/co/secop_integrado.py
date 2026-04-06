@@ -71,18 +71,22 @@ class SecopIntegradoSource(BaseSource):
 
             contratos = []
             for row in data:
-                contratos.append(SecopContrato(
-                    entidad=row.get("nombre_de_la_entidad", ""),
-                    nit_entidad=row.get("nit_de_la_entidad", ""),
-                    proveedor=row.get("nombre_del_proveedor", row.get("proveedor_adjudicado", "")),
-                    documento_proveedor=row.get("documento_proveedor", ""),
-                    estado=row.get("estado_del_proceso", ""),
-                    modalidad=row.get("modalidad_de_contrataci_n", ""),
-                    objeto=row.get("objeto_a_contratar", "")[:200],
-                    valor=row.get("valor_total_de_adjudicacion", row.get("valor_contrato", "")),
-                    departamento=row.get("departamento_entidad", ""),
-                    municipio=row.get("municipio_entidad", ""),
-                ))
+                contratos.append(
+                    SecopContrato(
+                        entidad=row.get("nombre_de_la_entidad", ""),
+                        nit_entidad=row.get("nit_de_la_entidad", ""),
+                        proveedor=row.get(
+                            "nombre_del_proveedor", row.get("proveedor_adjudicado", "")
+                        ),
+                        documento_proveedor=row.get("documento_proveedor", ""),
+                        estado=row.get("estado_del_proceso", ""),
+                        modalidad=row.get("modalidad_de_contrataci_n", ""),
+                        objeto=row.get("objeto_a_contratar", "")[:200],
+                        valor=row.get("valor_total_de_adjudicacion", row.get("valor_contrato", "")),
+                        departamento=row.get("departamento_entidad", ""),
+                        municipio=row.get("municipio_entidad", ""),
+                    )
+                )
 
             return SecopIntegradoResult(
                 query=query_label,
@@ -91,7 +95,9 @@ class SecopIntegradoSource(BaseSource):
             )
 
         except httpx.HTTPStatusError as e:
-            raise SourceError("co.secop_integrado", f"API returned HTTP {e.response.status_code}") from e
+            raise SourceError(
+                "co.secop_integrado", f"API returned HTTP {e.response.status_code}"
+            ) from e
         except httpx.RequestError as e:
             raise SourceError("co.secop_integrado", f"Request failed: {e}") from e
         except Exception as e:

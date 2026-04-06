@@ -93,7 +93,7 @@ class AfipCuitSource(BaseSource):
         return SourceMeta(
             name="ar.afip_cuit",
             display_name="AFIP — Constancia de CUIT",
-            description="Argentine federal taxpayer registry: business name, activities, and tax regime",
+            description="Argentine federal taxpayer registry: business name, activities, and tax regime",  # noqa: E501
             country="AR",
             url=AFIP_URL,
             supported_inputs=[DocumentType.CUSTOM],
@@ -119,6 +119,7 @@ class AfipCuitSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("ar.afip_cuit", "cuit", cuit)
 
         with browser.page(AFIP_URL, wait_until="networkidle") as page:
@@ -134,7 +135,9 @@ class AfipCuitSource(BaseSource):
                     if "captcha" in err_msg or "validacion" in err_msg:
                         logger.warning(
                             "Attempt %d/%d: captcha failed, retrying: %s",
-                            attempt, MAX_RETRIES, e,
+                            attempt,
+                            MAX_RETRIES,
+                            e,
                         )
                         # Reload for fresh captcha
                         page.goto(AFIP_URL, wait_until="networkidle")
@@ -144,7 +147,11 @@ class AfipCuitSource(BaseSource):
         raise last_error  # type: ignore[misc]
 
     def _do_query(
-        self, page, cuit: str, solver, collector,
+        self,
+        page,
+        cuit: str,
+        solver,
+        collector,
     ) -> AfipCuitResult:
         """Single query attempt against AFIP."""
         try:
@@ -165,11 +172,11 @@ class AfipCuitSource(BaseSource):
                 captcha_bytes = captcha_img.screenshot()
                 if captcha_bytes:
                     captcha_text = solver.solve(
-                        captcha_bytes, length="6", charset="alphanumeric",
+                        captcha_bytes,
+                        length="6",
+                        charset="alphanumeric",
                     )
-                    token_input = page.query_selector(
-                        '#token, input[name="token"]'
-                    )
+                    token_input = page.query_selector('#token, input[name="token"]')
                     if token_input:
                         token_input.fill(captcha_text)
                         logger.info("Solved CAPTCHA: %s", captcha_text)
@@ -179,8 +186,7 @@ class AfipCuitSource(BaseSource):
 
             # Submit — exact selector from site: button.ag-btn-primary
             submit = page.query_selector(
-                'button.ag-btn-primary, '
-                'button[type="submit"], input[type="submit"]'
+                'button.ag-btn-primary, button[type="submit"], input[type="submit"]'
             )
             if submit:
                 submit.click()
@@ -206,7 +212,8 @@ class AfipCuitSource(BaseSource):
 
             if collector:
                 result.audit = collector.generate_pdf(
-                    page, result.model_dump_json(),
+                    page,
+                    result.model_dump_json(),
                 )
 
             return result
@@ -225,7 +232,10 @@ class AfipCuitSource(BaseSource):
 
         # Parse fields
         field_patterns = [
-            (r"(?:raz[oó]n\s*social|apellido\s*y\s*nombre|denominaci[oó]n)[:\s]+([^\n]+)", "razon_social"),
+            (
+                r"(?:raz[oó]n\s*social|apellido\s*y\s*nombre|denominaci[oó]n)[:\s]+([^\n]+)",
+                "razon_social",
+            ),
             (r"(?:tipo\s*(?:de\s*)?persona)[:\s]+([^\n]+)", "tipo_persona"),
             (r"(?:estado)[:\s]+([^\n]+)", "estado"),
             (r"(?:domicilio\s*fiscal)[:\s]+([^\n]+)", "domicilio_fiscal"),
@@ -240,7 +250,9 @@ class AfipCuitSource(BaseSource):
 
         # Parse actividades
         actividades = re.findall(
-            r"(?:actividad|actividades)[:\s]+([^\n]+)", body_text, re.IGNORECASE,
+            r"(?:actividad|actividades)[:\s]+([^\n]+)",
+            body_text,
+            re.IGNORECASE,
         )
         if actividades:
             result.actividades = [a.strip() for a in actividades]

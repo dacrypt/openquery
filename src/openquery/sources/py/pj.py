@@ -57,6 +57,7 @@ class PyPjSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("py.pj", "custom", case_number)
 
         with browser.page(CSJ_URL) as page:

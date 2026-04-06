@@ -69,6 +69,7 @@ class HaciendaSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("pr.hacienda", "search_value", search_value)
 
         with browser.page(HACIENDA_URL) as page:
@@ -161,6 +162,8 @@ class HaciendaSource(BaseSource):
         result.details = details
         logger.info(
             "Hacienda result — merchant=%s, tax_status=%s, registration_status=%s",
-            result.merchant_name, result.tax_status, result.registration_status,
+            result.merchant_name,
+            result.tax_status,
+            result.registration_status,
         )
         return result

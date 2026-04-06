@@ -15,8 +15,8 @@ class FasecoldaResult(BaseModel):
 
     marca: str = ""
     linea: str = ""
-    modelo: int = 0          # year
-    valor: int = 0           # reference price COP
+    modelo: int = 0  # year
+    valor: int = 0  # reference price COP
     cilindraje: int = 0
     combustible: str = ""
     transmision: str = ""

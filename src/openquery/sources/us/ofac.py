@@ -44,7 +44,12 @@ class OfacSource(BaseSource):
             description="US Treasury OFAC Specially Designated Nationals (SDN) sanctions screening",
             country="US",
             url=OFAC_SEARCH_URL,
-            supported_inputs=[DocumentType.CEDULA, DocumentType.NIT, DocumentType.PASSPORT, DocumentType.CUSTOM],
+            supported_inputs=[
+                DocumentType.CEDULA,
+                DocumentType.NIT,
+                DocumentType.PASSPORT,
+                DocumentType.CUSTOM,
+            ],
             requires_captcha=False,
             requires_browser=False,
             rate_limit_rpm=20,
@@ -71,7 +76,6 @@ class OfacSource(BaseSource):
                 xml_content = resp.content
 
             root = ET.fromstring(xml_content)
-            ns = {"sdn": "https://sanctionslistservice.ofac.treas.gov/api/PublicationPreview/exports/SDN_ADVANCED.XML"}
 
             # Try with and without namespace
             query_lower = query.lower()
@@ -100,7 +104,11 @@ class OfacSource(BaseSource):
                     sdn_type = sdn_type_elem.text if sdn_type_elem is not None else ""
 
                     remarks_elem = entry.find("remarks") or entry.find("{*}remarks")
-                    remarks = remarks_elem.text[:200] if remarks_elem is not None and remarks_elem.text else ""
+                    remarks = (
+                        remarks_elem.text[:200]
+                        if remarks_elem is not None and remarks_elem.text
+                        else ""
+                    )
 
                     # Get programs
                     programs = []
@@ -109,14 +117,16 @@ class OfacSource(BaseSource):
                             if prog.text:
                                 programs.append(prog.text.strip())
 
-                    matches.append(OfacEntry(
-                        uid=uid,
-                        name=full_name,
-                        type=sdn_type,
-                        programs=programs,
-                        remarks=remarks,
-                        score=100.0,  # Exact XML match
-                    ))
+                    matches.append(
+                        OfacEntry(
+                            uid=uid,
+                            name=full_name,
+                            type=sdn_type,
+                            programs=programs,
+                            remarks=remarks,
+                            score=100.0,  # Exact XML match
+                        )
+                    )
 
             return OfacResult(
                 queried_at=datetime.now(),

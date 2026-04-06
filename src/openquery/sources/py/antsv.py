@@ -59,6 +59,7 @@ class PyAntsvSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("py.antsv", "custom", f"{brand}_{model}_{year}")
 
         with browser.page(ANTSV_URL) as page:

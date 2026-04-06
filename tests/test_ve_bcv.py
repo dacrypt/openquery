@@ -121,9 +121,7 @@ class TestBcvParseResult:
         assert result.eur_rate == "39,20"
 
     def test_multiple_currencies(self):
-        html = (
-            "<body>USD 36,50 EUR 39,20 CNY 5,03 TRY 1,12 RUB 0,40</body>"
-        )
+        html = "<body>USD 36,50 EUR 39,20 CNY 5,03 TRY 1,12 RUB 0,40</body>"
         result = self._parse(html)
         assert result.usd_rate == "36,50"
         assert result.eur_rate == "39,20"

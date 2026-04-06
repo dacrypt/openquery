@@ -67,6 +67,7 @@ class InttSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("ve.intt", "placa", placa)
 
         with browser.page(INTT_URL) as page:

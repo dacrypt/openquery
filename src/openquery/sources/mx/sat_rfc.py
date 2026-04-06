@@ -62,6 +62,7 @@ class SatRfcSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("mx.sat_rfc", "rfc", rfc)
 
         with browser.page(SAT_RFC_URL) as page:

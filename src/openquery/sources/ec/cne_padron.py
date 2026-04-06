@@ -59,7 +59,9 @@ class CnePadronSource(BaseSource):
         fecha_nacimiento = input.extra.get("fecha_nacimiento", "").strip()
         return self._query(cedula, fecha_nacimiento, audit=input.audit)
 
-    def _query(self, cedula: str, fecha_nacimiento: str = "", audit: bool = False) -> CnePadronResult:
+    def _query(
+        self, cedula: str, fecha_nacimiento: str = "", audit: bool = False
+    ) -> CnePadronResult:
         from openquery.core.browser import BrowserManager
 
         browser = BrowserManager(headless=self._headless, timeout=self._timeout)
@@ -67,6 +69,7 @@ class CnePadronSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("ec.cne_padron", "cedula", cedula)
 
         with browser.page(CNE_URL) as page:

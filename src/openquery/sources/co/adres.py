@@ -26,9 +26,7 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 logger = logging.getLogger(__name__)
 
 # Go directly to the iframe URL — bypasses the parent page
-ADRES_URL = (
-    "https://aplicaciones.adres.gov.co/BDUA_Internet/Pages/ConsultarAfiliadoWeb_2.aspx"
-)
+ADRES_URL = "https://aplicaciones.adres.gov.co/BDUA_Internet/Pages/ConsultarAfiliadoWeb_2.aspx"
 
 DOC_TYPE_MAP = {
     DocumentType.CEDULA: "CC",
@@ -60,13 +58,14 @@ class AdresSource(BaseSource):
 
     def query(self, input: QueryInput) -> BaseModel:
         if input.document_type not in DOC_TYPE_MAP:
-            raise SourceError(
-                "co.adres", f"Unsupported document type: {input.document_type}"
-            )
+            raise SourceError("co.adres", f"Unsupported document type: {input.document_type}")
         return self._query(input.document_type, input.document_number, audit=input.audit)
 
     def _query(
-        self, doc_type: DocumentType, doc_number: str, audit: bool = False,
+        self,
+        doc_type: DocumentType,
+        doc_number: str,
+        audit: bool = False,
     ) -> AdresResult:
         from openquery.core.browser import BrowserManager
 
@@ -75,6 +74,7 @@ class AdresSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.adres", str(doc_type), doc_number)
 
         with browser.page(ADRES_URL) as page:
@@ -93,7 +93,8 @@ class AdresSource(BaseSource):
                 )
                 if doc_select:
                     page.select_option(
-                        "#tipoDoc, #ddlTipoDocumento", value=adres_type,
+                        "#tipoDoc, #ddlTipoDocumento",
+                        value=adres_type,
                     )
                 logger.info("Selected document type: %s", adres_type)
 
@@ -108,15 +109,14 @@ class AdresSource(BaseSource):
 
                 # Solve reCAPTCHA Enterprise v3 if present
                 from openquery.core.captcha_middleware import solve_page_captchas
+
                 solve_page_captchas(page)
 
                 if collector:
                     collector.screenshot(page, "form_filled")
 
                 # Click "Consultar" — exact ID: #btnConsultar
-                submit = page.query_selector(
-                    "#btnConsultar, input[name='btnConsultar']"
-                )
+                submit = page.query_selector("#btnConsultar, input[name='btnConsultar']")
                 if submit:
                     submit.click()
                 else:
@@ -146,7 +146,10 @@ class AdresSource(BaseSource):
                 raise SourceError("co.adres", f"Query failed: {e}") from e
 
     def _parse_result(
-        self, page, doc_type: DocumentType, doc_number: str,
+        self,
+        page,
+        doc_type: DocumentType,
+        doc_number: str,
     ) -> AdresResult:
         """Parse the ADRES result page."""
         from datetime import datetime
@@ -159,9 +162,7 @@ class AdresSource(BaseSource):
         )
 
         # Try to parse from a result table (GridView)
-        rows = page.query_selector_all(
-            "table tr, #gvAfiliados tr, .grid tr"
-        )
+        rows = page.query_selector_all("table tr, #gvAfiliados tr, .grid tr")
 
         if len(rows) >= 2:
             # First row is header, second row is data

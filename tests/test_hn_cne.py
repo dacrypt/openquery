@@ -95,7 +95,7 @@ class TestHnCneSourceMeta:
     def test_hyphens_stripped_from_dni(self):
         from openquery.sources.hn.cne import HnCneSource
 
-        src = HnCneSource()
+        HnCneSource()
         # Just verify the stripping logic — no browser call
         dni_with_hyphens = "0801-1999-01234"
         cleaned = dni_with_hyphens.replace("-", "")

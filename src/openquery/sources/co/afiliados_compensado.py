@@ -39,7 +39,7 @@ class AfiliadosCompensadoSource(BaseSource):
         return SourceMeta(
             name="co.afiliados_compensado",
             display_name="Cajas de Compensaci\u00f3n \u2014 Afiliados",
-            description="Colombian compensation fund (Caja de Compensaci\u00f3n) affiliation status",
+            description="Colombian compensation fund (Caja de Compensaci\u00f3n) affiliation status",  # noqa: E501
             country="CO",
             url=SSF_URL,
             supported_inputs=[DocumentType.CEDULA, DocumentType.PASSPORT],
@@ -65,6 +65,7 @@ class AfiliadosCompensadoSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.afiliados_compensado", tipo, documento)
 
         with browser.page(SSF_URL, wait_until="commit") as page:
@@ -100,7 +101,9 @@ class AfiliadosCompensadoSource(BaseSource):
                     'input[type="text"]'
                 )
                 if not doc_input:
-                    raise SourceError("co.afiliados_compensado", "Could not find document input field")
+                    raise SourceError(
+                        "co.afiliados_compensado", "Could not find document input field"
+                    )
 
                 doc_input.fill(documento)
                 logger.info("Filled document: %s", documento)
@@ -145,13 +148,16 @@ class AfiliadosCompensadoSource(BaseSource):
         body_lower = body_text.lower()
 
         # Check for no records
-        no_records = any(phrase in body_lower for phrase in [
-            "no se encontr",
-            "no aparece",
-            "no registra",
-            "sin resultados",
-            "no tiene afiliaci",
-        ])
+        no_records = any(
+            phrase in body_lower
+            for phrase in [
+                "no se encontr",
+                "no aparece",
+                "no registra",
+                "sin resultados",
+                "no tiene afiliaci",
+            ]
+        )
 
         nombre = ""
         caja_compensacion = ""
@@ -168,7 +174,9 @@ class AfiliadosCompensadoSource(BaseSource):
                 if len(parts) > 1 and not nombre:
                     nombre = parts[1].strip()
 
-            if any(label in lower for label in ["caja de compensaci", "caja compensaci", "entidad"]):
+            if any(
+                label in lower for label in ["caja de compensaci", "caja compensaci", "entidad"]
+            ):
                 parts = stripped.split(":")
                 if len(parts) > 1 and not caja_compensacion:
                     caja_compensacion = parts[1].strip()

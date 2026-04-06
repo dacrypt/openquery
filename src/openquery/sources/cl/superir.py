@@ -39,7 +39,7 @@ class SuperirSource(BaseSource):
         return SourceMeta(
             name="cl.superir",
             display_name="Superir — Insolvencia y Reemprendimiento",
-            description="Chilean insolvency and bankruptcy proceedings (Superintendencia de Insolvencia)",
+            description="Chilean insolvency and bankruptcy proceedings (Superintendencia de Insolvencia)",  # noqa: E501
             country="CL",
             url=SUPERIR_URL,
             supported_inputs=[DocumentType.CUSTOM],
@@ -62,6 +62,7 @@ class SuperirSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("cl.superir", "rut", rut)
 
         with browser.page(SUPERIR_URL) as page:
@@ -136,13 +137,15 @@ class SuperirSource(BaseSource):
                 continue
             cells = text.split("\t")
             if len(cells) >= 2:
-                procedimientos.append(BankruptcyProceeding(
-                    tipo_procedimiento=cells[0].strip() if cells else "",
-                    estado=cells[1].strip() if len(cells) > 1 else "",
-                    tribunal=cells[2].strip() if len(cells) > 2 else "",
-                    fecha_resolucion=cells[3].strip() if len(cells) > 3 else "",
-                    veedor_liquidador=cells[4].strip() if len(cells) > 4 else "",
-                ))
+                procedimientos.append(
+                    BankruptcyProceeding(
+                        tipo_procedimiento=cells[0].strip() if cells else "",
+                        estado=cells[1].strip() if len(cells) > 1 else "",
+                        tribunal=cells[2].strip() if len(cells) > 2 else "",
+                        fecha_resolucion=cells[3].strip() if len(cells) > 3 else "",
+                        veedor_liquidador=cells[4].strip() if len(cells) > 4 else "",
+                    )
+                )
 
         result.procedimientos = procedimientos
         result.total_procedimientos = len(procedimientos)

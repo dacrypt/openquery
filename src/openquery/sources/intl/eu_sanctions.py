@@ -41,10 +41,15 @@ class EuSanctionsSource(BaseSource):
         return SourceMeta(
             name="intl.eu_sanctions",
             display_name="EU — Consolidated Financial Sanctions List",
-            description="EU Financial Sanctions File (FSF): persons, groups and entities subject to EU sanctions",
+            description="EU Financial Sanctions File (FSF): persons, groups and entities subject to EU sanctions",  # noqa: E501
             country="INTL",
             url=EU_PORTAL_URL,
-            supported_inputs=[DocumentType.CEDULA, DocumentType.NIT, DocumentType.PASSPORT, DocumentType.CUSTOM],
+            supported_inputs=[
+                DocumentType.CEDULA,
+                DocumentType.NIT,
+                DocumentType.PASSPORT,
+                DocumentType.CUSTOM,
+            ],
             requires_captcha=False,
             requires_browser=False,
             rate_limit_rpm=5,
@@ -55,7 +60,9 @@ class EuSanctionsSource(BaseSource):
         doc_number = input.document_number.strip()
 
         if not name and not doc_number:
-            raise SourceError("intl.eu_sanctions", "Provide a name (extra.name) or document number to search")
+            raise SourceError(
+                "intl.eu_sanctions", "Provide a name (extra.name) or document number to search"
+            )
 
         search_term = name if name else doc_number
         return self._search(search_term)
@@ -100,13 +107,15 @@ class EuSanctionsSource(BaseSource):
                         remarks.append(remark.text.strip())
                 details = "; ".join(remarks[:3])
 
-                entries.append(EuSanctionEntry(
-                    name=matched_name,
-                    entity_type=subject_type,
-                    program=program,
-                    listed_date=listed_date,
-                    details=details[:300],
-                ))
+                entries.append(
+                    EuSanctionEntry(
+                        name=matched_name,
+                        entity_type=subject_type,
+                        program=program,
+                        listed_date=listed_date,
+                        details=details[:300],
+                    )
+                )
 
             return EuSanctionsResult(
                 queried_at=datetime.now(),
@@ -116,7 +125,9 @@ class EuSanctionsSource(BaseSource):
             )
 
         except httpx.HTTPStatusError as e:
-            raise SourceError("intl.eu_sanctions", f"EU API returned HTTP {e.response.status_code}") from e
+            raise SourceError(
+                "intl.eu_sanctions", f"EU API returned HTTP {e.response.status_code}"
+            ) from e
         except httpx.RequestError as e:
             raise SourceError("intl.eu_sanctions", f"Request failed: {e}") from e
         except ET.ParseError as e:

@@ -60,6 +60,7 @@ class FopepSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.fopep", "cedula", cedula)
 
         with browser.page(FOPEP_URL) as page:
@@ -119,19 +120,25 @@ class FopepSource(BaseSource):
         body_text = page.inner_text("body")
         body_lower = body_text.lower()
 
-        esta_en_nomina = any(phrase in body_lower for phrase in [
-            "en nómina",
-            "pensionado activo",
-            "se encuentra",
-            "registra pensión",
-        ])
+        esta_en_nomina = any(
+            phrase in body_lower
+            for phrase in [
+                "en nómina",
+                "pensionado activo",
+                "se encuentra",
+                "registra pensión",
+            ]
+        )
 
-        no_en_nomina = any(phrase in body_lower for phrase in [
-            "no se encuentra",
-            "no registra",
-            "sin resultados",
-            "no está",
-        ])
+        no_en_nomina = any(
+            phrase in body_lower
+            for phrase in [
+                "no se encuentra",
+                "no registra",
+                "sin resultados",
+                "no está",
+            ]
+        )
 
         if no_en_nomina:
             esta_en_nomina = False

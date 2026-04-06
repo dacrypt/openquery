@@ -74,6 +74,7 @@ class TestBcuSourceMeta:
 
     def test_meta_supported_inputs(self):
         from openquery.sources.base import DocumentType
+
         source = BcuSource()
         assert DocumentType.CUSTOM in source.meta().supported_inputs
 

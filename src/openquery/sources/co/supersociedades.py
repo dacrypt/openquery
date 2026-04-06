@@ -39,7 +39,7 @@ class SupersociedadesSource(BaseSource):
         return SourceMeta(
             name="co.supersociedades",
             display_name="Supersociedades — Procesos de Insolvencia",
-            description="Colombian insolvency proceedings under Ley 1116 (Superintendencia de Sociedades)",
+            description="Colombian insolvency proceedings under Ley 1116 (Superintendencia de Sociedades)",  # noqa: E501
             country="CO",
             url=SUPERSOCIEDADES_URL,
             supported_inputs=[DocumentType.NIT, DocumentType.CEDULA, DocumentType.CUSTOM],
@@ -65,6 +65,7 @@ class SupersociedadesSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.supersociedades", "nit", query)
 
         with browser.page(SUPERSOCIEDADES_URL) as page:
@@ -140,13 +141,15 @@ class SupersociedadesSource(BaseSource):
                 continue
             cells = text.split("\t")
             if len(cells) >= 2:
-                procesos.append(InsolvencyProceeding(
-                    tipo_proceso=cells[0].strip() if cells else "",
-                    estado=cells[1].strip() if len(cells) > 1 else "",
-                    fecha_admision=cells[2].strip() if len(cells) > 2 else "",
-                    juzgado=cells[3].strip() if len(cells) > 3 else "",
-                    promotor=cells[4].strip() if len(cells) > 4 else "",
-                ))
+                procesos.append(
+                    InsolvencyProceeding(
+                        tipo_proceso=cells[0].strip() if cells else "",
+                        estado=cells[1].strip() if len(cells) > 1 else "",
+                        fecha_admision=cells[2].strip() if len(cells) > 2 else "",
+                        juzgado=cells[3].strip() if len(cells) > 3 else "",
+                        promotor=cells[4].strip() if len(cells) > 4 else "",
+                    )
+                )
 
         result.procesos = procesos
         result.total_procesos = len(procesos)

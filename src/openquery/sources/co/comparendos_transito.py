@@ -62,9 +62,7 @@ class ComparendosTransitoSource(BaseSource):
 
         return self._query(input.document_number, audit=input.audit)
 
-    def _query(
-        self, search_term: str, audit: bool = False
-    ) -> ComparendosTransitoResult:
+    def _query(self, search_term: str, audit: bool = False) -> ComparendosTransitoResult:
         from openquery.core.browser import BrowserManager
 
         browser = BrowserManager(headless=self._headless, timeout=self._timeout)
@@ -72,9 +70,8 @@ class ComparendosTransitoSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
-            collector = AuditCollector(
-                "co.comparendos_transito", "cedula/placa", search_term
-            )
+
+            collector = AuditCollector("co.comparendos_transito", "cedula/placa", search_term)
 
         with browser.page(SIMIT_COMPARENDOS_URL) as page:
             try:
@@ -83,9 +80,7 @@ class ComparendosTransitoSource(BaseSource):
 
                 # Wait for the Angular SPA to render
                 logger.info("Waiting for SIMIT search form...")
-                input_locator = page.get_by_label(
-                    "Número de identificación o placa del vehículo"
-                )
+                input_locator = page.get_by_label("Número de identificación o placa del vehículo")
                 input_locator.wait_for(state="visible", timeout=15000)
 
                 # Fill search term
@@ -99,9 +94,7 @@ class ComparendosTransitoSource(BaseSource):
                 page.wait_for_timeout(2000)
 
                 # Click submit
-                submit_locator = page.get_by_role(
-                    "button", name="Realizar consulta"
-                )
+                submit_locator = page.get_by_role("button", name="Realizar consulta")
                 submit_locator.click()
                 logger.info("Clicked submit button")
 
@@ -142,9 +135,7 @@ class ComparendosTransitoSource(BaseSource):
             except SourceError:
                 raise
             except Exception as e:
-                raise SourceError(
-                    "co.comparendos_transito", f"Query failed: {e}"
-                ) from e
+                raise SourceError("co.comparendos_transito", f"Query failed: {e}") from e
 
     def _parse_result(self, page, search_term: str) -> ComparendosTransitoResult:
         """Parse individual comparendo records from the SIMIT detail page."""
@@ -189,10 +180,14 @@ class ComparendosTransitoSource(BaseSource):
                     numero=(cells[0].inner_text() or "").strip(),
                     fecha=(cells[1].inner_text() or "").strip(),
                     infraccion=(cells[2].inner_text() or "").strip(),
-                    codigo_infraccion=(cells[3].inner_text() or "").strip() if len(cells) > 3 else "",
+                    codigo_infraccion=(cells[3].inner_text() or "").strip()
+                    if len(cells) > 3
+                    else "",
                     valor=(cells[4].inner_text() or "").strip() if len(cells) > 4 else "",
                     estado=(cells[5].inner_text() or "").strip() if len(cells) > 5 else "",
-                    secretaria_transito=(cells[6].inner_text() or "").strip() if len(cells) > 6 else "",
+                    secretaria_transito=(cells[6].inner_text() or "").strip()
+                    if len(cells) > 6
+                    else "",
                     placa=(cells[7].inner_text() or "").strip() if len(cells) > 7 else "",
                 )
                 comparendos.append(comparendo)

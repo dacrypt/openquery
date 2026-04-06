@@ -33,7 +33,7 @@ class BoNitSource(BaseSource):
         return SourceMeta(
             name="bo.nit",
             display_name="SIN — Consulta NIT",
-            description="Bolivian tax registry: taxpayer name, status (Servicio de Impuestos Nacionales)",
+            description="Bolivian tax registry: taxpayer name, status (Servicio de Impuestos Nacionales)",  # noqa: E501
             country="BO",
             url=SIN_URL,
             supported_inputs=[DocumentType.NIT, DocumentType.CUSTOM],
@@ -56,6 +56,7 @@ class BoNitSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("bo.nit", "nit", nit)
 
         with browser.page(SIN_URL) as page:

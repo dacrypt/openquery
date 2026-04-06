@@ -1,0 +1,5 @@
+{"timestamp":"2026-04-04T03:30:08.213Z","level":"debug","type":"visual_verdict_parse_no_match","session_id":"","turn_id":"019d568a-0ab2-7a43-a906-6d84d954e89f"}
+{"timestamp":"2026-04-04T03:33:29.961Z","level":"debug","type":"visual_verdict_parse_no_match","session_id":"","turn_id":"019d568c-a616-7003-9c4b-8f23c11531d9"}
+{"timestamp":"2026-04-04T03:42:12.329Z","level":"debug","type":"visual_verdict_parse_no_match","session_id":"","turn_id":"019d5693-5423-70d3-9b5a-926bc48bce97"}
+{"timestamp":"2026-04-04T04:20:36.285Z","verdict":"PASS","raw_match":"Verdict: PASS","session_id":"","turn_id":"019d56b6-fc47-7973-b76d-13e91ad526ce","level":"info","type":"visual_verdict_persisted"}
+{"timestamp":"2026-04-04T04:33:15.408Z","verdict":"PASS","raw_match":"Verdict: PASS","session_id":"","turn_id":"019d56bf-be0e-7e71-90e5-7f3f08e3aa3e","level":"info","type":"visual_verdict_persisted"}

@@ -41,7 +41,7 @@ class AzMvdSource(BaseSource):
         return SourceMeta(
             name="us.az_mvd",
             display_name="Arizona MVD — Title & Lien Status",
-            description="Arizona Motor Vehicle Division title check — returns title status and lien information for a vehicle by VIN",
+            description="Arizona Motor Vehicle Division title check — returns title status and lien information for a vehicle by VIN",  # noqa: E501
             country="US",
             url=AZ_MVD_URL,
             supported_inputs=[DocumentType.VIN],
@@ -70,6 +70,7 @@ class AzMvdSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("us.az_mvd", "vin", vin)
 
         with browser.page(AZ_MVD_TITLE_URL) as page:

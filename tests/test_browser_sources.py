@@ -16,11 +16,13 @@ from openquery.sources.base import DocumentType, QueryInput
 # co.policia — parse_result logic
 # ===========================================================================
 
+
 class TestPoliciaParseResult:
     """Test _parse_result with mocked page.inner_text."""
 
     def _parse(self, body_text: str, cedula: str = "12345678"):
         from openquery.sources.co.policia import PoliciaSource
+
         page = MagicMock()
         page.inner_text.return_value = body_text
         src = PoliciaSource()
@@ -53,6 +55,7 @@ class TestPoliciaParseResult:
 class TestPoliciaSource:
     def test_meta(self):
         from openquery.sources.co.policia import PoliciaSource
+
         meta = PoliciaSource().meta()
         assert meta.name == "co.policia"
         assert DocumentType.CEDULA in meta.supported_inputs
@@ -60,21 +63,26 @@ class TestPoliciaSource:
 
     def test_unsupported_doc_type(self):
         from openquery.sources.co.policia import PoliciaSource
+
         src = PoliciaSource()
         with pytest.raises(SourceError, match="Only cedula"):
-            src.query(QueryInput(
-                document_type=DocumentType.PLATE,
-                document_number="ABC123",
-            ))
+            src.query(
+                QueryInput(
+                    document_type=DocumentType.PLATE,
+                    document_number="ABC123",
+                )
+            )
 
 
 # ===========================================================================
 # co.adres — parse_result logic
 # ===========================================================================
 
+
 class TestAdresParseResult:
     def _parse(self, body_text: str, rows_data=None, doc_number="12345"):
         from openquery.sources.co.adres import AdresSource
+
         page = MagicMock()
         page.inner_text.return_value = body_text
 
@@ -97,10 +105,30 @@ class TestAdresParseResult:
         return src._parse_result(page, DocumentType.CEDULA, doc_number)
 
     def test_table_parsing(self):
-        header = ["TipoDoc", "Numero", "Juan Perez", "ACTIVO", "SANITAS", "CONTRIBUTIVO",
-                   "COTIZANTE", "BOGOTA", "CUNDINAMARCA", "2020-01-15"]
-        data = ["CC", "12345", "Juan Perez", "ACTIVO", "SANITAS", "CONTRIBUTIVO",
-                "COTIZANTE", "BOGOTA", "CUNDINAMARCA", "2020-01-15"]
+        header = [
+            "TipoDoc",
+            "Numero",
+            "Juan Perez",
+            "ACTIVO",
+            "SANITAS",
+            "CONTRIBUTIVO",
+            "COTIZANTE",
+            "BOGOTA",
+            "CUNDINAMARCA",
+            "2020-01-15",
+        ]
+        data = [
+            "CC",
+            "12345",
+            "Juan Perez",
+            "ACTIVO",
+            "SANITAS",
+            "CONTRIBUTIVO",
+            "COTIZANTE",
+            "BOGOTA",
+            "CUNDINAMARCA",
+            "2020-01-15",
+        ]
         result = self._parse("", rows_data=[header, data])
         assert result.eps == "SANITAS"
         assert result.regimen == "CONTRIBUTIVO"
@@ -122,6 +150,7 @@ class TestAdresParseResult:
 class TestAdresSource:
     def test_meta(self):
         from openquery.sources.co.adres import AdresSource
+
         meta = AdresSource().meta()
         assert meta.name == "co.adres"
         assert DocumentType.CEDULA in meta.supported_inputs
@@ -130,21 +159,26 @@ class TestAdresSource:
 
     def test_unsupported_doc_type(self):
         from openquery.sources.co.adres import AdresSource
+
         src = AdresSource()
         with pytest.raises(SourceError, match="Unsupported document type"):
-            src.query(QueryInput(
-                document_type=DocumentType.PLATE,
-                document_number="ABC123",
-            ))
+            src.query(
+                QueryInput(
+                    document_type=DocumentType.PLATE,
+                    document_number="ABC123",
+                )
+            )
 
 
 # ===========================================================================
 # co.fasecolda
 # ===========================================================================
 
+
 class TestFasecoldaSource:
     def test_meta(self):
         from openquery.sources.co.fasecolda import FasecoldaSource
+
         meta = FasecoldaSource().meta()
         assert meta.name == "co.fasecolda"
         assert meta.requires_browser is True
@@ -152,21 +186,26 @@ class TestFasecoldaSource:
 
     def test_unsupported_doc_type(self):
         from openquery.sources.co.fasecolda import FasecoldaSource
+
         src = FasecoldaSource()
         with pytest.raises(SourceError, match="CUSTOM"):
-            src.query(QueryInput(
-                document_type=DocumentType.CEDULA,
-                document_number="123",
-            ))
+            src.query(
+                QueryInput(
+                    document_type=DocumentType.CEDULA,
+                    document_number="123",
+                )
+            )
 
 
 # ===========================================================================
 # co.recalls
 # ===========================================================================
 
+
 class TestRecallsSource:
     def test_meta(self):
         from openquery.sources.co.recalls import RecallsSource
+
         meta = RecallsSource().meta()
         assert meta.name == "co.recalls"
         assert meta.requires_browser is True
@@ -174,9 +213,12 @@ class TestRecallsSource:
 
     def test_unsupported_doc_type(self):
         from openquery.sources.co.recalls import RecallsSource
+
         src = RecallsSource()
         with pytest.raises(SourceError, match="CUSTOM"):
-            src.query(QueryInput(
-                document_type=DocumentType.CEDULA,
-                document_number="123",
-            ))
+            src.query(
+                QueryInput(
+                    document_type=DocumentType.CEDULA,
+                    document_number="123",
+                )
+            )

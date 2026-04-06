@@ -64,6 +64,7 @@ class SvTseSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("sv.tse", "dui", dui)
 
         with browser.page(TSE_URL) as page:

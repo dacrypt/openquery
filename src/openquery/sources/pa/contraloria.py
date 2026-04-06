@@ -36,7 +36,7 @@ class PaContraloriaSource(BaseSource):
         return SourceMeta(
             name="pa.contraloria",
             display_name="Contraloría — Noticias y Reportes",
-            description="Panama Contraloría General news and accountability reports (WordPress API)",
+            description="Panama Contraloría General news and accountability reports (WordPress API)",  # noqa: E501
             country="PA",
             url="https://www.contraloria.gob.pa/",
             supported_inputs=[DocumentType.CUSTOM],
@@ -63,17 +63,27 @@ class PaContraloriaSource(BaseSource):
 
             posts = []
             for p in data:
-                title = p.get("title", {}).get("rendered", "") if isinstance(p.get("title"), dict) else str(p.get("title", ""))
-                excerpt = p.get("excerpt", {}).get("rendered", "") if isinstance(p.get("excerpt"), dict) else ""
+                title = (
+                    p.get("title", {}).get("rendered", "")
+                    if isinstance(p.get("title"), dict)
+                    else str(p.get("title", ""))
+                )
+                excerpt = (
+                    p.get("excerpt", {}).get("rendered", "")
+                    if isinstance(p.get("excerpt"), dict)
+                    else ""
+                )
                 excerpt_clean = re.sub(r"<[^>]+>", "", excerpt).strip()[:200]
 
-                posts.append(ContraloriaPost(
-                    id=p.get("id", 0),
-                    titulo=re.sub(r"<[^>]+>", "", title).strip(),
-                    fecha=p.get("date", ""),
-                    extracto=excerpt_clean,
-                    url=p.get("link", ""),
-                ))
+                posts.append(
+                    ContraloriaPost(
+                        id=p.get("id", 0),
+                        titulo=re.sub(r"<[^>]+>", "", title).strip(),
+                        fecha=p.get("date", ""),
+                        extracto=excerpt_clean,
+                        url=p.get("link", ""),
+                    )
+                )
 
             return PaContraloriaResult(
                 queried_at=datetime.now(),
@@ -83,7 +93,9 @@ class PaContraloriaSource(BaseSource):
             )
 
         except httpx.HTTPStatusError as e:
-            raise SourceError("pa.contraloria", f"API returned HTTP {e.response.status_code}") from e
+            raise SourceError(
+                "pa.contraloria", f"API returned HTTP {e.response.status_code}"
+            ) from e
         except httpx.RequestError as e:
             raise SourceError("pa.contraloria", f"Request failed: {e}") from e
         except Exception as e:

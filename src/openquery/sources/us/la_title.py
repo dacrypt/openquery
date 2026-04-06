@@ -43,7 +43,7 @@ class LaTitleSource(BaseSource):
         return SourceMeta(
             name="us.la_title",
             display_name="Louisiana OMV — Title Verification",
-            description="Louisiana Office of Motor Vehicles title verification — checks if a vehicle title is valid by VIN or title number",
+            description="Louisiana Office of Motor Vehicles title verification — checks if a vehicle title is valid by VIN or title number",  # noqa: E501
             country="US",
             url=LA_TITLE_URL,
             supported_inputs=[DocumentType.VIN, DocumentType.CUSTOM],
@@ -113,6 +113,7 @@ class LaTitleSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("us.la_title", search_type, search_value)
 
         with browser.page(LA_TITLE_URL) as page:
@@ -191,21 +192,27 @@ class LaTitleSource(BaseSource):
 
         # Detect valid/invalid title status — check negative phrases first to avoid
         # false positives (e.g. "no title found" contains "title found")
-        if any(phrase in body_text for phrase in (
-            "title is not valid",
-            "invalid title",
-            "no title found",
-            "not found",
-            "no record",
-        )):
+        if any(
+            phrase in body_text
+            for phrase in (
+                "title is not valid",
+                "invalid title",
+                "no title found",
+                "not found",
+                "no record",
+            )
+        ):
             result.title_valid = False
             details["status"] = "not_found"
-        elif any(phrase in body_text for phrase in (
-            "title is valid",
-            "valid title",
-            "title found",
-            "active title",
-        )):
+        elif any(
+            phrase in body_text
+            for phrase in (
+                "title is valid",
+                "valid title",
+                "title found",
+                "active title",
+            )
+        ):
             result.title_valid = True
             details["status"] = "valid"
 

@@ -129,14 +129,19 @@ class SisaRefesSource(BaseSource):
         servicios = record.get("servicios", [])
         if isinstance(servicios, list):
             result.services = [
-                s.get("nombre", str(s)) if isinstance(s, dict) else str(s)
-                for s in servicios
+                s.get("nombre", str(s)) if isinstance(s, dict) else str(s) for s in servicios
             ]
 
         # Flatten remaining keys into details
         skip = {
-            "nombre", "tipoEstablecimiento", "tipo", "cuit",
-            "provincia", "sector", "domicilio", "servicios",
+            "nombre",
+            "tipoEstablecimiento",
+            "tipo",
+            "cuit",
+            "provincia",
+            "sector",
+            "domicilio",
+            "servicios",
         }
         result.details = {
             k: str(v)

@@ -68,6 +68,7 @@ class SeniatSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("ve.seniat", "custom", rif)
 
         with browser.page(SENIAT_URL) as page:

@@ -39,8 +39,7 @@ class RegistroPropiedadSource(BaseSource):
             name="pr.registro_propiedad",
             display_name="Registro de la Propiedad — Puerto Rico",
             description=(
-                "Puerto Rico property registry: ownership, liens, "
-                "encumbrances, and property value"
+                "Puerto Rico property registry: ownership, liens, encumbrances, and property value"
             ),
             country="PR",
             url=REGISTRO_PROPIEDAD_URL,
@@ -70,6 +69,7 @@ class RegistroPropiedadSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("pr.registro_propiedad", "search_value", search_value)
 
         with browser.page(REGISTRO_PROPIEDAD_URL) as page:
@@ -170,6 +170,7 @@ class RegistroPropiedadSource(BaseSource):
         result.details = details
         logger.info(
             "RegistroPropiedad result — property_number=%s, owner=%s",
-            result.property_number, result.owner,
+            result.property_number,
+            result.owner,
         )
         return result

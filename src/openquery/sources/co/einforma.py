@@ -50,7 +50,7 @@ class EinformaSource(BaseSource):
     def query(self, input: QueryInput) -> BaseModel:
         raise SourceError(
             "co.einforma",
-            "Source deprecated: einforma.co search results redirect to an unrelated third-party site — automated access broken since 2026-04",
+            "Source deprecated: einforma.co search results redirect to an unrelated third-party site — automated access broken since 2026-04",  # noqa: E501
         )
 
     def _query(self, query: str, tipo: str, audit: bool = False) -> EinformaResult:
@@ -61,6 +61,7 @@ class EinformaSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.einforma", tipo, query)
 
         with browser.page(EINFORMA_URL) as page:
@@ -73,7 +74,7 @@ class EinformaSource(BaseSource):
 
                 # Fill search input — exact IDs from site: #search (mobile), #search2 (desktop)
                 search_input = page.query_selector(
-                    '#search, #search2, '
+                    "#search, #search2, "
                     'input[type="search"], '
                     'input[type="text"][placeholder*="empresa"], '
                     'input[type="text"]'
@@ -89,7 +90,7 @@ class EinformaSource(BaseSource):
 
                 # Submit — use the button or press Enter (JS-based form action)
                 submit_btn = page.query_selector(
-                    '#boton_buscador_nacional, '
+                    "#boton_buscador_nacional, "
                     'input[type="submit"].searchbox-submit, '
                     'input[type="button"].searchbox-submit'
                 )
@@ -106,8 +107,8 @@ class EinformaSource(BaseSource):
                 # Click first result if we get a list
                 first_link = page.query_selector(
                     'a[href*="empresa"], a[href*="company"], '
-                    '.resultado a, .result-item a, '
-                    'table tbody tr a'
+                    ".resultado a, .result-item a, "
+                    "table tbody tr a"
                 )
                 if first_link:
                     first_link.click()
@@ -136,13 +137,16 @@ class EinformaSource(BaseSource):
         body_text = page.inner_text("body")
         body_lower = body_text.lower()
 
-        no_records = any(phrase in body_lower for phrase in [
-            "no se encontr",
-            "sin resultados",
-            "no hay resultados",
-            "0 resultados",
-            "no hemos encontrado",
-        ])
+        no_records = any(
+            phrase in body_lower
+            for phrase in [
+                "no se encontr",
+                "sin resultados",
+                "no hay resultados",
+                "0 resultados",
+                "no hemos encontrado",
+            ]
+        )
 
         result = EinformaResult(
             queried_at=datetime.now(),
@@ -154,7 +158,9 @@ class EinformaSource(BaseSource):
             stripped = line.strip()
             lower = stripped.lower()
 
-            if any(label in lower for label in ["raz\u00f3n social", "razon social", "nombre empresa"]):
+            if any(
+                label in lower for label in ["raz\u00f3n social", "razon social", "nombre empresa"]
+            ):
                 parts = stripped.split(":")
                 if len(parts) > 1 and not result.razon_social:
                     result.razon_social = parts[1].strip()
@@ -194,7 +200,9 @@ class EinformaSource(BaseSource):
             elif "representante" in lower and ":" in stripped and not result.representante_legal:
                 result.representante_legal = stripped.split(":", 1)[1].strip()
 
-            elif any(label in lower for label in ["fecha constituci", "fecha de constituci", "fundaci"]):
+            elif any(
+                label in lower for label in ["fecha constituci", "fecha de constituci", "fundaci"]
+            ):
                 parts = stripped.split(":")
                 if len(parts) > 1 and not result.fecha_constitucion:
                     result.fecha_constitucion = parts[1].strip()

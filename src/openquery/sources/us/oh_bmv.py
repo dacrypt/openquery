@@ -73,6 +73,7 @@ class OhBmvSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("us.oh_bmv", "vin", vin)
 
         with browser.page(OH_BMV_URL) as page:

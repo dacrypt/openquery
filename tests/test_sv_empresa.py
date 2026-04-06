@@ -30,7 +30,9 @@ class TestSvEmpresaParseResult:
         assert result.search_term == "EMPRESA EJEMPLO SA DE CV"
 
     def test_company_name_parsed(self):
-        result = self._parse("Nombre: EMPRESA EJEMPLO SOCIEDAD ANONIMA DE CAPITAL VARIABLE\nEstado: Activa")
+        result = self._parse(
+            "Nombre: EMPRESA EJEMPLO SOCIEDAD ANONIMA DE CAPITAL VARIABLE\nEstado: Activa"
+        )
         assert result.company_name == "EMPRESA EJEMPLO SOCIEDAD ANONIMA DE CAPITAL VARIABLE"
 
     def test_registration_type_parsed(self):

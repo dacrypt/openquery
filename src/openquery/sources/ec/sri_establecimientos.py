@@ -62,13 +62,15 @@ class EcSriEstablecimientosSource(BaseSource):
 
             establecimientos = []
             for e in items:
-                establecimientos.append(Establecimiento(
-                    nombre_fantasia=e.get("nombreFantasiaComercial", "") or "",
-                    tipo=e.get("tipoEstablecimiento", "") or "",
-                    direccion=e.get("direccionCompleta", "") or "",
-                    estado=e.get("estado", "") or "",
-                    numero=e.get("numeroEstablecimiento", "") or "",
-                ))
+                establecimientos.append(
+                    Establecimiento(
+                        nombre_fantasia=e.get("nombreFantasiaComercial", "") or "",
+                        tipo=e.get("tipoEstablecimiento", "") or "",
+                        direccion=e.get("direccionCompleta", "") or "",
+                        estado=e.get("estado", "") or "",
+                        numero=e.get("numeroEstablecimiento", "") or "",
+                    )
+                )
 
             return EcSriEstablecimientosResult(
                 queried_at=datetime.now(),
@@ -78,7 +80,9 @@ class EcSriEstablecimientosSource(BaseSource):
             )
 
         except httpx.HTTPStatusError as e:
-            raise SourceError("ec.sri_establecimientos", f"API returned HTTP {e.response.status_code}") from e
+            raise SourceError(
+                "ec.sri_establecimientos", f"API returned HTTP {e.response.status_code}"
+            ) from e
         except httpx.RequestError as e:
             raise SourceError("ec.sri_establecimientos", f"Request failed: {e}") from e
         except Exception as e:

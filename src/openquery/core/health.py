@@ -108,9 +108,7 @@ class SourceHealthMonitor:
                 failure_count=stats.failure_count,
                 consecutive_failures=stats.consecutive_failures,
                 avg_latency_ms=(
-                    stats.total_latency_ms / stats.success_count
-                    if stats.success_count > 0
-                    else 0.0
+                    stats.total_latency_ms / stats.success_count if stats.success_count > 0 else 0.0
                 ),
                 last_check=datetime.now() if stats.last_check else None,
                 last_error=stats.last_error,

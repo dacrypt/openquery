@@ -73,8 +73,13 @@ class SriRucSource(BaseSource):
                 ruc=record.get("numeroRuc", ruc),
                 razon_social=record.get("razonSocial", ""),
                 nombre_comercial=record.get("nombreComercial", "") or "",
-                estado=record.get("estadoContribuyenteRuc", record.get("estadoContribuyente", record.get("estado", ""))),
-                actividad_economica=record.get("actividadEconomicaPrincipal", record.get("actividadEconomica", "")),
+                estado=record.get(
+                    "estadoContribuyenteRuc",
+                    record.get("estadoContribuyente", record.get("estado", "")),
+                ),
+                actividad_economica=record.get(
+                    "actividadEconomicaPrincipal", record.get("actividadEconomica", "")
+                ),
                 direccion=record.get("direccionMatriz", record.get("direccion", "")) or "",
                 tipo_contribuyente=record.get("tipoContribuyente", "") or "",
                 obligado_contabilidad=record.get("obligadoContabilidad", "") or "",

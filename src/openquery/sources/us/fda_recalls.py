@@ -36,7 +36,7 @@ class FdaRecallsSource(BaseSource):
         return SourceMeta(
             name="us.fda_recalls",
             display_name="FDA — Drug/Food Enforcement Recalls",
-            description="US FDA food and drug enforcement recalls: product, company, reason, and classification",
+            description="US FDA food and drug enforcement recalls: product, company, reason, and classification",  # noqa: E501
             country="US",
             url=FDA_RECALLS_URL,
             supported_inputs=[DocumentType.CUSTOM],

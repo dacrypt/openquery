@@ -69,8 +69,11 @@ class BrTaxasSource(BaseSource):
 
             return BrTaxasResult(
                 queried_at=datetime.now(),
-                selic=selic, cdi=cdi, ipca=ipca,
-                total=len(taxas), taxas=taxas,
+                selic=selic,
+                cdi=cdi,
+                ipca=ipca,
+                total=len(taxas),
+                taxas=taxas,
             )
 
         except httpx.HTTPStatusError as e:

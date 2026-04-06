@@ -26,6 +26,7 @@ logger = logging.getLogger(__name__)
 
 # ── CAPTCHA Type Detection ────────────────────────────────────────────────
 
+
 def detect_captcha_type(page: Any) -> str | None:
     """Detect what type of CAPTCHA is present on the page.
 
@@ -34,11 +35,11 @@ def detect_captcha_type(page: Any) -> str | None:
                 "image", "imperva", or None if no CAPTCHA detected.
     """
     # reCAPTCHA v2 / Enterprise
-    recaptcha_frame = page.query_selector(
-        'iframe[src*="recaptcha"], iframe[title*="reCAPTCHA"]'
+    recaptcha_frame = page.query_selector('iframe[src*="recaptcha"], iframe[title*="reCAPTCHA"]')
+    recaptcha_div = page.query_selector(".g-recaptcha, [data-sitekey]")
+    recaptcha_textarea = page.query_selector(
+        '#g-recaptcha-response, textarea[name="g-recaptcha-response"]'
     )
-    recaptcha_div = page.query_selector('.g-recaptcha, [data-sitekey]')
-    recaptcha_textarea = page.query_selector('#g-recaptcha-response, textarea[name="g-recaptcha-response"]')
 
     if recaptcha_frame or recaptcha_div or recaptcha_textarea:
         # Check if Enterprise
@@ -52,7 +53,7 @@ def detect_captcha_type(page: Any) -> str | None:
     # Cloudflare Turnstile
     turnstile_frame = page.query_selector(
         'iframe[src*="challenges.cloudflare.com/turnstile"], '
-        '.cf-turnstile, [data-sitekey][data-callback]'
+        ".cf-turnstile, [data-sitekey][data-callback]"
     )
     if turnstile_frame:
         logger.info("Detected: Cloudflare Turnstile")
@@ -62,7 +63,7 @@ def detect_captcha_type(page: Any) -> str | None:
     captcha_img = page.query_selector(
         'img[id*="captcha" i], img[alt*="captcha" i], img[src*="captcha" i], '
         'img[id*="Captcha"], img[class*="captcha" i], '
-        '.BDC_CaptchaDiv img'  # BotDetect
+        ".BDC_CaptchaDiv img"  # BotDetect
     )
     if captcha_img:
         logger.info("Detected: Image CAPTCHA")
@@ -70,8 +71,7 @@ def detect_captcha_type(page: Any) -> str | None:
 
     # Imperva/Incapsula bot challenge
     imperva = page.query_selector(
-        '#captcha-challenge, .vc-captcha, '
-        'input[name="answer"][id="ans"]'  # Imperva bot challenge
+        '#captcha-challenge, .vc-captcha, input[name="answer"][id="ans"]'  # Imperva bot challenge
     )
     if imperva:
         logger.info("Detected: Imperva bot challenge")
@@ -81,6 +81,7 @@ def detect_captcha_type(page: Any) -> str | None:
 
 
 # ── CAPTCHA Solving ───────────────────────────────────────────────────────
+
 
 def solve_page_captchas(page: Any, max_attempts: int = 3) -> bool:
     """Auto-detect and solve CAPTCHAs on the current page.
@@ -153,8 +154,7 @@ def _solve_turnstile(page: Any) -> bool:
     api_key = settings.capsolver_api_key
     if not api_key:
         logger.warning(
-            "Turnstile detected but no CapSolver API key. "
-            "Set OPENQUERY_CAPSOLVER_API_KEY"
+            "Turnstile detected but no CapSolver API key. Set OPENQUERY_CAPSOLVER_API_KEY"
         )
         return False
 
@@ -170,6 +170,7 @@ def _solve_turnstile(page: Any) -> bool:
         if frame:
             src = frame.get_attribute("src") or ""
             import re
+
             match = re.search(r"k=([A-Za-z0-9_-]+)", src)
             if match:
                 sitekey = match.group(1)
@@ -204,6 +205,7 @@ def _solve_turnstile(page: Any) -> bool:
 
         # Poll for result
         import time
+
         for _ in range(24):  # 24 * 5s = 120s max
             time.sleep(5)
             resp = httpx.post(
@@ -216,13 +218,18 @@ def _solve_turnstile(page: Any) -> bool:
                 token = result.get("solution", {}).get("token", "")
                 if token:
                     # Inject Turnstile token
-                    page.evaluate(f"""(token) => {{
-                        const resp = document.querySelector('input[name="cf-turnstile-response"], #cf-chl-widget-response');
+                    page.evaluate(
+                        """(token) => {
+                        const sel = 'input[name="cf-turnstile-response"],'
+                            + ' #cf-chl-widget-response';
+                        const resp = document.querySelector(sel);
                         if (resp) resp.value = token;
                         // Also try g-recaptcha-response (compatibility mode)
                         const gResp = document.querySelector('#g-recaptcha-response');
                         if (gResp) gResp.value = token;
-                    }}""", token)
+                    }""",
+                        token,
+                    )
                     logger.info("Turnstile solved and token injected")
                     return True
             elif result.get("status") == "failed":
@@ -241,7 +248,7 @@ def _solve_image_captcha(page: Any, max_attempts: int = 3) -> bool:
     captcha_img = page.query_selector(
         'img[id*="captcha" i], img[alt*="captcha" i], img[src*="captcha" i], '
         'img[id*="Captcha"], img[class*="captcha" i], '
-        '.BDC_CaptchaDiv img'
+        ".BDC_CaptchaDiv img"
     )
     if not captcha_img:
         return False
@@ -250,7 +257,7 @@ def _solve_image_captcha(page: Any, max_attempts: int = 3) -> bool:
     captcha_input = page.query_selector(
         'input[id*="captcha" i], input[name*="captcha" i], '
         'input[id*="Captcha"], input[name*="Captcha"], '
-        '#CaptchaCodeTextBox, #token, #txtCodigo, #captchacode'
+        "#CaptchaCodeTextBox, #token, #txtCodigo, #captchacode"
     )
     if not captcha_input:
         logger.warning("CAPTCHA image found but no input field to fill")
@@ -278,7 +285,7 @@ def _solve_image_captcha(page: Any, max_attempts: int = 3) -> bool:
         refresh = page.query_selector(
             'a[href*="refrescar" i], button[id*="reload" i], '
             'img[id*="reload" i], a[onclick*="captcha" i], '
-            '#c_index_examplecaptcha_ReloadIcon'
+            "#c_index_examplecaptcha_ReloadIcon"
         )
         if refresh:
             refresh.click()
@@ -310,6 +317,7 @@ def _build_vision_chain():
     # 2. PaddleOCR (best local accuracy)
     try:
         from openquery.core.captcha import PaddleOCRSolver
+
         solvers.append(PaddleOCRSolver())
         logger.debug("Added PaddleOCR solver to chain")
     except ImportError:

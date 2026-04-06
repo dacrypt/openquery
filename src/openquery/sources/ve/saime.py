@@ -65,6 +65,7 @@ class SaimeSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("ve.saime", "cedula", cedula)
 
         with browser.page(SAIME_URL) as page:
@@ -170,12 +171,16 @@ class SaimeSource(BaseSource):
                 text = row.inner_text().strip()
                 text_lower = text.lower()
                 if (
-                    "nombre" in text_lower or "apellido" in text_lower
-                ) and ":" in text and not nombre:
+                    ("nombre" in text_lower or "apellido" in text_lower)
+                    and ":" in text
+                    and not nombre
+                ):
                     nombre = text.split(":", 1)[1].strip()
                 elif (
-                    "estado" in text_lower or "vigencia" in text_lower
-                ) and ":" in text and not document_status:
+                    ("estado" in text_lower or "vigencia" in text_lower)
+                    and ":" in text
+                    and not document_status
+                ):
                     document_status = text.split(":", 1)[1].strip()
 
         result.nombre = nombre

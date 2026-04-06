@@ -64,6 +64,7 @@ class ProfecoSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("mx.profeco", "provider_name", provider)
 
         with browser.page(PROFECO_URL) as page:

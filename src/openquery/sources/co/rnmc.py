@@ -55,7 +55,9 @@ class RnmcSource(BaseSource):
         fecha = input.extra.get("fecha_nacimiento", "").strip()
         return self._query(input.document_number, input.document_type, fecha, audit=input.audit)
 
-    def _query(self, documento: str, doc_type: DocumentType, fecha: str = "", audit: bool = False) -> RnmcResult:
+    def _query(
+        self, documento: str, doc_type: DocumentType, fecha: str = "", audit: bool = False
+    ) -> RnmcResult:
         from openquery.core.browser import BrowserManager
 
         browser = BrowserManager(headless=self._headless, timeout=self._timeout)
@@ -63,6 +65,7 @@ class RnmcSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.rnmc", doc_type.value, documento)
 
         with browser.page(RNMC_URL) as page:
@@ -81,12 +84,12 @@ class RnmcSource(BaseSource):
 
                 doc_select = page.query_selector(
                     'select[id*="TipoDoc"], select[id*="tipo"], '
-                    '#ctl00_ContentPlaceHolder3_ddlTipoDoc'
+                    "#ctl00_ContentPlaceHolder3_ddlTipoDoc"
                 )
                 if doc_select:
                     page.select_option(
                         'select[id*="TipoDoc"], select[id*="tipo"], '
-                        '#ctl00_ContentPlaceHolder3_ddlTipoDoc',
+                        "#ctl00_ContentPlaceHolder3_ddlTipoDoc",
                         label=doc_type_label,
                         timeout=5000,
                     )
@@ -94,7 +97,7 @@ class RnmcSource(BaseSource):
                 # Fill document number
                 doc_input = page.query_selector(
                     'input[id*="txtExpediente"], '
-                    '#ctl00_ContentPlaceHolder3_txtExpediente, '
+                    "#ctl00_ContentPlaceHolder3_txtExpediente, "
                     'input[type="text"]'
                 )
                 if not doc_input:
@@ -105,7 +108,9 @@ class RnmcSource(BaseSource):
                 # Wait for any loader overlay to disappear
                 try:
                     page.wait_for_selector(
-                        ".loader_decad", state="hidden", timeout=10000,
+                        ".loader_decad",
+                        state="hidden",
+                        timeout=10000,
                     )
                 except Exception:
                     pass
@@ -115,8 +120,7 @@ class RnmcSource(BaseSource):
 
                 # Submit via the search icon link next to the input
                 submit_link = page.query_selector(
-                    'a[href*="btnConsultar"], '
-                    '#ctl00_ContentPlaceHolder3_btnConsultar'
+                    'a[href*="btnConsultar"], #ctl00_ContentPlaceHolder3_btnConsultar'
                 )
                 if submit_link:
                     submit_link.dispatch_event("click")
@@ -127,7 +131,9 @@ class RnmcSource(BaseSource):
                 page.wait_for_timeout(2000)
                 try:
                     page.wait_for_selector(
-                        ".loader_decad", state="hidden", timeout=15000,
+                        ".loader_decad",
+                        state="hidden",
+                        timeout=15000,
                     )
                 except Exception:
                     pass
@@ -155,18 +161,27 @@ class RnmcSource(BaseSource):
         body_text = page.inner_text("body")
         body_lower = body_text.lower()
 
-        no_records = any(phrase in body_lower for phrase in [
-            "no registra",
-            "no tiene medidas",
-            "no se encontr",
-            "sin medidas",
-        ])
+        no_records = any(
+            phrase in body_lower
+            for phrase in [
+                "no registra",
+                "no tiene medidas",
+                "no se encontr",
+                "sin medidas",
+            ]
+        )
 
-        has_records = any(phrase in body_lower for phrase in [
-            "medida correctiva",
-            "infracción",
-            "comparendo",
-        ]) and not no_records
+        has_records = (
+            any(
+                phrase in body_lower
+                for phrase in [
+                    "medida correctiva",
+                    "infracción",
+                    "comparendo",
+                ]
+            )
+            and not no_records
+        )
 
         # Try to extract name
         nombre = ""
@@ -183,13 +198,15 @@ class RnmcSource(BaseSource):
             cells = row.query_selector_all("td")
             if len(cells) >= 3:
                 cell_texts = [c.inner_text().strip() for c in cells]
-                medidas.append(MedidaCorrectiva(
-                    tipo_medida=cell_texts[0] if cell_texts else "",
-                    descripcion=cell_texts[1] if len(cell_texts) > 1 else "",
-                    fecha_imposicion=cell_texts[2] if len(cell_texts) > 2 else "",
-                    estado=cell_texts[3] if len(cell_texts) > 3 else "",
-                    localidad=cell_texts[4] if len(cell_texts) > 4 else "",
-                ))
+                medidas.append(
+                    MedidaCorrectiva(
+                        tipo_medida=cell_texts[0] if cell_texts else "",
+                        descripcion=cell_texts[1] if len(cell_texts) > 1 else "",
+                        fecha_imposicion=cell_texts[2] if len(cell_texts) > 2 else "",
+                        estado=cell_texts[3] if len(cell_texts) > 3 else "",
+                        localidad=cell_texts[4] if len(cell_texts) > 4 else "",
+                    )
+                )
 
         mensaje = ""
         if no_records:

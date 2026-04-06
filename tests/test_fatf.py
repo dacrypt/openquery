@@ -10,7 +10,6 @@ import pytest
 from openquery.exceptions import SourceError
 from openquery.sources.base import DocumentType, QueryInput
 
-
 # ===========================================================================
 # TestFatfResult — model tests
 # ===========================================================================
@@ -177,7 +176,11 @@ class TestFatfParseResult:
             mock_client.get.return_value = mock_resp
 
             # Override _parse_lists to return controlled data
-            with patch.object(source, "_parse_lists", return_value=(["Iran", "North Korea"], ["Bulgaria", "Haiti"], "October 2023")):
+            with patch.object(
+                source,
+                "_parse_lists",
+                return_value=(["Iran", "North Korea"], ["Bulgaria", "Haiti"], "October 2023"),
+            ):
                 result = source._fetch("Iran")
 
         assert result.list_type == "black"
@@ -196,7 +199,11 @@ class TestFatfParseResult:
             mock_client_cls.return_value.__enter__.return_value = mock_client
             mock_client.get.return_value = mock_resp
 
-            with patch.object(source, "_parse_lists", return_value=(["Iran", "North Korea"], ["Bulgaria", "Haiti"], "October 2023")):
+            with patch.object(
+                source,
+                "_parse_lists",
+                return_value=(["Iran", "North Korea"], ["Bulgaria", "Haiti"], "October 2023"),
+            ):
                 result = source._fetch("Bulgaria")
 
         assert result.list_type == "grey"
@@ -214,7 +221,11 @@ class TestFatfParseResult:
             mock_client_cls.return_value.__enter__.return_value = mock_client
             mock_client.get.return_value = mock_resp
 
-            with patch.object(source, "_parse_lists", return_value=(["Iran", "North Korea"], ["Bulgaria", "Haiti"], "October 2023")):
+            with patch.object(
+                source,
+                "_parse_lists",
+                return_value=(["Iran", "North Korea"], ["Bulgaria", "Haiti"], "October 2023"),
+            ):
                 result = source._fetch("Germany")
 
         assert result.list_type == "none"

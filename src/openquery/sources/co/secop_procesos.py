@@ -71,16 +71,20 @@ class SecopProcesosSource(BaseSource):
 
             procesos = []
             for row in data:
-                procesos.append(SecopProceso(
-                    entidad=row.get("nombre_de_la_entidad", row.get("entidad", "")),
-                    nit_entidad=row.get("nit_entidad", ""),
-                    proceso=row.get("id_del_proceso", row.get("referencia_del_proceso", "")),
-                    estado=row.get("estado_del_proceso", ""),
-                    tipo_proceso=row.get("tipo_de_proceso", ""),
-                    valor_proceso=row.get("precio_base", row.get("valor_total_adjudicacion", "")),
-                    fecha_publicacion=row.get("fecha_de_publicacion_del_proceso", ""),
-                    url_proceso=row.get("url_del_proceso", ""),
-                ))
+                procesos.append(
+                    SecopProceso(
+                        entidad=row.get("nombre_de_la_entidad", row.get("entidad", "")),
+                        nit_entidad=row.get("nit_entidad", ""),
+                        proceso=row.get("id_del_proceso", row.get("referencia_del_proceso", "")),
+                        estado=row.get("estado_del_proceso", ""),
+                        tipo_proceso=row.get("tipo_de_proceso", ""),
+                        valor_proceso=row.get(
+                            "precio_base", row.get("valor_total_adjudicacion", "")
+                        ),
+                        fecha_publicacion=row.get("fecha_de_publicacion_del_proceso", ""),
+                        url_proceso=row.get("url_del_proceso", ""),
+                    )
+                )
 
             return SecopProcesosResult(
                 query=query_label,
@@ -89,7 +93,9 @@ class SecopProcesosSource(BaseSource):
             )
 
         except httpx.HTTPStatusError as e:
-            raise SourceError("co.secop_procesos", f"API returned HTTP {e.response.status_code}") from e
+            raise SourceError(
+                "co.secop_procesos", f"API returned HTTP {e.response.status_code}"
+            ) from e
         except httpx.RequestError as e:
             raise SourceError("co.secop_procesos", f"Request failed: {e}") from e
         except Exception as e:

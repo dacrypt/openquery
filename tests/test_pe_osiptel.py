@@ -72,6 +72,7 @@ class TestOsiptelSourceMeta:
 
     def test_meta_supported_inputs(self):
         from openquery.sources.base import DocumentType
+
         source = OsiptelSource()
         assert DocumentType.CUSTOM in source.meta().supported_inputs
 
@@ -108,9 +109,7 @@ class TestParseResult:
 
     def test_parse_from_body_text(self):
         source = OsiptelSource()
-        page = self._make_page(
-            "Operador: AMERICA MOVIL PERU S.A.C.\nServicio: Telefonía Móvil\n"
-        )
+        page = self._make_page("Operador: AMERICA MOVIL PERU S.A.C.\nServicio: Telefonía Móvil\n")
         result = source._parse_result(page, "CLARO")
         assert result.operator_name == "AMERICA MOVIL PERU S.A.C."
         assert result.service_type == "Telefonía Móvil"

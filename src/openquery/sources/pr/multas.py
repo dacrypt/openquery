@@ -70,6 +70,7 @@ class MultasSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("pr.multas", "search_value", search_value)
 
         with browser.page(MULTAS_URL) as page:
@@ -165,6 +166,7 @@ class MultasSource(BaseSource):
         result.details = details
         logger.info(
             "Multas result — total_fines=%s, fines_amount=%s",
-            result.total_fines, result.fines_amount,
+            result.total_fines,
+            result.fines_amount,
         )
         return result

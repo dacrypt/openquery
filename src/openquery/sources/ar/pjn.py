@@ -51,7 +51,9 @@ class PjnSource(BaseSource):
         cuit = input.extra.get("cuit", "")
         consulta = nombre or cuit or input.document_number
         if not consulta:
-            raise SourceError("ar.pjn", "nombre or CUIT is required (pass via extra.nombre or extra.cuit)")
+            raise SourceError(
+                "ar.pjn", "nombre or CUIT is required (pass via extra.nombre or extra.cuit)"
+            )
         return self._query(consulta, is_cuit=bool(cuit), audit=input.audit)
 
     def _query(self, consulta: str, is_cuit: bool = False, audit: bool = False) -> PjnResult:
@@ -62,6 +64,7 @@ class PjnSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("ar.pjn", "cuit" if is_cuit else "nombre", consulta)
 
         with browser.page(PJN_URL) as page:

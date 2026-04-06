@@ -64,6 +64,7 @@ class NombreCompletoSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.nombre_completo", "cedula", cedula)
 
         with browser.page(REGISTRADURIA_URL) as page:
@@ -133,14 +134,17 @@ class NombreCompletoSource(BaseSource):
         body_lower = body_text.lower()
 
         # Check for no records
-        no_records = any(phrase in body_lower for phrase in [
-            "no se encontr",
-            "no aparece",
-            "no registra",
-            "cédula no válida",
-            "cedula no valida",
-            "sin resultados",
-        ])
+        no_records = any(
+            phrase in body_lower
+            for phrase in [
+                "no se encontr",
+                "no aparece",
+                "no registra",
+                "cédula no válida",
+                "cedula no valida",
+                "sin resultados",
+            ]
+        )
 
         nombre_completo = ""
 
@@ -149,7 +153,10 @@ class NombreCompletoSource(BaseSource):
             stripped = line.strip()
             lower = stripped.lower()
 
-            if any(label in lower for label in ["nombre completo", "nombre del ciudadano", "nombres y apellidos"]):
+            if any(
+                label in lower
+                for label in ["nombre completo", "nombre del ciudadano", "nombres y apellidos"]
+            ):
                 parts = stripped.split(":")
                 if len(parts) > 1 and not nombre_completo:
                     nombre_completo = parts[1].strip()

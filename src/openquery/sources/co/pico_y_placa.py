@@ -29,6 +29,7 @@ logger = logging.getLogger(__name__)
 # Dynamic Colombian Public Holidays (Ley 51 de 1983)
 # ---------------------------------------------------------------------------
 
+
 def _easter_date(year: int) -> date:
     """Compute Easter Sunday for a given year using the Anonymous Gregorian algorithm."""
     a = year % 19
@@ -64,32 +65,32 @@ def colombian_holidays(year: int) -> set[date]:
 
     # Fixed holidays (always on their date)
     fixed = [
-        date(year, 1, 1),    # Año Nuevo
-        date(year, 5, 1),    # Día del Trabajo
-        date(year, 7, 20),   # Grito de Independencia
-        date(year, 8, 7),    # Batalla de Boyacá
-        date(year, 12, 8),   # Inmaculada Concepción
+        date(year, 1, 1),  # Año Nuevo
+        date(year, 5, 1),  # Día del Trabajo
+        date(year, 7, 20),  # Grito de Independencia
+        date(year, 8, 7),  # Batalla de Boyacá
+        date(year, 12, 8),  # Inmaculada Concepción
         date(year, 12, 25),  # Navidad
     ]
 
     # Transferable to next Monday (Ley Emiliani)
     transferred = [
-        _next_monday(date(year, 1, 6)),    # Reyes Magos
-        _next_monday(date(year, 3, 19)),   # San José
-        _next_monday(date(year, 6, 29)),   # San Pedro y San Pablo
-        _next_monday(date(year, 8, 15)),   # Asunción de la Virgen
+        _next_monday(date(year, 1, 6)),  # Reyes Magos
+        _next_monday(date(year, 3, 19)),  # San José
+        _next_monday(date(year, 6, 29)),  # San Pedro y San Pablo
+        _next_monday(date(year, 8, 15)),  # Asunción de la Virgen
         _next_monday(date(year, 10, 12)),  # Día de la Raza
-        _next_monday(date(year, 11, 1)),   # Todos los Santos
+        _next_monday(date(year, 11, 1)),  # Todos los Santos
         _next_monday(date(year, 11, 11)),  # Independencia de Cartagena
     ]
 
     # Easter-relative holidays
     easter_relative = [
-        easter - timedelta(days=3),         # Jueves Santo
-        easter - timedelta(days=2),         # Viernes Santo
-        _next_monday(easter + timedelta(days=39)),   # Ascensión del Señor (transferred)
-        _next_monday(easter + timedelta(days=60)),   # Corpus Christi (transferred)
-        _next_monday(easter + timedelta(days=68)),   # Sagrado Corazón (transferred)
+        easter - timedelta(days=3),  # Jueves Santo
+        easter - timedelta(days=2),  # Viernes Santo
+        _next_monday(easter + timedelta(days=39)),  # Ascensión del Señor (transferred)
+        _next_monday(easter + timedelta(days=60)),  # Corpus Christi (transferred)
+        _next_monday(easter + timedelta(days=68)),  # Sagrado Corazón (transferred)
     ]
 
     return set(fixed + transferred + easter_relative)
@@ -100,7 +101,7 @@ def colombian_holidays(year: int) -> set[date]:
 # ---------------------------------------------------------------------------
 
 # Type of restriction
-EVEN_ODD = "par_impar"       # Even/odd calendar day (like Bogotá)
+EVEN_ODD = "par_impar"  # Even/odd calendar day (like Bogotá)
 WEEKDAY_BASED = "dia_semana"  # By day of week (like Medellín, Cali)
 NO_RESTRICTION = "sin_restriccion"
 
@@ -314,6 +315,7 @@ DAY_NAMES = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "D
 # Source Implementation
 # ---------------------------------------------------------------------------
 
+
 @register
 class PicoYPlacaSource(BaseSource):
     """Determine Pico y Placa driving restrictions for Colombian cities.
@@ -341,7 +343,9 @@ class PicoYPlacaSource(BaseSource):
 
     def query(self, input: QueryInput) -> BaseModel:
         if input.document_type != DocumentType.PLATE:
-            raise SourceError("co.pico_y_placa", f"Only PLATE queries supported, got: {input.document_type}")
+            raise SourceError(
+                "co.pico_y_placa", f"Only PLATE queries supported, got: {input.document_type}"
+            )
 
         placa = input.document_number.upper().strip()
         if not placa:
@@ -354,7 +358,9 @@ class PicoYPlacaSource(BaseSource):
             try:
                 fecha = date.fromisoformat(fecha_str)
             except ValueError:
-                raise SourceError("co.pico_y_placa", f"Invalid date format: {fecha_str}. Use YYYY-MM-DD")
+                raise SourceError(
+                    "co.pico_y_placa", f"Invalid date format: {fecha_str}. Use YYYY-MM-DD"
+                )
         else:
             fecha = date.today()
 
@@ -363,7 +369,9 @@ class PicoYPlacaSource(BaseSource):
 
         if ciudad not in CITIES:
             available = ", ".join(sorted(CITIES.keys()))
-            raise SourceError("co.pico_y_placa", f"Unsupported city: {ciudad_raw}. Available: {available}")
+            raise SourceError(
+                "co.pico_y_placa", f"Unsupported city: {ciudad_raw}. Available: {available}"
+            )
 
         # Extract last digit
         ultimo_digito = ""
@@ -392,7 +400,9 @@ class PicoYPlacaSource(BaseSource):
             self._holiday_cache[year] = colombian_holidays(year)
         return self._holiday_cache[year]
 
-    def _check_restriction(self, placa: str, digito: int, fecha: date, config: CityConfig) -> PicoYPlacaResult:
+    def _check_restriction(
+        self, placa: str, digito: int, fecha: date, config: CityConfig
+    ) -> PicoYPlacaResult:
         result = PicoYPlacaResult(tipo_vehiculo="particular")
 
         # Weekend check
@@ -421,7 +431,9 @@ class PicoYPlacaSource(BaseSource):
         else:
             raise SourceError("co.pico_y_placa", f"Unknown restriction type: {tipo}")
 
-    def _check_even_odd(self, digito: int, fecha: date, config: CityConfig, result: PicoYPlacaResult) -> PicoYPlacaResult:
+    def _check_even_odd(
+        self, digito: int, fecha: date, config: CityConfig, result: PicoYPlacaResult
+    ) -> PicoYPlacaResult:
         day_of_month = fecha.day
         is_even = day_of_month % 2 == 0
 
@@ -442,7 +454,9 @@ class PicoYPlacaSource(BaseSource):
 
         return result
 
-    def _check_weekday(self, digito: int, fecha: date, config: CityConfig, result: PicoYPlacaResult) -> PicoYPlacaResult:
+    def _check_weekday(
+        self, digito: int, fecha: date, config: CityConfig, result: PicoYPlacaResult
+    ) -> PicoYPlacaResult:
         weekday = fecha.weekday()
         restricted = config["regla"].get(weekday, [])
         restringido = digito in restricted

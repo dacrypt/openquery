@@ -114,11 +114,13 @@ class TestSarenQuery:
 
         src = SarenSource()
         with pytest.raises(SourceError):
-            src.query(QueryInput(
-                document_type=DocumentType.CUSTOM,
-                document_number="",
-                extra={},
-            ))
+            src.query(
+                QueryInput(
+                    document_type=DocumentType.CUSTOM,
+                    document_number="",
+                    extra={},
+                )
+            )
 
     def test_document_number_used_as_search_term(self):
         from openquery.models.ve.saren import SarenResult
@@ -142,11 +144,13 @@ class TestSarenQuery:
             return SarenResult(search_term=search_term)
 
         src._query = fake_query
-        src.query(QueryInput(
-            document_type=DocumentType.CUSTOM,
-            document_number="",
-            extra={"name": "Banco de Venezuela"},
-        ))
+        src.query(
+            QueryInput(
+                document_type=DocumentType.CUSTOM,
+                document_number="",
+                extra={"name": "Banco de Venezuela"},
+            )
+        )
         assert called_with["term"] == "Banco de Venezuela"
 
 
@@ -217,9 +221,11 @@ class TestSarenIntegration:
         from openquery.sources.ve.saren import SarenSource
 
         src = SarenSource(headless=True)
-        result = src.query(QueryInput(
-            document_type=DocumentType.CUSTOM,
-            document_number="PDVSA",
-        ))
+        result = src.query(
+            QueryInput(
+                document_type=DocumentType.CUSTOM,
+                document_number="PDVSA",
+            )
+        )
         assert isinstance(result.search_term, str)
         assert isinstance(result.company_name, str)

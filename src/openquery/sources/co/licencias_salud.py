@@ -23,8 +23,7 @@ logger = logging.getLogger(__name__)
 
 API_URL = "https://www.datos.gov.co/resource/c36g-9fc2.json"
 PAGE_URL = (
-    "https://www.datos.gov.co/Salud-y-Protecci-n-Social/"
-    "Prestadores-de-Servicios-de-Salud/c36g-9fc2"
+    "https://www.datos.gov.co/Salud-y-Protecci-n-Social/Prestadores-de-Servicios-de-Salud/c36g-9fc2"
 )
 
 
@@ -73,12 +72,12 @@ class LicenciasSaludSource(BaseSource):
         try:
             conditions = []
             if nit:
-                conditions.append(f"numeroidentificacion='{nit}' OR tipoid='NI' AND numeroidentificacion='{nit}'")
+                conditions.append(
+                    f"numeroidentificacion='{nit}' OR tipoid='NI' AND numeroidentificacion='{nit}'"
+                )
             if name:
                 prefix = name[:10].upper()
-                conditions.append(
-                    f"starts_with(upper(nombreprestador), '{prefix}')"
-                )
+                conditions.append(f"starts_with(upper(nombreprestador), '{prefix}')")
 
             where_clause = " AND ".join(conditions)
             params: dict[str, str] = {"$where": where_clause, "$limit": "500"}
@@ -94,19 +93,23 @@ class LicenciasSaludSource(BaseSource):
 
             prestadores = []
             for row in data:
-                prestadores.append(LicenciaSalud(
-                    prestador=row.get("codigoprestador", row.get("codigo_habilitacion", "")),
-                    nit=row.get("numeroidentificacion", row.get("nits_nit", "")),
-                    nombre=row.get("nombreprestador", row.get("razon_social", "")),
-                    clase=row.get("claseprestador", row.get("clpr_nombre", "")),
-                    naturaleza=row.get("naturalezajuridica", row.get("clase_persona", "")),
-                    departamento=row.get("departamentoprestadordesc", row.get("depa_nombre", "")),
-                    municipio=row.get("municipioprestadordesc", row.get("muni_nombre", "")),
-                    direccion=row.get("direccionprestador", row.get("direccion", "")),
-                    telefono=row.get("telefonoprestador", row.get("telefono", "")),
-                    estado=row.get("ese", row.get("habilitado", "")),
-                    nivel=row.get("tipoid", row.get("nivel", "")),
-                ))
+                prestadores.append(
+                    LicenciaSalud(
+                        prestador=row.get("codigoprestador", row.get("codigo_habilitacion", "")),
+                        nit=row.get("numeroidentificacion", row.get("nits_nit", "")),
+                        nombre=row.get("nombreprestador", row.get("razon_social", "")),
+                        clase=row.get("claseprestador", row.get("clpr_nombre", "")),
+                        naturaleza=row.get("naturalezajuridica", row.get("clase_persona", "")),
+                        departamento=row.get(
+                            "departamentoprestadordesc", row.get("depa_nombre", "")
+                        ),
+                        municipio=row.get("municipioprestadordesc", row.get("muni_nombre", "")),
+                        direccion=row.get("direccionprestador", row.get("direccion", "")),
+                        telefono=row.get("telefonoprestador", row.get("telefono", "")),
+                        estado=row.get("ese", row.get("habilitado", "")),
+                        nivel=row.get("tipoid", row.get("nivel", "")),
+                    )
+                )
 
             return LicenciasSaludResult(
                 query=nit or name,

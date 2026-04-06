@@ -96,10 +96,7 @@ class TestParseResult:
 
     def test_parse_ruling(self):
         source = CsjnSource()
-        page = self._make_page(
-            "Causa 99/2022\n"
-            "Fallo: Confirmar la sentencia apelada\n"
-        )
+        page = self._make_page("Causa 99/2022\nFallo: Confirmar la sentencia apelada\n")
         result = source._parse_result(page, "99/2022")
         assert result.ruling == "Confirmar la sentencia apelada"
 

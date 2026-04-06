@@ -49,14 +49,20 @@ class ContraloriaSource(BaseSource):
         )
 
     def query(self, input: QueryInput) -> BaseModel:
-        if input.document_type not in (DocumentType.CEDULA, DocumentType.NIT, DocumentType.PASSPORT):
+        if input.document_type not in (
+            DocumentType.CEDULA,
+            DocumentType.NIT,
+            DocumentType.PASSPORT,
+        ):
             raise SourceError(
                 "co.contraloria",
                 f"Unsupported document type: {input.document_type}. Use cedula, NIT, or passport.",
             )
         return self._query(input.document_number, input.document_type, audit=input.audit)
 
-    def _query(self, documento: str, doc_type: DocumentType, audit: bool = False) -> ContraloriaResult:
+    def _query(
+        self, documento: str, doc_type: DocumentType, audit: bool = False
+    ) -> ContraloriaResult:
         from openquery.core.browser import BrowserManager
 
         browser = BrowserManager(headless=self._headless, timeout=self._timeout)
@@ -64,6 +70,7 @@ class ContraloriaSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.contraloria", doc_type.value, documento)
 
         doc_type_map = {
@@ -83,14 +90,12 @@ class ContraloriaSource(BaseSource):
 
                 # Select document type — exact ID: #ddlTipoDocumento
                 doc_select = page.query_selector(
-                    '#ddlTipoDocumento, '
-                    'select[id*="TipoDocumento"], select[id*="tipo"]'
+                    '#ddlTipoDocumento, select[id*="TipoDocumento"], select[id*="tipo"]'
                 )
                 if doc_select:
                     select_value = doc_type_map.get(doc_type, "CC")
                     page.select_option(
-                        '#ddlTipoDocumento, '
-                        'select[id*="TipoDocumento"], select[id*="tipo"]',
+                        '#ddlTipoDocumento, select[id*="TipoDocumento"], select[id*="tipo"]',
                         value=select_value,
                         timeout=5000,
                     )
@@ -98,9 +103,7 @@ class ContraloriaSource(BaseSource):
 
                 # Fill document number — exact ID: #txtNumeroDocumento
                 doc_input = page.query_selector(
-                    '#txtNumeroDocumento, '
-                    'input[id*="NumeroDocumento"], '
-                    'input[type="text"]'
+                    '#txtNumeroDocumento, input[id*="NumeroDocumento"], input[type="text"]'
                 )
                 if not doc_input:
                     raise SourceError("co.contraloria", "Could not find document input field")
@@ -113,7 +116,7 @@ class ContraloriaSource(BaseSource):
 
                 # Submit — exact ID: #btnBuscar
                 submit_btn = page.query_selector(
-                    '#btnBuscar, '
+                    "#btnBuscar, "
                     'input[id*="btnBuscar"], '
                     'button[type="submit"], input[type="submit"]'
                 )
@@ -147,21 +150,30 @@ class ContraloriaSource(BaseSource):
         body_text = page.inner_text("body")
         body_lower = body_text.lower()
 
-        no_records = any(phrase in body_lower for phrase in [
-            "no se encontr",
-            "no registra",
-            "no aparece",
-            "sin antecedentes",
-            "no figura",
-            "no tiene responsabilidad",
-        ])
+        no_records = any(
+            phrase in body_lower
+            for phrase in [
+                "no se encontr",
+                "no registra",
+                "no aparece",
+                "sin antecedentes",
+                "no figura",
+                "no tiene responsabilidad",
+            ]
+        )
 
-        has_records = any(phrase in body_lower for phrase in [
-            "responsabilidad fiscal",
-            "bolet",
-            "registra antecedentes",
-            "fiscal vigente",
-        ]) and not no_records
+        has_records = (
+            any(
+                phrase in body_lower
+                for phrase in [
+                    "responsabilidad fiscal",
+                    "bolet",
+                    "registra antecedentes",
+                    "fiscal vigente",
+                ]
+            )
+            and not no_records
+        )
 
         # Try to extract name
         nombre = ""

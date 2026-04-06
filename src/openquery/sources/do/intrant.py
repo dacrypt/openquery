@@ -56,6 +56,7 @@ class DoIntrantSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("do.intrant", "cedula", search_value)
 
         with browser.page(INTRANT_URL) as page:

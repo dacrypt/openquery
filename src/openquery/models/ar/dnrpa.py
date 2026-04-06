@@ -1,4 +1,4 @@
-"""DNRPA data model — Argentine vehicle registry (Direccion Nacional de los Registros de la Propiedad del Automotor)."""
+"""DNRPA data model — Argentine vehicle registry (Direccion Nacional de los Registros de la Propiedad del Automotor)."""  # noqa: E501
 
 from __future__ import annotations
 

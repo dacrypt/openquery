@@ -63,7 +63,7 @@ class FaceVerifier:
                 distance=result.get("distance", 0.0),
                 threshold=result.get("threshold", 0.0),
                 model=result.get("model", self._model_name),
-                liveness=not result.get("is_real") is False,
+                liveness=result.get("is_real") is not False,
                 processing_time_ms=elapsed,
             )
 
@@ -73,6 +73,7 @@ class FaceVerifier:
             elapsed = int((time.monotonic() - start) * 1000)
             logger.error("Face verification failed: %s", e)
             from openquery.exceptions import FaceVerificationError
+
             raise FaceVerificationError(str(e)) from e
         finally:
             if tmp1:

@@ -19,7 +19,9 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-CPF_URL = "https://servicos.receita.fazenda.gov.br/servicos/cpf/consultasituacao/consultapublica.asp"
+CPF_URL = (
+    "https://servicos.receita.fazenda.gov.br/servicos/cpf/consultasituacao/consultapublica.asp"
+)
 
 
 @register
@@ -34,7 +36,7 @@ class BrCpfSource(BaseSource):
         return SourceMeta(
             name="br.cpf",
             display_name="CPF — Cadastro de Pessoas Físicas",
-            description="Brazilian citizen identity: CPF status, name, registration (Receita Federal)",
+            description="Brazilian citizen identity: CPF status, name, registration (Receita Federal)",  # noqa: E501
             country="BR",
             url=CPF_URL,
             supported_inputs=[DocumentType.SSN, DocumentType.CUSTOM],
@@ -59,6 +61,7 @@ class BrCpfSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("br.cpf", "cpf", cpf)
 
         with browser.page(CPF_URL) as page:
@@ -71,8 +74,7 @@ class BrCpfSource(BaseSource):
 
                 # Fill CPF
                 cpf_input = page.query_selector(
-                    '#txtCPF, input[name*="txtCPF"], input[id*="cpf" i], '
-                    'input[type="text"]'
+                    '#txtCPF, input[name*="txtCPF"], input[id*="cpf" i], input[type="text"]'
                 )
                 if not cpf_input:
                     raise SourceError("br.cpf", "Could not find CPF input field")
@@ -91,6 +93,7 @@ class BrCpfSource(BaseSource):
 
                 # Solve CAPTCHA using middleware
                 from openquery.core.captcha_middleware import solve_page_captchas
+
                 solve_page_captchas(page)
 
                 if collector:

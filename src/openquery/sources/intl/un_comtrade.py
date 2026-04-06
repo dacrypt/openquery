@@ -63,7 +63,9 @@ class IntlUnComtradeSource(BaseSource):
                 "Accept": "application/json",
             }
             logger.info("Querying UN Comtrade: reporter=%s commodity=%s", reporter, commodity_code)
-            with httpx.Client(timeout=self._timeout, headers=headers, follow_redirects=True) as client:  # noqa: E501
+            with httpx.Client(
+                timeout=self._timeout, headers=headers, follow_redirects=True
+            ) as client:  # noqa: E501
                 resp = client.get(url)
                 if resp.status_code in (404, 400):
                     return IntlUnComtradeResult(
@@ -78,7 +80,9 @@ class IntlUnComtradeSource(BaseSource):
             return self._parse_response(data, reporter, commodity_code)
 
         except httpx.HTTPStatusError as e:
-            raise SourceError("intl.un_comtrade", f"API returned HTTP {e.response.status_code}") from e  # noqa: E501
+            raise SourceError(
+                "intl.un_comtrade", f"API returned HTTP {e.response.status_code}"
+            ) from e  # noqa: E501
         except httpx.RequestError as e:
             raise SourceError("intl.un_comtrade", f"Request failed: {e}") from e
         except SourceError:
@@ -86,7 +90,9 @@ class IntlUnComtradeSource(BaseSource):
         except Exception as e:
             raise SourceError("intl.un_comtrade", f"Query failed: {e}") from e
 
-    def _parse_response(self, data: dict, reporter: str, commodity_code: str) -> IntlUnComtradeResult:  # noqa: E501
+    def _parse_response(
+        self, data: dict, reporter: str, commodity_code: str
+    ) -> IntlUnComtradeResult:  # noqa: E501
         records = data.get("data", data.get("Dataset", []))
         if isinstance(records, dict):
             records = [records]
@@ -104,12 +110,14 @@ class IntlUnComtradeSource(BaseSource):
                 try:
                     tv = float(trade_val)
                     total_value += tv
-                    partners.append(ComtradePartner(
-                        partner_code=partner_code,
-                        partner_desc=str(partner_desc),
-                        trade_value=tv,
-                        flow=str(flow),
-                    ))
+                    partners.append(
+                        ComtradePartner(
+                            partner_code=partner_code,
+                            partner_desc=str(partner_desc),
+                            trade_value=tv,
+                            flow=str(flow),
+                        )
+                    )
                 except (ValueError, TypeError):
                     pass
 

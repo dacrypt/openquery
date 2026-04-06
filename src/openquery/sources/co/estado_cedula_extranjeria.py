@@ -38,7 +38,7 @@ class EstadoCedulaExtranjeriaSource(BaseSource):
         return SourceMeta(
             name="co.estado_cedula_extranjeria",
             display_name="Migración Colombia — Cédula de Extranjería",
-            description="Foreign national ID card (cédula de extranjería) status from Migración Colombia",
+            description="Foreign national ID card (cédula de extranjería) status from Migración Colombia",  # noqa: E501
             country="CO",
             url=MIGRACION_URL,
             supported_inputs=[DocumentType.CUSTOM],
@@ -50,13 +50,18 @@ class EstadoCedulaExtranjeriaSource(BaseSource):
     def query(self, input: QueryInput) -> BaseModel:
         cedula = input.document_number.strip()
         if not cedula:
-            raise SourceError("co.estado_cedula_extranjeria", "Cédula de extranjería number is required")
+            raise SourceError(
+                "co.estado_cedula_extranjeria", "Cédula de extranjería number is required"
+            )
 
         fecha = input.extra.get("fecha_expedicion", "").strip()
         return self._query(cedula, fecha, audit=input.audit)
 
     def _query(
-        self, cedula: str, fecha_expedicion: str = "", audit: bool = False,
+        self,
+        cedula: str,
+        fecha_expedicion: str = "",
+        audit: bool = False,
     ) -> EstadoCedulaExtranjeriaResult:
         from openquery.core.browser import BrowserManager
 
@@ -65,6 +70,7 @@ class EstadoCedulaExtranjeriaSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.estado_cedula_extranjeria", "cedula_extranjeria", cedula)
 
         with browser.page(MIGRACION_URL) as page:
@@ -84,7 +90,9 @@ class EstadoCedulaExtranjeriaSource(BaseSource):
                     'input[type="text"]'
                 )
                 if not cedula_input:
-                    raise SourceError("co.estado_cedula_extranjeria", "Could not find cédula input field")
+                    raise SourceError(
+                        "co.estado_cedula_extranjeria", "Could not find cédula input field"
+                    )
 
                 cedula_input.fill(cedula)
 
@@ -160,7 +168,11 @@ class EstadoCedulaExtranjeriaSource(BaseSource):
                 nacionalidad = stripped.split(":", 1)[1].strip()
             elif "vencimiento" in lower and ":" in stripped and not fecha_vencimiento:
                 fecha_vencimiento = stripped.split(":", 1)[1].strip()
-            elif ("verificaci" in lower or "código" in lower) and ":" in stripped and not codigo_verificacion:
+            elif (
+                ("verificaci" in lower or "código" in lower)
+                and ":" in stripped
+                and not codigo_verificacion
+            ):
                 codigo_verificacion = stripped.split(":", 1)[1].strip()
 
         return EstadoCedulaExtranjeriaResult(

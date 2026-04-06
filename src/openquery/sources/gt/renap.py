@@ -66,6 +66,7 @@ class GtRenapSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("gt.renap", "dpi", dpi)
 
         with browser.page(RENAP_URL) as page:

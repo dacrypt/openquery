@@ -149,9 +149,7 @@ class TestParseResult:
 
     def test_parse_tax_status_from_text(self):
         source = SiiDeudaSource()
-        page = self._make_page(
-            "Situación tributaria: Contribuyente activo al día\n"
-        )
+        page = self._make_page("Situación tributaria: Contribuyente activo al día\n")
         result = source._parse_result(page, "12345678-9")
         assert result.tax_status == "Contribuyente activo al día"
 

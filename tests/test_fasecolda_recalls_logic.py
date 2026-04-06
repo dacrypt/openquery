@@ -16,22 +16,26 @@ class TestFasecoldaValidation:
 
         src = FasecoldaSource()
         with pytest.raises(SourceError, match="marca"):
-            src.query(QueryInput(
-                document_type=DocumentType.CUSTOM,
-                document_number="",
-                extra={},
-            ))
+            src.query(
+                QueryInput(
+                    document_type=DocumentType.CUSTOM,
+                    document_number="",
+                    extra={},
+                )
+            )
 
     def test_empty_marca_raises(self):
         from openquery.sources.co.fasecolda import FasecoldaSource
 
         src = FasecoldaSource()
         with pytest.raises(SourceError, match="marca"):
-            src.query(QueryInput(
-                document_type=DocumentType.CUSTOM,
-                document_number="",
-                extra={"marca": ""},
-            ))
+            src.query(
+                QueryInput(
+                    document_type=DocumentType.CUSTOM,
+                    document_number="",
+                    extra={"marca": ""},
+                )
+            )
 
 
 class TestFasecoldaBuildResult:
@@ -49,16 +53,18 @@ class TestFasecoldaBuildResult:
         from openquery.sources.co.fasecolda import FasecoldaSource
 
         src = FasecoldaSource()
-        data = [{
-            "referencia": "MODEL 3",
-            "valor": 150000000,
-            "cilindraje": 0,
-            "combustible": "ELECTRICO",
-            "transmision": "AUTOMATICA",
-            "puertas": 4,
-            "pasajeros": 5,
-            "codigoFasecolda": "XYZ",
-        }]
+        data = [
+            {
+                "referencia": "MODEL 3",
+                "valor": 150000000,
+                "cilindraje": 0,
+                "combustible": "ELECTRICO",
+                "transmision": "AUTOMATICA",
+                "puertas": 4,
+                "pasajeros": 5,
+                "codigoFasecolda": "XYZ",
+            }
+        ]
         result = src._build_result("TESLA", 2026, data)
         assert result.marca == "TESLA"
         assert result.linea == "MODEL 3"
@@ -91,7 +97,9 @@ class TestFasecoldaApiFetch:
         src = FasecoldaSource()
         page = MagicMock()
         page.evaluate.return_value = {
-            "__error": True, "status": 403, "text": "Forbidden",
+            "__error": True,
+            "status": 403,
+            "text": "Forbidden",
         }
         with pytest.raises(SourceError, match="403"):
             src._api_fetch(page, "Bearer xyz", "https://example.com/api")
@@ -103,22 +111,26 @@ class TestRecallsValidation:
 
         src = RecallsSource()
         with pytest.raises(SourceError, match="marca"):
-            src.query(QueryInput(
-                document_type=DocumentType.CUSTOM,
-                document_number="",
-                extra={},
-            ))
+            src.query(
+                QueryInput(
+                    document_type=DocumentType.CUSTOM,
+                    document_number="",
+                    extra={},
+                )
+            )
 
     def test_empty_marca_raises(self):
         from openquery.sources.co.recalls import RecallsSource
 
         src = RecallsSource()
         with pytest.raises(SourceError, match="marca"):
-            src.query(QueryInput(
-                document_type=DocumentType.CUSTOM,
-                document_number="",
-                extra={"marca": "  "},
-            ))
+            src.query(
+                QueryInput(
+                    document_type=DocumentType.CUSTOM,
+                    document_number="",
+                    extra={"marca": "  "},
+                )
+            )
 
 
 class TestRecallsExtract:

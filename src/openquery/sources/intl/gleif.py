@@ -47,9 +47,7 @@ class IntlGleifSource(BaseSource):
 
     def query(self, input: QueryInput) -> BaseModel:
         search = (
-            input.extra.get("name", "")
-            or input.extra.get("lei", "")
-            or input.document_number
+            input.extra.get("name", "") or input.extra.get("lei", "") or input.document_number
         ).strip()
         if not search:
             raise SourceError(

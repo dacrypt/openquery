@@ -39,7 +39,7 @@ class SnrSource(BaseSource):
         return SourceMeta(
             name="co.snr",
             display_name="SNR — Índice de Propietarios",
-            description="Colombian property registry lookup (Superintendencia de Notariado y Registro)",
+            description="Colombian property registry lookup (Superintendencia de Notariado y Registro)",  # noqa: E501
             country="CO",
             url=SNR_URL,
             supported_inputs=[DocumentType.CEDULA, DocumentType.NIT],
@@ -62,6 +62,7 @@ class SnrSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.snr", tipo, documento)
 
         with browser.page(SNR_URL) as page:
@@ -79,8 +80,7 @@ class SnrSource(BaseSource):
                 )
                 if tipo_select:
                     page.select_option(
-                        '[id$="j_idt43_input"], select[id*="j_idt43"], '
-                        'select[id*="tipo"]',
+                        '[id$="j_idt43_input"], select[id*="j_idt43"], select[id*="tipo"]',
                         value="DOC",
                     )
                     page.wait_for_timeout(1000)
@@ -89,7 +89,7 @@ class SnrSource(BaseSource):
                 doc_input = page.query_selector(
                     '[id$="j_idt52"], input[id*="j_idt52"], '
                     'input[placeholder*="NIR"], '
-                    'input.filter-label, '
+                    "input.filter-label, "
                     'input[type="text"]'
                 )
                 if not doc_input:
@@ -157,14 +157,16 @@ class SnrSource(BaseSource):
                 continue
             cells = text.split("\t")
             if len(cells) >= 3:
-                propiedades.append(SnrPropiedad(
-                    matricula_inmobiliaria=cells[0].strip() if cells else "",
-                    tipo=cells[1].strip() if len(cells) > 1 else "",
-                    departamento=cells[2].strip() if len(cells) > 2 else "",
-                    municipio=cells[3].strip() if len(cells) > 3 else "",
-                    direccion=cells[4].strip() if len(cells) > 4 else "",
-                    estado=cells[5].strip() if len(cells) > 5 else "",
-                ))
+                propiedades.append(
+                    SnrPropiedad(
+                        matricula_inmobiliaria=cells[0].strip() if cells else "",
+                        tipo=cells[1].strip() if len(cells) > 1 else "",
+                        departamento=cells[2].strip() if len(cells) > 2 else "",
+                        municipio=cells[3].strip() if len(cells) > 3 else "",
+                        direccion=cells[4].strip() if len(cells) > 4 else "",
+                        estado=cells[5].strip() if len(cells) > 5 else "",
+                    )
+                )
 
         result.propiedades = propiedades
         result.total_propiedades = len(propiedades)

@@ -56,13 +56,9 @@ class RegistroCivilSource(BaseSource):
                 "Provide a document number or serial (extra.serial)",
             )
 
-        return self._query(
-            search_term, serial=serial, audit=input.audit
-        )
+        return self._query(search_term, serial=serial, audit=input.audit)
 
-    def _query(
-        self, documento: str, serial: str = "", audit: bool = False
-    ) -> RegistroCivilResult:
+    def _query(self, documento: str, serial: str = "", audit: bool = False) -> RegistroCivilResult:
         from openquery.core.browser import BrowserManager
 
         browser = BrowserManager(headless=self._headless, timeout=self._timeout)
@@ -70,6 +66,7 @@ class RegistroCivilSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.registro_civil", "cedula", documento)
 
         with browser.page(REGISTRO_CIVIL_URL) as page:
@@ -100,8 +97,7 @@ class RegistroCivilSource(BaseSource):
                 # Fill serial if provided
                 if serial:
                     serial_input = page.query_selector(
-                        'input[type="text"][id*="serial"], '
-                        'input[type="text"][name*="serial"]'
+                        'input[type="text"][id*="serial"], input[type="text"][name*="serial"]'
                     )
                     if serial_input:
                         serial_input.fill(serial)
@@ -142,9 +138,7 @@ class RegistroCivilSource(BaseSource):
             except SourceError:
                 raise
             except Exception as e:
-                raise SourceError(
-                    "co.registro_civil", f"Query failed: {e}"
-                ) from e
+                raise SourceError("co.registro_civil", f"Query failed: {e}") from e
 
     def _parse_result(self, page, documento: str) -> RegistroCivilResult:
         from datetime import datetime

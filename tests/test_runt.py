@@ -43,6 +43,7 @@ class TestSolveCaptcha:
         image_bytes = buf.getvalue()
 
         from openquery.core.captcha import OCRSolver
+
         solver = OCRSolver(max_chars=5)
         result = solver.solve(image_bytes)
 
@@ -57,6 +58,7 @@ class TestSolveCaptcha:
         img.save(buf, format="PNG")
 
         from openquery.core.captcha import OCRSolver
+
         solver = OCRSolver(max_chars=5)
         with pytest.raises(CaptchaError, match="too few characters"):
             solver.solve(buf.getvalue())
@@ -74,7 +76,12 @@ class TestExecuteQuery:
         }
 
         result = source._execute_query(
-            mock_page, "2", "vin", "5YJ3E1EA1PF000001", "abc12", "test-uuid",
+            mock_page,
+            "2",
+            "vin",
+            "5YJ3E1EA1PF000001",
+            "abc12",
+            "test-uuid",
         )
         assert result["infoVehiculo"]["marca"] == "TESLA"
 

@@ -33,8 +33,15 @@ class TestSourcesCommand:
     def test_shows_all_13_sources(self):
         result = runner.invoke(app, ["sources"])
         assert result.exit_code == 0
-        for name in ["co.simit", "co.runt", "co.policia", "co.adres",
-                      "co.pico_y_placa", "co.peajes", "co.vehiculos"]:
+        for name in [
+            "co.simit",
+            "co.runt",
+            "co.policia",
+            "co.adres",
+            "co.pico_y_placa",
+            "co.peajes",
+            "co.vehiculos",
+        ]:
             assert name in result.output
 
 
@@ -55,10 +62,17 @@ class TestQueryCommand:
         assert "does not support" in result.output
 
     def test_invalid_extra_json(self):
-        result = runner.invoke(app, [
-            "query", "co.peajes", "--custom", "tolls",
-            "--extra", "not-valid-json",
-        ])
+        result = runner.invoke(
+            app,
+            [
+                "query",
+                "co.peajes",
+                "--custom",
+                "tolls",
+                "--extra",
+                "not-valid-json",
+            ],
+        )
         assert result.exit_code == 1
         assert "Invalid" in result.output
 

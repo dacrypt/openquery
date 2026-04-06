@@ -57,6 +57,7 @@ class SscSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("sv.ssc", "dui", dui)
 
         with browser.page(SSC_URL) as page:
@@ -81,7 +82,7 @@ class SscSource(BaseSource):
                     collector.screenshot(page, "form_filled")
 
                 submit = page.query_selector(
-                    "button[type='submit'], input[type='submit'], button[id*='buscar'], button[id*='consultar']"
+                    "button[type='submit'], input[type='submit'], button[id*='buscar'], button[id*='consultar']"  # noqa: E501
                 )
                 if submit:
                     submit.click()

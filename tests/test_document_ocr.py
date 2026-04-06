@@ -115,9 +115,7 @@ class TestPEDNIPipeline:
         assert fields["dni"] == "12345678"
 
     def test_extracts_names(self):
-        fields = self._extract(
-            "APELLIDO PATERNO: GARCIA\nAPELLIDO MATERNO: LOPEZ\nNOMBRES: CARLOS"
-        )
+        fields = self._extract("APELLIDO PATERNO: GARCIA\nAPELLIDO MATERNO: LOPEZ\nNOMBRES: CARLOS")
         assert fields["apellido_paterno"] == "GARCIA"
         assert fields["apellido_materno"] == "LOPEZ"
         assert fields["nombres"] == "CARLOS"

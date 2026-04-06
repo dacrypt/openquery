@@ -52,6 +52,7 @@ class TestCrHaciendaResult:
 class TestCrHaciendaSourceMeta:
     def test_meta(self):
         from openquery.sources.cr.hacienda import CrHaciendaSource
+
         meta = CrHaciendaSource().meta()
         assert meta.name == "cr.hacienda"
         assert meta.country == "CR"
@@ -62,6 +63,7 @@ class TestCrHaciendaSourceMeta:
 
     def test_missing_cedula_raises(self):
         from openquery.sources.cr.hacienda import CrHaciendaSource
+
         src = CrHaciendaSource()
         with pytest.raises(SourceError, match="Cédula is required"):
             src.query(QueryInput(document_type=DocumentType.CEDULA, document_number=""))
@@ -72,6 +74,7 @@ class TestCrHaciendaParseResult:
 
     def _parse(self, body_text: str, cedula: str = "1-0234-0567") -> CrHaciendaResult:
         from openquery.sources.cr.hacienda import CrHaciendaSource
+
         page = MagicMock()
         page.inner_text.return_value = body_text
         src = CrHaciendaSource()
@@ -137,10 +140,7 @@ class TestCrHaciendaParseResult:
         assert result.obligations == ""
 
     def test_multiple_fields_parsed(self):
-        body = (
-            "Estado: Declarante Activo\n"
-            "Obligaciones: Renta, IVA\n"
-        )
+        body = "Estado: Declarante Activo\nObligaciones: Renta, IVA\n"
         result = self._parse(body)
         assert result.declarant_status == "Declarante Activo"
         assert result.obligations == "Renta, IVA"

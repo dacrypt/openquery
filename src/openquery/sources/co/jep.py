@@ -64,6 +64,7 @@ class JepSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.jep", "consulta", query_value)
 
         with browser.page(JEP_URL) as page:
@@ -128,20 +129,22 @@ class JepSource(BaseSource):
         body_lower = body_text.lower()
 
         # Check for no-results indicators
-        no_results = any(phrase in body_lower for phrase in [
-            "no se encontraron",
-            "sin resultados",
-            "no registra",
-            "0 resultados",
-        ])
+        no_results = any(
+            phrase in body_lower
+            for phrase in [
+                "no se encontraron",
+                "sin resultados",
+                "no registra",
+                "0 resultados",
+            ]
+        )
 
         resultados: list[dict] = []
 
         if not no_results:
             # Try to extract result rows from tables or result containers
             rows = page.query_selector_all(
-                "table tr, .resultado, .item-resultado, "
-                ".search-result, .caso, .proceso"
+                "table tr, .resultado, .item-resultado, .search-result, .caso, .proceso"
             )
 
             for row in rows:

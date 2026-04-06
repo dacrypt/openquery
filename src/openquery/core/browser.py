@@ -30,10 +30,12 @@ def _get_sync_playwright():
     """Get sync_playwright from patchright (preferred) or playwright (fallback)."""
     try:
         from patchright.sync_api import sync_playwright
+
         return sync_playwright
     except ImportError:
         logger.debug("Patchright not installed, falling back to Playwright")
         from playwright.sync_api import sync_playwright
+
         return sync_playwright
 
 
@@ -49,7 +51,10 @@ class BrowserManager:
     """
 
     def __init__(
-        self, headless: bool = True, timeout: float = 30.0, proxy: str = "",
+        self,
+        headless: bool = True,
+        timeout: float = 30.0,
+        proxy: str = "",
     ) -> None:
         self._headless = headless
         self._timeout = timeout
@@ -72,6 +77,7 @@ class BrowserManager:
         proxy_url = self._proxy
         if not proxy_url:
             from openquery.config import get_settings
+
             proxy_url = get_settings().proxy_url
 
         launch_kwargs: dict[str, Any] = {
@@ -80,7 +86,9 @@ class BrowserManager:
         }
         if proxy_url:
             launch_kwargs["proxy"] = {"server": proxy_url}
-            logger.info("Using proxy: %s", proxy_url.split("@")[-1] if "@" in proxy_url else proxy_url)
+            logger.info(
+                "Using proxy: %s", proxy_url.split("@")[-1] if "@" in proxy_url else proxy_url
+            )
 
         with sync_playwright() as pw:
             browser = pw.chromium.launch(**launch_kwargs)

@@ -34,10 +34,12 @@ class TestRuntE2E:
     def test_query_by_vin(self, runt):
         """Query RUNT by VIN — most reliable query type."""
         try:
-            result = runt.query(QueryInput(
-                document_type=DocumentType.VIN,
-                document_number=TEST_VIN,
-            ))
+            result = runt.query(
+                QueryInput(
+                    document_type=DocumentType.VIN,
+                    document_number=TEST_VIN,
+                )
+            )
             assert isinstance(result, RuntResult)
             print(f"\nVIN result: {result.marca} {result.linea} {result.modelo_ano}")
             print(f"  Estado: {result.estado}")
@@ -51,10 +53,12 @@ class TestRuntE2E:
     def test_query_invalid_plate_returns_or_errors(self, runt):
         """Querying a non-existent plate should raise or return empty."""
         try:
-            result = runt.query(QueryInput(
-                document_type=DocumentType.PLATE,
-                document_number="ZZZ000",
-            ))
+            result = runt.query(
+                QueryInput(
+                    document_type=DocumentType.PLATE,
+                    document_number="ZZZ000",
+                )
+            )
             # If it returns, data should indicate not found
             print(f"\nInvalid plate result: estado='{result.estado}'")
         except SourceError as e:

@@ -94,10 +94,7 @@ class TestParseResult:
 
     def test_parse_delinquency(self):
         source = NosisSource()
-        page = self._make_page(
-            "CUIT 20123456789\n"
-            "Presenta mora en cuota 3\n"
-        )
+        page = self._make_page("CUIT 20123456789\nPresenta mora en cuota 3\n")
         result = source._parse_result(page, "20123456789")
         assert result.delinquency_status == "Con mora"
 

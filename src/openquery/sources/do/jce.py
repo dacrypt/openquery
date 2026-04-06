@@ -33,7 +33,7 @@ class DoJceSource(BaseSource):
         return SourceMeta(
             name="do.jce",
             display_name="JCE — Validar Cédula",
-            description="Dominican Republic identity validation: cedula status (Junta Central Electoral)",
+            description="Dominican Republic identity validation: cedula status (Junta Central Electoral)",  # noqa: E501
             country="DO",
             url=JCE_URL,
             supported_inputs=[DocumentType.CEDULA],
@@ -56,6 +56,7 @@ class DoJceSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("do.jce", "cedula", cedula)
 
         with browser.page(JCE_URL) as page:

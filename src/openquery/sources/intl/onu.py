@@ -44,7 +44,12 @@ class OnuSource(BaseSource):
             description="UN Security Council Consolidated Sanctions List screening",
             country="INTL",
             url=ONU_PAGE_URL,
-            supported_inputs=[DocumentType.CEDULA, DocumentType.NIT, DocumentType.PASSPORT, DocumentType.CUSTOM],
+            supported_inputs=[
+                DocumentType.CEDULA,
+                DocumentType.NIT,
+                DocumentType.PASSPORT,
+                DocumentType.CUSTOM,
+            ],
             requires_captcha=False,
             requires_browser=False,
             rate_limit_rpm=10,
@@ -55,7 +60,9 @@ class OnuSource(BaseSource):
         doc_number = input.document_number.strip()
 
         if not name and not doc_number:
-            raise SourceError("intl.onu", "Provide a name (extra.name) or document number to search")
+            raise SourceError(
+                "intl.onu", "Provide a name (extra.name) or document number to search"
+            )
 
         search_term = name if name else doc_number
         return self._search(search_term)
@@ -89,15 +96,25 @@ class OnuSource(BaseSource):
                     designation = individual.find(".//DESIGNATION/VALUE")
                     list_type = individual.find("UN_LIST_TYPE")
 
-                    matches.append(OnuEntry(
-                        reference_number=ref.text if ref is not None and ref.text else "",
-                        name=full_name,
-                        un_list_type=list_type.text if list_type is not None and list_type.text else "",
-                        listed_on=listed.text if listed is not None and listed.text else "",
-                        comments=comments.text[:200] if comments is not None and comments.text else "",
-                        nationality=nationality_elem.text if nationality_elem is not None and nationality_elem.text else "",
-                        designation=designation.text if designation is not None and designation.text else "",
-                    ))
+                    matches.append(
+                        OnuEntry(
+                            reference_number=ref.text if ref is not None and ref.text else "",
+                            name=full_name,
+                            un_list_type=list_type.text
+                            if list_type is not None and list_type.text
+                            else "",
+                            listed_on=listed.text if listed is not None and listed.text else "",
+                            comments=comments.text[:200]
+                            if comments is not None and comments.text
+                            else "",
+                            nationality=nationality_elem.text
+                            if nationality_elem is not None and nationality_elem.text
+                            else "",
+                            designation=designation.text
+                            if designation is not None and designation.text
+                            else "",
+                        )
+                    )
 
             # Search entities
             for entity in root.iter("ENTITY"):
@@ -112,13 +129,19 @@ class OnuSource(BaseSource):
                     comments = entity.find("COMMENTS1")
                     list_type = entity.find("UN_LIST_TYPE")
 
-                    matches.append(OnuEntry(
-                        reference_number=ref.text if ref is not None and ref.text else "",
-                        name=entity_name,
-                        un_list_type=list_type.text if list_type is not None and list_type.text else "",
-                        listed_on=listed.text if listed is not None and listed.text else "",
-                        comments=comments.text[:200] if comments is not None and comments.text else "",
-                    ))
+                    matches.append(
+                        OnuEntry(
+                            reference_number=ref.text if ref is not None and ref.text else "",
+                            name=entity_name,
+                            un_list_type=list_type.text
+                            if list_type is not None and list_type.text
+                            else "",
+                            listed_on=listed.text if listed is not None and listed.text else "",
+                            comments=comments.text[:200]
+                            if comments is not None and comments.text
+                            else "",
+                        )
+                    )
 
             return OnuResult(
                 queried_at=datetime.now(),

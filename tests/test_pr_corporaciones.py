@@ -127,10 +127,7 @@ class TestParseResult:
     def test_parse_details_collected(self):
         source = CorporacionesSource()
         mock_page = MagicMock()
-        mock_page.inner_text.return_value = (
-            "Charter Number: 0123456\n"
-            "Resident Agent: JOHN DOE\n"
-        )
+        mock_page.inner_text.return_value = "Charter Number: 0123456\nResident Agent: JOHN DOE\n"
 
         result = source._parse_result(mock_page, "test")
 

@@ -64,6 +64,7 @@ class TestIdDmvSourceMeta:
 
     def test_meta_supported_inputs(self):
         from openquery.sources.base import DocumentType
+
         source = IdDmvSource()
         meta = source.meta()
         assert DocumentType.VIN in meta.supported_inputs
@@ -93,6 +94,7 @@ class TestIdDmvSourceMeta:
 
     def test_meta_url(self):
         from openquery.sources.us.id_dmv import TITLE_URL
+
         source = IdDmvSource()
         meta = source.meta()
         assert meta.url == TITLE_URL
@@ -178,6 +180,7 @@ class TestParseResult:
     def test_query_wrong_document_type_raises(self):
         from openquery.exceptions import SourceError
         from openquery.sources.base import DocumentType, QueryInput
+
         source = IdDmvSource()
         inp = QueryInput(document_type=DocumentType.PASSPORT, document_number="ABC123")
         try:
@@ -189,6 +192,7 @@ class TestParseResult:
     def test_query_empty_vin_raises(self):
         from openquery.exceptions import SourceError
         from openquery.sources.base import DocumentType, QueryInput
+
         source = IdDmvSource()
         inp = QueryInput(document_type=DocumentType.VIN, document_number="   ")
         try:

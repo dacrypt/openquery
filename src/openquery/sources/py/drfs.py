@@ -61,6 +61,7 @@ class PyDrfsSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("py.drfs", "custom", search_term)
 
         with browser.page(DRFS_URL) as page:

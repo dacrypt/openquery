@@ -60,6 +60,7 @@ class CrVehiculoSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("cr.vehiculo", "placa", placa)
 
         with browser.page(VEHICULO_URL) as page:
@@ -83,8 +84,7 @@ class CrVehiculoSource(BaseSource):
                     collector.screenshot(page, "form_filled")
 
                 submit = page.query_selector(
-                    '#btnConsultar, input[name="btnConsultar"], '
-                    '#btnBuscar, input[name="btnBuscar"]'
+                    '#btnConsultar, input[name="btnConsultar"], #btnBuscar, input[name="btnBuscar"]'
                 )
                 if submit:
                     submit.click()

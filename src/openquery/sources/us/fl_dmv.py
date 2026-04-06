@@ -81,6 +81,7 @@ class FlDmvSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("us.fl_dmv", search_type, value)
 
         with browser.page(FL_DMV_URL) as page:
@@ -199,7 +200,7 @@ class FlDmvSource(BaseSource):
         for phrase in ("title status", "title:"):
             idx = body_lower.find(phrase)
             if idx != -1:
-                snippet = body_text[idx: idx + 80].strip()
+                snippet = body_text[idx : idx + 80].strip()
                 result.title_status = snippet
                 details["title_status_raw"] = snippet
                 break
@@ -207,8 +208,16 @@ class FlDmvSource(BaseSource):
         # Brand history — look for common brand keywords
         brands: list[str] = []
         brand_keywords = (
-            "salvage", "rebuilt", "flood", "lemon", "theft", "junk",
-            "dismantled", "non-repairable", "odometer rollback", "fire",
+            "salvage",
+            "rebuilt",
+            "flood",
+            "lemon",
+            "theft",
+            "junk",
+            "dismantled",
+            "non-repairable",
+            "odometer rollback",
+            "fire",
         )
         for kw in brand_keywords:
             if kw in body_lower:
@@ -219,7 +228,7 @@ class FlDmvSource(BaseSource):
         for phrase in ("odometer", "mileage"):
             idx = body_lower.find(phrase)
             if idx != -1:
-                snippet = body_text[idx: idx + 60].strip()
+                snippet = body_text[idx : idx + 60].strip()
                 result.odometer = snippet
                 details["odometer_raw"] = snippet
                 break
@@ -228,7 +237,7 @@ class FlDmvSource(BaseSource):
         for phrase in ("registration status", "registration:", "reg status"):
             idx = body_lower.find(phrase)
             if idx != -1:
-                snippet = body_text[idx: idx + 80].strip()
+                snippet = body_text[idx : idx + 80].strip()
                 result.registration_status = snippet
                 details["registration_raw"] = snippet
                 break

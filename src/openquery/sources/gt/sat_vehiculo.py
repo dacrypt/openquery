@@ -69,6 +69,7 @@ class GtSatVehiculoSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("gt.sat_vehiculo", "placa", placa)
 
         with browser.page(SAT_VEHICULO_URL) as page:
@@ -94,8 +95,7 @@ class GtSatVehiculoSource(BaseSource):
 
                 # Fill NIT input
                 nit_input = page.query_selector(
-                    'input[id*="nit"], input[name*="nit"], '
-                    'input[id*="NIT"], input[name*="NIT"]'
+                    'input[id*="nit"], input[name*="nit"], input[id*="NIT"], input[name*="NIT"]'
                 )
                 if nit_input:
                     nit_input.fill(nit)

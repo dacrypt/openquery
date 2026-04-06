@@ -66,6 +66,7 @@ class SimitSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.simit", "cedula/placa", search_term)
 
         with browser.page(SIMIT_URL) as page:
@@ -75,9 +76,7 @@ class SimitSource(BaseSource):
 
                 # Wait for the Angular SPA to render
                 logger.info("Waiting for search form...")
-                input_locator = page.get_by_label(
-                    "Número de identificación o placa del vehículo"
-                )
+                input_locator = page.get_by_label("Número de identificación o placa del vehículo")
                 input_locator.wait_for(state="visible", timeout=15000)
 
                 # Fill search term
@@ -160,7 +159,11 @@ class SimitSource(BaseSource):
 
         logger.info(
             "SIMIT results — comparendos=%d, multas=%d, acuerdos=%d, total=$%.0f, paz_y_salvo=%s",
-            data.comparendos, data.multas, data.acuerdos_pago, data.total_deuda, data.paz_y_salvo,
+            data.comparendos,
+            data.multas,
+            data.acuerdos_pago,
+            data.total_deuda,
+            data.paz_y_salvo,
         )
         return data
 

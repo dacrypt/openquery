@@ -50,7 +50,9 @@ class RethusSource(BaseSource):
 
     def query(self, input: QueryInput) -> BaseModel:
         if input.document_type not in (DocumentType.CEDULA, DocumentType.PASSPORT):
-            raise SourceError("co.rethus", f"Only cedula/passport supported, got: {input.document_type}")
+            raise SourceError(
+                "co.rethus", f"Only cedula/passport supported, got: {input.document_type}"
+            )
         return self._query(input.document_number, input.document_type, audit=input.audit)
 
     def _query(self, documento: str, tipo: str = "cedula", audit: bool = False) -> RethusResult:
@@ -61,6 +63,7 @@ class RethusSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.rethus", tipo, documento)
 
         with browser.page(RETHUS_URL) as page:
@@ -130,17 +133,23 @@ class RethusSource(BaseSource):
         body_text = page.inner_text("body")
         body_lower = body_text.lower()
 
-        esta_registrado = any(phrase in body_lower for phrase in [
-            "registrado",
-            "activo",
-            "resultado de la consulta",
-        ])
+        esta_registrado = any(
+            phrase in body_lower
+            for phrase in [
+                "registrado",
+                "activo",
+                "resultado de la consulta",
+            ]
+        )
 
-        no_registrado = any(phrase in body_lower for phrase in [
-            "no se encontr",
-            "no registra",
-            "sin resultados",
-        ])
+        no_registrado = any(
+            phrase in body_lower
+            for phrase in [
+                "no se encontr",
+                "no registra",
+                "sin resultados",
+            ]
+        )
 
         if no_registrado:
             esta_registrado = False
@@ -167,7 +176,9 @@ class RethusSource(BaseSource):
                 fecha_registro = stripped.split(":", 1)[1].strip()
             elif "universidad" in lower and ":" in stripped:
                 universidad = stripped.split(":", 1)[1].strip()
-            elif ("instituci" in lower or "entidad" in lower) and ":" in stripped and not universidad:
+            elif (
+                ("instituci" in lower or "entidad" in lower) and ":" in stripped and not universidad
+            ):
                 universidad = stripped.split(":", 1)[1].strip()
 
         estado_msg = "Registrado" if esta_registrado else "No registrado"

@@ -70,9 +70,8 @@ class OsceSancionadosSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
-            collector = AuditCollector(
-                "pe.osce_sancionados", "custom", ruc or name
-            )
+
+            collector = AuditCollector("pe.osce_sancionados", "custom", ruc or name)
 
         with browser.page(OSCE_URL) as page:
             try:
@@ -117,13 +116,16 @@ class OsceSancionadosSource(BaseSource):
                 # Solve image CAPTCHA — the CAPTCHA image is not marked with captcha
                 # attributes; identify it as the img above "Ingrese el Código de la imagen"
                 captcha_input = all_inputs[2] if len(all_inputs) >= 3 else None
-                captcha_img = page.query_selector('img[src*="captcha" i], img + a + * img, table img')
+                captcha_img = page.query_selector(
+                    'img[src*="captcha" i], img + a + * img, table img'
+                )
                 # Fallback: any img that precedes a "Ingrese" label
                 if not captcha_img:
-                    captcha_img = page.query_selector('img')
+                    captcha_img = page.query_selector("img")
 
                 if captcha_img and captcha_input:
                     from openquery.core.captcha import ChainedSolver, LLMCaptchaSolver, OCRSolver
+
                     solvers = []
                     try:
                         solvers.append(LLMCaptchaSolver())
@@ -143,7 +145,9 @@ class OsceSancionadosSource(BaseSource):
                         except Exception as e:
                             logger.warning("CAPTCHA attempt %d failed: %s", attempt, e)
                         # Refresh CAPTCHA via the "Refrescar código" link
-                        refresh = page.query_selector('a:has-text("Refrescar"), a[href*="refrescar" i]')
+                        refresh = page.query_selector(
+                            'a:has-text("Refrescar"), a[href*="refrescar" i]'
+                        )
                         if refresh:
                             refresh.click()
                             page.wait_for_timeout(1000)
@@ -171,18 +175,14 @@ class OsceSancionadosSource(BaseSource):
                 result = self._parse_result(page)
 
                 if collector:
-                    result.audit = collector.generate_pdf(
-                        page, result.model_dump_json()
-                    )
+                    result.audit = collector.generate_pdf(page, result.model_dump_json())
 
                 return result
 
             except SourceError:
                 raise
             except Exception as e:
-                raise SourceError(
-                    "pe.osce_sancionados", f"Query failed: {e}"
-                ) from e
+                raise SourceError("pe.osce_sancionados", f"Query failed: {e}") from e
 
     def _parse_result(self, page) -> OsceSancionadosResult:
         """Parse the OSCE result page."""
@@ -215,9 +215,7 @@ class OsceSancionadosSource(BaseSource):
 
         # Fallback: extract count from text
         if not sancionados:
-            m = re.search(
-                r"(\d+)\s*(?:resultado|registro|sancion)", body_text, re.IGNORECASE
-            )
+            m = re.search(r"(\d+)\s*(?:resultado|registro|sancion)", body_text, re.IGNORECASE)
             if m:
                 result.total_sancionados = int(m.group(1))
 

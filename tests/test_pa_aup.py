@@ -3,13 +3,12 @@
 from __future__ import annotations
 
 from datetime import datetime
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
 import pytest
 
 from openquery.exceptions import SourceError
 from openquery.sources.base import DocumentType, QueryInput
-
 
 # ===========================================================================
 # TestPaAupResult — model tests
@@ -128,11 +127,13 @@ class TestPaAupParseResult:
             return PaAupResult(search_term=search)
 
         src._query = fake_query
-        src.query(QueryInput(
-            document_type=DocumentType.CUSTOM,
-            document_number="",
-            extra={"name": "ENSA"},
-        ))
+        src.query(
+            QueryInput(
+                document_type=DocumentType.CUSTOM,
+                document_number="",
+                extra={"name": "ENSA"},
+            )
+        )
         assert called_with[0] == "ENSA"
 
 
@@ -147,8 +148,10 @@ class TestPaAupIntegration:
         from openquery.sources.pa.aup import PaAupSource
 
         src = PaAupSource(headless=True)
-        result = src.query(QueryInput(
-            document_type=DocumentType.CUSTOM,
-            extra={"name": "ENSA"},
-        ))
+        result = src.query(
+            QueryInput(
+                document_type=DocumentType.CUSTOM,
+                extra={"name": "ENSA"},
+            )
+        )
         assert isinstance(result.search_term, str)

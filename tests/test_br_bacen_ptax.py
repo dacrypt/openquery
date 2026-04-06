@@ -7,9 +7,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from openquery.exceptions import SourceError
 from openquery.sources.base import DocumentType, QueryInput
-
 
 # ===========================================================================
 # TestBrBacenPtaxResult — model tests
@@ -151,9 +149,11 @@ class TestBrBacenPtaxIntegration:
         from openquery.sources.br.bacen_ptax import BrBacenPtaxSource
 
         src = BrBacenPtaxSource()
-        result = src.query(QueryInput(
-            document_type=DocumentType.CUSTOM,
-            document_number="01-15-2025",
-            extra={"date": "01-15-2025"},
-        ))
+        result = src.query(
+            QueryInput(
+                document_type=DocumentType.CUSTOM,
+                document_number="01-15-2025",
+                extra={"date": "01-15-2025"},
+            )
+        )
         assert isinstance(result.date, str)

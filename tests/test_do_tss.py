@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
 from openquery.models.do.tss import TssResult
 from openquery.sources.do.tss import TssSource
@@ -77,6 +77,7 @@ class TestTssSourceMeta:
 
     def test_meta_supported_inputs(self):
         from openquery.sources.base import DocumentType
+
         source = TssSource()
         assert DocumentType.CEDULA in source.meta().supported_inputs
 

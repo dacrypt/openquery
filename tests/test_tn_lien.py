@@ -71,6 +71,7 @@ class TestTnLienSourceMeta:
 
     def test_meta_supported_inputs(self):
         from openquery.sources.base import DocumentType
+
         source = TnLienSource()
         meta = source.meta()
         assert DocumentType.VIN in meta.supported_inputs
@@ -106,6 +107,7 @@ class TestTnLienQueryValidation:
     def test_unsupported_document_type_raises(self):
         from openquery.exceptions import SourceError
         from openquery.sources.base import DocumentType, QueryInput
+
         source = TnLienSource()
         inp = QueryInput(document_type=DocumentType.CEDULA, document_number="123")
         try:
@@ -117,6 +119,7 @@ class TestTnLienQueryValidation:
     def test_empty_vin_raises(self):
         from openquery.exceptions import SourceError
         from openquery.sources.base import DocumentType, QueryInput
+
         source = TnLienSource()
         inp = QueryInput(document_type=DocumentType.VIN, document_number="   ")
         try:
@@ -128,6 +131,7 @@ class TestTnLienQueryValidation:
     def test_invalid_custom_search_type_raises(self):
         from openquery.exceptions import SourceError
         from openquery.sources.base import DocumentType, QueryInput
+
         source = TnLienSource()
         inp = QueryInput(
             document_type=DocumentType.CUSTOM,
@@ -173,9 +177,11 @@ class TestParseResult:
 
     def test_parse_single_lien(self):
         source = TnLienSource()
-        page = self._make_page(rows=[
-            ["TN-2024-001", "JOHN DOE", "FIRST BANK", "2024-01-15", "ACTIVE"],
-        ])
+        page = self._make_page(
+            rows=[
+                ["TN-2024-001", "JOHN DOE", "FIRST BANK", "2024-01-15", "ACTIVE"],
+            ]
+        )
         result = source._parse_results(page, "1HGCM82633A004352", "vin")
         assert result.total_liens == 1
         assert result.liens[0].document_number == "TN-2024-001"
@@ -186,19 +192,23 @@ class TestParseResult:
 
     def test_parse_multiple_liens(self):
         source = TnLienSource()
-        page = self._make_page(rows=[
-            ["TN-2024-001", "JOHN DOE", "FIRST BANK", "2024-01-15", "ACTIVE"],
-            ["TN-2024-002", "JANE SMITH", "CREDIT UNION", "2024-02-20", "ACTIVE"],
-        ])
+        page = self._make_page(
+            rows=[
+                ["TN-2024-001", "JOHN DOE", "FIRST BANK", "2024-01-15", "ACTIVE"],
+                ["TN-2024-002", "JANE SMITH", "CREDIT UNION", "2024-02-20", "ACTIVE"],
+            ]
+        )
         result = source._parse_results(page, "SMITH", "debtor")
         assert result.total_liens == 2
         assert result.search_type == "debtor"
 
     def test_parse_partial_row(self):
         source = TnLienSource()
-        page = self._make_page(rows=[
-            ["TN-2024-001", "JOHN DOE"],
-        ])
+        page = self._make_page(
+            rows=[
+                ["TN-2024-001", "JOHN DOE"],
+            ]
+        )
         result = source._parse_results(page, "TN-2024-001", "document")
         assert result.total_liens == 1
         assert result.liens[0].document_number == "TN-2024-001"

@@ -47,10 +47,7 @@ class SenapiSource(BaseSource):
         )
 
     def query(self, input: QueryInput) -> BaseModel:
-        search_term = (
-            input.extra.get("trademark_name", "")
-            or input.document_number
-        )
+        search_term = input.extra.get("trademark_name", "") or input.document_number
         if not search_term:
             raise SourceError("bo.senapi", "trademark_name is required")
         return self._query(search_term.strip(), audit=input.audit)
@@ -63,6 +60,7 @@ class SenapiSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("bo.senapi", "trademark_name", search_term)
 
         with browser.page(SENAPI_URL) as page:

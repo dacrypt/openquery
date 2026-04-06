@@ -67,6 +67,7 @@ class InpiSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("ar.inpi", "trademark_name", search_term)
 
         with browser.page(INPI_URL) as page:

@@ -16,12 +16,11 @@ def create_app() -> FastAPI:
     )
 
     # Include routes
+    from openquery.server.routes.face import router as face_router
     from openquery.server.routes.health import router as health_router
+    from openquery.server.routes.ocr import router as ocr_router
     from openquery.server.routes.query import router as query_router
     from openquery.server.routes.sources import router as sources_router
-
-    from openquery.server.routes.face import router as face_router
-    from openquery.server.routes.ocr import router as ocr_router
 
     app.include_router(health_router, prefix="/api/v1", tags=["system"])
     app.include_router(sources_router, prefix="/api/v1", tags=["system"])
@@ -31,6 +30,7 @@ def create_app() -> FastAPI:
 
     # API key middleware
     from openquery.server.auth import setup_auth
+
     setup_auth(app)
 
     # Dashboard static files

@@ -61,14 +61,10 @@ class CombustibleSource(BaseSource):
             conditions = []
             if municipio:
                 prefix = municipio[:5]
-                conditions.append(
-                    f"starts_with(upper(municipio), '{prefix}')"
-                )
+                conditions.append(f"starts_with(upper(municipio), '{prefix}')")
             if departamento:
                 prefix_dep = departamento[:5]
-                conditions.append(
-                    f"starts_with(upper(departamento), '{prefix_dep}')"
-                )
+                conditions.append(f"starts_with(upper(departamento), '{prefix_dep}')")
 
             where_clause = " AND ".join(conditions)
             params: dict[str, str] = {"$where": where_clause, "$limit": "500"}
@@ -84,13 +80,15 @@ class CombustibleSource(BaseSource):
 
             estaciones = []
             for row in data:
-                estaciones.append({
-                    "nombre": row.get("nombre_comercial", ""),
-                    "bandera": row.get("bandera", ""),
-                    "direccion": row.get("direccion", ""),
-                    "producto": row.get("producto", ""),
-                    "precio": row.get("precio", ""),
-                })
+                estaciones.append(
+                    {
+                        "nombre": row.get("nombre_comercial", ""),
+                        "bandera": row.get("bandera", ""),
+                        "direccion": row.get("direccion", ""),
+                        "producto": row.get("producto", ""),
+                        "precio": row.get("precio", ""),
+                    }
+                )
 
             return CombustibleResult(
                 departamento=departamento or (data[0].get("departamento", "") if data else ""),

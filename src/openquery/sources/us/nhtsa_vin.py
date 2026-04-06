@@ -106,7 +106,9 @@ class NhtsaVinSource(BaseSource):
                 val = all_fields.get(api_key, "")
                 setattr(result, attr, val)
 
-            logger.info("Decoded VIN %s: %s %s %s", vin, result.make, result.model, result.model_year)
+            logger.info(
+                "Decoded VIN %s: %s %s %s", vin, result.make, result.model, result.model_year
+            )
             return result
 
         except httpx.HTTPStatusError as e:

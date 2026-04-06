@@ -73,6 +73,7 @@ class TestSisaRefesSourceMeta:
 
     def test_meta_supported_inputs(self):
         from openquery.sources.base import DocumentType
+
         source = SisaRefesSource()
         assert DocumentType.CUSTOM in source.meta().supported_inputs
 
@@ -157,9 +158,7 @@ class TestParseResult:
 
     def test_query_uses_code_param(self):
         source = SisaRefesSource()
-        api_response = {
-            "establecimientos": [{"nombre": "HOSPITAL X", "cuit": "30000000001"}]
-        }
+        api_response = {"establecimientos": [{"nombre": "HOSPITAL X", "cuit": "30000000001"}]}
         with patch("httpx.Client") as mock_client_cls:
             mock_resp = MagicMock()
             mock_resp.status_code = 200

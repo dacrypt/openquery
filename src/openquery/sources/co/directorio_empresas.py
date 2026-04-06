@@ -52,7 +52,9 @@ class DirectorioEmpresasSource(BaseSource):
         name = input.extra.get("name", "").strip()
 
         if not search_term and not name:
-            raise SourceError("co.directorio_empresas", "Provide a NIT or company name (extra.name)")
+            raise SourceError(
+                "co.directorio_empresas", "Provide a NIT or company name (extra.name)"
+            )
 
         query_term = search_term if search_term else name
         tipo = "nit" if input.document_type == DocumentType.NIT else "nombre"
@@ -81,17 +83,21 @@ class DirectorioEmpresasSource(BaseSource):
 
             empresas = []
             for row in data:
-                empresas.append(EmpresaDirectorio(
-                    razon_social=row.get("raz_n_social", row.get("razon_social", "")),
-                    nit=row.get("nit", ""),
-                    actividad_economica=row.get("actividad_econ_mica", row.get("actividad_economica", "")),
-                    ciiu=row.get("ciiu", row.get("c_digo_ciiu", "")),
-                    direccion=row.get("direcci_n", row.get("direccion", "")),
-                    municipio=row.get("municipio", ""),
-                    departamento=row.get("departamento", ""),
-                    telefono=row.get("tel_fono", row.get("telefono", "")),
-                    estado=row.get("estado", row.get("estado_matr_cula", "")),
-                ))
+                empresas.append(
+                    EmpresaDirectorio(
+                        razon_social=row.get("raz_n_social", row.get("razon_social", "")),
+                        nit=row.get("nit", ""),
+                        actividad_economica=row.get(
+                            "actividad_econ_mica", row.get("actividad_economica", "")
+                        ),
+                        ciiu=row.get("ciiu", row.get("c_digo_ciiu", "")),
+                        direccion=row.get("direcci_n", row.get("direccion", "")),
+                        municipio=row.get("municipio", ""),
+                        departamento=row.get("departamento", ""),
+                        telefono=row.get("tel_fono", row.get("telefono", "")),
+                        estado=row.get("estado", row.get("estado_matr_cula", "")),
+                    )
+                )
 
             if not empresas:
                 mensaje = "No se encontraron empresas"

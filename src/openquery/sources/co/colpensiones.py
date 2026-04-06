@@ -23,7 +23,9 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-COLPENSIONES_URL = "https://www.colpensiones.gov.co/afiliados-y-pensionados/afiliados/consulta-de-afiliacion/"
+COLPENSIONES_URL = (
+    "https://www.colpensiones.gov.co/afiliados-y-pensionados/afiliados/consulta-de-afiliacion/"
+)
 
 
 @register
@@ -49,7 +51,9 @@ class ColpensionesSource(BaseSource):
 
     def query(self, input: QueryInput) -> BaseModel:
         if input.document_type != DocumentType.CEDULA:
-            raise SourceError("co.colpensiones", f"Only cedula supported, got: {input.document_type}")
+            raise SourceError(
+                "co.colpensiones", f"Only cedula supported, got: {input.document_type}"
+            )
         return self._query(input.document_number, audit=input.audit)
 
     def _query(self, cedula: str, audit: bool = False) -> ColpensionesResult:
@@ -60,6 +64,7 @@ class ColpensionesSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.colpensiones", "cedula", cedula)
 
         with browser.page(COLPENSIONES_URL) as page:
@@ -119,17 +124,23 @@ class ColpensionesSource(BaseSource):
         body_text = page.inner_text("body")
         body_lower = body_text.lower()
 
-        esta_afiliado = any(phrase in body_lower for phrase in [
-            "afiliado activo",
-            "está afiliado",
-            "se encuentra afiliado",
-        ])
+        esta_afiliado = any(
+            phrase in body_lower
+            for phrase in [
+                "afiliado activo",
+                "está afiliado",
+                "se encuentra afiliado",
+            ]
+        )
 
-        no_afiliado = any(phrase in body_lower for phrase in [
-            "no se encuentra",
-            "no está afiliado",
-            "no registra",
-        ])
+        no_afiliado = any(
+            phrase in body_lower
+            for phrase in [
+                "no se encuentra",
+                "no está afiliado",
+                "no registra",
+            ]
+        )
 
         estado = "Desconocido"
         if esta_afiliado:

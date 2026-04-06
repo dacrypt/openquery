@@ -23,10 +23,12 @@ class TestSimitE2E:
 
     def test_query_cedula(self, simit):
         """Query SIMIT with a cedula number."""
-        result = simit.query(QueryInput(
-            document_type=DocumentType.CEDULA,
-            document_number="1017268287",
-        ))
+        result = simit.query(
+            QueryInput(
+                document_type=DocumentType.CEDULA,
+                document_number="1017268287",
+            )
+        )
         assert isinstance(result, SimitResult)
         assert result.cedula == "1017268287"
         # Should have parsed the summary

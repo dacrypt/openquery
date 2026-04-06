@@ -55,6 +55,7 @@ class TestDinardapSourceMeta:
 
     def test_meta_supported_inputs(self):
         from openquery.sources.base import DocumentType
+
         source = DinardapSource()
         meta = source.meta()
         assert DocumentType.CEDULA in meta.supported_inputs
@@ -94,9 +95,7 @@ class TestParseResult:
     def test_parse_nombre(self):
         source = DinardapSource()
         page = self._make_page(
-            "Consulta de Datos\n"
-            "Nombre: JUAN PEREZ LOPEZ\n"
-            "Estado Civil: SOLTERO\n"
+            "Consulta de Datos\nNombre: JUAN PEREZ LOPEZ\nEstado Civil: SOLTERO\n"
         )
         result = source._parse_result(page, "1234567890")
         assert result.cedula == "1234567890"
@@ -116,9 +115,7 @@ class TestParseResult:
     def test_parse_details(self):
         source = DinardapSource()
         page = self._make_page(
-            "Nombre: JUAN PEREZ LOPEZ\n"
-            "Estado Civil: CASADO\n"
-            "Fecha Nacimiento: 01/01/1980\n"
+            "Nombre: JUAN PEREZ LOPEZ\nEstado Civil: CASADO\nFecha Nacimiento: 01/01/1980\n"
         )
         result = source._parse_result(page, "1234567890")
         assert "Estado Civil" in result.details

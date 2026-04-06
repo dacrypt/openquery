@@ -90,7 +90,9 @@ class RntTurismoSource(BaseSource):
                 registros.append(
                     RntTurismoEntry(
                         rnt=row.get("rnt", row.get("numero_rnt", "")),
-                        razon_social=row.get("razon_social", row.get("nombre_del_establecimiento", "")),
+                        razon_social=row.get(
+                            "razon_social", row.get("nombre_del_establecimiento", "")
+                        ),
                         categoria=row.get("categoria", row.get("categor_a", "")),
                         subcategoria=row.get("subcategoria", row.get("subcategor_a", "")),
                         municipio=row.get("municipio", ""),

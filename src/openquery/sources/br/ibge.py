@@ -61,12 +61,14 @@ class BrIbgeSource(BaseSource):
             estados = []
             for s in data:
                 regiao = s.get("regiao", {})
-                estados.append(IbgeUF(
-                    id=s.get("id", 0),
-                    sigla=s.get("sigla", ""),
-                    nome=s.get("nome", ""),
-                    regiao=regiao.get("nome", "") if isinstance(regiao, dict) else str(regiao),
-                ))
+                estados.append(
+                    IbgeUF(
+                        id=s.get("id", 0),
+                        sigla=s.get("sigla", ""),
+                        nome=s.get("nome", ""),
+                        regiao=regiao.get("nome", "") if isinstance(regiao, dict) else str(regiao),
+                    )
+                )
 
             return BrIbgeResult(
                 queried_at=datetime.now(),

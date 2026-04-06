@@ -94,13 +94,15 @@ class BrDatajudSource(BaseSource):
             # Parse movements
             movimentos = []
             for m in src.get("movimentos", [])[:20]:
-                movimentos.append(MovimentoProcessual(
-                    data=m.get("dataHora", ""),
-                    nome=m.get("nome", ""),
-                    complemento=", ".join(
-                        c.get("nome", "") for c in m.get("complementosTabelados", [])
-                    ),
-                ))
+                movimentos.append(
+                    MovimentoProcessual(
+                        data=m.get("dataHora", ""),
+                        nome=m.get("nome", ""),
+                        complemento=", ".join(
+                            c.get("nome", "") for c in m.get("complementosTabelados", [])
+                        ),
+                    )
+                )
 
             # Parse subjects
             assuntos = [a.get("nome", "") for a in src.get("assuntos", []) if a.get("nome")]
@@ -108,9 +110,13 @@ class BrDatajudSource(BaseSource):
             return BrDatajudResult(
                 queried_at=datetime.now(),
                 numero_processo=src.get("numeroProcesso", numero),
-                classe=src.get("classe", {}).get("nome", "") if isinstance(src.get("classe"), dict) else str(src.get("classe", "")),
+                classe=src.get("classe", {}).get("nome", "")
+                if isinstance(src.get("classe"), dict)
+                else str(src.get("classe", "")),
                 sistema=src.get("siglaSistema", ""),
-                orgao_julgador=src.get("orgaoJulgador", {}).get("nome", "") if isinstance(src.get("orgaoJulgador"), dict) else "",
+                orgao_julgador=src.get("orgaoJulgador", {}).get("nome", "")
+                if isinstance(src.get("orgaoJulgador"), dict)
+                else "",
                 tribunal=src.get("tribunal", court),
                 data_ajuizamento=src.get("dataAjuizamento", ""),
                 assuntos=assuntos,

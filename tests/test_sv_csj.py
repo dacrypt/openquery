@@ -42,9 +42,7 @@ class TestSvCsjParseResult:
         assert result.status == "En trámite"
 
     def test_parties_parsed(self):
-        result = self._parse(
-            "Demandante: JUAN GARCIA\nDemandado: EMPRESA SA\nTribunal: Juzgado"
-        )
+        result = self._parse("Demandante: JUAN GARCIA\nDemandado: EMPRESA SA\nTribunal: Juzgado")
         assert len(result.parties) >= 1
 
     def test_details_populated(self):

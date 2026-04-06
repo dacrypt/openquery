@@ -62,11 +62,7 @@ class TestParseResults:
             MagicMock() if "Paz y Salvo" in sel else None
         )
         mock_page.inner_text.return_value = (
-            "Resumen\n"
-            "Comparendos: 0\n"
-            "Multas: 0\n"
-            "Acuerdos de pago: 0\n"
-            "Total: $ 0\n"
+            "Resumen\nComparendos: 0\nMultas: 0\nAcuerdos de pago: 0\nTotal: $ 0\n"
         )
 
         result = source._parse_results(mock_page, "12345678")
@@ -82,11 +78,7 @@ class TestParseResults:
         mock_page = MagicMock()
         mock_page.query_selector.return_value = None
         mock_page.inner_text.return_value = (
-            "Resumen\n"
-            "Comparendos: 3\n"
-            "Multas: 2\n"
-            "Acuerdos de pago: 1\n"
-            "Total: $ 1.500.000\n"
+            "Resumen\nComparendos: 3\nMultas: 2\nAcuerdos de pago: 1\nTotal: $ 1.500.000\n"
         )
 
         result = source._parse_results(mock_page, "12345678")

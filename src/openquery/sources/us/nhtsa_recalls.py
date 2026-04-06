@@ -72,16 +72,18 @@ class NhtsaRecallsSource(BaseSource):
             raw_results = data.get("results", [])
             recalls: list[NhtsaRecall] = []
             for entry in raw_results:
-                recalls.append(NhtsaRecall(
-                    campaign_number=str(entry.get("NHTSACampaignNumber", "")),
-                    date_reported=str(entry.get("ReportReceivedDate", "")),
-                    component=str(entry.get("Component", "")),
-                    summary=str(entry.get("Summary", "")),
-                    consequence=str(entry.get("Consequence", "")),
-                    remedy=str(entry.get("Remedy", "")),
-                    manufacturer=str(entry.get("Manufacturer", "")),
-                    notes=str(entry.get("Notes", "")),
-                ))
+                recalls.append(
+                    NhtsaRecall(
+                        campaign_number=str(entry.get("NHTSACampaignNumber", "")),
+                        date_reported=str(entry.get("ReportReceivedDate", "")),
+                        component=str(entry.get("Component", "")),
+                        summary=str(entry.get("Summary", "")),
+                        consequence=str(entry.get("Consequence", "")),
+                        remedy=str(entry.get("Remedy", "")),
+                        manufacturer=str(entry.get("Manufacturer", "")),
+                        notes=str(entry.get("Notes", "")),
+                    )
+                )
 
             logger.info("Found %d recalls for %s %s %s", len(recalls), year, make, model)
 
@@ -95,7 +97,9 @@ class NhtsaRecallsSource(BaseSource):
             )
 
         except httpx.HTTPStatusError as e:
-            raise SourceError("us.nhtsa_recalls", f"API returned HTTP {e.response.status_code}") from e
+            raise SourceError(
+                "us.nhtsa_recalls", f"API returned HTTP {e.response.status_code}"
+            ) from e
         except httpx.RequestError as e:
             raise SourceError("us.nhtsa_recalls", f"Request failed: {e}") from e
         except Exception as e:

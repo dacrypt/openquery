@@ -37,7 +37,7 @@ class RepepSource(BaseSource):
         return SourceMeta(
             name="mx.repep",
             display_name="REPEP — Registro Público para Evitar Publicidad",
-            description="Mexico do-not-call registry: check if a phone number is registered with PROFECO's REPEP",
+            description="Mexico do-not-call registry: check if a phone number is registered with PROFECO's REPEP",  # noqa: E501
             country="MX",
             url=REPEP_URL,
             supported_inputs=[DocumentType.CUSTOM],
@@ -67,6 +67,7 @@ class RepepSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("mx.repep", "phone_number", phone_number)
 
         with browser.page(REPEP_URL) as page:

@@ -63,6 +63,7 @@ class SpensionesSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("cl.spensiones", "rut", rut)
 
         with browser.page(SPENSIONES_URL) as page:

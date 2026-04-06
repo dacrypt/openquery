@@ -35,7 +35,7 @@ class DetranSpSource(BaseSource):
         return SourceMeta(
             name="br.detran_sp",
             display_name="DETRAN-SP — Débitos de Veículos (São Paulo)",
-            description="São Paulo vehicle debt lookup: IPVA, licensing, fines, situation (DETRAN-SP)",
+            description="São Paulo vehicle debt lookup: IPVA, licensing, fines, situation (DETRAN-SP)",  # noqa: E501
             country="BR",
             url=DETRAN_SP_URL,
             supported_inputs=[DocumentType.PLATE, DocumentType.CUSTOM],
@@ -60,6 +60,7 @@ class DetranSpSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("br.detran_sp", "placa", placa)
 
         with browser.page(DETRAN_SP_URL) as page:
@@ -171,6 +172,7 @@ class DetranSpSource(BaseSource):
             # Fines count
             if any(k in lower for k in ("multa", "infração", "infracao")):
                 import re
+
                 nums = re.findall(r"\d+", stripped)
                 if nums and result.fines_count == 0:
                     result.fines_count = int(nums[0])

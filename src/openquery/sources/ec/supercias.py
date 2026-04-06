@@ -70,6 +70,7 @@ class SuperciasSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("ec.supercias", tipo_busqueda, search_term)
 
         with browser.page(SUPERCIAS_URL) as page:

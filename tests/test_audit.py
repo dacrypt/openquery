@@ -218,11 +218,13 @@ class TestAuditCollector:
 class TestAuditInQueryInput:
     def test_audit_default_false(self):
         from openquery.sources.base import DocumentType, QueryInput
+
         qi = QueryInput(document_type=DocumentType.CEDULA, document_number="12345678")
         assert qi.audit is False
 
     def test_audit_true(self):
         from openquery.sources.base import DocumentType, QueryInput
+
         qi = QueryInput(
             document_type=DocumentType.CEDULA,
             document_number="12345678",
@@ -234,36 +236,42 @@ class TestAuditInQueryInput:
 class TestAuditFieldInModels:
     def test_simit_audit_excluded_from_dump(self):
         from openquery.models.co.simit import SimitResult
+
         result = SimitResult(cedula="12345678")
         data = result.model_dump()
         assert "audit" not in data
 
     def test_procuraduria_audit_excluded_from_dump(self):
         from openquery.models.co.procuraduria import ProcuraduriaResult
+
         result = ProcuraduriaResult(cedula="12345678")
         data = result.model_dump()
         assert "audit" not in data
 
     def test_policia_audit_excluded_from_dump(self):
         from openquery.models.co.policia import PoliciaResult
+
         result = PoliciaResult(cedula="12345678")
         data = result.model_dump()
         assert "audit" not in data
 
     def test_adres_audit_excluded_from_dump(self):
         from openquery.models.co.adres import AdresResult
+
         result = AdresResult(cedula="12345678")
         data = result.model_dump()
         assert "audit" not in data
 
     def test_runt_audit_excluded_from_dump(self):
         from openquery.models.co.runt import RuntResult
+
         result = RuntResult()
         data = result.model_dump()
         assert "audit" not in data
 
     def test_audit_field_assignable(self):
         from openquery.models.co.simit import SimitResult
+
         record = AuditRecord(id="test", source="co.simit")
         result = SimitResult(cedula="12345678")
         result.audit = record

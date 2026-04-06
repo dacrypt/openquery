@@ -38,7 +38,7 @@ class ServirSancionesSource(BaseSource):
         return SourceMeta(
             name="pe.servir_sanciones",
             display_name="SERVIR — Sanciones a Servidores Publicos",
-            description="Peruvian public servant sanctions: disciplinary actions and disqualifications",
+            description="Peruvian public servant sanctions: disciplinary actions and disqualifications",  # noqa: E501
             country="PE",
             url=SERVIR_URL,
             supported_inputs=[DocumentType.CUSTOM],
@@ -48,7 +48,9 @@ class ServirSancionesSource(BaseSource):
         )
 
     def query(self, input: QueryInput) -> BaseModel:
-        raise SourceError("pe.servir_sanciones", "Source deprecated: site unreachable since 2026-04")
+        raise SourceError(
+            "pe.servir_sanciones", "Source deprecated: site unreachable since 2026-04"
+        )
         nombre = input.extra.get("nombre", "")
         dni = input.extra.get("dni", "")
         if not nombre and not dni:
@@ -71,9 +73,8 @@ class ServirSancionesSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
-            collector = AuditCollector(
-                "pe.servir_sanciones", "custom", nombre or dni
-            )
+
+            collector = AuditCollector("pe.servir_sanciones", "custom", nombre or dni)
 
         with browser.page(SERVIR_URL) as page:
             try:
@@ -120,18 +121,14 @@ class ServirSancionesSource(BaseSource):
                 result = self._parse_result(page)
 
                 if collector:
-                    result.audit = collector.generate_pdf(
-                        page, result.model_dump_json()
-                    )
+                    result.audit = collector.generate_pdf(page, result.model_dump_json())
 
                 return result
 
             except SourceError:
                 raise
             except Exception as e:
-                raise SourceError(
-                    "pe.servir_sanciones", f"Query failed: {e}"
-                ) from e
+                raise SourceError("pe.servir_sanciones", f"Query failed: {e}") from e
 
     def _parse_result(self, page) -> ServirSancionesResult:
         """Parse the SERVIR sanciones result page."""
@@ -163,9 +160,7 @@ class ServirSancionesSource(BaseSource):
 
         # Fallback: extract count from text
         if not sanciones:
-            m = re.search(
-                r"(\d+)\s*(?:resultado|registro|sanci[oó]n)", body_text, re.IGNORECASE
-            )
+            m = re.search(r"(\d+)\s*(?:resultado|registro|sanci[oó]n)", body_text, re.IGNORECASE)
             if m:
                 result.total_sanciones = int(m.group(1))
 

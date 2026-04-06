@@ -126,22 +126,26 @@ class TestAnttRntrcQuery:
 
         src = AnttRntrcSource()
         with pytest.raises(SourceError, match="search_value is required"):
-            src.query(QueryInput(
-                document_type=DocumentType.CUSTOM,
-                document_number="",
-                extra={"search_type": "rntrc", "search_value": ""},
-            ))
+            src.query(
+                QueryInput(
+                    document_type=DocumentType.CUSTOM,
+                    document_number="",
+                    extra={"search_type": "rntrc", "search_value": ""},
+                )
+            )
 
     def test_invalid_search_type_raises(self):
         from openquery.sources.br.antt_rntrc import AnttRntrcSource
 
         src = AnttRntrcSource()
         with pytest.raises(SourceError, match="Invalid search_type"):
-            src.query(QueryInput(
-                document_type=DocumentType.CUSTOM,
-                document_number="12345",
-                extra={"search_type": "nit"},
-            ))
+            src.query(
+                QueryInput(
+                    document_type=DocumentType.CUSTOM,
+                    document_number="12345",
+                    extra={"search_type": "nit"},
+                )
+            )
 
     def test_document_number_used_as_search_value(self):
         """document_number falls back to search_value when extra is absent."""
@@ -155,14 +159,17 @@ class TestAnttRntrcQuery:
             called_with["type"] = search_type
             called_with["value"] = search_value
             from openquery.models.br.antt_rntrc import AnttRntrcResult
+
             return AnttRntrcResult(search_type=search_type, search_value=search_value)
 
         src._query = fake_query
-        src.query(QueryInput(
-            document_type=DocumentType.CUSTOM,
-            document_number="12345",
-            extra={},
-        ))
+        src.query(
+            QueryInput(
+                document_type=DocumentType.CUSTOM,
+                document_number="12345",
+                extra={},
+            )
+        )
         assert called_with["value"] == "12345"
         assert called_with["type"] == "rntrc"  # 5-digit numeric → rntrc
 
@@ -175,14 +182,17 @@ class TestAnttRntrcQuery:
         def fake_query(search_type: str, search_value: str, audit: bool = False):
             called_with["type"] = search_type
             from openquery.models.br.antt_rntrc import AnttRntrcResult
+
             return AnttRntrcResult(search_type=search_type, search_value=search_value)
 
         src._query = fake_query
-        src.query(QueryInput(
-            document_type=DocumentType.CUSTOM,
-            document_number="12345678000195",
-            extra={},
-        ))
+        src.query(
+            QueryInput(
+                document_type=DocumentType.CUSTOM,
+                document_number="12345678000195",
+                extra={},
+            )
+        )
         assert called_with["type"] == "cnpj"
 
     def test_cpf_auto_detected(self):
@@ -194,14 +204,17 @@ class TestAnttRntrcQuery:
         def fake_query(search_type: str, search_value: str, audit: bool = False):
             called_with["type"] = search_type
             from openquery.models.br.antt_rntrc import AnttRntrcResult
+
             return AnttRntrcResult(search_type=search_type, search_value=search_value)
 
         src._query = fake_query
-        src.query(QueryInput(
-            document_type=DocumentType.CUSTOM,
-            document_number="12345678901",
-            extra={},
-        ))
+        src.query(
+            QueryInput(
+                document_type=DocumentType.CUSTOM,
+                document_number="12345678901",
+                extra={},
+            )
+        )
         assert called_with["type"] == "cpf"
 
     def test_plate_auto_detected(self):
@@ -213,14 +226,17 @@ class TestAnttRntrcQuery:
         def fake_query(search_type: str, search_value: str, audit: bool = False):
             called_with["type"] = search_type
             from openquery.models.br.antt_rntrc import AnttRntrcResult
+
             return AnttRntrcResult(search_type=search_type, search_value=search_value)
 
         src._query = fake_query
-        src.query(QueryInput(
-            document_type=DocumentType.CUSTOM,
-            document_number="ABC1234",
-            extra={},
-        ))
+        src.query(
+            QueryInput(
+                document_type=DocumentType.CUSTOM,
+                document_number="ABC1234",
+                extra={},
+            )
+        )
         assert called_with["type"] == "plate"
 
 
@@ -251,8 +267,13 @@ class TestAnttRntrcParseResult:
 
         return page
 
-    def _parse(self, body_text: str, table_rows: list[list[str]] | None = None,
-               search_type: str = "rntrc", search_value: str = "12345") -> object:
+    def _parse(
+        self,
+        body_text: str,
+        table_rows: list[list[str]] | None = None,
+        search_type: str = "rntrc",
+        search_value: str = "12345",
+    ) -> object:
         from openquery.sources.br.antt_rntrc import AnttRntrcSource
 
         src = AnttRntrcSource()
@@ -277,10 +298,7 @@ class TestAnttRntrcParseResult:
 
     def test_fallback_text_parsing(self):
         body = (
-            "RNTRC: 00099999\n"
-            "Razão Social: Empresa Teste Ltda\n"
-            "Situação: HABILITADO\n"
-            "Tipo: ETC\n"
+            "RNTRC: 00099999\nRazão Social: Empresa Teste Ltda\nSituação: HABILITADO\nTipo: ETC\n"
         )
         result = self._parse(body)
         assert result.rntrc_number == "00099999"
@@ -318,10 +336,12 @@ class TestAnttRntrcIntegration:
         from openquery.sources.br.antt_rntrc import AnttRntrcSource
 
         src = AnttRntrcSource(headless=True)
-        result = src.query(QueryInput(
-            document_type=DocumentType.CUSTOM,
-            document_number="1",
-            extra={"search_type": "rntrc", "search_value": "1"},
-        ))
+        result = src.query(
+            QueryInput(
+                document_type=DocumentType.CUSTOM,
+                document_number="1",
+                extra={"search_type": "rntrc", "search_value": "1"},
+            )
+        )
         assert result.search_type == "rntrc"
         assert isinstance(result.rntrc_number, str)

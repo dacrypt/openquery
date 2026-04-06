@@ -110,10 +110,7 @@ class TestParseResult:
     def test_parse_details_collected(self):
         source = CrimSource()
         mock_page = MagicMock()
-        mock_page.inner_text.return_value = (
-            "Municipio: San Juan\n"
-            "Código Postal: 00901\n"
-        )
+        mock_page.inner_text.return_value = "Municipio: San Juan\nCódigo Postal: 00901\n"
 
         result = source._parse_result(mock_page, "123")
 

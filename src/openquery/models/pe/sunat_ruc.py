@@ -9,7 +9,9 @@ from pydantic import BaseModel, Field
 
 
 class SunatRucResult(BaseModel):
-    """Tax registration from Peru's SUNAT (Superintendencia Nacional de Aduanas y Administracion Tributaria).
+    """Tax registration from Peru's SUNAT.
+
+    Full name: Superintendencia Nacional de Aduanas y Administracion Tributaria.
 
     Source: https://e-consultaruc.sunat.gob.pe/cl-ti-itmrconsruc/FrameCriterioBusquedaWeb.jsp
     """

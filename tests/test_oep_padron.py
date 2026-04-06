@@ -64,6 +64,7 @@ class TestOepPadronSourceMeta:
 
     def test_meta_supported_inputs(self):
         from openquery.sources.base import DocumentType
+
         source = OepPadronSource()
         meta = source.meta()
         assert DocumentType.CEDULA in meta.supported_inputs
@@ -102,11 +103,7 @@ class TestParseResult:
 
     def test_parse_nombre(self):
         source = OepPadronSource()
-        page = self._make_page(
-            "Padrón Electoral\n"
-            "Nombre: JUAN PEREZ LOPEZ\n"
-            "Departamento: LA PAZ\n"
-        )
+        page = self._make_page("Padrón Electoral\nNombre: JUAN PEREZ LOPEZ\nDepartamento: LA PAZ\n")
         result = source._parse_result(page, "12345678")
         assert result.cedula == "12345678"
         assert result.nombre == "JUAN PEREZ LOPEZ"
@@ -114,9 +111,7 @@ class TestParseResult:
     def test_parse_departamento(self):
         source = OepPadronSource()
         page = self._make_page(
-            "Nombre: JUAN PEREZ LOPEZ\n"
-            "Departamento: COCHABAMBA\n"
-            "Municipio: COCHABAMBA\n"
+            "Nombre: JUAN PEREZ LOPEZ\nDepartamento: COCHABAMBA\nMunicipio: COCHABAMBA\n"
         )
         result = source._parse_result(page, "12345678")
         assert result.departamento == "COCHABAMBA"
@@ -133,20 +128,13 @@ class TestParseResult:
 
     def test_parse_recinto(self):
         source = OepPadronSource()
-        page = self._make_page(
-            "Municipio: LA PAZ\n"
-            "Recinto: UNIDAD EDUCATIVA TEST\n"
-            "Mesa: 042\n"
-        )
+        page = self._make_page("Municipio: LA PAZ\nRecinto: UNIDAD EDUCATIVA TEST\nMesa: 042\n")
         result = source._parse_result(page, "12345678")
         assert result.recinto == "UNIDAD EDUCATIVA TEST"
 
     def test_parse_mesa(self):
         source = OepPadronSource()
-        page = self._make_page(
-            "Recinto: UNIDAD EDUCATIVA TEST\n"
-            "Mesa: 042\n"
-        )
+        page = self._make_page("Recinto: UNIDAD EDUCATIVA TEST\nMesa: 042\n")
         result = source._parse_result(page, "12345678")
         assert result.mesa == "042"
 

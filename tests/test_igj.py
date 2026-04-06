@@ -68,6 +68,7 @@ class TestIgjSourceMeta:
 
     def test_meta_supported_inputs(self):
         from openquery.sources.base import DocumentType
+
         source = IgjSource()
         assert DocumentType.CUSTOM in source.meta().supported_inputs
 
@@ -88,7 +89,7 @@ class TestParseResult:
         page.inner_text.return_value = body_text
 
         mock_rows = []
-        for label, value in (rows or []):
+        for label, value in rows or []:
             row = MagicMock()
             td_label = MagicMock()
             td_label.inner_text.return_value = label

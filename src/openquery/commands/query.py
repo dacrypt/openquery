@@ -51,9 +51,7 @@ def query_cmd(
         doc_type = DocumentType.CUSTOM
         doc_number = custom
     else:
-        console.print(
-            "[red]Error:[/red] Provide --cedula, --placa, --vin, or --custom"
-        )
+        console.print("[red]Error:[/red] Provide --cedula, --placa, --vin, or --custom")
         raise typer.Exit(1)
 
     try:
@@ -77,12 +75,14 @@ def query_cmd(
 
     start = time.monotonic()
     try:
-        result = src.query(QueryInput(
-            document_type=doc_type,
-            document_number=doc_number,
-            extra=extra_dict,
-            audit=audit,
-        ))
+        result = src.query(
+            QueryInput(
+                document_type=doc_type,
+                document_number=doc_number,
+                extra=extra_dict,
+                audit=audit,
+            )
+        )
     except Exception as e:
         console.print(f"[red]Error:[/red] {e}")
         raise typer.Exit(1) from e
@@ -101,11 +101,13 @@ def query_cmd(
                 lines.append(f"[cyan]{key}:[/cyan] ({len(value)} items)")
             elif value or value == 0:
                 lines.append(f"[cyan]{key}:[/cyan] {value}")
-        console.print(Panel(
-            "\n".join(lines),
-            title=f"{meta.display_name} — {doc_number}",
-            subtitle=f"{elapsed_ms}ms",
-        ))
+        console.print(
+            Panel(
+                "\n".join(lines),
+                title=f"{meta.display_name} — {doc_number}",
+                subtitle=f"{elapsed_ms}ms",
+            )
+        )
 
     # Save audit files if requested
     if audit and hasattr(result, "audit") and result.audit is not None:

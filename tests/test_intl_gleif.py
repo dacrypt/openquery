@@ -10,7 +10,6 @@ import pytest
 from openquery.exceptions import SourceError
 from openquery.sources.base import DocumentType, QueryInput
 
-
 # ===========================================================================
 # TestIntlGleifResult — model tests
 # ===========================================================================
@@ -98,8 +97,8 @@ class TestIntlGleifParseResult:
 
     def test_lei_routing(self):
         """20-char alphanumeric triggers LEI direct lookup."""
-        from openquery.sources.intl.gleif import IntlGleifSource
         from openquery.models.intl.gleif import IntlGleifResult
+        from openquery.sources.intl.gleif import IntlGleifSource
 
         src = IntlGleifSource()
         called_lei: list[str] = []
@@ -117,16 +116,18 @@ class TestIntlGleifParseResult:
         src._query_by_name = fake_by_name
 
         # 20-char alphanumeric — routes to LEI
-        src.query(QueryInput(
-            document_type=DocumentType.CUSTOM,
-            document_number="HWUPKR0MPOU8FGXBT394",
-        ))
+        src.query(
+            QueryInput(
+                document_type=DocumentType.CUSTOM,
+                document_number="HWUPKR0MPOU8FGXBT394",
+            )
+        )
         assert len(called_lei) == 1
         assert len(called_name) == 0
 
     def test_name_routing(self):
-        from openquery.sources.intl.gleif import IntlGleifSource
         from openquery.models.intl.gleif import IntlGleifResult
+        from openquery.sources.intl.gleif import IntlGleifSource
 
         src = IntlGleifSource()
         called_name: list[str] = []
@@ -136,10 +137,12 @@ class TestIntlGleifParseResult:
             return IntlGleifResult(search_term=name)
 
         src._query_by_name = fake_by_name
-        src.query(QueryInput(
-            document_type=DocumentType.CUSTOM,
-            document_number="Apple Inc",
-        ))
+        src.query(
+            QueryInput(
+                document_type=DocumentType.CUSTOM,
+                document_number="Apple Inc",
+            )
+        )
         assert called_name[0] == "Apple Inc"
 
     def test_parse_record_full(self):
@@ -198,18 +201,22 @@ class TestIntlGleifIntegration:
         from openquery.sources.intl.gleif import IntlGleifSource
 
         src = IntlGleifSource()
-        result = src.query(QueryInput(
-            document_type=DocumentType.CUSTOM,
-            extra={"name": "Apple Inc"},
-        ))
+        result = src.query(
+            QueryInput(
+                document_type=DocumentType.CUSTOM,
+                extra={"name": "Apple Inc"},
+            )
+        )
         assert isinstance(result.search_term, str)
 
     def test_query_by_lei(self):
         from openquery.sources.intl.gleif import IntlGleifSource
 
         src = IntlGleifSource()
-        result = src.query(QueryInput(
-            document_type=DocumentType.CUSTOM,
-            document_number="HWUPKR0MPOU8FGXBT394",
-        ))
+        result = src.query(
+            QueryInput(
+                document_type=DocumentType.CUSTOM,
+                document_number="HWUPKR0MPOU8FGXBT394",
+            )
+        )
         assert isinstance(result.lei, str)

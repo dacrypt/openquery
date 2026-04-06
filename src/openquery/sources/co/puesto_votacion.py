@@ -64,6 +64,7 @@ class PuestoVotacionSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.puesto_votacion", "cedula", cedula)
 
         with browser.page(REGISTRADURIA_URL) as page:
@@ -134,14 +135,17 @@ class PuestoVotacionSource(BaseSource):
         body_lower = body_text.lower()
 
         # Check for no records
-        no_records = any(phrase in body_lower for phrase in [
-            "no se encontr",
-            "no aparece",
-            "no registra",
-            "c\u00e9dula no v\u00e1lida",
-            "cedula no valida",
-            "sin resultados",
-        ])
+        no_records = any(
+            phrase in body_lower
+            for phrase in [
+                "no se encontr",
+                "no aparece",
+                "no registra",
+                "c\u00e9dula no v\u00e1lida",
+                "cedula no valida",
+                "sin resultados",
+            ]
+        )
 
         # Extract fields from result
         nombre = ""

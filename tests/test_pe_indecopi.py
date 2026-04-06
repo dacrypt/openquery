@@ -79,6 +79,7 @@ class TestIndecopiSourceMeta:
 
     def test_meta_supported_inputs(self):
         from openquery.sources.base import DocumentType
+
         source = IndecopiSource()
         assert DocumentType.CUSTOM in source.meta().supported_inputs
 

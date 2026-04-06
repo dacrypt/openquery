@@ -110,10 +110,7 @@ class TestParseResult:
     def test_parse_details_collected(self):
         source = TribunalesSource()
         mock_page = MagicMock()
-        mock_page.inner_text.return_value = (
-            "Sala: Civil\n"
-            "Región: Bayamón\n"
-        )
+        mock_page.inner_text.return_value = "Sala: Civil\nRegión: Bayamón\n"
 
         result = source._parse_result(mock_page, "test")
 

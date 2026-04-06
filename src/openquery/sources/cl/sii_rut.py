@@ -62,6 +62,7 @@ class SiiRutSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("cl.sii_rut", "rut", rut)
 
         with browser.page(SII_URL) as page:
@@ -74,7 +75,7 @@ class SiiRutSource(BaseSource):
 
                 # Fill RUT — exact selector from site: input.rut-form
                 rut_input = page.query_selector(
-                    'input.rut-form, '
+                    "input.rut-form, "
                     'input[name*="rut"], input[name*="RUT"], '
                     'input[placeholder*="12.345"]'
                 )
@@ -89,7 +90,7 @@ class SiiRutSource(BaseSource):
                 # Submit — exact selector: input[name="Consultar"]
                 submit = page.query_selector(
                     'input[name="Consultar"], '
-                    'input.button-azul, '
+                    "input.button-azul, "
                     'button[type="submit"], input[type="submit"]'
                 )
                 if submit:
@@ -119,7 +120,7 @@ class SiiRutSource(BaseSource):
         from datetime import datetime
 
         body_text = page.inner_text("body")
-        body_lower = body_text.lower()
+        body_text.lower()
 
         result = SiiRutResult(queried_at=datetime.now(), rut=rut)
 
@@ -130,7 +131,9 @@ class SiiRutSource(BaseSource):
 
         # Parse actividades economicas
         actividades = re.findall(
-            r"actividad[:\s]+([^\n]+)", body_text, re.IGNORECASE,
+            r"actividad[:\s]+([^\n]+)",
+            body_text,
+            re.IGNORECASE,
         )
         if actividades:
             result.actividades_economicas = [a.strip() for a in actividades]

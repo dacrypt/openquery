@@ -94,8 +94,7 @@ class TestParseResult:
     def test_parse_not_registered(self):
         source = RepepSource()
         page = self._make_page(
-            "Consulta REPEP\n"
-            "El número 5512345678 no está registrado en el REPEP.\n"
+            "Consulta REPEP\nEl número 5512345678 no está registrado en el REPEP.\n"
         )
         result = source._parse_result(page, "5512345678")
         assert result.is_registered is False

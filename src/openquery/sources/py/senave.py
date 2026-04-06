@@ -34,7 +34,7 @@ class SenaveSource(BaseSource):
         return SourceMeta(
             name="py.senave",
             display_name="SENAVE — Registro Fitosanitario (PY)",
-            description="Paraguay SENAVE phytosanitary registry: registration status by company name or number",
+            description="Paraguay SENAVE phytosanitary registry: registration status by company name or number",  # noqa: E501
             country="PY",
             url=SENAVE_URL,
             supported_inputs=[DocumentType.CUSTOM],
@@ -46,7 +46,9 @@ class SenaveSource(BaseSource):
     def query(self, input: QueryInput) -> BaseModel:
         search_term = input.extra.get("search_term", "") or input.document_number
         if not search_term:
-            raise SourceError("py.senave", "Search term (company name or registration number) is required")
+            raise SourceError(
+                "py.senave", "Search term (company name or registration number) is required"
+            )
         return self._query(search_term.strip(), audit=input.audit)
 
     def _query(self, search_term: str, audit: bool = False) -> SenaveResult:
@@ -57,6 +59,7 @@ class SenaveSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("py.senave", "search_term", search_term)
 
         with browser.page(SENAVE_URL) as page:

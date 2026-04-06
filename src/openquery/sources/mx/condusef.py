@@ -64,6 +64,7 @@ class CondusefSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("mx.condusef", "institution_name", institution)
 
         with browser.page(CONDUSEF_URL) as page:

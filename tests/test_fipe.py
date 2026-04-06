@@ -8,8 +8,8 @@ from unittest.mock import MagicMock, patch
 import pytest
 
 from openquery.models.br.fipe import BrFipeResult
-from openquery.sources.br.fipe import BrFipeSource
 from openquery.sources.base import DocumentType, QueryInput
+from openquery.sources.br.fipe import BrFipeSource
 
 
 class TestBrFipeResult:
@@ -155,9 +155,7 @@ class TestBrFipeParseResult:
 
         mock_resp = MagicMock()
         mock_resp.status_code = 500
-        http_err = httpx.HTTPStatusError(
-            "Server Error", request=MagicMock(), response=mock_resp
-        )
+        http_err = httpx.HTTPStatusError("Server Error", request=MagicMock(), response=mock_resp)
         mock_resp.raise_for_status.side_effect = http_err
         mock_client_cls.return_value.__enter__.return_value.get.return_value = mock_resp
 

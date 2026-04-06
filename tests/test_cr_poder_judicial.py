@@ -57,6 +57,7 @@ class TestCrPoderJudicialResult:
 class TestCrPoderJudicialSourceMeta:
     def test_meta(self):
         from openquery.sources.cr.poder_judicial import CrPoderJudicialSource
+
         meta = CrPoderJudicialSource().meta()
         assert meta.name == "cr.poder_judicial"
         assert meta.country == "CR"
@@ -67,6 +68,7 @@ class TestCrPoderJudicialSourceMeta:
 
     def test_missing_search_value_raises(self):
         from openquery.sources.cr.poder_judicial import CrPoderJudicialSource
+
         src = CrPoderJudicialSource()
         with pytest.raises(SourceError, match="Case number or cedula is required"):
             src.query(QueryInput(document_type=DocumentType.CUSTOM, document_number=""))
@@ -79,6 +81,7 @@ class TestCrPoderJudicialParseResult:
         self, body_text: str, search_value: str = "01-000100-0007-CI"
     ) -> CrPoderJudicialResult:
         from openquery.sources.cr.poder_judicial import CrPoderJudicialSource
+
         page = MagicMock()
         page.inner_text.return_value = body_text
         src = CrPoderJudicialSource()

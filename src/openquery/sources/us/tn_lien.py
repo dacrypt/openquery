@@ -84,6 +84,7 @@ class TnLienSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("us.tn_lien", search_type, search_value)
 
         with browser.page(TN_LIEN_URL) as page:
@@ -131,8 +132,7 @@ class TnLienSource(BaseSource):
 
                 # Wait for results — Kendo UI grid or no-results message
                 page.wait_for_selector(
-                    ".k-grid, .k-grid-content, table, "
-                    "[class*='result'], [class*='no-result'], p",
+                    ".k-grid, .k-grid-content, table, [class*='result'], [class*='no-result'], p",
                     timeout=20000,
                 )
                 page.wait_for_timeout(1500)

@@ -22,9 +22,7 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-BCN_URL = (
-    "https://www.bcn.gob.ni/estadisticas/mercados_cambiarios/tipo_cambio/cordoba_dolar/"
-)
+BCN_URL = "https://www.bcn.gob.ni/estadisticas/mercados_cambiarios/tipo_cambio/cordoba_dolar/"
 
 
 @register
@@ -39,8 +37,7 @@ class NiBcnSource(BaseSource):
             name="ni.bcn",
             display_name="BCN — Tipo de Cambio NIO/USD",
             description=(
-                "Nicaragua Central Bank official NIO/USD exchange rate "
-                "(Banco Central de Nicaragua)"
+                "Nicaragua Central Bank official NIO/USD exchange rate (Banco Central de Nicaragua)"
             ),
             country="NI",
             url="https://www.bcn.gob.ni/",

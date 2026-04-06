@@ -37,7 +37,7 @@ class ImfSource(BaseSource):
         return SourceMeta(
             name="intl.imf",
             display_name="IMF DataMapper — Economic Indicators",
-            description="IMF DataMapper public API for country economic indicators (GDP growth, inflation, etc.)",
+            description="IMF DataMapper public API for country economic indicators (GDP growth, inflation, etc.)",  # noqa: E501
             country="INTL",
             url="https://www.imf.org/external/datamapper/",
             supported_inputs=[DocumentType.CUSTOM],
@@ -51,9 +51,13 @@ class ImfSource(BaseSource):
         indicator = input.extra.get("indicator", "").strip()
 
         if not country:
-            raise SourceError("intl.imf", "Provide a country ISO3 code (extra.country or document_number)")
+            raise SourceError(
+                "intl.imf", "Provide a country ISO3 code (extra.country or document_number)"
+            )
         if not indicator:
-            raise SourceError("intl.imf", "Provide an indicator code (extra.indicator), e.g. NGDP_RPCH")
+            raise SourceError(
+                "intl.imf", "Provide an indicator code (extra.indicator), e.g. NGDP_RPCH"
+            )
 
         return self._fetch(country, indicator)
 

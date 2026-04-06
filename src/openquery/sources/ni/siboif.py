@@ -52,10 +52,7 @@ class NiSiboifSource(BaseSource):
 
     def query(self, input: QueryInput) -> BaseModel:
         """Query SIBOIF for supervised entity data."""
-        search_term = (
-            input.extra.get("entity_name", "")
-            or input.document_number
-        )
+        search_term = input.extra.get("entity_name", "") or input.document_number
         if not search_term:
             raise SourceError("ni.siboif", "entity_name is required")
         return self._query(search_term.strip(), audit=input.audit)
@@ -69,6 +66,7 @@ class NiSiboifSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("ni.siboif", "search_term", search_term)
 
         with browser.page(SIBOIF_URL) as page:
@@ -161,6 +159,8 @@ class NiSiboifSource(BaseSource):
         result.details = details
         logger.info(
             "SIBOIF result — entity=%s, license_status=%s, entity_type=%s",
-            result.entity_name, result.license_status, result.entity_type,
+            result.entity_name,
+            result.license_status,
+            result.entity_type,
         )
         return result

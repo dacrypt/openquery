@@ -60,6 +60,7 @@ class CrTseSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("cr.tse", "cedula", cedula)
 
         with browser.page(TSE_URL) as page:
@@ -70,9 +71,7 @@ class CrTseSource(BaseSource):
                 page.wait_for_load_state("networkidle", timeout=30000)
                 page.wait_for_timeout(2000)
 
-                cedula_input = page.query_selector(
-                    '#txtcedula, input[name="txtcedula"]'
-                )
+                cedula_input = page.query_selector('#txtcedula, input[name="txtcedula"]')
                 if not cedula_input:
                     raise SourceError("cr.tse", "Could not find cedula input field")
 
@@ -82,9 +81,7 @@ class CrTseSource(BaseSource):
                 if collector:
                     collector.screenshot(page, "form_filled")
 
-                submit = page.query_selector(
-                    '#btnConsultaCedula, input[name="btnConsultaCedula"]'
-                )
+                submit = page.query_selector('#btnConsultaCedula, input[name="btnConsultaCedula"]')
                 if submit:
                     submit.click()
                 else:

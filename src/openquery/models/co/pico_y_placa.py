@@ -17,13 +17,13 @@ class PicoYPlacaResult(BaseModel):
     ultimo_digito: str = ""
     ciudad: str = ""
     ciudad_nombre: str = ""  # Full display name
-    fecha: str = ""          # ISO date queried
+    fecha: str = ""  # ISO date queried
     restringido: bool = False
-    horario: str = ""        # restriction hours
-    motivo: str = ""         # why restricted or not
+    horario: str = ""  # restriction hours
+    motivo: str = ""  # why restricted or not
     tipo_vehiculo: str = ""  # particular, taxi, etc
-    exento: bool = False     # EV/hybrid exempt
-    fuente_oficial: str = "" # URL of official source
-    vigencia: str = ""       # validity period of the rule
+    exento: bool = False  # EV/hybrid exempt
+    fuente_oficial: str = ""  # URL of official source
+    vigencia: str = ""  # validity period of the rule
 
     audit: Any | None = Field(default=None, exclude=True)

@@ -35,7 +35,7 @@ class HnRtnSource(BaseSource):
         return SourceMeta(
             name="hn.rtn",
             display_name="SAR — Verificador RTN",
-            description="Honduran tax registry: taxpayer name, status (Servicio de Administración de Rentas)",
+            description="Honduran tax registry: taxpayer name, status (Servicio de Administración de Rentas)",  # noqa: E501
             country="HN",
             url=SAR_URL,
             supported_inputs=[DocumentType.CUSTOM],
@@ -58,6 +58,7 @@ class HnRtnSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("hn.rtn", "rtn", rtn)
 
         with browser.page(SAR_URL) as page:
@@ -69,9 +70,7 @@ class HnRtnSource(BaseSource):
                 page.wait_for_timeout(2000)
 
                 # Fill RTN — exact ID: #txtCriterio
-                rtn_input = page.query_selector(
-                    '#txtCriterio, input[name="txtCriterio"]'
-                )
+                rtn_input = page.query_selector('#txtCriterio, input[name="txtCriterio"]')
                 if not rtn_input:
                     raise SourceError("hn.rtn", "Could not find RTN input field")
 
@@ -79,14 +78,15 @@ class HnRtnSource(BaseSource):
                 logger.info("Filled RTN: %s", rtn)
 
                 # Solve BotDetect CAPTCHA if present
-                captcha_img = page.query_selector('#c_index_examplecaptcha_CaptchaImage')
+                captcha_img = page.query_selector("#c_index_examplecaptcha_CaptchaImage")
                 if captcha_img:
                     captcha_bytes = captcha_img.screenshot()
                     if captcha_bytes:
                         from openquery.core.captcha import OCRSolver
+
                         solver = OCRSolver(max_chars=6)
                         captcha_text = solver.solve(captcha_bytes)
-                        captcha_input = page.query_selector('#CaptchaCodeTextBox')
+                        captcha_input = page.query_selector("#CaptchaCodeTextBox")
                         if captcha_input:
                             captcha_input.fill(captcha_text)
                             logger.info("Solved CAPTCHA: %s", captcha_text)
@@ -95,9 +95,7 @@ class HnRtnSource(BaseSource):
                     collector.screenshot(page, "form_filled")
 
                 # Submit — exact ID: #btnBuscar
-                submit = page.query_selector(
-                    '#btnBuscar, input[name="btnBuscar"]'
-                )
+                submit = page.query_selector('#btnBuscar, input[name="btnBuscar"]')
                 if submit:
                     submit.click()
                 else:

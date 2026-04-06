@@ -32,16 +32,19 @@ def _safe_query(source_name: str):
     """Query a council source, skip on CAPTCHA/timeout."""
     src = _get_source(source_name)
     try:
-        return src.query(QueryInput(
-            document_type=DocumentType.CEDULA,
-            document_number=CEDULA_PUBLIC,
-        ))
+        return src.query(
+            QueryInput(
+                document_type=DocumentType.CEDULA,
+                document_number=CEDULA_PUBLIC,
+            )
+        )
     except CaptchaError as e:
         pytest.skip(f"CAPTCHA failed for {source_name}: {e}")
     except SourceError as e:
         msg = str(e).lower()
-        if any(k in msg for k in ("timeout", "ssl", "certificate", "http 404", "http 403",
-                                   "could not")):
+        if any(
+            k in msg for k in ("timeout", "ssl", "certificate", "http 404", "http 403", "could not")
+        ):
             pytest.skip(f"Transient failure for {source_name}: {e}")
         if "no se encontr" in msg or "no registra" in msg or "sin resultado" in msg:
             print(f"\n{source_name}: Not registered (expected)")

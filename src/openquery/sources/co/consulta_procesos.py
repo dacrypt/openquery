@@ -24,9 +24,7 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-RAMA_JUDICIAL_URL = (
-    "https://consultaprocesos.ramajudicial.gov.co/Procesos/NombreRazonSocial"
-)
+RAMA_JUDICIAL_URL = "https://consultaprocesos.ramajudicial.gov.co/Procesos/NombreRazonSocial"
 
 
 @register
@@ -75,6 +73,7 @@ class ConsultaProcesosSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.consulta_procesos", tipo, query)
 
         with browser.page(RAMA_JUDICIAL_URL) as page:
@@ -83,9 +82,7 @@ class ConsultaProcesosSource(BaseSource):
                     collector.attach(page)
 
                 # Wait for the SPA form — ARIA textboxes rendered by Angular/React
-                search_input = page.get_by_role(
-                    "textbox", name="Nombre"
-                )
+                search_input = page.get_by_role("textbox", name="Nombre")
                 search_input.wait_for(state="visible", timeout=15000)
                 page.wait_for_timeout(2000)
 
@@ -97,9 +94,7 @@ class ConsultaProcesosSource(BaseSource):
                     collector.screenshot(page, "form_filled")
 
                 # Submit — target the elevated submit button, not the nav icon
-                submit_btn = page.locator(
-                    'button.v-btn--has-bg[aria-label*="onsultar"]'
-                )
+                submit_btn = page.locator('button.v-btn--has-bg[aria-label*="onsultar"]')
                 submit_btn.click()
 
                 page.wait_for_timeout(5000)
@@ -127,13 +122,16 @@ class ConsultaProcesosSource(BaseSource):
         body_text = page.inner_text("body")
         body_lower = body_text.lower()
 
-        no_records = any(phrase in body_lower for phrase in [
-            "no se encontr",
-            "sin resultados",
-            "no hay resultados",
-            "0 resultados",
-            "no registra procesos",
-        ])
+        no_records = any(
+            phrase in body_lower
+            for phrase in [
+                "no se encontr",
+                "sin resultados",
+                "no hay resultados",
+                "0 resultados",
+                "no registra procesos",
+            ]
+        )
 
         nombre = ""
         for line in body_text.split("\n"):
@@ -146,9 +144,7 @@ class ConsultaProcesosSource(BaseSource):
 
         # Parse process records from table rows
         procesos: list[ProcesoJudicial] = []
-        rows = page.query_selector_all(
-            "table tbody tr, .proceso-row, .resultado-item"
-        )
+        rows = page.query_selector_all("table tbody tr, .proceso-row, .resultado-item")
 
         for row in rows:
             text = row.inner_text()
@@ -189,11 +185,13 @@ class ConsultaProcesosSource(BaseSource):
                     if len(parts) > 1:
                         tipo_proceso = parts[1].strip()
             if radicacion or despacho:
-                procesos.append(ProcesoJudicial(
-                    radicacion=radicacion,
-                    despacho=despacho,
-                    tipo_proceso=tipo_proceso,
-                ))
+                procesos.append(
+                    ProcesoJudicial(
+                        radicacion=radicacion,
+                        despacho=despacho,
+                        tipo_proceso=tipo_proceso,
+                    )
+                )
 
         total_procesos = len(procesos)
 

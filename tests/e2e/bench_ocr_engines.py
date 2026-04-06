@@ -45,9 +45,11 @@ def load_samples() -> list[dict]:
 # Engine wrappers
 # ---------------------------------------------------------------------------
 
+
 def solve_tesseract(image_bytes: bytes) -> str:
     """Current OCRSolver approach."""
     from openquery.core.captcha import OCRSolver
+
     solver = OCRSolver(max_chars=5)
     return solver.solve(image_bytes)
 
@@ -55,6 +57,7 @@ def solve_tesseract(image_bytes: bytes) -> str:
 def solve_paddleocr(image_path: str) -> str:
     """PaddleOCR PP-OCRv5."""
     from paddleocr import PaddleOCR
+
     if not hasattr(solve_paddleocr, "_ocr"):
         solve_paddleocr._ocr = PaddleOCR(
             lang="en",
@@ -77,6 +80,7 @@ def solve_doctr(image_path: str) -> str:
     """docTR with ViTSTR recognition."""
     from doctr.io import DocumentFile
     from doctr.models import ocr_predictor
+
     if not hasattr(solve_doctr, "_predictor"):
         solve_doctr._predictor = ocr_predictor(
             det_arch="db_mobilenet_v3_large",
@@ -98,6 +102,7 @@ def solve_doctr(image_path: str) -> str:
 def solve_easyocr(image_path: str) -> str:
     """EasyOCR."""
     import easyocr
+
     if not hasattr(solve_easyocr, "_reader"):
         solve_easyocr._reader = easyocr.Reader(["en"], gpu=False, verbose=False)
     results = solve_easyocr._reader.readtext(image_path, detail=0)
@@ -121,15 +126,19 @@ def check_available(name: str) -> bool:
     try:
         if name == "tesseract":
             import pytesseract  # noqa: F401
+
             return True
         elif name == "paddleocr":
             from paddleocr import PaddleOCR  # noqa: F401
+
             return True
         elif name == "doctr":
             from doctr.models import ocr_predictor  # noqa: F401
+
             return True
         elif name == "easyocr":
             import easyocr  # noqa: F401
+
             return True
     except ImportError:
         return False
@@ -227,7 +236,7 @@ def run_benchmark():
         for name in available:
             correct = sum(1 for _, t, r, _ in results[name] if metric_fn(r, t))
             total = len(results[name])
-            row += f" {correct}/{total} ({correct/total:.0%})    "
+            row += f" {correct}/{total} ({correct / total:.0%})    "
         print(row)
 
     # Character accuracy
@@ -287,7 +296,7 @@ def run_benchmark():
 
         engine_names = list(available.keys())
         for i, name_a in enumerate(engine_names):
-            for name_b in engine_names[i + 1:]:
+            for name_b in engine_names[i + 1 :]:
                 a_wrong_b_right = 0
                 b_wrong_a_right = 0
                 both_wrong = 0
@@ -316,7 +325,7 @@ def run_benchmark():
                 print(f"  {name_a} right, {name_b} wrong: {b_wrong_a_right}/{total}")
                 print(f"  {name_b} right, {name_a} wrong: {a_wrong_b_right}/{total}")
                 print(f"  Both wrong:           {both_wrong}/{total}")
-                print(f"  Combined potential:    {combined}/{total} ({combined/total:.0%})")
+                print(f"  Combined potential:    {combined}/{total} ({combined / total:.0%})")
 
 
 if __name__ == "__main__":

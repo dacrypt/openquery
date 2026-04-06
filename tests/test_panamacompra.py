@@ -7,14 +7,15 @@ import pytest
 from openquery.exceptions import SourceError
 from openquery.sources.base import DocumentType, QueryInput
 
-
 # ===========================================================================
 # TestResult
 # ===========================================================================
 
+
 class TestResult:
     def test_default_values(self):
         from openquery.models.pa.panamacompra import PanamaCompraResult
+
         r = PanamaCompraResult()
         assert r.search_term == ""
         assert r.total == 0
@@ -23,6 +24,7 @@ class TestResult:
 
     def test_contract_defaults(self):
         from openquery.models.pa.panamacompra import PanamaCompraContract
+
         c = PanamaCompraContract()
         assert c.ocid == ""
         assert c.title == ""
@@ -33,6 +35,7 @@ class TestResult:
 
     def test_audit_excluded_from_json(self):
         from openquery.models.pa.panamacompra import PanamaCompraResult
+
         r = PanamaCompraResult(search_term="test", total=0)
         r.audit = {"evidence": "data"}
         data = r.model_dump_json()
@@ -40,10 +43,18 @@ class TestResult:
 
     def test_model_roundtrip(self):
         from openquery.models.pa.panamacompra import PanamaCompraContract, PanamaCompraResult
+
         r = PanamaCompraResult(
             search_term="MINSA",
             total=1,
-            contracts=[PanamaCompraContract(ocid="ocds-abc-001", title="Compra de medicamentos", value="50000", currency="USD")],
+            contracts=[
+                PanamaCompraContract(
+                    ocid="ocds-abc-001",
+                    title="Compra de medicamentos",
+                    value="50000",
+                    currency="USD",
+                )
+            ],
         )
         r2 = PanamaCompraResult.model_validate_json(r.model_dump_json())
         assert r2.search_term == "MINSA"
@@ -56,30 +67,36 @@ class TestResult:
 # TestSourceMeta
 # ===========================================================================
 
+
 class TestSourceMeta:
     def test_meta_name(self):
         from openquery.sources.pa.panamacompra import PanamaCompraSource
+
         meta = PanamaCompraSource().meta()
         assert meta.name == "pa.panamacompra"
 
     def test_meta_country(self):
         from openquery.sources.pa.panamacompra import PanamaCompraSource
+
         meta = PanamaCompraSource().meta()
         assert meta.country == "PA"
 
     def test_meta_no_browser(self):
         from openquery.sources.pa.panamacompra import PanamaCompraSource
+
         meta = PanamaCompraSource().meta()
         assert meta.requires_browser is False
         assert meta.requires_captcha is False
 
     def test_meta_supports_custom(self):
         from openquery.sources.pa.panamacompra import PanamaCompraSource
+
         meta = PanamaCompraSource().meta()
         assert DocumentType.CUSTOM in meta.supported_inputs
 
     def test_meta_rate_limit(self):
         from openquery.sources.pa.panamacompra import PanamaCompraSource
+
         meta = PanamaCompraSource().meta()
         assert meta.rate_limit_rpm == 10
 
@@ -88,9 +105,11 @@ class TestSourceMeta:
 # TestParseResult
 # ===========================================================================
 
+
 class TestParseResult:
     def _make_source(self):
         from openquery.sources.pa.panamacompra import PanamaCompraSource
+
         return PanamaCompraSource()
 
     def test_parse_releases(self):
@@ -155,6 +174,7 @@ class TestParseResult:
     def test_query_uses_document_number(self):
         """document_number is used as fallback search term."""
         from unittest.mock import patch
+
         src = self._make_source()
         mock_result = src._parse_response({"count": 0, "releases": []}, "TEST-CORP")
         with patch.object(src, "_query", return_value=mock_result) as m:
@@ -163,12 +183,15 @@ class TestParseResult:
 
     def test_query_uses_extra_q(self):
         from unittest.mock import patch
+
         src = self._make_source()
         mock_result = src._parse_response({"count": 0, "releases": []}, "MINSA")
         with patch.object(src, "_query", return_value=mock_result) as m:
-            src.query(QueryInput(
-                document_type=DocumentType.CUSTOM,
-                document_number="",
-                extra={"q": "MINSA"},
-            ))
+            src.query(
+                QueryInput(
+                    document_type=DocumentType.CUSTOM,
+                    document_number="",
+                    extra={"q": "MINSA"},
+                )
+            )
             m.assert_called_once_with("MINSA")

@@ -66,6 +66,7 @@ class HnEmpresaSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("hn.empresa", "search_term", search_term)
 
         with browser.page(EMPRESA_URL) as page:

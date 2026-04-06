@@ -51,7 +51,9 @@ class FiscalizacionSource(BaseSource):
     def query(self, input: QueryInput) -> BaseModel:
         raise SourceError("cl.fiscalizacion", "Source deprecated: site unreachable since 2026-04")
         if input.document_type != DocumentType.PLATE:
-            raise SourceError("cl.fiscalizacion", f"Unsupported document type: {input.document_type}")
+            raise SourceError(
+                "cl.fiscalizacion", f"Unsupported document type: {input.document_type}"
+            )
         return self._query(input.document_number, audit=input.audit)
 
     def _query(self, patente: str, audit: bool = False) -> FiscalizacionResult:
@@ -62,6 +64,7 @@ class FiscalizacionSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("cl.fiscalizacion", "placa", patente)
 
         with browser.page(FISCALIZACION_URL) as page:

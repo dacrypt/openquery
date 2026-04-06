@@ -108,7 +108,7 @@ class TestAsfiSourceMeta:
     def test_entity_name_extra(self):
         from openquery.sources.bo.asfi import AsfiSource
 
-        src = AsfiSource()
+        AsfiSource()
         input_ = QueryInput(
             document_type=DocumentType.CUSTOM,
             document_number="",
@@ -119,7 +119,7 @@ class TestAsfiSourceMeta:
     def test_document_number_used_as_fallback(self):
         from openquery.sources.bo.asfi import AsfiSource
 
-        src = AsfiSource()
+        AsfiSource()
         input_ = QueryInput(
             document_type=DocumentType.CUSTOM,
             document_number="Banco Nacional",

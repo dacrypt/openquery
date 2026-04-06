@@ -71,9 +71,8 @@ class PoderJudicialSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
-            collector = AuditCollector(
-                "pe.poder_judicial", "custom", nombre or expediente
-            )
+
+            collector = AuditCollector("pe.poder_judicial", "custom", nombre or expediente)
 
         with browser.page(CEJ_URL, wait_until="commit") as page:
             try:
@@ -100,16 +99,14 @@ class PoderJudicialSource(BaseSource):
 
                 if nombre:
                     name_input = page.query_selector(
-                        "#txtNombre, input[name*='nombre'], "
-                        "input[name*='partes']"
+                        "#txtNombre, input[name*='nombre'], input[name*='partes']"
                     )
                     if name_input:
                         name_input.fill(nombre)
                         logger.info("Filled nombre: %s", nombre)
                 elif expediente:
                     exp_input = page.query_selector(
-                        "#txtExpediente, input[name*='expediente'], "
-                        "input[name*='numero']"
+                        "#txtExpediente, input[name*='expediente'], input[name*='numero']"
                     )
                     if exp_input:
                         exp_input.fill(expediente)
@@ -132,8 +129,7 @@ class PoderJudicialSource(BaseSource):
                 # fall back to waiting for body (always present) to avoid timeout.
                 try:
                     page.wait_for_selector(
-                        "table, .resultado, #divResultado, .grid, "
-                        "#tblResultado, .dataTable",
+                        "table, .resultado, #divResultado, .grid, #tblResultado, .dataTable",
                         timeout=30000,
                     )
                 except Exception:
@@ -146,18 +142,14 @@ class PoderJudicialSource(BaseSource):
                 result = self._parse_result(page)
 
                 if collector:
-                    result.audit = collector.generate_pdf(
-                        page, result.model_dump_json()
-                    )
+                    result.audit = collector.generate_pdf(page, result.model_dump_json())
 
                 return result
 
             except SourceError:
                 raise
             except Exception as e:
-                raise SourceError(
-                    "pe.poder_judicial", f"Query failed: {e}"
-                ) from e
+                raise SourceError("pe.poder_judicial", f"Query failed: {e}") from e
 
     def _parse_result(self, page) -> PoderJudicialResult:
         """Parse the CEJ result page."""

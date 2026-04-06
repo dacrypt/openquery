@@ -12,14 +12,15 @@ import pytest
 from openquery.exceptions import SourceError
 from openquery.sources.base import DocumentType, QueryInput
 
-
 # ===========================================================================
 # co.estado_cedula_extranjeria
 # ===========================================================================
 
+
 class TestEstadoCedulaExtranjeriaParseResult:
     def _parse(self, body_text: str, cedula: str = "E-123456"):
         from openquery.sources.co.estado_cedula_extranjeria import EstadoCedulaExtranjeriaSource
+
         page = MagicMock()
         page.inner_text.return_value = body_text
         src = EstadoCedulaExtranjeriaSource()
@@ -55,6 +56,7 @@ class TestEstadoCedulaExtranjeriaParseResult:
 class TestEstadoCedulaExtranjeriaSource:
     def test_meta(self):
         from openquery.sources.co.estado_cedula_extranjeria import EstadoCedulaExtranjeriaSource
+
         meta = EstadoCedulaExtranjeriaSource().meta()
         assert meta.name == "co.estado_cedula_extranjeria"
         assert DocumentType.CUSTOM in meta.supported_inputs
@@ -63,13 +65,17 @@ class TestEstadoCedulaExtranjeriaSource:
 
     def test_empty_cedula_raises(self):
         from openquery.sources.co.estado_cedula_extranjeria import EstadoCedulaExtranjeriaSource
+
         src = EstadoCedulaExtranjeriaSource()
         with pytest.raises(SourceError, match="required"):
             src.query(QueryInput(document_type=DocumentType.CUSTOM, document_number=""))
 
     def test_model_roundtrip(self):
         from openquery.models.co.estado_cedula_extranjeria import EstadoCedulaExtranjeriaResult
-        r = EstadoCedulaExtranjeriaResult(cedula_extranjeria="E-123", estado="Vigente", mensaje="OK")
+
+        r = EstadoCedulaExtranjeriaResult(
+            cedula_extranjeria="E-123", estado="Vigente", mensaje="OK"
+        )
         data = r.model_dump_json()
         r2 = EstadoCedulaExtranjeriaResult.model_validate_json(data)
         assert r2.estado == "Vigente"
@@ -80,16 +86,22 @@ class TestEstadoCedulaExtranjeriaSource:
 # co.validar_policia
 # ===========================================================================
 
+
 class TestValidarPoliciaParseResult:
-    def _parse(self, body_text: str, cedula: str = "12345", placa: str = "P001", carnet: str = "C001"):
+    def _parse(
+        self, body_text: str, cedula: str = "12345", placa: str = "P001", carnet: str = "C001"
+    ):
         from openquery.sources.co.validar_policia import ValidarPoliciaSource
+
         page = MagicMock()
         page.inner_text.return_value = body_text
         src = ValidarPoliciaSource()
         return src._parse_result(page, cedula, placa, carnet)
 
     def test_active_officer(self):
-        result = self._parse("El funcionario es un funcionario activo de la Policía Nacional\nNombre: Pedro Gómez\nGrado: Patrullero")
+        result = self._parse(
+            "El funcionario es un funcionario activo de la Policía Nacional\nNombre: Pedro Gómez\nGrado: Patrullero"  # noqa: E501
+        )
         assert result.es_policia_activo is True
         assert result.nombre == "Pedro Gómez"
         assert result.grado == "Patrullero"
@@ -112,19 +124,24 @@ class TestValidarPoliciaParseResult:
 class TestValidarPoliciaSource:
     def test_meta(self):
         from openquery.sources.co.validar_policia import ValidarPoliciaSource
+
         meta = ValidarPoliciaSource().meta()
         assert meta.name == "co.validar_policia"
         assert DocumentType.CUSTOM in meta.supported_inputs
 
     def test_missing_placa_and_carnet_raises(self):
         from openquery.sources.co.validar_policia import ValidarPoliciaSource
+
         src = ValidarPoliciaSource()
         with pytest.raises(SourceError, match="placa_policia"):
             src.query(QueryInput(document_type=DocumentType.CUSTOM, document_number="12345"))
 
     def test_model_roundtrip(self):
         from openquery.models.co.validar_policia import ValidarPoliciaResult
-        r = ValidarPoliciaResult(cedula="123", placa="P1", carnet="C1", es_policia_activo=True, mensaje="OK")
+
+        r = ValidarPoliciaResult(
+            cedula="123", placa="P1", carnet="C1", es_policia_activo=True, mensaje="OK"
+        )
         data = r.model_dump_json()
         r2 = ValidarPoliciaResult.model_validate_json(data)
         assert r2.es_policia_activo is True
@@ -134,9 +151,11 @@ class TestValidarPoliciaSource:
 # co.rne
 # ===========================================================================
 
+
 class TestRneSource:
     def test_meta(self):
         from openquery.sources.co.rne import RneSource
+
         meta = RneSource().meta()
         assert meta.name == "co.rne"
         assert DocumentType.CUSTOM in meta.supported_inputs
@@ -144,27 +163,36 @@ class TestRneSource:
 
     def test_missing_phone_and_email_raises(self):
         from openquery.sources.co.rne import RneSource
+
         src = RneSource()
         with pytest.raises(SourceError, match="telefono"):
-            src.query(QueryInput(
-                document_type=DocumentType.CUSTOM,
-                document_number="",
-                extra={"usuario": "u", "password": "p"},
-            ))
+            src.query(
+                QueryInput(
+                    document_type=DocumentType.CUSTOM,
+                    document_number="",
+                    extra={"usuario": "u", "password": "p"},
+                )
+            )
 
     def test_missing_credentials_raises(self):
         from openquery.sources.co.rne import RneSource
+
         src = RneSource()
         with pytest.raises(SourceError, match="usuario"):
-            src.query(QueryInput(
-                document_type=DocumentType.CUSTOM,
-                document_number="",
-                extra={"telefono": "3001234567"},
-            ))
+            src.query(
+                QueryInput(
+                    document_type=DocumentType.CUSTOM,
+                    document_number="",
+                    extra={"telefono": "3001234567"},
+                )
+            )
 
     def test_model_roundtrip(self):
         from openquery.models.co.rne import RneResult
-        r = RneResult(consulta="3001234567", tipo_consulta="telefono", esta_excluido=True, mensaje="Excluido")
+
+        r = RneResult(
+            consulta="3001234567", tipo_consulta="telefono", esta_excluido=True, mensaje="Excluido"
+        )
         data = r.model_dump_json()
         r2 = RneResult.model_validate_json(data)
         assert r2.esta_excluido is True
@@ -175,9 +203,11 @@ class TestRneSource:
 # co.camara_comercio_medellin
 # ===========================================================================
 
+
 class TestCamaraComercioMedellinParseResult:
     def _parse(self, body_text: str, rows_data=None, query="901234567"):
         from openquery.sources.co.camara_comercio_medellin import CamaraComercioMedellinSource
+
         page = MagicMock()
         page.inner_text.return_value = body_text
 
@@ -216,7 +246,10 @@ class TestCamaraComercioMedellinParseResult:
 
     def test_model_roundtrip(self):
         from openquery.models.co.camara_comercio_medellin import CamaraComercioMedellinResult
-        r = CamaraComercioMedellinResult(query="test", tipo_busqueda="nit", total_expedientes=0, mensaje="OK")
+
+        r = CamaraComercioMedellinResult(
+            query="test", tipo_busqueda="nit", total_expedientes=0, mensaje="OK"
+        )
         data = r.model_dump_json()
         r2 = CamaraComercioMedellinResult.model_validate_json(data)
         assert r2.query == "test"
@@ -225,6 +258,7 @@ class TestCamaraComercioMedellinParseResult:
 class TestCamaraComercioMedellinSource:
     def test_meta(self):
         from openquery.sources.co.camara_comercio_medellin import CamaraComercioMedellinSource
+
         meta = CamaraComercioMedellinSource().meta()
         assert meta.name == "co.camara_comercio_medellin"
         assert DocumentType.NIT in meta.supported_inputs
@@ -232,6 +266,7 @@ class TestCamaraComercioMedellinSource:
 
     def test_empty_query_raises(self):
         from openquery.sources.co.camara_comercio_medellin import CamaraComercioMedellinSource
+
         src = CamaraComercioMedellinSource()
         with pytest.raises(SourceError, match="NIT or company name"):
             src.query(QueryInput(document_type=DocumentType.NIT, document_number=""))
@@ -241,9 +276,11 @@ class TestCamaraComercioMedellinSource:
 # co.directorio_empresas
 # ===========================================================================
 
+
 class TestDirectorioEmpresasSource:
     def test_meta(self):
         from openquery.sources.co.directorio_empresas import DirectorioEmpresasSource
+
         meta = DirectorioEmpresasSource().meta()
         assert meta.name == "co.directorio_empresas"
         assert DocumentType.NIT in meta.supported_inputs
@@ -252,14 +289,21 @@ class TestDirectorioEmpresasSource:
 
     def test_empty_query_raises(self):
         from openquery.sources.co.directorio_empresas import DirectorioEmpresasSource
+
         src = DirectorioEmpresasSource()
         with pytest.raises(SourceError, match="NIT or company name"):
             src.query(QueryInput(document_type=DocumentType.NIT, document_number=""))
 
     def test_model_roundtrip(self):
-        from openquery.models.co.directorio_empresas import DirectorioEmpresasResult, EmpresaDirectorio
+        from openquery.models.co.directorio_empresas import (
+            DirectorioEmpresasResult,
+            EmpresaDirectorio,
+        )
+
         emp = EmpresaDirectorio(razon_social="ACME", nit="900123456", municipio="MEDELLIN")
-        r = DirectorioEmpresasResult(query="900123456", tipo_busqueda="nit", empresas=[emp], total_empresas=1, mensaje="OK")
+        r = DirectorioEmpresasResult(
+            query="900123456", tipo_busqueda="nit", empresas=[emp], total_empresas=1, mensaje="OK"
+        )
         data = r.model_dump_json()
         r2 = DirectorioEmpresasResult.model_validate_json(data)
         assert r2.total_empresas == 1
@@ -270,9 +314,11 @@ class TestDirectorioEmpresasSource:
 # co.empresas_google
 # ===========================================================================
 
+
 class TestEmpresasGoogleParseResult:
     def _parse(self, items_data=None, query="restaurantes"):
         from openquery.sources.co.empresas_google import EmpresasGoogleSource
+
         page = MagicMock()
         page.inner_text.return_value = "Google Maps results"
 
@@ -307,8 +353,11 @@ class TestEmpresasGoogleParseResult:
 
     def test_model_roundtrip(self):
         from openquery.models.co.empresas_google import EmpresaGoogle, EmpresasGoogleResult
+
         emp = EmpresaGoogle(nombre="Test", rating="4.0", categoria="Restaurante")
-        r = EmpresasGoogleResult(query="test", ubicacion="Colombia", empresas=[emp], total_empresas=1, mensaje="OK")
+        r = EmpresasGoogleResult(
+            query="test", ubicacion="Colombia", empresas=[emp], total_empresas=1, mensaje="OK"
+        )
         data = r.model_dump_json()
         r2 = EmpresasGoogleResult.model_validate_json(data)
         assert r2.empresas[0].nombre == "Test"
@@ -317,6 +366,7 @@ class TestEmpresasGoogleParseResult:
 class TestEmpresasGoogleSource:
     def test_meta(self):
         from openquery.sources.co.empresas_google import EmpresasGoogleSource
+
         meta = EmpresasGoogleSource().meta()
         assert meta.name == "co.empresas_google"
         assert DocumentType.CUSTOM in meta.supported_inputs
@@ -324,6 +374,7 @@ class TestEmpresasGoogleSource:
 
     def test_empty_query_raises(self):
         from openquery.sources.co.empresas_google import EmpresasGoogleSource
+
         src = EmpresasGoogleSource()
         with pytest.raises(SourceError, match="query"):
             src.query(QueryInput(document_type=DocumentType.CUSTOM, document_number=""))
@@ -333,19 +384,24 @@ class TestEmpresasGoogleSource:
 # Registry integration — all 6 sources discoverable
 # ===========================================================================
 
+
 class TestNewSourcesRegistered:
     """Verify all 6 new sources appear in the registry."""
 
-    @pytest.mark.parametrize("source_name", [
-        "co.estado_cedula_extranjeria",
-        "co.validar_policia",
-        "co.rne",
-        "co.camara_comercio_medellin",
-        "co.directorio_empresas",
-        "co.empresas_google",
-    ])
+    @pytest.mark.parametrize(
+        "source_name",
+        [
+            "co.estado_cedula_extranjeria",
+            "co.validar_policia",
+            "co.rne",
+            "co.camara_comercio_medellin",
+            "co.directorio_empresas",
+            "co.empresas_google",
+        ],
+    )
     def test_source_registered(self, source_name):
         from openquery.sources import get_source
+
         src = get_source(source_name)
         assert src.meta().name == source_name
         assert src.meta().country == "CO"

@@ -86,9 +86,7 @@ class TestNiSiboifSourceMeta:
             src.query(QueryInput(document_type=DocumentType.CUSTOM, document_number=""))
 
     def test_entity_name_from_document_number(self):
-        inp = QueryInput(
-            document_type=DocumentType.CUSTOM, document_number="Banco de Finanzas"
-        )
+        inp = QueryInput(document_type=DocumentType.CUSTOM, document_number="Banco de Finanzas")
         assert inp.document_number == "Banco de Finanzas"
 
     def test_entity_name_from_extra(self):

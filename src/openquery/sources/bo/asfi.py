@@ -47,10 +47,7 @@ class AsfiSource(BaseSource):
         )
 
     def query(self, input: QueryInput) -> BaseModel:
-        search_term = (
-            input.extra.get("entity_name", "")
-            or input.document_number
-        )
+        search_term = input.extra.get("entity_name", "") or input.document_number
         if not search_term:
             raise SourceError("bo.asfi", "entity_name is required")
         return self._query(search_term.strip(), audit=input.audit)
@@ -63,6 +60,7 @@ class AsfiSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("bo.asfi", "entity_name", search_term)
 
         with browser.page(ASFI_URL) as page:

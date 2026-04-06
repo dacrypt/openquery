@@ -69,6 +69,7 @@ class CrimSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("pr.crim", "account_number", search_term)
 
         with browser.page(CRIM_URL) as page:
@@ -166,6 +167,8 @@ class CrimSource(BaseSource):
         result.details = details
         logger.info(
             "CRIM result — account=%s, owner=%s, status=%s",
-            result.account_number, result.owner, result.tax_status,
+            result.account_number,
+            result.owner,
+            result.tax_status,
         )
         return result

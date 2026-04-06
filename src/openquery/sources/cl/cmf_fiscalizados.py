@@ -23,9 +23,7 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-CMF_FISCALIZADOS_URL = (
-    "https://www.cmfchile.cl/portal/principal/613/w3-propertyvalue-43336.html"
-)
+CMF_FISCALIZADOS_URL = "https://www.cmfchile.cl/portal/principal/613/w3-propertyvalue-43336.html"
 
 
 @register
@@ -84,9 +82,7 @@ class CmfFiscalizadosSource(BaseSource):
                     'input[type="text"], input[type="search"]'
                 )
                 if not search_input:
-                    raise SourceError(
-                        "cl.cmf_fiscalizados", "Could not find search input field"
-                    )
+                    raise SourceError("cl.cmf_fiscalizados", "Could not find search input field")
                 search_input.fill(search_term)
                 logger.info("Filled search_term: %s", search_term)
 

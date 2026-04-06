@@ -31,18 +31,32 @@ def _get_source(name: str):
 def _safe_query(source_name: str, doc_type: DocumentType, doc_number: str, **extra):
     src = _get_source(source_name)
     try:
-        return src.query(QueryInput(
-            document_type=doc_type,
-            document_number=doc_number,
-            extra=extra,
-        ))
+        return src.query(
+            QueryInput(
+                document_type=doc_type,
+                document_number=doc_number,
+                extra=extra,
+            )
+        )
     except CaptchaError as e:
         pytest.skip(f"CAPTCHA failed for {source_name}: {e}")
     except SourceError as e:
         msg = str(e).lower()
-        if any(k in msg for k in ("timeout", "no hay información", "no se encontr",
-                                   "ssl", "certificate", "http 404", "http 403",
-                                   "could not", "captcha", "no corresponden")):
+        if any(
+            k in msg
+            for k in (
+                "timeout",
+                "no hay información",
+                "no se encontr",
+                "ssl",
+                "certificate",
+                "http 404",
+                "http 403",
+                "could not",
+                "captcha",
+                "no corresponden",
+            )
+        ):
             pytest.skip(f"Transient/no-data for {source_name}: {e}")
         raise
     except Exception as e:
@@ -60,8 +74,9 @@ class TestSimitByTypeE2E:
     def test_by_cedula(self):
         result = _safe_query("co.simit", DocumentType.CEDULA, CEDULA_PUBLIC)
         assert result.comparendos >= 0
-        print(f"\nSIMIT (cédula): comparendos={result.comparendos}, "
-              f"deuda=${result.total_deuda:,.0f}")
+        print(
+            f"\nSIMIT (cédula): comparendos={result.comparendos}, deuda=${result.total_deuda:,.0f}"
+        )
 
     def test_by_plate(self):
         result = _safe_query("co.simit", DocumentType.PLATE, PLATE_TEST)
@@ -128,8 +143,11 @@ class TestRetencionVehiculosE2E:
 class TestFasecoldaE2E:
     def test_tesla(self):
         result = _safe_query(
-            "co.fasecolda", DocumentType.CUSTOM, "tesla",
-            marca="TESLA", modelo_anio="2025",
+            "co.fasecolda",
+            DocumentType.CUSTOM,
+            "tesla",
+            marca="TESLA",
+            modelo_anio="2025",
         )
         print(f"\nFasecolda Tesla 2025: {result}")
 
@@ -138,7 +156,9 @@ class TestFasecoldaE2E:
 class TestRecallsE2E:
     def test_tesla_recalls(self):
         result = _safe_query(
-            "co.recalls", DocumentType.CUSTOM, "tesla",
+            "co.recalls",
+            DocumentType.CUSTOM,
+            "tesla",
             marca="TESLA",
         )
         print(f"\nRecalls (SIC) Tesla: {result}")

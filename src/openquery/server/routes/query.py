@@ -92,11 +92,13 @@ async def query(req: QueryRequest) -> QueryResponse:
 
     # Execute query
     try:
-        result = src.query(QueryInput(
-            document_type=req.document_type,
-            document_number=req.document_number,
-            audit=req.audit,
-        ))
+        result = src.query(
+            QueryInput(
+                document_type=req.document_type,
+                document_number=req.document_number,
+                audit=req.audit,
+            )
+        )
         data = result.model_dump(mode="json")
 
         # Extract audit record if present

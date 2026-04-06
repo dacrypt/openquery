@@ -61,6 +61,7 @@ class PjudSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("cl.pjud", "rut" if is_rut else "nombre", consulta)
 
         with browser.page(PJUD_URL) as page:

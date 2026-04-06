@@ -210,9 +210,7 @@ class MultasQuipuxSource(BaseSource):
                 if collector:
                     collector.screenshot(page, "result")
 
-                return self._parse_response(
-                    page, search_term, api_result, collector
-                )
+                return self._parse_response(page, search_term, api_result, collector)
 
             except SourceError:
                 raise

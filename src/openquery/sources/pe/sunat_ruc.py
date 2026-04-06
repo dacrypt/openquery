@@ -24,9 +24,7 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-SUNAT_URL = (
-    "https://e-consultaruc.sunat.gob.pe/cl-ti-itmrconsruc/FrameCriterioBusquedaMovil.jsp"
-)
+SUNAT_URL = "https://e-consultaruc.sunat.gob.pe/cl-ti-itmrconsruc/FrameCriterioBusquedaMovil.jsp"
 
 
 @register
@@ -75,6 +73,7 @@ class SunatRucSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("pe.sunat_ruc", "custom", ruc or dni or name)
 
         with browser.page(SUNAT_URL) as page:
@@ -101,9 +100,7 @@ class SunatRucSource(BaseSource):
                     if doc_tab:
                         doc_tab.click()
                         page.wait_for_timeout(500)
-                    dni_input = page.query_selector(
-                        "#txtNumeroDocumento, input[name*='documento']"
-                    )
+                    dni_input = page.query_selector("#txtNumeroDocumento, input[name*='documento']")
                     if dni_input:
                         dni_input.fill(dni)
                         logger.info("Filled DNI: %s", dni)
@@ -113,9 +110,7 @@ class SunatRucSource(BaseSource):
                     if name_tab:
                         name_tab.click()
                         page.wait_for_timeout(500)
-                    name_input = page.query_selector(
-                        "#txtNombreRazonSocial, input[name*='razon']"
-                    )
+                    name_input = page.query_selector("#txtNombreRazonSocial, input[name*='razon']")
                     if name_input:
                         name_input.fill(name)
                         logger.info("Filled name: %s", name)
@@ -125,9 +120,7 @@ class SunatRucSource(BaseSource):
 
                 # Submit — exact ID: #btnAceptar
                 submit = page.query_selector(
-                    "#btnAceptar, #btnBuscar, "
-                    "input[value='Buscar'], "
-                    "button:has-text('Buscar')"
+                    "#btnAceptar, #btnBuscar, input[value='Buscar'], button:has-text('Buscar')"
                 )
                 if submit:
                     submit.click()
@@ -146,9 +139,7 @@ class SunatRucSource(BaseSource):
                 result = self._parse_result(page, ruc, dni, name)
 
                 if collector:
-                    result.audit = collector.generate_pdf(
-                        page, result.model_dump_json()
-                    )
+                    result.audit = collector.generate_pdf(page, result.model_dump_json())
 
                 return result
 
@@ -158,7 +149,11 @@ class SunatRucSource(BaseSource):
                 raise SourceError("pe.sunat_ruc", f"Query failed: {e}") from e
 
     def _parse_result(
-        self, page, ruc: str, dni: str, name: str,
+        self,
+        page,
+        ruc: str,
+        dni: str,
+        name: str,
     ) -> SunatRucResult:
         """Parse the SUNAT RUC result page."""
         from datetime import datetime

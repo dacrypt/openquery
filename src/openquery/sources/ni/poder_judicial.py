@@ -67,6 +67,7 @@ class NiPoderJudicialSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("ni.poder_judicial", "case_number", search_term)
 
         with browser.page(NICARAO_URL) as page:
@@ -84,9 +85,7 @@ class NiPoderJudicialSource(BaseSource):
                     'input[placeholder*="expediente"], input[placeholder*="causa"]'
                 )
                 if not search_input:
-                    raise SourceError(
-                        "ni.poder_judicial", "Could not find search input field"
-                    )
+                    raise SourceError("ni.poder_judicial", "Could not find search input field")
 
                 search_input.fill(search_term)
                 logger.info("Filled search term: %s", search_term)
@@ -125,9 +124,7 @@ class NiPoderJudicialSource(BaseSource):
         from datetime import datetime
 
         body_text = page.inner_text("body")
-        result = NiPoderJudicialResult(
-            queried_at=datetime.now(), search_term=search_term
-        )
+        result = NiPoderJudicialResult(queried_at=datetime.now(), search_term=search_term)
 
         field_map = {
             "expediente": "case_number",

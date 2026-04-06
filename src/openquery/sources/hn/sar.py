@@ -57,6 +57,7 @@ class HnSarSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("hn.sar", "rtn", rtn)
 
         with browser.page(SAR_URL) as page:
@@ -88,6 +89,7 @@ class HnSarSource(BaseSource):
                     captcha_bytes = captcha_img.screenshot()
                     if captcha_bytes:
                         from openquery.core.captcha import OCRSolver
+
                         solver = OCRSolver(max_chars=6)
                         captcha_text = solver.solve(captcha_bytes)
                         captcha_input = page.query_selector(

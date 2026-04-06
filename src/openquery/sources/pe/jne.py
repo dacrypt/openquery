@@ -61,6 +61,7 @@ class JneSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("pe.jne", "cedula", dni)
 
         with browser.page(JNE_URL) as page:
@@ -144,9 +145,17 @@ class JneSource(BaseSource):
                 lower = stripped.lower()
                 if "nombre" in lower and ":" in stripped:
                     result.nombre = stripped.split(":", 1)[1].strip()
-                elif ("distrito" in lower or "circunscripci" in lower) and ":" in stripped and not result.electoral_district:
+                elif (
+                    ("distrito" in lower or "circunscripci" in lower)
+                    and ":" in stripped
+                    and not result.electoral_district
+                ):
                     result.electoral_district = stripped.split(":", 1)[1].strip()
-                elif ("estado" in lower or "condici" in lower) and ":" in stripped and not result.voting_status:
+                elif (
+                    ("estado" in lower or "condici" in lower)
+                    and ":" in stripped
+                    and not result.voting_status
+                ):
                     result.voting_status = stripped.split(":", 1)[1].strip()
 
         return result

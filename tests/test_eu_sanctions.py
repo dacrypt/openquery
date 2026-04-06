@@ -13,7 +13,6 @@ import pytest
 from openquery.exceptions import SourceError
 from openquery.sources.base import DocumentType, QueryInput
 
-
 # ===========================================================================
 # TestEuSanctionsResult — model tests
 # ===========================================================================

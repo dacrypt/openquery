@@ -66,6 +66,7 @@ class RepuveSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("mx.repuve", "vin" if is_vin else "placa", identifier)
 
         with browser.page(REPUVE_URL) as page:

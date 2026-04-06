@@ -50,7 +50,9 @@ class GarantiasMobiliariasSource(BaseSource):
 
     def query(self, input: QueryInput) -> BaseModel:
         if input.document_type != DocumentType.CEDULA:
-            raise SourceError("co.garantias_mobiliarias", f"Only cedula supported, got: {input.document_type}")
+            raise SourceError(
+                "co.garantias_mobiliarias", f"Only cedula supported, got: {input.document_type}"
+            )
         return self._query(input.document_number, audit=input.audit)
 
     def _query(self, cedula: str, audit: bool = False) -> GarantiasMobiliariasResult:
@@ -61,6 +63,7 @@ class GarantiasMobiliariasSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.garantias_mobiliarias", "cedula", cedula)
 
         with browser.page(GARANTIAS_URL) as page:
@@ -79,7 +82,9 @@ class GarantiasMobiliariasSource(BaseSource):
                     'input[type="text"]'
                 )
                 if not cedula_input:
-                    raise SourceError("co.garantias_mobiliarias", "Could not find document input field")
+                    raise SourceError(
+                        "co.garantias_mobiliarias", "Could not find document input field"
+                    )
 
                 cedula_input.fill(cedula)
                 logger.info("Searching Garantías Mobiliarias for: %s", cedula)
@@ -142,19 +147,23 @@ class GarantiasMobiliariasSource(BaseSource):
                 continue
             cells = text.split("\t")
             if len(cells) >= 3:
-                garantias.append(GarantiaEntry(
-                    numero_registro=cells[0].strip() if cells else "",
-                    tipo_garantia=cells[1].strip() if len(cells) > 1 else "",
-                    deudor=cells[2].strip() if len(cells) > 2 else "",
-                    acreedor=cells[3].strip() if len(cells) > 3 else "",
-                    descripcion_bien=cells[4].strip() if len(cells) > 4 else "",
-                    fecha_inscripcion=cells[5].strip() if len(cells) > 5 else "",
-                    estado=cells[6].strip() if len(cells) > 6 else "",
-                ))
+                garantias.append(
+                    GarantiaEntry(
+                        numero_registro=cells[0].strip() if cells else "",
+                        tipo_garantia=cells[1].strip() if len(cells) > 1 else "",
+                        deudor=cells[2].strip() if len(cells) > 2 else "",
+                        acreedor=cells[3].strip() if len(cells) > 3 else "",
+                        descripcion_bien=cells[4].strip() if len(cells) > 4 else "",
+                        fecha_inscripcion=cells[5].strip() if len(cells) > 5 else "",
+                        estado=cells[6].strip() if len(cells) > 6 else "",
+                    )
+                )
 
         result.garantias = garantias
         result.total_garantias = len(garantias)
         result.tiene_garantias = len(garantias) > 0
-        result.mensaje = f"Garantías Mobiliarias {cedula}: {len(garantias)} garantía(s) encontrada(s)"
+        result.mensaje = (
+            f"Garantías Mobiliarias {cedula}: {len(garantias)} garantía(s) encontrada(s)"
+        )
 
         return result

@@ -61,6 +61,7 @@ class RegistroCivilEcSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("ec.registro_civil", "cedula", cedula)
 
         with browser.page(REGISTRO_CIVIL_EC_URL) as page:

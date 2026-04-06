@@ -5,7 +5,6 @@ Uses mocked httpx to avoid hitting the real API.
 
 from __future__ import annotations
 
-import json
 from datetime import datetime
 from unittest.mock import MagicMock, patch
 
@@ -13,7 +12,6 @@ import pytest
 
 from openquery.exceptions import SourceError
 from openquery.sources.base import DocumentType, QueryInput
-
 
 # ===========================================================================
 # TestWorldBankResult — model tests

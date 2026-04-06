@@ -51,7 +51,7 @@ class MiCasaYaSource(BaseSource):
     def query(self, input: QueryInput) -> BaseModel:
         raise SourceError(
             "co.mi_casa_ya",
-            "Source deprecated: Mi Casa Ya subsidy lookup portal is no longer available — micasaya.gov.co DNS dead and minvivienda.gov.co removed the query form since 2026-04",
+            "Source deprecated: Mi Casa Ya subsidy lookup portal is no longer available — micasaya.gov.co DNS dead and minvivienda.gov.co removed the query form since 2026-04",  # noqa: E501
         )
 
     def _query(self, cedula: str, audit: bool = False) -> MiCasaYaResult:
@@ -62,6 +62,7 @@ class MiCasaYaSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.mi_casa_ya", "cedula", cedula)
 
         with browser.page(MINVIVIENDA_URL) as page:
@@ -130,14 +131,17 @@ class MiCasaYaSource(BaseSource):
         body_lower = body_text.lower()
 
         # Check for no records
-        no_records = any(phrase in body_lower for phrase in [
-            "no se encontr",
-            "no aparece",
-            "no registra",
-            "sin resultados",
-            "no tiene subsidio",
-            "no ha sido beneficiario",
-        ])
+        no_records = any(
+            phrase in body_lower
+            for phrase in [
+                "no se encontr",
+                "no aparece",
+                "no registra",
+                "sin resultados",
+                "no tiene subsidio",
+                "no ha sido beneficiario",
+            ]
+        )
 
         nombre = ""
 
@@ -151,9 +155,7 @@ class MiCasaYaSource(BaseSource):
 
         # Parse subsidies from table rows
         subsidios: list[SubsidioVivienda] = []
-        rows = page.query_selector_all(
-            "table tbody tr, .resultado-row, .subsidio-item"
-        )
+        rows = page.query_selector_all("table tbody tr, .resultado-row, .subsidio-item")
 
         for row in rows:
             text = row.inner_text()
@@ -190,12 +192,14 @@ class MiCasaYaSource(BaseSource):
                 elif "fecha" in lower and ":" in stripped:
                     fecha = stripped.split(":", 1)[1].strip()
             if programa or estado_sub:
-                subsidios.append(SubsidioVivienda(
-                    programa=programa,
-                    estado=estado_sub,
-                    valor=valor,
-                    fecha=fecha,
-                ))
+                subsidios.append(
+                    SubsidioVivienda(
+                        programa=programa,
+                        estado=estado_sub,
+                        valor=valor,
+                        fecha=fecha,
+                    )
+                )
 
         tiene_subsidio = len(subsidios) > 0 and not no_records
 

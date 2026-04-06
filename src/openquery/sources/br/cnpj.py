@@ -35,7 +35,7 @@ class BrCnpjSource(BaseSource):
         return SourceMeta(
             name="br.cnpj",
             display_name="CNPJ — Cadastro Nacional da Pessoa Jurídica",
-            description="Brazilian business registry: company name, status, CNAE, partners, address",
+            description="Brazilian business registry: company name, status, CNAE, partners, address",  # noqa: E501
             country="BR",
             url="https://brasilapi.com.br/",
             supported_inputs=[DocumentType.NIT, DocumentType.CUSTOM],
@@ -63,12 +63,14 @@ class BrCnpjSource(BaseSource):
 
             socios = []
             for s in data.get("qsa", []):
-                socios.append(CnpjSocio(
-                    nome=s.get("nome_socio", ""),
-                    cnpj_cpf_do_socio=s.get("cnpj_cpf_do_socio", ""),
-                    qualificacao_socio=s.get("qualificacao_socio", ""),
-                    data_entrada_sociedade=s.get("data_entrada_sociedade", ""),
-                ))
+                socios.append(
+                    CnpjSocio(
+                        nome=s.get("nome_socio", ""),
+                        cnpj_cpf_do_socio=s.get("cnpj_cpf_do_socio", ""),
+                        qualificacao_socio=s.get("qualificacao_socio", ""),
+                        data_entrada_sociedade=s.get("data_entrada_sociedade", ""),
+                    )
+                )
 
             # Helper to safely get string (BrasilAPI returns None for missing fields)
             def s(key: str, alt: str = "") -> str:

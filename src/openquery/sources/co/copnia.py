@@ -26,8 +26,8 @@ logger = logging.getLogger(__name__)
 COPNIA_URL = "https://tramites.copnia.gov.co/Copnia_Microsite/CertificateOfGoodStanding/CertificateOfGoodStandingStart"
 
 DOC_TYPE_MAP = {
-    DocumentType.CEDULA: "1",    # Cedula de Ciudadania
-    DocumentType.NIT: "6",       # NIT
+    DocumentType.CEDULA: "1",  # Cedula de Ciudadania
+    DocumentType.NIT: "6",  # NIT
     DocumentType.PASSPORT: "4",  # Pasaporte
 }
 
@@ -62,7 +62,10 @@ class CopniaSource(BaseSource):
         return self._query(input.document_number, input.document_type, audit=input.audit)
 
     def _query(
-        self, documento: str, doc_type: DocumentType, audit: bool = False,
+        self,
+        documento: str,
+        doc_type: DocumentType,
+        audit: bool = False,
     ) -> CopniaResult:
         from openquery.core.browser import BrowserManager
 
@@ -71,6 +74,7 @@ class CopniaSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.copnia", doc_type.value, documento)
 
         with browser.page(COPNIA_URL) as page:
@@ -89,7 +93,9 @@ class CopniaSource(BaseSource):
                     page.wait_for_timeout(500)
 
                 # Select "Numero de identificacion" search method
-                search_select = page.query_selector('#SearchWithCode, select[name="SearchWithCode"]')
+                search_select = page.query_selector(
+                    '#SearchWithCode, select[name="SearchWithCode"]'
+                )
                 if search_select:
                     page.select_option('#SearchWithCode, select[name="SearchWithCode"]', value="1")
                     page.wait_for_timeout(500)
@@ -107,9 +113,7 @@ class CopniaSource(BaseSource):
 
                 # Fill document number — exact ID: #DocumentNumber
                 doc_input = page.query_selector(
-                    '#DocumentNumber, '
-                    'input[name="DocumentNumber"], '
-                    'input[type="text"]'
+                    '#DocumentNumber, input[name="DocumentNumber"], input[type="text"]'
                 )
                 if not doc_input:
                     raise SourceError("co.copnia", "Could not find document input field")
@@ -122,8 +126,7 @@ class CopniaSource(BaseSource):
 
                 # Submit — exact ID: #btnConsult
                 submit_btn = page.query_selector(
-                    '#btnConsult, '
-                    'button[type="submit"], input[type="submit"]'
+                    '#btnConsult, button[type="submit"], input[type="submit"]'
                 )
                 if submit_btn:
                     submit_btn.click()
@@ -157,20 +160,29 @@ class CopniaSource(BaseSource):
         body_lower = body_text.lower()
 
         # Check for no records
-        no_records = any(phrase in body_lower for phrase in [
-            "no se encontr",
-            "sin registros",
-            "no registra",
-            "no aparece",
-            "no tiene matr",
-        ])
+        no_records = any(
+            phrase in body_lower
+            for phrase in [
+                "no se encontr",
+                "sin registros",
+                "no registra",
+                "no aparece",
+                "no tiene matr",
+            ]
+        )
 
-        has_records = any(phrase in body_lower for phrase in [
-            "vigente",
-            "matr\u00edcula",
-            "matricula",
-            "profesional registrado",
-        ]) and not no_records
+        has_records = (
+            any(
+                phrase in body_lower
+                for phrase in [
+                    "vigente",
+                    "matr\u00edcula",
+                    "matricula",
+                    "profesional registrado",
+                ]
+            )
+            and not no_records
+        )
 
         # Extract fields from result
         nombre = ""
@@ -198,7 +210,10 @@ class CopniaSource(BaseSource):
                 if len(parts) > 1 and not estado_matricula:
                     estado_matricula = parts[1].strip()
 
-            if any(label in line_lower for label in ["profesi\u00f3n", "profesion", "t\u00edtulo", "titulo"]):
+            if any(
+                label in line_lower
+                for label in ["profesi\u00f3n", "profesion", "t\u00edtulo", "titulo"]
+            ):
                 parts = line_stripped.split(":")
                 if len(parts) > 1 and not profesion:
                     profesion = parts[1].strip()

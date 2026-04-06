@@ -37,7 +37,7 @@ class NosisSource(BaseSource):
         return SourceMeta(
             name="ar.nosis",
             display_name="NOSIS — Informe Crediticio",
-            description="Argentine NOSIS credit bureau: credit status and delinquency summary by CUIT",
+            description="Argentine NOSIS credit bureau: credit status and delinquency summary by CUIT",  # noqa: E501
             country="AR",
             url=NOSIS_URL,
             supported_inputs=[DocumentType.CUSTOM],
@@ -47,10 +47,7 @@ class NosisSource(BaseSource):
         )
 
     def query(self, input: QueryInput) -> BaseModel:
-        cuit = (
-            input.extra.get("cuit", "")
-            or input.document_number
-        )
+        cuit = input.extra.get("cuit", "") or input.document_number
         if not cuit:
             raise SourceError(
                 "ar.nosis",
@@ -66,6 +63,7 @@ class NosisSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("ar.nosis", "cuit", cuit)
 
         with browser.page(NOSIS_URL) as page:

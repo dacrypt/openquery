@@ -79,6 +79,7 @@ class NyDmvSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("us.ny_dmv", "vin", vin)
 
         with browser.page(NY_DMV_URL) as page:
@@ -192,9 +193,7 @@ class NyDmvSource(BaseSource):
                                 details[key] = val
                     elif tag == "dt":
                         # Try to get paired dd
-                        val_el = row.evaluate_handle(
-                            "el => el.nextElementSibling"
-                        )
+                        val_el = row.evaluate_handle("el => el.nextElementSibling")
                         val = ""
                         try:
                             val = (val_el.as_element().inner_text() or "").strip()

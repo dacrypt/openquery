@@ -62,6 +62,7 @@ class SoiSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.soi", tipo, documento)
 
         with browser.page(SOI_URL) as page:
@@ -155,15 +156,17 @@ class SoiSource(BaseSource):
             cells = row.query_selector_all("td")
             if len(cells) >= 3:
                 cell_texts = [c.inner_text().strip() for c in cells]
-                pagos.append(SoiPago(
-                    periodo=cell_texts[0] if cell_texts else "",
-                    aportante=cell_texts[1] if len(cell_texts) > 1 else "",
-                    tipo_aportante=cell_texts[2] if len(cell_texts) > 2 else "",
-                    salud=cell_texts[3] if len(cell_texts) > 3 else "",
-                    pension=cell_texts[4] if len(cell_texts) > 4 else "",
-                    riesgos=cell_texts[5] if len(cell_texts) > 5 else "",
-                    estado=cell_texts[6] if len(cell_texts) > 6 else "",
-                ))
+                pagos.append(
+                    SoiPago(
+                        periodo=cell_texts[0] if cell_texts else "",
+                        aportante=cell_texts[1] if len(cell_texts) > 1 else "",
+                        tipo_aportante=cell_texts[2] if len(cell_texts) > 2 else "",
+                        salud=cell_texts[3] if len(cell_texts) > 3 else "",
+                        pension=cell_texts[4] if len(cell_texts) > 4 else "",
+                        riesgos=cell_texts[5] if len(cell_texts) > 5 else "",
+                        estado=cell_texts[6] if len(cell_texts) > 6 else "",
+                    )
+                )
 
         result.pagos = pagos
         result.total_pagos = len(pagos)

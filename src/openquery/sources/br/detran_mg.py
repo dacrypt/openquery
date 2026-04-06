@@ -60,6 +60,7 @@ class DetranMgSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("br.detran_mg", "placa", placa)
 
         with browser.page(DETRAN_MG_URL) as page:

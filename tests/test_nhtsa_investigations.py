@@ -11,7 +11,6 @@ from openquery.models.us.nhtsa_investigations import NhtsaInvestigation, NhtsaIn
 from openquery.sources.base import DocumentType, QueryInput
 from openquery.sources.us.nhtsa_investigations import NhtsaInvestigationsSource
 
-
 # ── Model tests ──────────────────────────────────────────────────────────────
 
 
@@ -213,10 +212,22 @@ class TestParseResult:
         assert result.investigations == []
 
     def test_total_from_pagination(self):
-        raw = [{"nhtsaId": "1", "investigationNumber": "DP21001", "investigationType": "DP",
-                "subject": "BRAKES", "description": "Brake issue.", "status": "Open",
-                "openDate": "2021-05-01", "closeDate": "", "components": ["BRAKES"],
-                "make": "HONDA", "model": "ACCORD", "year": "2021"}]
+        raw = [
+            {
+                "nhtsaId": "1",
+                "investigationNumber": "DP21001",
+                "investigationType": "DP",
+                "subject": "BRAKES",
+                "description": "Brake issue.",
+                "status": "Open",
+                "openDate": "2021-05-01",
+                "closeDate": "",
+                "components": ["BRAKES"],
+                "make": "HONDA",
+                "model": "ACCORD",
+                "year": "2021",
+            }
+        ]
         mock_resp = _mock_response(raw, total=42)
 
         with patch("httpx.Client") as mock_client_cls:

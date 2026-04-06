@@ -71,15 +71,17 @@ class SecopSancionesSource(BaseSource):
 
             sanciones = []
             for row in data:
-                sanciones.append(SecopSancion(
-                    proveedor=row.get("nombre_contratista", ""),
-                    nit=row.get("documento_contratista", ""),
-                    tipo_sancion=row.get("numero_de_resolucion", ""),
-                    entidad=row.get("nombre_entidad", ""),
-                    fecha_sancion=row.get("fecha_de_publicacion", ""),
-                    valor=row.get("valor_sancion", ""),
-                    estado=row.get("numero_de_contrato", ""),
-                ))
+                sanciones.append(
+                    SecopSancion(
+                        proveedor=row.get("nombre_contratista", ""),
+                        nit=row.get("documento_contratista", ""),
+                        tipo_sancion=row.get("numero_de_resolucion", ""),
+                        entidad=row.get("nombre_entidad", ""),
+                        fecha_sancion=row.get("fecha_de_publicacion", ""),
+                        valor=row.get("valor_sancion", ""),
+                        estado=row.get("numero_de_contrato", ""),
+                    )
+                )
 
             return SecopSancionesResult(
                 query=query_label,
@@ -88,7 +90,9 @@ class SecopSancionesSource(BaseSource):
             )
 
         except httpx.HTTPStatusError as e:
-            raise SourceError("co.secop_sanciones", f"API returned HTTP {e.response.status_code}") from e
+            raise SourceError(
+                "co.secop_sanciones", f"API returned HTTP {e.response.status_code}"
+            ) from e
         except httpx.RequestError as e:
             raise SourceError("co.secop_sanciones", f"Request failed: {e}") from e
         except Exception as e:

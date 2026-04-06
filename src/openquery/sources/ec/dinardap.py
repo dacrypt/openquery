@@ -66,6 +66,7 @@ class DinardapSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("ec.dinardap", "cedula", cedula)
 
         with browser.page(DINARDAP_URL) as page:

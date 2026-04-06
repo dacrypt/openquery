@@ -57,6 +57,7 @@ class SvNitSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("sv.nit", "dui", dui)
 
         with browser.page(DGII_URL) as page:
@@ -69,8 +70,7 @@ class SvNitSource(BaseSource):
 
                 # Fill DUI
                 dui_input = page.query_selector(
-                    '#txtDUI, input[name*="DUI"], input[name*="dui"], '
-                    'input[type="text"]'
+                    '#txtDUI, input[name*="DUI"], input[name*="dui"], input[type="text"]'
                 )
                 if not dui_input:
                     raise SourceError("sv.nit", "Could not find DUI input field")
@@ -86,6 +86,7 @@ class SvNitSource(BaseSource):
                     captcha_bytes = captcha_img.screenshot()
                     if captcha_bytes:
                         from openquery.core.captcha import OCRSolver
+
                         solver = OCRSolver(max_chars=6)
                         captcha_text = solver.solve(captcha_bytes)
                         captcha_input = page.query_selector(

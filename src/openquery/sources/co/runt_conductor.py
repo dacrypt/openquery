@@ -130,6 +130,7 @@ class RuntConductorSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.runt_conductor", "cedula", cedula)
 
         with browser.page(RUNT_PAGE, wait_until="networkidle") as page:
@@ -140,7 +141,9 @@ class RuntConductorSource(BaseSource):
                 try:
                     logger.info(
                         "RUNT conductor attempt %d/%d for cedula=%s",
-                        attempt, MAX_RETRIES, cedula,
+                        attempt,
+                        MAX_RETRIES,
+                        cedula,
                     )
 
                     # Step 1: Generate captcha
@@ -172,7 +175,10 @@ class RuntConductorSource(BaseSource):
                 except Exception as e:
                     last_error = e
                     logger.warning(
-                        "Attempt %d failed unexpectedly: %s", attempt, e, exc_info=True,
+                        "Attempt %d failed unexpectedly: %s",
+                        attempt,
+                        e,
+                        exc_info=True,
                     )
 
         raise SourceError(
@@ -211,13 +217,18 @@ class RuntConductorSource(BaseSource):
 
         if len(image_bytes) < 100:
             raise SourceError(
-                "co.runt_conductor", f"Captcha image too small ({len(image_bytes)} bytes)",
+                "co.runt_conductor",
+                f"Captcha image too small ({len(image_bytes)} bytes)",
             )
 
         return captcha_id, image_bytes
 
     def _execute_query(
-        self, page, cedula: str, captcha_text: str, captcha_id: str,
+        self,
+        page,
+        cedula: str,
+        captcha_text: str,
+        captcha_id: str,
     ) -> dict:
         """POST auth query to RUNT vehicle API via browser fetch (conductor MS retired)."""
         body = {
@@ -261,7 +272,8 @@ class RuntConductorSource(BaseSource):
 
         if status != 200:
             raise SourceError(
-                "co.runt_conductor", f"RUNT API returned {status}: {body_text[:200]}",
+                "co.runt_conductor",
+                f"RUNT API returned {status}: {body_text[:200]}",
             )
 
         try:
@@ -275,9 +287,14 @@ class RuntConductorSource(BaseSource):
                 raise CaptchaError("co.runt_conductor", f"Captcha error: {error_msg}")
             if data.get("error") is True:
                 desc = data.get(
-                    "descripcionRespuesta", data.get("mensaje", "Unknown error"),
+                    "descripcionRespuesta",
+                    data.get("mensaje", "Unknown error"),
                 )
-                if "no corresponden" in desc.lower() or "no se encontr" in desc.lower() or "no tiene" in desc.lower():
+                if (
+                    "no corresponden" in desc.lower()
+                    or "no se encontr" in desc.lower()
+                    or "no tiene" in desc.lower()
+                ):
                     logger.info("RUNT conductor returned no matching data: %s", desc)
                 else:
                     raise SourceError("co.runt_conductor", f"RUNT error: {desc}")
@@ -299,13 +316,15 @@ class RuntConductorSource(BaseSource):
         licencias: list[LicenciaConduccion] = []
         if isinstance(licencias_raw, list):
             for lic in licencias_raw:
-                licencias.append(LicenciaConduccion(
-                    categoria=lic.get("categoria", lic.get("categoriaLicencia", "")),
-                    fecha_expedicion=lic.get("fechaExpedicion", ""),
-                    fecha_vencimiento=lic.get("fechaVencimiento", ""),
-                    estado=lic.get("estado", lic.get("estadoLicencia", "")),
-                    organismo_transito=lic.get("organismoTransito", ""),
-                ))
+                licencias.append(
+                    LicenciaConduccion(
+                        categoria=lic.get("categoria", lic.get("categoriaLicencia", "")),
+                        fecha_expedicion=lic.get("fechaExpedicion", ""),
+                        fecha_vencimiento=lic.get("fechaVencimiento", ""),
+                        estado=lic.get("estado", lic.get("estadoLicencia", "")),
+                        organismo_transito=lic.get("organismoTransito", ""),
+                    )
+                )
 
         tiene_licencia = len(licencias) > 0
         total_comparendos = int(conductor.get("totalComparendos", 0))
@@ -315,12 +334,16 @@ class RuntConductorSource(BaseSource):
         )
         if isinstance(tiene_restricciones, str):
             tiene_restricciones = tiene_restricciones.upper() in (
-                "SI", "S\u00cd", "YES", "TRUE", "1",
+                "SI",
+                "S\u00cd",
+                "YES",
+                "TRUE",
+                "1",
             )
 
         mensaje = ""
         if tiene_licencia:
-            cats = ", ".join(l.categoria for l in licencias if l.categoria)
+            cats = ", ".join(lic.categoria for lic in licencias if lic.categoria)
             mensaje = f"Licencia(s) encontrada(s): {cats}"
         else:
             mensaje = "No registra licencias de conducci\u00f3n"

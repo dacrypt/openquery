@@ -61,14 +61,16 @@ class MxInegiSource(BaseSource):
             datos = data.get("datos", [])
             entidades = []
             for d in datos:
-                entidades.append(InegiEntidad(
-                    clave=d.get("cve_agee", ""),
-                    nombre=d.get("nom_agee", ""),
-                    poblacion_total=int(d.get("pob", 0) or 0),
-                    poblacion_masculina=int(d.get("pob_mas", 0) or 0),
-                    poblacion_femenina=int(d.get("pob_fem", 0) or 0),
-                    viviendas=int(d.get("viv", 0) or 0),
-                ))
+                entidades.append(
+                    InegiEntidad(
+                        clave=d.get("cve_agee", ""),
+                        nombre=d.get("nom_agee", ""),
+                        poblacion_total=int(d.get("pob", 0) or 0),
+                        poblacion_masculina=int(d.get("pob_mas", 0) or 0),
+                        poblacion_femenina=int(d.get("pob_fem", 0) or 0),
+                        viviendas=int(d.get("viv", 0) or 0),
+                    )
+                )
 
             return MxInegiResult(
                 queried_at=datetime.now(),
@@ -96,14 +98,16 @@ class MxInegiSource(BaseSource):
             datos = data.get("datos", [])
             entidades = []
             for d in datos:
-                entidades.append(InegiEntidad(
-                    clave=d.get("cve_agem", ""),
-                    nombre=d.get("nom_agem", ""),
-                    poblacion_total=int(d.get("pob", 0) or 0),
-                    poblacion_masculina=int(d.get("pob_mas", 0) or 0),
-                    poblacion_femenina=int(d.get("pob_fem", 0) or 0),
-                    viviendas=int(d.get("viv", 0) or 0),
-                ))
+                entidades.append(
+                    InegiEntidad(
+                        clave=d.get("cve_agem", ""),
+                        nombre=d.get("nom_agem", ""),
+                        poblacion_total=int(d.get("pob", 0) or 0),
+                        poblacion_masculina=int(d.get("pob_mas", 0) or 0),
+                        poblacion_femenina=int(d.get("pob_fem", 0) or 0),
+                        viviendas=int(d.get("viv", 0) or 0),
+                    )
+                )
 
             return MxInegiResult(
                 queried_at=datetime.now(),

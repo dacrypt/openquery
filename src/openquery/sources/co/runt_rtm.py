@@ -129,6 +129,7 @@ class RuntRtmSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.runt_rtm", "placa", placa)
 
         with browser.page(RUNT_PAGE, wait_until="networkidle") as page:
@@ -139,7 +140,9 @@ class RuntRtmSource(BaseSource):
                 try:
                     logger.info(
                         "RUNT RTM attempt %d/%d for placa=%s",
-                        attempt, MAX_RETRIES, placa,
+                        attempt,
+                        MAX_RETRIES,
+                        placa,
                     )
 
                     # Step 1: Generate captcha
@@ -171,7 +174,10 @@ class RuntRtmSource(BaseSource):
                 except Exception as e:
                     last_error = e
                     logger.warning(
-                        "Attempt %d failed unexpectedly: %s", attempt, e, exc_info=True,
+                        "Attempt %d failed unexpectedly: %s",
+                        attempt,
+                        e,
+                        exc_info=True,
                     )
 
         raise SourceError(
@@ -210,13 +216,18 @@ class RuntRtmSource(BaseSource):
 
         if len(image_bytes) < 100:
             raise SourceError(
-                "co.runt_rtm", f"Captcha image too small ({len(image_bytes)} bytes)",
+                "co.runt_rtm",
+                f"Captcha image too small ({len(image_bytes)} bytes)",
             )
 
         return captcha_id, image_bytes
 
     def _execute_query(
-        self, page, placa: str, captcha_text: str, captcha_id: str,
+        self,
+        page,
+        placa: str,
+        captcha_text: str,
+        captcha_id: str,
     ) -> dict:
         """POST auth query to RUNT API via browser fetch."""
         body = {
@@ -260,7 +271,8 @@ class RuntRtmSource(BaseSource):
 
         if status != 200:
             raise SourceError(
-                "co.runt_rtm", f"RUNT API returned {status}: {body_text[:200]}",
+                "co.runt_rtm",
+                f"RUNT API returned {status}: {body_text[:200]}",
             )
 
         try:
@@ -274,7 +286,8 @@ class RuntRtmSource(BaseSource):
                 raise CaptchaError("co.runt_rtm", f"Captcha error: {error_msg}")
             if data.get("error") is True:
                 desc = data.get(
-                    "descripcionRespuesta", data.get("mensaje", "Unknown error"),
+                    "descripcionRespuesta",
+                    data.get("mensaje", "Unknown error"),
                 )
                 if "no corresponden" in desc.lower() or "no se encontr" in desc.lower():
                     logger.info("RUNT RTM returned no matching data: %s", desc)
@@ -299,15 +312,23 @@ class RuntRtmSource(BaseSource):
             return default
 
         rtm_vigente = g(["rtmVigente", "vigenciaRTM", "tecnomecanicaVigente"]).upper() in (
-            "SI", "S\u00cd", "YES", "TRUE", "1",
+            "SI",
+            "S\u00cd",
+            "YES",
+            "TRUE",
+            "1",
         )
         cda = g(["cda", "centroDiagnostico", "cdaRtm"])
         numero_certificado = g(["certificadoRtm", "numCertificadoRtm", "rtmCertificado"])
         fecha_expedicion = g(["fechaExpedicionRtm", "rtmFechaExpedicion"])
-        fecha_vencimiento = g([
-            "fechaVencimientoRTM", "rtmFechaVencimiento", "vencimientoRTM",
-            "tecnomecanicaVencimiento",
-        ])
+        fecha_vencimiento = g(
+            [
+                "fechaVencimientoRTM",
+                "rtmFechaVencimiento",
+                "vencimientoRTM",
+                "tecnomecanicaVencimiento",
+            ]
+        )
         resultado = g(["resultadoRtm", "rtmResultado"])
         estado = "Vigente" if rtm_vigente else "Vencido"
 

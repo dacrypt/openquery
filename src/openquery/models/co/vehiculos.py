@@ -14,10 +14,10 @@ class VehiculosResult(BaseModel):
     """
 
     placa: str = ""
-    clase: str = ""          # AUTOMOVIL, CAMIONETA, etc.
+    clase: str = ""  # AUTOMOVIL, CAMIONETA, etc.
     marca: str = ""
-    modelo: str = ""         # year as string
-    servicio: str = ""       # PARTICULAR, PUBLICO
+    modelo: str = ""  # year as string
+    servicio: str = ""  # PARTICULAR, PUBLICO
     cilindraje: int = 0
     resultados: list[dict] = Field(default_factory=list)
     total: int = 0

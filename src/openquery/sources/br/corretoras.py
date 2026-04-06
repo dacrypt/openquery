@@ -35,7 +35,7 @@ class BrCorretorasSource(BaseSource):
         return SourceMeta(
             name="br.corretoras",
             display_name="CVM — Corretoras de Valores",
-            description="Brazilian stock broker registry: name, status, CVM code, equity (BrasilAPI/CVM)",
+            description="Brazilian stock broker registry: name, status, CVM code, equity (BrasilAPI/CVM)",  # noqa: E501
             country="BR",
             url="https://brasilapi.com.br/",
             supported_inputs=[DocumentType.NIT, DocumentType.CUSTOM],

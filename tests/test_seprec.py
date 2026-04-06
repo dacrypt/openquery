@@ -64,6 +64,7 @@ class TestSeprecSourceMeta:
 
     def test_meta_supported_inputs(self):
         from openquery.sources.base import DocumentType
+
         source = SeprecSource()
         meta = source.meta()
         assert DocumentType.CUSTOM in meta.supported_inputs
@@ -103,9 +104,7 @@ class TestParseResult:
     def test_parse_company_name(self):
         source = SeprecSource()
         page = self._make_page(
-            "Resultados de búsqueda\n"
-            "Razón Social: EMPRESA TEST S.R.L.\n"
-            "Estado: ACTIVO\n"
+            "Resultados de búsqueda\nRazón Social: EMPRESA TEST S.R.L.\nEstado: ACTIVO\n"
         )
         result = source._parse_result(page, "EMPRESA TEST")
         assert result.search_term == "EMPRESA TEST"
@@ -113,20 +112,14 @@ class TestParseResult:
 
     def test_parse_registration_status(self):
         source = SeprecSource()
-        page = self._make_page(
-            "Razón Social: EMPRESA TEST S.R.L.\n"
-            "Estado: ACTIVO\n"
-            "Folio: 98765\n"
-        )
+        page = self._make_page("Razón Social: EMPRESA TEST S.R.L.\nEstado: ACTIVO\nFolio: 98765\n")
         result = source._parse_result(page, "EMPRESA TEST")
         assert result.registration_status == "ACTIVO"
 
     def test_parse_folio(self):
         source = SeprecSource()
         page = self._make_page(
-            "Razón Social: EMPRESA TEST S.R.L.\n"
-            "Folio: 98765\n"
-            "Representante Legal: MARIA LOPEZ\n"
+            "Razón Social: EMPRESA TEST S.R.L.\nFolio: 98765\nRepresentante Legal: MARIA LOPEZ\n"
         )
         result = source._parse_result(page, "EMPRESA TEST")
         assert result.folio == "98765"
@@ -134,18 +127,14 @@ class TestParseResult:
     def test_parse_legal_representative(self):
         source = SeprecSource()
         page = self._make_page(
-            "Razón Social: EMPRESA TEST S.R.L.\n"
-            "Representante Legal: MARIA LOPEZ\n"
+            "Razón Social: EMPRESA TEST S.R.L.\nRepresentante Legal: MARIA LOPEZ\n"
         )
         result = source._parse_result(page, "EMPRESA TEST")
         assert result.legal_representative == "MARIA LOPEZ"
 
     def test_parse_nit(self):
         source = SeprecSource()
-        page = self._make_page(
-            "NIT: 1234567890\n"
-            "Razón Social: EMPRESA TEST S.R.L.\n"
-        )
+        page = self._make_page("NIT: 1234567890\nRazón Social: EMPRESA TEST S.R.L.\n")
         result = source._parse_result(page, "1234567890")
         assert result.nit == "1234567890"
 

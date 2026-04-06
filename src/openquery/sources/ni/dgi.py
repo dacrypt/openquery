@@ -60,6 +60,7 @@ class NiDgiSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("ni.dgi", "ruc", ruc)
 
         with browser.page(DGI_URL) as page:

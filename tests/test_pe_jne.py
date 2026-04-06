@@ -75,6 +75,7 @@ class TestJneSourceMeta:
 
     def test_meta_supported_inputs(self):
         from openquery.sources.base import DocumentType
+
         source = JneSource()
         assert DocumentType.CEDULA in source.meta().supported_inputs
 

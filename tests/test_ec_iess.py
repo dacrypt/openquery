@@ -72,6 +72,7 @@ class TestIessSourceMeta:
 
     def test_meta_supported_inputs(self):
         from openquery.sources.base import DocumentType
+
         source = IessSource()
         assert DocumentType.CEDULA in source.meta().supported_inputs
 

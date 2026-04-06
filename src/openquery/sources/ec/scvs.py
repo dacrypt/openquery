@@ -68,6 +68,7 @@ class ScvsSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("ec.scvs", "ruc" if ruc else "nombre", search_term)
 
         with browser.page(SCVS_URL) as page:
@@ -132,7 +133,9 @@ class ScvsSource(BaseSource):
                 if label and value:
                     details[label] = value
                     label_lower = label.lower()
-                    if ("raz" in label_lower and "social" in label_lower) or "nombre" in label_lower:
+                    if (
+                        "raz" in label_lower and "social" in label_lower
+                    ) or "nombre" in label_lower:
                         result.company_name = value
                     elif "ruc" in label_lower:
                         result.ruc = value
@@ -155,7 +158,9 @@ class ScvsSource(BaseSource):
                     result.ruc = stripped.split(":", 1)[1].strip()
                 elif "estado" in lower and ":" in stripped and not result.status:
                     result.status = stripped.split(":", 1)[1].strip()
-                elif "representante" in lower and ":" in stripped and not result.legal_representative:
+                elif (
+                    "representante" in lower and ":" in stripped and not result.legal_representative
+                ):
                     result.legal_representative = stripped.split(":", 1)[1].strip()
 
         return result

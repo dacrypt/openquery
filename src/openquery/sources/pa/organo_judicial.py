@@ -60,6 +60,7 @@ class OrganoJudicialSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("pa.organo_judicial", "search", search_value)
 
         with browser.page(PORTAL_URL) as page:
@@ -141,14 +142,16 @@ class OrganoJudicialSource(BaseSource):
                 cells = row.query_selector_all("td")
                 cell_texts = [c.inner_text().strip() for c in cells]
                 if len(cell_texts) >= 2 and cell_texts[0]:
-                    processes.append(PaProcesoRecord(
-                        case_number=cell_texts[0] if len(cell_texts) > 0 else "",
-                        court=cell_texts[1] if len(cell_texts) > 1 else "",
-                        case_type=cell_texts[2] if len(cell_texts) > 2 else "",
-                        status=cell_texts[3] if len(cell_texts) > 3 else "",
-                        filing_date=cell_texts[4] if len(cell_texts) > 4 else "",
-                        parties=cell_texts[5] if len(cell_texts) > 5 else "",
-                    ))
+                    processes.append(
+                        PaProcesoRecord(
+                            case_number=cell_texts[0] if len(cell_texts) > 0 else "",
+                            court=cell_texts[1] if len(cell_texts) > 1 else "",
+                            case_type=cell_texts[2] if len(cell_texts) > 2 else "",
+                            status=cell_texts[3] if len(cell_texts) > 3 else "",
+                            filing_date=cell_texts[4] if len(cell_texts) > 4 else "",
+                            parties=cell_texts[5] if len(cell_texts) > 5 else "",
+                        )
+                    )
         except Exception:
             # Fall back to text parsing if table extraction fails
             for line in body_text.split("\n"):

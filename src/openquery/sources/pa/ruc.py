@@ -36,7 +36,7 @@ class PaRucSource(BaseSource):
         return SourceMeta(
             name="pa.ruc",
             display_name="DGI — Consulta RUC / CCIC",
-            description="Panamanian taxpayer compliance status (Dirección General de Ingresos CCIC)",
+            description="Panamanian taxpayer compliance status (Dirección General de Ingresos CCIC)",  # noqa: E501
             country="PA",
             url=DGI_URL,
             supported_inputs=[DocumentType.NIT, DocumentType.CUSTOM],

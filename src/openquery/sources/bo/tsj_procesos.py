@@ -34,8 +34,7 @@ class TsjProcesosSource(BaseSource):
             name="bo.tsj_procesos",
             display_name="TSJ — Consulta de Procesos",
             description=(
-                "Bolivia court cases: case status, rulings, parties"
-                " (Tribunal Supremo de Justicia)"
+                "Bolivia court cases: case status, rulings, parties (Tribunal Supremo de Justicia)"
             ),
             country="BO",
             url=TSJ_URL,
@@ -63,6 +62,7 @@ class TsjProcesosSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("bo.tsj_procesos", "search_value", search_value)
 
         with browser.page(TSJ_URL) as page:

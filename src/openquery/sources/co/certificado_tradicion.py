@@ -39,7 +39,7 @@ class CertificadoTradicionSource(BaseSource):
         return SourceMeta(
             name="co.certificado_tradicion",
             display_name="SNR \u2014 Certificado de Tradici\u00f3n y Libertad",
-            description="Colombian property title certificate (Certificado de Tradici\u00f3n y Libertad)",
+            description="Colombian property title certificate (Certificado de Tradici\u00f3n y Libertad)",  # noqa: E501
             country="CO",
             url=SNR_URL,
             supported_inputs=[DocumentType.CUSTOM],
@@ -60,6 +60,7 @@ class CertificadoTradicionSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.certificado_tradicion", "matricula", matricula)
 
         with browser.page(SNR_URL) as page:
@@ -79,7 +80,8 @@ class CertificadoTradicionSource(BaseSource):
                 )
                 if not matricula_input:
                     raise SourceError(
-                        "co.certificado_tradicion", "Could not find matricula input field",
+                        "co.certificado_tradicion",
+                        "Could not find matricula input field",
                     )
 
                 matricula_input.fill(matricula)
@@ -153,14 +155,16 @@ class CertificadoTradicionSource(BaseSource):
                 continue
             cells = text.split("\t")
             if len(cells) >= 3:
-                anotaciones.append(AnotacionTradicion(
-                    numero=cells[0].strip() if cells else "",
-                    fecha=cells[1].strip() if len(cells) > 1 else "",
-                    especificacion=cells[2].strip() if len(cells) > 2 else "",
-                    radicacion=cells[3].strip() if len(cells) > 3 else "",
-                    valor_acto=cells[4].strip() if len(cells) > 4 else "",
-                    personas=cells[5].strip() if len(cells) > 5 else "",
-                ))
+                anotaciones.append(
+                    AnotacionTradicion(
+                        numero=cells[0].strip() if cells else "",
+                        fecha=cells[1].strip() if len(cells) > 1 else "",
+                        especificacion=cells[2].strip() if len(cells) > 2 else "",
+                        radicacion=cells[3].strip() if len(cells) > 3 else "",
+                        valor_acto=cells[4].strip() if len(cells) > 4 else "",
+                        personas=cells[5].strip() if len(cells) > 5 else "",
+                    )
+                )
 
         result.anotaciones = anotaciones
         result.total_anotaciones = len(anotaciones)
@@ -172,8 +176,6 @@ class CertificadoTradicionSource(BaseSource):
             for phrase in ["gravamen", "hipoteca", "embargo", "medida cautelar"]
         )
 
-        result.mensaje = (
-            f"Certificado {matricula}: {len(anotaciones)} anotacion(es) encontrada(s)"
-        )
+        result.mensaje = f"Certificado {matricula}: {len(anotaciones)} anotacion(es) encontrada(s)"
 
         return result

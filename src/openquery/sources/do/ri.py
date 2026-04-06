@@ -34,7 +34,7 @@ class RiSource(BaseSource):
         return SourceMeta(
             name="do.ri",
             display_name="Registro Inmobiliario (RD)",
-            description="Dominican Republic property registry: status and ownership by cadastral designation",
+            description="Dominican Republic property registry: status and ownership by cadastral designation",  # noqa: E501
             country="DO",
             url=RI_URL,
             supported_inputs=[DocumentType.CUSTOM],
@@ -57,6 +57,7 @@ class RiSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("do.ri", "cadastral", search_value)
 
         with browser.page(RI_URL) as page:

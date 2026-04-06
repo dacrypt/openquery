@@ -81,13 +81,15 @@ class SiniestralidadSource(BaseSource):
             for row in data:
                 fallecidos = int(row.get("fallecidos", 0) or 0)
                 total_fallecidos += fallecidos
-                sectores.append({
-                    "tramo": row.get("tramo", ""),
-                    "fallecidos": fallecidos,
-                    "latitud": row.get("latitud", ""),
-                    "longitud": row.get("longitud", ""),
-                    "pr": row.get("pr", ""),
-                })
+                sectores.append(
+                    {
+                        "tramo": row.get("tramo", ""),
+                        "fallecidos": fallecidos,
+                        "latitud": row.get("latitud", ""),
+                        "longitud": row.get("longitud", ""),
+                        "pr": row.get("pr", ""),
+                    }
+                )
 
             return SiniestralidadResult(
                 departamento=departamento or (data[0].get("departamento", "") if data else ""),

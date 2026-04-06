@@ -69,14 +69,22 @@ class DatosCatalogoSource(BaseSource):
             datasets = []
             for r in results:
                 res = r.get("resource", {})
-                datasets.append(DatosCatalogoEntry(
-                    nombre=res.get("name", ""),
-                    descripcion=(res.get("description", "") or "")[:200],
-                    entidad=r.get("classification", {}).get("domain_metadata", [{}])[0].get("value", "") if r.get("classification", {}).get("domain_metadata") else "",
-                    categoria=r.get("classification", {}).get("categories", [""])[0] if r.get("classification", {}).get("categories") else "",
-                    url=r.get("link", ""),
-                    recurso_id=res.get("id", ""),
-                ))
+                datasets.append(
+                    DatosCatalogoEntry(
+                        nombre=res.get("name", ""),
+                        descripcion=(res.get("description", "") or "")[:200],
+                        entidad=r.get("classification", {})
+                        .get("domain_metadata", [{}])[0]
+                        .get("value", "")
+                        if r.get("classification", {}).get("domain_metadata")
+                        else "",
+                        categoria=r.get("classification", {}).get("categories", [""])[0]
+                        if r.get("classification", {}).get("categories")
+                        else "",
+                        url=r.get("link", ""),
+                        recurso_id=res.get("id", ""),
+                    )
+                )
 
             return DatosCatalogoResult(
                 queried_at=datetime.now(),
@@ -86,7 +94,9 @@ class DatosCatalogoSource(BaseSource):
             )
 
         except httpx.HTTPStatusError as e:
-            raise SourceError("co.datos_catalogo", f"API returned HTTP {e.response.status_code}") from e
+            raise SourceError(
+                "co.datos_catalogo", f"API returned HTTP {e.response.status_code}"
+            ) from e
         except httpx.RequestError as e:
             raise SourceError("co.datos_catalogo", f"Request failed: {e}") from e
         except Exception as e:

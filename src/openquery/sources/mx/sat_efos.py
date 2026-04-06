@@ -23,7 +23,9 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-SAT_EFOS_URL = "http://omawww.sat.gob.mx/cifras_sat/Paginas/DatosAbiertos/contribuyentes_publicados.html"
+SAT_EFOS_URL = (
+    "http://omawww.sat.gob.mx/cifras_sat/Paginas/DatosAbiertos/contribuyentes_publicados.html"
+)
 
 
 @register
@@ -52,7 +54,9 @@ class SatEfosSource(BaseSource):
         nombre = input.extra.get("nombre", "")
         consulta = rfc or nombre or input.document_number
         if not consulta:
-            raise SourceError("mx.sat_efos", "RFC or nombre is required (pass via extra.rfc or extra.nombre)")
+            raise SourceError(
+                "mx.sat_efos", "RFC or nombre is required (pass via extra.rfc or extra.nombre)"
+            )
         return self._query(consulta, is_rfc=bool(rfc), audit=input.audit)
 
     def _query(self, consulta: str, is_rfc: bool = True, audit: bool = False) -> SatEfosResult:
@@ -63,6 +67,7 @@ class SatEfosSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("mx.sat_efos", "rfc" if is_rfc else "nombre", consulta)
 
         with browser.page(SAT_EFOS_URL) as page:

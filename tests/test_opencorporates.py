@@ -10,7 +10,6 @@ import pytest
 from openquery.exceptions import SourceError
 from openquery.sources.base import DocumentType, QueryInput
 
-
 # ===========================================================================
 # TestOpenCorporatesResult — model tests
 # ===========================================================================
@@ -28,7 +27,10 @@ class TestOpenCorporatesResult:
         assert isinstance(r.queried_at, datetime)
 
     def test_json_roundtrip(self):
-        from openquery.models.intl.opencorporates import IntlOpenCorporatesResult, OpenCorporatesCompany
+        from openquery.models.intl.opencorporates import (
+            IntlOpenCorporatesResult,
+            OpenCorporatesCompany,
+        )
 
         r = IntlOpenCorporatesResult(
             search_term="Apple",

@@ -64,6 +64,7 @@ class GtTseSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("gt.tse", "dpi", dpi)
 
         with browser.page(TSE_URL) as page:

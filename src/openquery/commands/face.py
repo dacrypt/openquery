@@ -12,7 +12,9 @@ console = Console()
 def face_verify_cmd(
     image1: str = typer.Argument(..., help="Path to the first face image (e.g., ID photo)"),
     image2: str = typer.Argument(..., help="Path to the second face image (e.g., selfie)"),
-    model: str = typer.Option("ArcFace", "--model", "-m", help="Face model: ArcFace, Facenet, VGG-Face"),
+    model: str = typer.Option(
+        "ArcFace", "--model", "-m", help="Face model: ArcFace, Facenet, VGG-Face"
+    ),
     output_json: bool = typer.Option(False, "--json", "-j", help="Output raw JSON"),
 ) -> None:
     """Verify identity by comparing two face images."""
@@ -40,7 +42,9 @@ def face_verify_cmd(
         return
 
     # Rich output
-    verified_str = "[bold green]MATCH[/bold green]" if result.verified else "[bold red]NO MATCH[/bold red]"
+    verified_str = (
+        "[bold green]MATCH[/bold green]" if result.verified else "[bold red]NO MATCH[/bold red]"
+    )
     liveness_str = "[green]REAL[/green]" if result.liveness else "[red]SPOOF[/red]"
 
     content = (

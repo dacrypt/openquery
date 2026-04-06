@@ -77,6 +77,7 @@ class TestConservadorSourceMeta:
 
     def test_meta_supported_inputs(self):
         from openquery.sources.base import DocumentType
+
         source = ConservadorSource()
         assert DocumentType.CUSTOM in source.meta().supported_inputs
 
@@ -93,7 +94,7 @@ class TestParseResult:
         mock_page.inner_text.return_value = ""
 
         mock_tables = []
-        for table_spec in (tables or []):
+        for table_spec in tables or []:
             mock_table = MagicMock()
             headers = table_spec.get("headers", [])
             rows = table_spec.get("rows", [])

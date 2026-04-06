@@ -33,9 +33,9 @@ PROCURADURIA_URL = "https://apps.procuraduria.gov.co/webcert/inicio.aspx?tpo=2"
 
 # Map our DocumentType to Procuraduria's dropdown values
 DOC_TYPE_MAP = {
-    DocumentType.CEDULA: "1",      # Cedula de Ciudadania
-    DocumentType.NIT: "4",         # NIT
-    DocumentType.PASSPORT: "6",    # Pasaporte
+    DocumentType.CEDULA: "1",  # Cedula de Ciudadania
+    DocumentType.NIT: "4",  # NIT
+    DocumentType.PASSPORT: "6",  # Pasaporte
 }
 
 
@@ -89,8 +89,10 @@ class ProcuraduriaSource(BaseSource):
         for attempt in range(3):
             try:
                 return self._query(
-                    input.document_type, input.document_number,
-                    nombre=nombre, audit=input.audit,
+                    input.document_type,
+                    input.document_number,
+                    nombre=nombre,
+                    audit=input.audit,
                 )
             except SourceError as e:
                 last_error = e
@@ -98,7 +100,10 @@ class ProcuraduriaSource(BaseSource):
         raise last_error  # type: ignore[misc]
 
     def _query(
-        self, doc_type: DocumentType, doc_number: str, nombre: str = "",
+        self,
+        doc_type: DocumentType,
+        doc_number: str,
+        nombre: str = "",
         audit: bool = False,
     ) -> ProcuraduriaResult:
         from openquery.core.browser import BrowserManager
@@ -108,6 +113,7 @@ class ProcuraduriaSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.procuraduria", str(doc_type), doc_number)
 
         with browser.page(PROCURADURIA_URL) as page:
@@ -130,7 +136,9 @@ class ProcuraduriaSource(BaseSource):
                 # Solve captcha (math, name-based, document-digits, or QA)
                 captcha_text = page.inner_text("#lblPregunta")
                 answer = self._solve_captcha(
-                    captcha_text, nombre=nombre, doc_number=doc_number,
+                    captcha_text,
+                    nombre=nombre,
+                    doc_number=doc_number,
                 )
                 page.fill("#txtRespuestaPregunta", str(answer))
                 logger.info("Captcha: '%s' -> '%s'", captcha_text, answer)
@@ -161,7 +169,9 @@ class ProcuraduriaSource(BaseSource):
 
     @staticmethod
     def _solve_captcha(
-        text: str, nombre: str = "", doc_number: str = "",
+        text: str,
+        nombre: str = "",
+        doc_number: str = "",
     ) -> str:
         """Solve Procuraduria captcha using pattern matching or LLM fallback.
 
@@ -188,12 +198,18 @@ class ProcuraduriaSource(BaseSource):
         # "Last N digits of document" captcha — extract from doc_number
         # Pattern: "los dos ultimos digitos" or "los 2 últimos dígitos"
         digits_match = re.search(
-            r"(\w+)\s+(?:ultimos|últimos)\s+d[ií]gitos", text.lower(),
+            r"(\w+)\s+(?:ultimos|últimos)\s+d[ií]gitos",
+            text.lower(),
         )
         if digits_match and doc_number:
             word = digits_match.group(1)
             digit_count_map = {
-                "dos": 2, "tres": 3, "cuatro": 4, "2": 2, "3": 3, "4": 4,
+                "dos": 2,
+                "tres": 3,
+                "cuatro": 4,
+                "2": 2,
+                "3": 3,
+                "4": 4,
             }
             n = digit_count_map.get(word, 2)
             return doc_number.strip()[-n:]
@@ -208,7 +224,10 @@ class ProcuraduriaSource(BaseSource):
         return _solve_with_qa_chain(text)
 
     def _parse_result(
-        self, page, doc_type: DocumentType, doc_number: str,
+        self,
+        page,
+        doc_type: DocumentType,
+        doc_number: str,
     ) -> ProcuraduriaResult:
         """Parse the result page after submitting the form."""
         from datetime import datetime
@@ -216,30 +235,42 @@ class ProcuraduriaSource(BaseSource):
         body_text = page.inner_text("body")
 
         # Check for error messages (captcha wrong, etc.)
-        is_error = any(phrase in body_text.lower() for phrase in [
-            "no corresponde con lo que espera",
-            "datos incorrectos",
-            "intente nuevamente",
-        ])
+        is_error = any(
+            phrase in body_text.lower()
+            for phrase in [
+                "no corresponde con lo que espera",
+                "datos incorrectos",
+                "intente nuevamente",
+            ]
+        )
         if is_error:
             raise SourceError("co.procuraduria", "Captcha or form validation failed")
 
         # Check for "no tiene antecedentes" message
-        no_records = any(phrase in body_text.lower() for phrase in [
-            "no tiene antecedentes",
-            "no registra antecedentes",
-            "no aparece registrado",
-            "no se encontraron registros",
-        ])
+        no_records = any(
+            phrase in body_text.lower()
+            for phrase in [
+                "no tiene antecedentes",
+                "no registra antecedentes",
+                "no aparece registrado",
+                "no se encontraron registros",
+            ]
+        )
 
         # Check for actual records found — be specific to avoid false positives
         # from the page's static text about what antecedentes are
-        has_records = any(phrase in body_text.lower() for phrase in [
-            "registra sanciones",
-            "registra inhabilidades",
-            "se encontraron los siguientes",
-            "presenta anotaciones",
-        ]) and not no_records
+        has_records = (
+            any(
+                phrase in body_text.lower()
+                for phrase in [
+                    "registra sanciones",
+                    "registra inhabilidades",
+                    "se encontraron los siguientes",
+                    "presenta anotaciones",
+                ]
+            )
+            and not no_records
+        )
 
         # Try to get the certificate PDF URL
         cert_url = ""

@@ -72,6 +72,7 @@ class IvssSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("ve.ivss", "cedula", cedula)
 
         with browser.page(IVSS_URL) as page:

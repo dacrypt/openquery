@@ -59,6 +59,7 @@ class InpecSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.inpec", "cedula", cedula)
 
         with browser.page(INPEC_URL) as page:
@@ -118,18 +119,24 @@ class InpecSource(BaseSource):
         body_text = page.inner_text("body")
         body_lower = body_text.lower()
 
-        esta_recluido = any(phrase in body_lower for phrase in [
-            "privado de la libertad",
-            "recluido",
-            "interno",
-            "se encuentra",
-        ])
+        esta_recluido = any(
+            phrase in body_lower
+            for phrase in [
+                "privado de la libertad",
+                "recluido",
+                "interno",
+                "se encuentra",
+            ]
+        )
 
-        no_recluido = any(phrase in body_lower for phrase in [
-            "no se encuentra",
-            "no registra",
-            "sin resultados",
-        ])
+        no_recluido = any(
+            phrase in body_lower
+            for phrase in [
+                "no se encuentra",
+                "no registra",
+                "sin resultados",
+            ]
+        )
 
         if no_recluido:
             esta_recluido = False

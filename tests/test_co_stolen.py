@@ -5,8 +5,8 @@ from __future__ import annotations
 from unittest.mock import MagicMock
 
 from openquery.models.us.co_stolen import CoStolenResult
-from openquery.sources.us.co_stolen import CoStolenSource
 from openquery.sources.base import DocumentType, QueryInput
+from openquery.sources.us.co_stolen import CoStolenSource
 
 
 class TestCoStolenResult:
@@ -94,16 +94,20 @@ class TestCoStolenSourceMeta:
         assert source._timeout == 60.0
 
     def test_query_rejects_wrong_type(self):
-        from openquery.exceptions import SourceError
         import pytest
+
+        from openquery.exceptions import SourceError
+
         source = CoStolenSource()
         inp = QueryInput(document_type=DocumentType.CEDULA, document_number="123")
         with pytest.raises(SourceError):
             source.query(inp)
 
     def test_query_requires_year(self):
-        from openquery.exceptions import SourceError
         import pytest
+
+        from openquery.exceptions import SourceError
+
         source = CoStolenSource()
         inp = QueryInput(document_type=DocumentType.VIN, document_number="1HGCM82633A004352")
         with pytest.raises(SourceError, match="year"):

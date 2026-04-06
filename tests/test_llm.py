@@ -20,6 +20,7 @@ from openquery.core.llm import (
 
 # -- Test helpers --
 
+
 class FailingQA(QASolver):
     """Always fails."""
 
@@ -38,6 +39,7 @@ class FixedQA(QASolver):
 
 
 # -- Unit tests --
+
 
 class TestCleanAnswer:
     def test_basic(self):

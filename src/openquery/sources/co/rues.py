@@ -55,8 +55,10 @@ class RuesSource(BaseSource):
             raise SourceError("co.rues", "Provide a NIT/cedula or name (extra.name)")
 
         query_term = search_term if search_term else name
-        tipo = "nit" if input.document_type == DocumentType.NIT else (
-            "cedula" if input.document_type == DocumentType.CEDULA else "nombre"
+        tipo = (
+            "nit"
+            if input.document_type == DocumentType.NIT
+            else ("cedula" if input.document_type == DocumentType.CEDULA else "nombre")
         )
         return self._query(query_term, tipo, audit=input.audit)
 
@@ -68,6 +70,7 @@ class RuesSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.rues", tipo, query)
 
         with browser.page(RUES_URL) as page:
@@ -102,6 +105,7 @@ class RuesSource(BaseSource):
 
                 # Solve reCAPTCHA if present
                 from openquery.core.captcha_middleware import solve_page_captchas
+
                 solve_page_captchas(page)
 
                 if collector:
@@ -150,12 +154,14 @@ class RuesSource(BaseSource):
                 continue
             cells = text.split("\t")
             if len(cells) >= 3:
-                establecimientos.append(RuesEstablecimiento(
-                    nombre=cells[0].strip() if cells else "",
-                    matricula=cells[1].strip() if len(cells) > 1 else "",
-                    estado=cells[2].strip() if len(cells) > 2 else "",
-                    municipio=cells[3].strip() if len(cells) > 3 else "",
-                ))
+                establecimientos.append(
+                    RuesEstablecimiento(
+                        nombre=cells[0].strip() if cells else "",
+                        matricula=cells[1].strip() if len(cells) > 1 else "",
+                        estado=cells[2].strip() if len(cells) > 2 else "",
+                        municipio=cells[3].strip() if len(cells) > 3 else "",
+                    )
+                )
 
         result.establecimientos = establecimientos
         result.total_establecimientos = len(establecimientos)

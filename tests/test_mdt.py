@@ -58,6 +58,7 @@ class TestMdtSourceMeta:
 
     def test_meta_supported_inputs(self):
         from openquery.sources.base import DocumentType
+
         source = MdtSource()
         meta = source.meta()
         assert DocumentType.CEDULA in meta.supported_inputs
@@ -96,41 +97,26 @@ class TestParseResult:
 
     def test_parse_employer_name(self):
         source = MdtSource()
-        page = self._make_page(
-            "Consulta Laboral\n"
-            "Empleador: EMPRESA ABC S.A.\n"
-            "Estado: ACTIVO\n"
-        )
+        page = self._make_page("Consulta Laboral\nEmpleador: EMPRESA ABC S.A.\nEstado: ACTIVO\n")
         result = source._parse_result(page, "1234567890")
         assert result.search_value == "1234567890"
         assert result.employer_name == "EMPRESA ABC S.A."
 
     def test_parse_labor_status(self):
         source = MdtSource()
-        page = self._make_page(
-            "Empleador: EMPRESA XYZ\n"
-            "Estado: ACTIVO\n"
-            "Contrato: INDEFINIDO\n"
-        )
+        page = self._make_page("Empleador: EMPRESA XYZ\nEstado: ACTIVO\nContrato: INDEFINIDO\n")
         result = source._parse_result(page, "1234567890")
         assert result.labor_status == "ACTIVO"
 
     def test_parse_contract_type(self):
         source = MdtSource()
-        page = self._make_page(
-            "Empleador: EMPRESA XYZ\n"
-            "Contrato: PLAZO FIJO\n"
-        )
+        page = self._make_page("Empleador: EMPRESA XYZ\nContrato: PLAZO FIJO\n")
         result = source._parse_result(page, "1234567890")
         assert result.contract_type == "PLAZO FIJO"
 
     def test_parse_details(self):
         source = MdtSource()
-        page = self._make_page(
-            "Empleador: EMPRESA XYZ\n"
-            "Cargo: ANALISTA\n"
-            "Salario: 500.00\n"
-        )
+        page = self._make_page("Empleador: EMPRESA XYZ\nCargo: ANALISTA\nSalario: 500.00\n")
         result = source._parse_result(page, "1234567890")
         assert "Cargo" in result.details
         assert result.details["Cargo"] == "ANALISTA"

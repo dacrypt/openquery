@@ -34,7 +34,7 @@ class DoRncSource(BaseSource):
         return SourceMeta(
             name="do.rnc",
             display_name="DGII — Consulta RNC",
-            description="Dominican Republic tax registry: taxpayer name, status, economic activity (DGII)",
+            description="Dominican Republic tax registry: taxpayer name, status, economic activity (DGII)",  # noqa: E501
             country="DO",
             url=DGII_URL,
             supported_inputs=[DocumentType.CEDULA, DocumentType.NIT, DocumentType.CUSTOM],
@@ -57,6 +57,7 @@ class DoRncSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("do.rnc", "rnc", rnc)
 
         with browser.page(DGII_URL) as page:
@@ -69,7 +70,7 @@ class DoRncSource(BaseSource):
 
                 # Fill RNC/cedula
                 rnc_input = page.query_selector(
-                    '#ctl00_SPWebPartManager1_g_baborrnc_txtRNCCedula, '
+                    "#ctl00_SPWebPartManager1_g_baborrnc_txtRNCCedula, "
                     'input[id*="txtRNC"], input[id*="txtCedula"], '
                     'input[type="text"]'
                 )
@@ -83,7 +84,7 @@ class DoRncSource(BaseSource):
                     collector.screenshot(page, "form_filled")
 
                 submit = page.query_selector(
-                    '#ctl00_SPWebPartManager1_g_baborrnc_btnBuscar, '
+                    "#ctl00_SPWebPartManager1_g_baborrnc_btnBuscar, "
                     'input[id*="btnBuscar"], '
                     'button[type="submit"], input[type="submit"]'
                 )

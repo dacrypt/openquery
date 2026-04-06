@@ -49,10 +49,7 @@ class BanxicoSource(BaseSource):
         )
 
     def query(self, input: QueryInput) -> BaseModel:
-        series_id = (
-            input.extra.get("series_id", "")
-            or input.document_number
-        )
+        series_id = input.extra.get("series_id", "") or input.document_number
         if not series_id:
             raise SourceError(
                 "mx.banxico",

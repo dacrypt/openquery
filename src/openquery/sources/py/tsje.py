@@ -58,6 +58,7 @@ class PyTsjeSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("py.tsje", "cedula", ci)
 
         with browser.page(TSJE_URL) as page:

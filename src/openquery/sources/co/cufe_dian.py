@@ -52,7 +52,7 @@ class CufeDianSource(BaseSource):
         if input.document_type != DocumentType.CUSTOM:
             raise SourceError(
                 "co.cufe_dian",
-                f"Unsupported document type: {input.document_type}. Use CUSTOM with the CUFE as document_number.",
+                f"Unsupported document type: {input.document_type}. Use CUSTOM with the CUFE as document_number.",  # noqa: E501
             )
         cufe = input.document_number.strip()
         if not cufe:
@@ -67,6 +67,7 @@ class CufeDianSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.cufe_dian", "cufe", cufe)
 
         with browser.page(CUFE_URL) as page:
@@ -159,9 +160,17 @@ class CufeDianSource(BaseSource):
                 if label in lower and ":" in stripped:
                     value = stripped.split(":", 1)[1].strip()
                     # For emisor/receptor, avoid overwriting NIT fields
-                    if field == "emisor_nombre" and result.emisor_nit and value == result.emisor_nit:
+                    if (
+                        field == "emisor_nombre"
+                        and result.emisor_nit
+                        and value == result.emisor_nit
+                    ):
                         continue
-                    if field == "receptor_nombre" and result.receptor_nit and value == result.receptor_nit:
+                    if (
+                        field == "receptor_nombre"
+                        and result.receptor_nit
+                        and value == result.receptor_nit
+                    ):
                         continue
                     setattr(result, field, value)
                     break
@@ -169,7 +178,9 @@ class CufeDianSource(BaseSource):
         # Determine validity
         body_lower = body_text.lower()
         if result.estado:
-            result.es_valida = "aprobad" in result.estado.lower() or "valid" in result.estado.lower()
+            result.es_valida = (
+                "aprobad" in result.estado.lower() or "valid" in result.estado.lower()
+            )
         if result.numero_factura:
             result.mensaje = f"Factura {result.numero_factura} - {result.estado}"
         elif "no se encontr" in body_lower or "no existe" in body_lower:

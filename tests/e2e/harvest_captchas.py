@@ -50,7 +50,7 @@ def harvest(count: int = 20) -> None:
                 image_data = result.get("imagen", "")
 
                 if not captcha_id or not image_data:
-                    print(f"  [{i+1}/{count}] SKIP — no id or image")
+                    print(f"  [{i + 1}/{count}] SKIP — no id or image")
                     errors += 1
                     continue
 
@@ -60,7 +60,7 @@ def harvest(count: int = 20) -> None:
                 image_bytes = base64.b64decode(image_data)
 
                 if len(image_bytes) < 100:
-                    print(f"  [{i+1}/{count}] SKIP — image too small ({len(image_bytes)}b)")
+                    print(f"  [{i + 1}/{count}] SKIP — image too small ({len(image_bytes)}b)")
                     errors += 1
                     continue
 
@@ -70,6 +70,7 @@ def harvest(count: int = 20) -> None:
 
                 # Also try to solve it
                 from openquery.core.captcha import OCRSolver
+
                 solver = OCRSolver(max_chars=5)
                 try:
                     text = solver.solve(image_bytes)
@@ -78,23 +79,28 @@ def harvest(count: int = 20) -> None:
                     text = ""
                     status = f"OCR FAIL: {e}"
 
-                print(f"  [{i+1}/{count}] {captcha_id[:12]}... -> {status}")
+                print(f"  [{i + 1}/{count}] {captcha_id[:12]}... -> {status}")
                 harvested += 1
 
                 # Save metadata
                 meta_path = FIXTURES_DIR / f"{captcha_id}.json"
-                meta_path.write_text(json.dumps({
-                    "id": captcha_id,
-                    "ocr_result": text,
-                    "ground_truth": "",  # Fill manually after visual inspection
-                    "size_bytes": len(image_bytes),
-                }, indent=2))
+                meta_path.write_text(
+                    json.dumps(
+                        {
+                            "id": captcha_id,
+                            "ocr_result": text,
+                            "ground_truth": "",  # Fill manually after visual inspection
+                            "size_bytes": len(image_bytes),
+                        },
+                        indent=2,
+                    )
+                )
 
                 # Small delay to be polite
                 page.wait_for_timeout(500)
 
             except Exception as e:
-                print(f"  [{i+1}/{count}] ERROR: {e}")
+                print(f"  [{i + 1}/{count}] ERROR: {e}")
                 errors += 1
 
         browser.close()

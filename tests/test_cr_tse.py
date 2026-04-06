@@ -51,6 +51,7 @@ class TestCrTseResult:
 class TestCrTseSourceMeta:
     def test_meta(self):
         from openquery.sources.cr.tse import CrTseSource
+
         meta = CrTseSource().meta()
         assert meta.name == "cr.tse"
         assert meta.country == "CR"
@@ -61,6 +62,7 @@ class TestCrTseSourceMeta:
 
     def test_missing_cedula_raises(self):
         from openquery.sources.cr.tse import CrTseSource
+
         src = CrTseSource()
         with pytest.raises(SourceError, match="Cédula is required"):
             src.query(QueryInput(document_type=DocumentType.CEDULA, document_number=""))
@@ -71,6 +73,7 @@ class TestCrTseParseResult:
 
     def _parse(self, body_text: str, cedula: str = "123456789") -> CrTseResult:
         from openquery.sources.cr.tse import CrTseSource
+
         page = MagicMock()
         page.inner_text.return_value = body_text
         src = CrTseSource()

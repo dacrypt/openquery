@@ -39,7 +39,7 @@ class SeguridadSocialSource(BaseSource):
         return SourceMeta(
             name="co.seguridad_social",
             display_name="PILA — Seguridad Social Integral",
-            description="Colombian integrated social security status (health, pension, labor risks)",
+            description="Colombian integrated social security status (health, pension, labor risks)",  # noqa: E501
             country="CO",
             url=SEGURIDAD_SOCIAL_URL,
             supported_inputs=[DocumentType.CEDULA, DocumentType.NIT],
@@ -58,9 +58,7 @@ class SeguridadSocialSource(BaseSource):
         tipo = "cedula" if input.document_type == DocumentType.CEDULA else "nit"
         return self._query(input.document_number, tipo, audit=input.audit)
 
-    def _query(
-        self, documento: str, tipo: str, audit: bool = False
-    ) -> SeguridadSocialResult:
+    def _query(self, documento: str, tipo: str, audit: bool = False) -> SeguridadSocialResult:
         from openquery.core.browser import BrowserManager
 
         browser = BrowserManager(headless=self._headless, timeout=self._timeout)
@@ -68,6 +66,7 @@ class SeguridadSocialSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.seguridad_social", tipo, documento)
 
         with browser.page(SEGURIDAD_SOCIAL_URL) as page:
@@ -139,13 +138,9 @@ class SeguridadSocialSource(BaseSource):
             except SourceError:
                 raise
             except Exception as e:
-                raise SourceError(
-                    "co.seguridad_social", f"Query failed: {e}"
-                ) from e
+                raise SourceError("co.seguridad_social", f"Query failed: {e}") from e
 
-    def _parse_result(
-        self, page, documento: str, tipo: str
-    ) -> SeguridadSocialResult:
+    def _parse_result(self, page, documento: str, tipo: str) -> SeguridadSocialResult:
         from datetime import datetime
 
         body_text = page.inner_text("body")
@@ -181,8 +176,7 @@ class SeguridadSocialSource(BaseSource):
         ]
 
         rows = page.query_selector_all(
-            "table tbody tr, .afiliacion-row, .resultado-item, "
-            ".card, .panel-body"
+            "table tbody tr, .afiliacion-row, .resultado-item, .card, .panel-body"
         )
 
         for row in rows:
@@ -197,21 +191,28 @@ class SeguridadSocialSource(BaseSource):
                     for part in parts:
                         part_stripped = part.strip()
                         part_lower = part_stripped.lower()
-                        if any(kw in part_lower for kw in ["administradora", "entidad", "eps", "afp", "arl"]):
+                        if any(
+                            kw in part_lower
+                            for kw in ["administradora", "entidad", "eps", "afp", "arl"]
+                        ):
                             if ":" in part_stripped:
                                 admin = part_stripped.split(":", 1)[1].strip()
                             elif not admin:
                                 admin = part_stripped
                         elif "estado" in part_lower and ":" in part_stripped:
                             estado = part_stripped.split(":", 1)[1].strip()
-                        elif ("régimen" in part_lower or "regimen" in part_lower) and ":" in part_stripped:
+                        elif (
+                            "régimen" in part_lower or "regimen" in part_lower
+                        ) and ":" in part_stripped:
                             regimen = part_stripped.split(":", 1)[1].strip()
-                    afiliaciones.append(AfiliacionSS(
-                        tipo=tipo_ss,
-                        administradora=admin,
-                        estado=estado,
-                        regimen=regimen,
-                    ))
+                    afiliaciones.append(
+                        AfiliacionSS(
+                            tipo=tipo_ss,
+                            administradora=admin,
+                            estado=estado,
+                            regimen=regimen,
+                        )
+                    )
                     break
 
         # Fallback: parse from key-value lines if no table rows matched
@@ -223,12 +224,15 @@ class SeguridadSocialSource(BaseSource):
                         afiliaciones.append(AfiliacionSS(tipo=tipo_ss))
                         break
 
-        no_records = any(phrase in body_lower for phrase in [
-            "no se encontr",
-            "sin resultados",
-            "no registra",
-            "no hay información",
-        ])
+        no_records = any(
+            phrase in body_lower
+            for phrase in [
+                "no se encontr",
+                "sin resultados",
+                "no registra",
+                "no hay información",
+            ]
+        )
 
         mensaje = ""
         if no_records:

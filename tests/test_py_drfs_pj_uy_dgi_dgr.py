@@ -14,9 +14,11 @@ from openquery.sources.base import DocumentType, QueryInput
 # PARAGUAY — py.pj
 # ===========================================================================
 
+
 class TestPyPjResult:
     def test_default_values(self):
         from openquery.models.py.pj import PyPjResult
+
         r = PyPjResult(case_number="123-2024")
         assert r.case_number == "123-2024"
         assert r.status == ""
@@ -28,6 +30,7 @@ class TestPyPjResult:
 
     def test_roundtrip(self):
         from openquery.models.py.pj import PyPjResult
+
         r = PyPjResult(
             case_number="123-2024",
             status="EN TRAMITE",
@@ -44,6 +47,7 @@ class TestPyPjResult:
 
     def test_audit_excluded_from_dump(self):
         from openquery.models.py.pj import PyPjResult
+
         r = PyPjResult(case_number="123-2024")
         r.audit = b"pdf_bytes"
         data = r.model_dump()
@@ -53,6 +57,7 @@ class TestPyPjResult:
 class TestPyPjSourceMeta:
     def test_meta(self):
         from openquery.sources.py.pj import PyPjSource
+
         meta = PyPjSource().meta()
         assert meta.name == "py.pj"
         assert meta.country == "PY"
@@ -62,6 +67,7 @@ class TestPyPjSourceMeta:
 
     def test_query_requires_case_number(self):
         from openquery.sources.py.pj import PyPjSource
+
         src = PyPjSource()
         with pytest.raises(SourceError, match="Case number is required"):
             src.query(QueryInput(document_type=DocumentType.CUSTOM, document_number="", extra={}))
@@ -70,14 +76,17 @@ class TestPyPjSourceMeta:
         from unittest.mock import MagicMock, patch
 
         from openquery.sources.py.pj import PyPjSource
+
         src = PyPjSource()
         mock_result = MagicMock()
         with patch.object(src, "_query", return_value=mock_result) as mock_q:
-            src.query(QueryInput(
-                document_type=DocumentType.CUSTOM,
-                document_number="",
-                extra={"case_number": "456-2024"},
-            ))
+            src.query(
+                QueryInput(
+                    document_type=DocumentType.CUSTOM,
+                    document_number="",
+                    extra={"case_number": "456-2024"},
+                )
+            )
             mock_q.assert_called_once_with("456-2024", audit=False)
 
 
@@ -85,9 +94,11 @@ class TestPyPjSourceMeta:
 # PARAGUAY — py.drfs
 # ===========================================================================
 
+
 class TestPyDrfsResult:
     def test_default_values(self):
         from openquery.models.py.drfs import PyDrfsResult
+
         r = PyDrfsResult(search_term="EMPRESA SA")
         assert r.search_term == "EMPRESA SA"
         assert r.company_name == ""
@@ -99,6 +110,7 @@ class TestPyDrfsResult:
 
     def test_roundtrip(self):
         from openquery.models.py.drfs import PyDrfsResult
+
         r = PyDrfsResult(
             search_term="EMPRESA SA",
             company_name="EMPRESA SOCIEDAD ANONIMA",
@@ -115,6 +127,7 @@ class TestPyDrfsResult:
 
     def test_audit_excluded_from_dump(self):
         from openquery.models.py.drfs import PyDrfsResult
+
         r = PyDrfsResult(search_term="EMPRESA SA")
         r.audit = b"pdf_bytes"
         data = r.model_dump()
@@ -124,6 +137,7 @@ class TestPyDrfsResult:
 class TestPyDrfsSourceMeta:
     def test_meta(self):
         from openquery.sources.py.drfs import PyDrfsSource
+
         meta = PyDrfsSource().meta()
         assert meta.name == "py.drfs"
         assert meta.country == "PY"
@@ -133,6 +147,7 @@ class TestPyDrfsSourceMeta:
 
     def test_query_requires_search_term(self):
         from openquery.sources.py.drfs import PyDrfsSource
+
         src = PyDrfsSource()
         with pytest.raises(SourceError, match="Company name or registration number is required"):
             src.query(QueryInput(document_type=DocumentType.CUSTOM, document_number="", extra={}))
@@ -141,14 +156,17 @@ class TestPyDrfsSourceMeta:
         from unittest.mock import MagicMock, patch
 
         from openquery.sources.py.drfs import PyDrfsSource
+
         src = PyDrfsSource()
         mock_result = MagicMock()
         with patch.object(src, "_query", return_value=mock_result) as mock_q:
-            src.query(QueryInput(
-                document_type=DocumentType.CUSTOM,
-                document_number="",
-                extra={"company_name": "EMPRESA SA"},
-            ))
+            src.query(
+                QueryInput(
+                    document_type=DocumentType.CUSTOM,
+                    document_number="",
+                    extra={"company_name": "EMPRESA SA"},
+                )
+            )
             mock_q.assert_called_once_with("EMPRESA SA", audit=False)
 
 
@@ -156,9 +174,11 @@ class TestPyDrfsSourceMeta:
 # URUGUAY — uy.dgi
 # ===========================================================================
 
+
 class TestUyDgiResult:
     def test_default_values(self):
         from openquery.models.uy.dgi import UyDgiResult
+
         r = UyDgiResult(rut="210000000001")
         assert r.rut == "210000000001"
         assert r.contributor_status == ""
@@ -169,6 +189,7 @@ class TestUyDgiResult:
 
     def test_roundtrip(self):
         from openquery.models.uy.dgi import UyDgiResult
+
         r = UyDgiResult(
             rut="210000000001",
             contributor_status="ACTIVO",
@@ -183,6 +204,7 @@ class TestUyDgiResult:
 
     def test_audit_excluded_from_dump(self):
         from openquery.models.uy.dgi import UyDgiResult
+
         r = UyDgiResult(rut="210000000001")
         r.audit = b"pdf_bytes"
         data = r.model_dump()
@@ -192,6 +214,7 @@ class TestUyDgiResult:
 class TestUyDgiSourceMeta:
     def test_meta(self):
         from openquery.sources.uy.dgi import UyDgiSource
+
         meta = UyDgiSource().meta()
         assert meta.name == "uy.dgi"
         assert meta.country == "UY"
@@ -201,6 +224,7 @@ class TestUyDgiSourceMeta:
 
     def test_query_requires_rut(self):
         from openquery.sources.uy.dgi import UyDgiSource
+
         src = UyDgiSource()
         with pytest.raises(SourceError, match="RUT"):
             src.query(QueryInput(document_type=DocumentType.CUSTOM, document_number="", extra={}))
@@ -209,14 +233,17 @@ class TestUyDgiSourceMeta:
         from unittest.mock import MagicMock, patch
 
         from openquery.sources.uy.dgi import UyDgiSource
+
         src = UyDgiSource()
         mock_result = MagicMock()
         with patch.object(src, "_query", return_value=mock_result) as mock_q:
-            src.query(QueryInput(
-                document_type=DocumentType.CUSTOM,
-                document_number="",
-                extra={"rut": "210000000001"},
-            ))
+            src.query(
+                QueryInput(
+                    document_type=DocumentType.CUSTOM,
+                    document_number="",
+                    extra={"rut": "210000000001"},
+                )
+            )
             mock_q.assert_called_once_with("210000000001", audit=False)
 
 
@@ -224,9 +251,11 @@ class TestUyDgiSourceMeta:
 # URUGUAY — uy.dgr
 # ===========================================================================
 
+
 class TestUyDgrResult:
     def test_default_values(self):
         from openquery.models.uy.dgr import UyDgrResult
+
         r = UyDgrResult(search_term="EMPRESA SA")
         assert r.search_term == "EMPRESA SA"
         assert r.company_name == ""
@@ -237,6 +266,7 @@ class TestUyDgrResult:
 
     def test_roundtrip(self):
         from openquery.models.uy.dgr import UyDgrResult
+
         r = UyDgrResult(
             search_term="EMPRESA SA",
             company_name="EMPRESA SOCIEDAD ANONIMA",
@@ -251,6 +281,7 @@ class TestUyDgrResult:
 
     def test_audit_excluded_from_dump(self):
         from openquery.models.uy.dgr import UyDgrResult
+
         r = UyDgrResult(search_term="EMPRESA SA")
         r.audit = b"pdf_bytes"
         data = r.model_dump()
@@ -260,6 +291,7 @@ class TestUyDgrResult:
 class TestUyDgrSourceMeta:
     def test_meta(self):
         from openquery.sources.uy.dgr import UyDgrSource
+
         meta = UyDgrSource().meta()
         assert meta.name == "uy.dgr"
         assert meta.country == "UY"
@@ -269,6 +301,7 @@ class TestUyDgrSourceMeta:
 
     def test_query_requires_search_term(self):
         from openquery.sources.uy.dgr import UyDgrSource
+
         src = UyDgrSource()
         with pytest.raises(SourceError, match="Company name or registration number is required"):
             src.query(QueryInput(document_type=DocumentType.CUSTOM, document_number="", extra={}))
@@ -277,14 +310,17 @@ class TestUyDgrSourceMeta:
         from unittest.mock import MagicMock, patch
 
         from openquery.sources.uy.dgr import UyDgrSource
+
         src = UyDgrSource()
         mock_result = MagicMock()
         with patch.object(src, "_query", return_value=mock_result) as mock_q:
-            src.query(QueryInput(
-                document_type=DocumentType.CUSTOM,
-                document_number="",
-                extra={"company_name": "EMPRESA SA"},
-            ))
+            src.query(
+                QueryInput(
+                    document_type=DocumentType.CUSTOM,
+                    document_number="",
+                    extra={"company_name": "EMPRESA SA"},
+                )
+            )
             mock_q.assert_called_once_with("EMPRESA SA", audit=False)
 
 
@@ -292,9 +328,11 @@ class TestUyDgrSourceMeta:
 # Registry integration
 # ===========================================================================
 
+
 class TestNewSourcesRegistry:
     def test_all_four_registered(self):
         from openquery.sources import list_sources
+
         names = [s.meta().name for s in list_sources()]
         assert "py.pj" in names
         assert "py.drfs" in names

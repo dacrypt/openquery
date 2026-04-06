@@ -68,6 +68,7 @@ class SunarpVehicularSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("pe.sunarp_vehicular", "placa", placa)
 
         with browser.page(SUNARP_URL, wait_until="commit") as page:
@@ -79,13 +80,13 @@ class SunarpVehicularSource(BaseSource):
                 page.wait_for_load_state("domcontentloaded", timeout=45000)
                 # Wait for Angular to finish rendering the form
                 page.wait_for_selector(
-                    "input[placeholder='ABC123'], input[type='text'], #txtPlaca, input[name*='placa']",
+                    "input[placeholder='ABC123'], input[type='text'], #txtPlaca, input[name*='placa']",  # noqa: E501
                     timeout=30000,
                 )
                 page.wait_for_timeout(2000)
 
                 plate_input = page.query_selector(
-                    "input[placeholder='ABC123'], #txtPlaca, input[name*='placa'], input[type='text']"
+                    "input[placeholder='ABC123'], #txtPlaca, input[name*='placa'], input[type='text']"  # noqa: E501
                 )
                 if plate_input:
                     plate_input.fill(placa)
@@ -122,18 +123,14 @@ class SunarpVehicularSource(BaseSource):
                 result = self._parse_result(page, placa)
 
                 if collector:
-                    result.audit = collector.generate_pdf(
-                        page, result.model_dump_json()
-                    )
+                    result.audit = collector.generate_pdf(page, result.model_dump_json())
 
                 return result
 
             except SourceError:
                 raise
             except Exception as e:
-                raise SourceError(
-                    "pe.sunarp_vehicular", f"Query failed: {e}"
-                ) from e
+                raise SourceError("pe.sunarp_vehicular", f"Query failed: {e}") from e
 
     def _parse_result(self, page, placa: str) -> SunarpVehicularResult:
         """Parse the SUNARP vehicular result page."""

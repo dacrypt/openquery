@@ -13,9 +13,11 @@ from openquery.sources.base import DocumentType, QueryInput
 # Model tests
 # ===========================================================================
 
+
 class TestNhtsaSafetyRatingsResult:
     def test_default_values(self):
         from openquery.models.us.nhtsa_safety_ratings import NhtsaSafetyRatingsResult
+
         r = NhtsaSafetyRatingsResult()
         assert r.make == ""
         assert r.model == ""
@@ -25,6 +27,7 @@ class TestNhtsaSafetyRatingsResult:
 
     def test_json_roundtrip(self):
         from openquery.models.us.nhtsa_safety_ratings import NhtsaSafetyRatingsResult
+
         r = NhtsaSafetyRatingsResult(make="Toyota", model="Camry", model_year="2024")
         data = r.model_dump_json()
         r2 = NhtsaSafetyRatingsResult.model_validate_json(data)
@@ -34,6 +37,7 @@ class TestNhtsaSafetyRatingsResult:
 
     def test_audit_excluded_from_json(self):
         from openquery.models.us.nhtsa_safety_ratings import NhtsaSafetyRatingsResult
+
         r = NhtsaSafetyRatingsResult(audit={"screenshot": "base64data"})
         data = r.model_dump_json()
         assert "audit" not in data
@@ -44,6 +48,7 @@ class TestNhtsaSafetyRatingsResult:
             NhtsaSafetyRating,
             NhtsaSafetyRatingsResult,
         )
+
         rating = NhtsaSafetyRating(vehicle_id=19427, overall_rating="5")
         r = NhtsaSafetyRatingsResult(make="Toyota", ratings=[rating])
         assert len(r.ratings) == 1
@@ -54,6 +59,7 @@ class TestNhtsaSafetyRatingsResult:
 class TestNhtsaSafetyRating:
     def test_default_values(self):
         from openquery.models.us.nhtsa_safety_ratings import NhtsaSafetyRating
+
         r = NhtsaSafetyRating()
         assert r.vehicle_id == 0
         assert r.vehicle_description == ""
@@ -65,6 +71,7 @@ class TestNhtsaSafetyRating:
 
     def test_json_roundtrip(self):
         from openquery.models.us.nhtsa_safety_ratings import NhtsaSafetyRating
+
         r = NhtsaSafetyRating(
             vehicle_id=19427,
             vehicle_description="2024 Toyota CAMRY 4 DR AWD",
@@ -84,30 +91,36 @@ class TestNhtsaSafetyRating:
 # Source meta tests
 # ===========================================================================
 
+
 class TestNhtsaSafetyRatingsSourceMeta:
     def test_name(self):
         from openquery.sources.us.nhtsa_safety_ratings import NhtsaSafetyRatingsSource
+
         meta = NhtsaSafetyRatingsSource().meta()
         assert meta.name == "us.nhtsa_safety_ratings"
 
     def test_country(self):
         from openquery.sources.us.nhtsa_safety_ratings import NhtsaSafetyRatingsSource
+
         meta = NhtsaSafetyRatingsSource().meta()
         assert meta.country == "US"
 
     def test_supported_inputs(self):
         from openquery.sources.us.nhtsa_safety_ratings import NhtsaSafetyRatingsSource
+
         meta = NhtsaSafetyRatingsSource().meta()
         assert DocumentType.CUSTOM in meta.supported_inputs
 
     def test_no_browser_no_captcha(self):
         from openquery.sources.us.nhtsa_safety_ratings import NhtsaSafetyRatingsSource
+
         meta = NhtsaSafetyRatingsSource().meta()
         assert meta.requires_browser is False
         assert meta.requires_captcha is False
 
     def test_rate_limit(self):
         from openquery.sources.us.nhtsa_safety_ratings import NhtsaSafetyRatingsSource
+
         meta = NhtsaSafetyRatingsSource().meta()
         assert meta.rate_limit_rpm == 20
 
@@ -134,6 +147,7 @@ class TestParseResult:
 
     def _query(self, vehicles_resp, ratings_resp):
         from openquery.sources.us.nhtsa_safety_ratings import NhtsaSafetyRatingsSource
+
         src = NhtsaSafetyRatingsSource()
         inp = QueryInput(
             document_type=DocumentType.CUSTOM,
@@ -194,6 +208,7 @@ class TestParseResult:
 
     def test_no_vehicles_returns_empty_ratings(self):
         from openquery.sources.us.nhtsa_safety_ratings import NhtsaSafetyRatingsSource
+
         src = NhtsaSafetyRatingsSource()
         inp = QueryInput(
             document_type=DocumentType.CUSTOM,
@@ -214,6 +229,7 @@ class TestParseResult:
 
     def test_missing_make_raises(self):
         from openquery.sources.us.nhtsa_safety_ratings import NhtsaSafetyRatingsSource
+
         src = NhtsaSafetyRatingsSource()
         inp = QueryInput(
             document_type=DocumentType.CUSTOM,
@@ -225,6 +241,7 @@ class TestParseResult:
 
     def test_missing_model_raises(self):
         from openquery.sources.us.nhtsa_safety_ratings import NhtsaSafetyRatingsSource
+
         src = NhtsaSafetyRatingsSource()
         inp = QueryInput(
             document_type=DocumentType.CUSTOM,
@@ -236,6 +253,7 @@ class TestParseResult:
 
     def test_missing_year_raises(self):
         from openquery.sources.us.nhtsa_safety_ratings import NhtsaSafetyRatingsSource
+
         src = NhtsaSafetyRatingsSource()
         inp = QueryInput(
             document_type=DocumentType.CUSTOM,
@@ -247,6 +265,7 @@ class TestParseResult:
 
     def test_wrong_document_type_raises(self):
         from openquery.sources.us.nhtsa_safety_ratings import NhtsaSafetyRatingsSource
+
         src = NhtsaSafetyRatingsSource()
         inp = QueryInput(document_type=DocumentType.VIN, document_number="1HGCM82633A123456")
         with pytest.raises(SourceError, match="Unsupported"):
@@ -256,6 +275,7 @@ class TestParseResult:
         import httpx
 
         from openquery.sources.us.nhtsa_safety_ratings import NhtsaSafetyRatingsSource
+
         src = NhtsaSafetyRatingsSource()
         inp = QueryInput(
             document_type=DocumentType.CUSTOM,

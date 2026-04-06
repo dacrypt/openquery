@@ -100,43 +100,52 @@ class NhtsaSafetyRatingsSource(BaseSource):
                     rdata = r.json()
 
                     raw = rdata.get("Results", [{}])[0] if rdata.get("Results") else {}
-                    ratings.append(NhtsaSafetyRating(
-                        vehicle_id=vehicle_id,
-                        vehicle_description=vehicle_description,
-                        overall_rating=str(raw.get("OverallRating", "")),
-                        front_crash_rating=str(raw.get("OverallFrontCrashRating", "")),
-                        front_crash_driver_rating=str(raw.get("FrontCrashDriversideRating", "")),
-                        front_crash_passenger_rating=str(
-                            raw.get("FrontCrashPassengersideRating", "")
-                        ),
-                        side_crash_rating=str(raw.get("OverallSideCrashRating", "")),
-                        side_crash_driver_rating=str(raw.get("SideCrashDriversideRating", "")),
-                        side_crash_passenger_rating=str(
-                            raw.get("SideCrashPassengersideRating", "")
-                        ),
-                        rollover_rating=str(raw.get("RolloverRating", "")),
-                        rollover_probability=float(raw.get("RolloverPossibility") or 0.0),
-                        side_pole_rating=str(raw.get("SidePoleCrashRating", "")),
-                        dynamic_tip_result=str(raw.get("dynamicTipResult", "")),
-                        front_crash_picture=str(raw.get("FrontCrashPicture", "")),
-                        front_crash_video=str(raw.get("FrontCrashVideo", "")),
-                        side_crash_picture=str(raw.get("SideCrashPicture", "")),
-                        side_crash_video=str(raw.get("SideCrashVideo", "")),
-                        side_pole_picture=str(raw.get("SidePolePicture", "")),
-                        side_pole_video=str(raw.get("SidePoleVideo", "")),
-                        electronic_stability_control=str(
-                            raw.get("NHTSAElectronicStabilityControl", "")
-                        ),
-                        forward_collision_warning=str(raw.get("NHTSAForwardCollisionWarning", "")),
-                        lane_departure_warning=str(raw.get("NHTSALaneDepartureWarning", "")),
-                        complaints_count=int(raw.get("ComplaintsCount") or 0),
-                        recalls_count=int(raw.get("RecallsCount") or 0),
-                        investigation_count=int(raw.get("InvestigationCount") or 0),
-                    ))
+                    ratings.append(
+                        NhtsaSafetyRating(
+                            vehicle_id=vehicle_id,
+                            vehicle_description=vehicle_description,
+                            overall_rating=str(raw.get("OverallRating", "")),
+                            front_crash_rating=str(raw.get("OverallFrontCrashRating", "")),
+                            front_crash_driver_rating=str(
+                                raw.get("FrontCrashDriversideRating", "")
+                            ),
+                            front_crash_passenger_rating=str(
+                                raw.get("FrontCrashPassengersideRating", "")
+                            ),
+                            side_crash_rating=str(raw.get("OverallSideCrashRating", "")),
+                            side_crash_driver_rating=str(raw.get("SideCrashDriversideRating", "")),
+                            side_crash_passenger_rating=str(
+                                raw.get("SideCrashPassengersideRating", "")
+                            ),
+                            rollover_rating=str(raw.get("RolloverRating", "")),
+                            rollover_probability=float(raw.get("RolloverPossibility") or 0.0),
+                            side_pole_rating=str(raw.get("SidePoleCrashRating", "")),
+                            dynamic_tip_result=str(raw.get("dynamicTipResult", "")),
+                            front_crash_picture=str(raw.get("FrontCrashPicture", "")),
+                            front_crash_video=str(raw.get("FrontCrashVideo", "")),
+                            side_crash_picture=str(raw.get("SideCrashPicture", "")),
+                            side_crash_video=str(raw.get("SideCrashVideo", "")),
+                            side_pole_picture=str(raw.get("SidePolePicture", "")),
+                            side_pole_video=str(raw.get("SidePoleVideo", "")),
+                            electronic_stability_control=str(
+                                raw.get("NHTSAElectronicStabilityControl", "")
+                            ),
+                            forward_collision_warning=str(
+                                raw.get("NHTSAForwardCollisionWarning", "")
+                            ),
+                            lane_departure_warning=str(raw.get("NHTSALaneDepartureWarning", "")),
+                            complaints_count=int(raw.get("ComplaintsCount") or 0),
+                            recalls_count=int(raw.get("RecallsCount") or 0),
+                            investigation_count=int(raw.get("InvestigationCount") or 0),
+                        )
+                    )
 
             logger.info(
                 "Found %d vehicle variant(s) with ratings for %s %s %s",
-                len(ratings), year, make, model,
+                len(ratings),
+                year,
+                make,
+                model,
             )
 
             return NhtsaSafetyRatingsResult(

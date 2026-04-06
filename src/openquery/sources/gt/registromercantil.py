@@ -62,6 +62,7 @@ class GtRegistroMercantilSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("gt.registromercantil", "search_term", search_term)
 
         with browser.page(REGISTRO_MERCANTIL_URL) as page:

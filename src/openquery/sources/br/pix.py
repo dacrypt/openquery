@@ -34,7 +34,7 @@ class BrPixSource(BaseSource):
         return SourceMeta(
             name="br.pix",
             display_name="PIX — Participantes do Sistema de Pagamentos",
-            description="Brazilian PIX payment system participants (banks, fintechs) via BrasilAPI/BACEN",
+            description="Brazilian PIX payment system participants (banks, fintechs) via BrasilAPI/BACEN",  # noqa: E501
             country="BR",
             url="https://brasilapi.com.br/",
             supported_inputs=[DocumentType.CUSTOM],
@@ -62,13 +62,15 @@ class BrPixSource(BaseSource):
 
             participants = []
             for p in data[:50]:
-                participants.append(PixParticipant(
-                    ispb=str(p.get("ispb", "")),
-                    nome=p.get("nome", ""),
-                    cnpj=p.get("cnpj", "") or "",
-                    tipo_participacao=p.get("tipo_participacao", ""),
-                    inicio_operacao=p.get("inicio_operacao", ""),
-                ))
+                participants.append(
+                    PixParticipant(
+                        ispb=str(p.get("ispb", "")),
+                        nome=p.get("nome", ""),
+                        cnpj=p.get("cnpj", "") or "",
+                        tipo_participacao=p.get("tipo_participacao", ""),
+                        inicio_operacao=p.get("inicio_operacao", ""),
+                    )
+                )
 
             return BrPixResult(
                 queried_at=datetime.now(),

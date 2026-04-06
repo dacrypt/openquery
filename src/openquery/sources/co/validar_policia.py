@@ -40,7 +40,7 @@ class ValidarPoliciaSource(BaseSource):
         return SourceMeta(
             name="co.validar_policia",
             display_name="Policía Nacional — Validar Policía",
-            description="Validate a police officer is legitimate by cédula, badge (placa), and ID card (carnet)",
+            description="Validate a police officer is legitimate by cédula, badge (placa), and ID card (carnet)",  # noqa: E501
             country="CO",
             url=POLICIA_URL,
             supported_inputs=[DocumentType.CUSTOM],
@@ -64,7 +64,9 @@ class ValidarPoliciaSource(BaseSource):
 
         return self._query(cedula, placa, carnet, audit=input.audit)
 
-    def _query(self, cedula: str, placa: str, carnet: str, audit: bool = False) -> ValidarPoliciaResult:
+    def _query(
+        self, cedula: str, placa: str, carnet: str, audit: bool = False
+    ) -> ValidarPoliciaResult:
         from openquery.core.browser import BrowserManager
 
         browser = BrowserManager(headless=self._headless, timeout=self._timeout)
@@ -72,6 +74,7 @@ class ValidarPoliciaSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.validar_policia", "cedula", cedula)
 
         with browser.page(POLICIA_URL) as page:
@@ -84,8 +87,7 @@ class ValidarPoliciaSource(BaseSource):
 
                 # Click "Validar Policia" tab — exact ID from site inspection
                 validar_tab = page.query_selector(
-                    '#ctl00_ContentPlaceHolder3_btnActivaPol, '
-                    'a[id*="btnActivaPol"]'
+                    '#ctl00_ContentPlaceHolder3_btnActivaPol, a[id*="btnActivaPol"]'
                 )
                 if validar_tab:
                     validar_tab.click()
@@ -93,8 +95,7 @@ class ValidarPoliciaSource(BaseSource):
 
                 # Fill cédula — exact ID: #ctl00_ContentPlaceHolder3_txtIdentificacion
                 cedula_input = page.query_selector(
-                    '#ctl00_ContentPlaceHolder3_txtIdentificacion, '
-                    'input[id*="txtIdentificacion"]'
+                    '#ctl00_ContentPlaceHolder3_txtIdentificacion, input[id*="txtIdentificacion"]'
                 )
                 if not cedula_input:
                     raise SourceError("co.validar_policia", "Could not find cédula input field")
@@ -104,8 +105,7 @@ class ValidarPoliciaSource(BaseSource):
                 # Fill placa — exact ID: #ctl00_ContentPlaceHolder3_txtPlaca
                 if placa:
                     placa_input = page.query_selector(
-                        '#ctl00_ContentPlaceHolder3_txtPlaca, '
-                        'input[id*="txtPlaca"]'
+                        '#ctl00_ContentPlaceHolder3_txtPlaca, input[id*="txtPlaca"]'
                     )
                     if placa_input:
                         placa_input.fill(placa)
@@ -113,8 +113,7 @@ class ValidarPoliciaSource(BaseSource):
                 # Fill carnet — exact ID: #ctl00_ContentPlaceHolder3_txtCarnet
                 if carnet:
                     carnet_input = page.query_selector(
-                        '#ctl00_ContentPlaceHolder3_txtCarnet, '
-                        'input[id*="txtCarnet"]'
+                        '#ctl00_ContentPlaceHolder3_txtCarnet, input[id*="txtCarnet"]'
                     )
                     if carnet_input:
                         carnet_input.fill(carnet)
@@ -124,7 +123,7 @@ class ValidarPoliciaSource(BaseSource):
 
                 # Submit — exact ID: #ctl00_ContentPlaceHolder3_btnBuscaPol
                 submit_btn = page.query_selector(
-                    '#ctl00_ContentPlaceHolder3_btnBuscaPol, '
+                    "#ctl00_ContentPlaceHolder3_btnBuscaPol, "
                     'a[id*="btnBuscaPol"], '
                     'button[type="submit"], input[type="submit"]'
                 )
@@ -163,24 +162,30 @@ class ValidarPoliciaSource(BaseSource):
         unidad = ""
         mensaje = ""
 
-        if any(phrase in body_lower for phrase in [
-            "es un funcionario activo",
-            "policía activo",
-            "policia activo",
-            "validación exitosa",
-            "validacion exitosa",
-            "sí pertenece",
-            "si pertenece",
-        ]):
+        if any(
+            phrase in body_lower
+            for phrase in [
+                "es un funcionario activo",
+                "policía activo",
+                "policia activo",
+                "validación exitosa",
+                "validacion exitosa",
+                "sí pertenece",
+                "si pertenece",
+            ]
+        ):
             es_activo = True
             mensaje = "El funcionario es un policía activo"
-        elif any(phrase in body_lower for phrase in [
-            "no pertenece",
-            "no es funcionario",
-            "no se encontr",
-            "no registra",
-            "datos no coinciden",
-        ]):
+        elif any(
+            phrase in body_lower
+            for phrase in [
+                "no pertenece",
+                "no es funcionario",
+                "no se encontr",
+                "no registra",
+                "datos no coinciden",
+            ]
+        ):
             es_activo = False
             mensaje = "No se pudo validar como policía activo"
 

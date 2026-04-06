@@ -49,7 +49,9 @@ class NhtsaComplaintsSource(BaseSource):
     def query(self, input: QueryInput) -> BaseModel:
         """Query NHTSA complaints for a given make/model/year."""
         if input.document_type != DocumentType.CUSTOM:
-            raise SourceError("us.nhtsa_complaints", f"Unsupported input type: {input.document_type}")
+            raise SourceError(
+                "us.nhtsa_complaints", f"Unsupported input type: {input.document_type}"
+            )
 
         make = input.extra.get("make", "").strip()
         model = input.extra.get("model", "").strip()
@@ -72,16 +74,18 @@ class NhtsaComplaintsSource(BaseSource):
             raw_results = data.get("results", [])
             complaints: list[NhtsaComplaint] = []
             for entry in raw_results:
-                complaints.append(NhtsaComplaint(
-                    odi_number=str(entry.get("odiNumber", "")),
-                    date_complaint=str(entry.get("dateComplaintFiled", "")),
-                    component=str(entry.get("components", "")),
-                    summary=str(entry.get("summary", "")),
-                    crash=bool(entry.get("crash", False)),
-                    fire=bool(entry.get("fire", False)),
-                    injuries=int(entry.get("numberOfInjuries", 0) or 0),
-                    deaths=int(entry.get("numberOfDeaths", 0) or 0),
-                ))
+                complaints.append(
+                    NhtsaComplaint(
+                        odi_number=str(entry.get("odiNumber", "")),
+                        date_complaint=str(entry.get("dateComplaintFiled", "")),
+                        component=str(entry.get("components", "")),
+                        summary=str(entry.get("summary", "")),
+                        crash=bool(entry.get("crash", False)),
+                        fire=bool(entry.get("fire", False)),
+                        injuries=int(entry.get("numberOfInjuries", 0) or 0),
+                        deaths=int(entry.get("numberOfDeaths", 0) or 0),
+                    )
+                )
 
             logger.info("Found %d complaints for %s %s %s", len(complaints), year, make, model)
 
@@ -95,7 +99,9 @@ class NhtsaComplaintsSource(BaseSource):
             )
 
         except httpx.HTTPStatusError as e:
-            raise SourceError("us.nhtsa_complaints", f"API returned HTTP {e.response.status_code}") from e
+            raise SourceError(
+                "us.nhtsa_complaints", f"API returned HTTP {e.response.status_code}"
+            ) from e
         except httpx.RequestError as e:
             raise SourceError("us.nhtsa_complaints", f"Request failed: {e}") from e
         except Exception as e:

@@ -45,7 +45,11 @@ class AntCitacionesSource(BaseSource):
 
     def query(self, input: QueryInput) -> BaseModel:
         """Query traffic citations by cedula, plate, or custom identifier."""
-        if input.document_type not in (DocumentType.CEDULA, DocumentType.PLATE, DocumentType.CUSTOM):
+        if input.document_type not in (
+            DocumentType.CEDULA,
+            DocumentType.PLATE,
+            DocumentType.CUSTOM,
+        ):
             raise SourceError("ec.ant_citaciones", f"Unsupported input type: {input.document_type}")
 
         documento = input.document_number.strip()

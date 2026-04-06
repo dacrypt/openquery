@@ -154,13 +154,16 @@ class MultasSuiteNeptunoSource(BaseSource):
                 page.on("response", handle_response)
 
                 # Fill form via DevExtreme API
-                page.evaluate("""(docNumber) => {
+                page.evaluate(
+                    """(docNumber) => {
                     var sbs = document.querySelectorAll('.dx-selectbox');
 
                     // Tipo búsqueda = Identificación
                     DevExpress.ui.dxSelectBox.getInstance(sbs[0])
                         .option('value', 'Identificación');
-                }""", doc_number)
+                }""",
+                    doc_number,
+                )
                 page.wait_for_timeout(1000)
 
                 # Open tipo doc to trigger lazy load, then select CC
@@ -186,7 +189,8 @@ class MultasSuiteNeptunoSource(BaseSource):
                 page.wait_for_timeout(500)
 
                 # Fill correo and identificación
-                page.evaluate("""(docNumber) => {
+                page.evaluate(
+                    """(docNumber) => {
                     var correo = document.querySelector('input[name="Correo"]');
                     if (correo) {
                         var inst = DevExpress.ui.dxTextBox.getInstance(
@@ -202,7 +206,9 @@ class MultasSuiteNeptunoSource(BaseSource):
                         );
                         if (inst2) inst2.option('value', docNumber);
                     }
-                }""", doc_number)
+                }""",
+                    doc_number,
+                )
 
                 logger.info("Filled form for %s: %s", self._city_name, doc_number)
 
@@ -223,9 +229,7 @@ class MultasSuiteNeptunoSource(BaseSource):
                 if collector:
                     collector.screenshot(page, "result")
 
-                return self._parse_results(
-                    page, doc_number, api_data, collector
-                )
+                return self._parse_results(page, doc_number, api_data, collector)
 
             except SourceError:
                 raise
@@ -266,7 +270,7 @@ class MultasSuiteNeptunoSource(BaseSource):
                     return rows.map(r => r.data);
                 } catch(e) { return []; }
             }""")
-            for row in (grid_data or []):
+            for row in grid_data or []:
                 comp = ComparendoLocal(
                     numero=str(row.get("Comparendo", row.get("NumeroComparendo", ""))),
                     tipo="Comparendo",

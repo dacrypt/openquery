@@ -105,9 +105,8 @@ class SecEdgarSource(BaseSource):
             # Extract company name and CIK from first filing
             if not result.company_name:
                 display_names = src.get("display_names", [])
-                result.company_name = (
-                    src.get("entity_name", "")
-                    or (display_names[0] if display_names else "")
+                result.company_name = src.get("entity_name", "") or (
+                    display_names[0] if display_names else ""
                 )
             if not result.cik:
                 result.cik = src.get("entity_id", "") or src.get("file_num", "")

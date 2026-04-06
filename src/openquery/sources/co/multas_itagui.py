@@ -31,18 +31,15 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-QITS_URL = (
-    "https://comp.transitoitagui.gov.co/portal/qits/"
-    "menuPrincipalPortal?execution=e1s1"
-)
+QITS_URL = "https://comp.transitoitagui.gov.co/portal/qits/menuPrincipalPortal?execution=e1s1"
 
 # QITS document type codes
 QITS_DOC_TYPES = {
-    "CC": "2",   # Cedula Ciudadania
-    "CE": "4",   # Cedula Extranjeria
+    "CC": "2",  # Cedula Ciudadania
+    "CE": "4",  # Cedula Extranjeria
     "NIT": "3",
-    "PA": "6",   # Pasaporte
-    "TI": "5",   # Tarjeta Identidad
+    "PA": "6",  # Pasaporte
+    "TI": "5",  # Tarjeta Identidad
     "RC": "21",  # Registro Civil
     "PPT": "9",  # Permiso por Protección Temporal
 }
@@ -61,8 +58,7 @@ class MultasItaguiSource(BaseSource):
             name="co.multas_itagui",
             display_name="Tránsito Itagüí — Multas y Comparendos",
             description=(
-                "Itagüí traffic fines and violations from the "
-                "Secretaría de Movilidad (QITS portal)"
+                "Itagüí traffic fines and violations from the Secretaría de Movilidad (QITS portal)"
             ),
             country="CO",
             url="https://comp.transitoitagui.gov.co/portal/qits/",
@@ -117,9 +113,9 @@ class MultasItaguiSource(BaseSource):
                     QITS_DOC_TYPES.get("CC", "2"),
                 )
                 # Trigger onchange via the select element
-                page.locator(
-                    "#formInfracciones\\:selectTipoIdentificacion"
-                ).dispatch_event("change")
+                page.locator("#formInfracciones\\:selectTipoIdentificacion").dispatch_event(
+                    "change"
+                )
                 page.wait_for_timeout(2000)
 
                 # Fill document number
@@ -145,20 +141,14 @@ class MultasItaguiSource(BaseSource):
             except SourceError:
                 raise
             except Exception as e:
-                raise SourceError(
-                    "co.multas_itagui", f"Query failed: {e}"
-                ) from e
+                raise SourceError("co.multas_itagui", f"Query failed: {e}") from e
 
-    def _parse_results(
-        self, page, doc_number: str, collector
-    ) -> MultasTransitoLocalResult:
+    def _parse_results(self, page, doc_number: str, collector) -> MultasTransitoLocalResult:
         """Parse QITS datatable results."""
         body_text = page.inner_text("body")
 
         # Check for "Total registros encontrados: N"
-        total_match = re.search(
-            r"Total registros encontrados:\s*(\d+)", body_text
-        )
+        total_match = re.search(r"Total registros encontrados:\s*(\d+)", body_text)
         total_found = int(total_match.group(1)) if total_match else 0
 
         if total_found == 0:
@@ -177,9 +167,7 @@ class MultasItaguiSource(BaseSource):
         for row in rows:
             cells = row.query_selector_all("td")
             if len(cells) >= 6:
-                cell_texts = [
-                    (cells[i].inner_text() or "").strip() for i in range(6)
-                ]
+                cell_texts = [(cells[i].inner_text() or "").strip() for i in range(6)]
                 nro_comparendo = cell_texts[0]
                 nro_resolucion = cell_texts[1]
                 fecha = cell_texts[2]

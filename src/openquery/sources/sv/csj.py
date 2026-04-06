@@ -57,6 +57,7 @@ class SvCsjSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("sv.csj", "case_number", case_number)
 
         with browser.page(CSJ_URL) as page:

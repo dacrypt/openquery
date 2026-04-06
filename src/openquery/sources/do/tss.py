@@ -57,6 +57,7 @@ class TssSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("do.tss", "cedula", cedula)
 
         with browser.page(TSS_URL) as page:
@@ -82,7 +83,7 @@ class TssSource(BaseSource):
 
                 # Submit form
                 submit = page.query_selector(
-                    "button[type='submit'], input[type='submit'], button[id*='buscar'], button[id*='consultar']"
+                    "button[type='submit'], input[type='submit'], button[id*='buscar'], button[id*='consultar']"  # noqa: E501
                 )
                 if submit:
                     submit.click()

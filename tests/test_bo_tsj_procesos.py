@@ -41,10 +41,7 @@ class TestTsjProcesosParseResult:
         assert result.processes[0].status == "En trámite"
 
     def test_text_parse_multiple_cases(self):
-        body = (
-            "Número: CASO-001\nJuzgado: Juzgado A\n"
-            "Número: CASO-002\nJuzgado: Juzgado B\n"
-        )
+        body = "Número: CASO-001\nJuzgado: Juzgado A\nNúmero: CASO-002\nJuzgado: Juzgado B\n"
         result = self._parse(body)
         assert len(result.processes) == 2
         assert result.total == 2
@@ -119,7 +116,6 @@ class TestTsjProcesosSourceMeta:
             src.query(QueryInput(document_type=DocumentType.CUSTOM, document_number=""))
 
     def test_case_number_extra_accepted(self):
-        from openquery.sources.bo.tsj_procesos import TsjProcesosSource
 
         input_ = QueryInput(
             document_type=DocumentType.CUSTOM,

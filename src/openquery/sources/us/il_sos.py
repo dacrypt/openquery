@@ -40,7 +40,7 @@ class IlSosSource(BaseSource):
         return SourceMeta(
             name="us.il_sos",
             display_name="Illinois SOS — Title/Registration Status",
-            description="Illinois Secretary of State vehicle title and registration status — checks active/inactive status, lien info, and outstanding fees",
+            description="Illinois Secretary of State vehicle title and registration status — checks active/inactive status, lien info, and outstanding fees",  # noqa: E501
             country="US",
             url=IL_SOS_URL,
             supported_inputs=[DocumentType.VIN],
@@ -69,6 +69,7 @@ class IlSosSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("us.il_sos", "vin", vin)
 
         with browser.page(IL_SOS_URL) as page:
@@ -88,7 +89,7 @@ class IlSosSource(BaseSource):
                 # Wait for JS to enable the submit button (it loads with disabled attr)
                 submit_btn = page.locator("input[type='submit'][name='submit']").first
                 page.wait_for_function(
-                    "() => !document.querySelector(\"input[type='submit'][name='submit']\")?.disabled",
+                    "() => !document.querySelector(\"input[type='submit'][name='submit']\")?.disabled",  # noqa: E501
                     timeout=5000,
                 )
 
@@ -146,22 +147,38 @@ class IlSosSource(BaseSource):
             logger.debug("Table row parsing failed, falling back to text scan")
 
         # Fallback: scan body text for known patterns (only for fields not yet populated)
-        needs_fallback = not any([
-            result.title_status,
-            result.registration_status,
-            result.lien_info,
-            result.outstanding_fees,
-        ])
+        needs_fallback = not any(
+            [
+                result.title_status,
+                result.registration_status,
+                result.lien_info,
+                result.outstanding_fees,
+            ]
+        )
         if needs_fallback:
             for line in body_text.splitlines():
                 line_lower = line.lower().strip()
-                if not result.title_status and "title" in line_lower and ("active" in line_lower or "inactive" in line_lower or "status" in line_lower):
+                if (
+                    not result.title_status
+                    and "title" in line_lower
+                    and (
+                        "active" in line_lower or "inactive" in line_lower or "status" in line_lower
+                    )
+                ):
                     result.title_status = line.strip()
-                elif not result.registration_status and "registration" in line_lower and ("active" in line_lower or "inactive" in line_lower or "status" in line_lower):
+                elif (
+                    not result.registration_status
+                    and "registration" in line_lower
+                    and (
+                        "active" in line_lower or "inactive" in line_lower or "status" in line_lower
+                    )
+                ):
                     result.registration_status = line.strip()
                 elif not result.lien_info and "lien" in line_lower:
                     result.lien_info = line.strip()
-                elif not result.outstanding_fees and ("fee" in line_lower or "outstanding" in line_lower):
+                elif not result.outstanding_fees and (
+                    "fee" in line_lower or "outstanding" in line_lower
+                ):
                     result.outstanding_fees = line.strip()
 
         # Try to capture vehicle description from known selectors
@@ -184,7 +201,10 @@ class IlSosSource(BaseSource):
                     continue
 
         # Check for error/not-found response
-        if any(phrase in body_lower for phrase in ("not found", "no record", "invalid vin", "no results")):
+        if any(
+            phrase in body_lower
+            for phrase in ("not found", "no record", "invalid vin", "no results")
+        ):
             if not result.title_status:
                 result.title_status = "Not found"
 

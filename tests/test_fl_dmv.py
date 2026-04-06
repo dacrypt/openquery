@@ -77,6 +77,7 @@ class TestFlDmvSourceMeta:
 
     def test_meta_supported_inputs(self):
         from openquery.sources.base import DocumentType
+
         source = FlDmvSource()
         meta = source.meta()
         assert DocumentType.VIN in meta.supported_inputs
@@ -150,8 +151,7 @@ class TestParseResult:
     def test_parse_plate_search_type(self):
         source = FlDmvSource()
         page = self._make_page(
-            "Vehicle Title Check\n"
-            "Registration Status: Active\n",
+            "Vehicle Title Check\nRegistration Status: Active\n",
         )
         result = source._parse_results(page, "ABC123", "plate")
         assert result.search_type == "plate"
@@ -160,8 +160,7 @@ class TestParseResult:
     def test_parse_odometer_captured(self):
         source = FlDmvSource()
         page = self._make_page(
-            "Odometer: 52000 miles\n"
-            "Title Status: Clean\n",
+            "Odometer: 52000 miles\nTitle Status: Clean\n",
         )
         result = source._parse_results(page, "1HGCM82633A004352", "vin")
         assert "odometer" in result.odometer.lower()
@@ -169,8 +168,7 @@ class TestParseResult:
     def test_parse_registration_status(self):
         source = FlDmvSource()
         page = self._make_page(
-            "Title Status: Clean\n"
-            "Registration Status: Expired\n",
+            "Title Status: Clean\nRegistration Status: Expired\n",
         )
         result = source._parse_results(page, "1HGCM82633A004352", "vin")
         assert "registration" in result.registration_status.lower()
@@ -178,8 +176,7 @@ class TestParseResult:
     def test_parse_flood_brand(self):
         source = FlDmvSource()
         page = self._make_page(
-            "Title Status: Branded\n"
-            "Brand History: Flood damage reported\n",
+            "Title Status: Branded\nBrand History: Flood damage reported\n",
         )
         result = source._parse_results(page, "1HGCM82633A004352", "vin")
         assert "Flood" in result.brand_history
@@ -187,8 +184,7 @@ class TestParseResult:
     def test_parse_no_brands_empty_list(self):
         source = FlDmvSource()
         page = self._make_page(
-            "Title Status: Clean\n"
-            "No brand history on record.\n",
+            "Title Status: Clean\nNo brand history on record.\n",
         )
         result = source._parse_results(page, "1HGCM82633A004352", "vin")
         assert result.brand_history == []

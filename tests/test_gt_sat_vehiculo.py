@@ -117,9 +117,7 @@ class TestGtSatVehiculoSourceMeta:
 
         src = GtSatVehiculoSource()
         with pytest.raises(SourceError, match="NIT"):
-            src.query(
-                QueryInput(document_type=DocumentType.PLATE, document_number="P123ABC")
-            )
+            src.query(QueryInput(document_type=DocumentType.PLATE, document_number="P123ABC"))
 
     def test_wrong_document_type_raises(self):
         from openquery.sources.gt.sat_vehiculo import GtSatVehiculoSource

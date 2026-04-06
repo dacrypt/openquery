@@ -73,7 +73,9 @@ class BrReceitaCnaeSource(BaseSource):
             )
 
         except httpx.HTTPStatusError as e:
-            raise SourceError("br.receita_cnae", f"API returned HTTP {e.response.status_code}") from e  # noqa: E501
+            raise SourceError(
+                "br.receita_cnae", f"API returned HTTP {e.response.status_code}"
+            ) from e  # noqa: E501
         except httpx.RequestError as e:
             raise SourceError("br.receita_cnae", f"Request failed: {e}") from e
         except SourceError:

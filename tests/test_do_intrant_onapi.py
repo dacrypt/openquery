@@ -10,14 +10,15 @@ import pytest
 from openquery.exceptions import SourceError
 from openquery.sources.base import DocumentType, QueryInput
 
-
 # ===========================================================================
 # do.intrant — INTRANT driver license status
 # ===========================================================================
 
+
 class TestDoIntrantResult:
     def test_default_values(self):
         from openquery.models.do.intrant import DoIntrantResult
+
         r = DoIntrantResult(search_value="00100000001")
         assert r.search_value == "00100000001"
         assert r.license_status == ""
@@ -29,6 +30,7 @@ class TestDoIntrantResult:
 
     def test_roundtrip(self):
         from openquery.models.do.intrant import DoIntrantResult
+
         r = DoIntrantResult(
             search_value="00100000001",
             license_status="ACTIVO",
@@ -45,6 +47,7 @@ class TestDoIntrantResult:
 
     def test_audit_excluded_from_dump(self):
         from openquery.models.do.intrant import DoIntrantResult
+
         r = DoIntrantResult(search_value="00100000001")
         r.audit = b"pdf_bytes"
         data = r.model_dump()
@@ -54,6 +57,7 @@ class TestDoIntrantResult:
 class TestDoIntrantSourceMeta:
     def test_meta(self):
         from openquery.sources.do.intrant import DoIntrantSource
+
         meta = DoIntrantSource().meta()
         assert meta.name == "do.intrant"
         assert meta.country == "DO"
@@ -63,12 +67,14 @@ class TestDoIntrantSourceMeta:
 
     def test_query_requires_value(self):
         from openquery.sources.do.intrant import DoIntrantSource
+
         src = DoIntrantSource()
         with pytest.raises(SourceError, match="required"):
             src.query(QueryInput(document_type=DocumentType.CEDULA, document_number="", extra={}))
 
     def test_registered(self):
         from openquery.sources import get_source
+
         src = get_source("do.intrant")
         assert src is not None
         assert src.meta().name == "do.intrant"
@@ -78,9 +84,11 @@ class TestDoIntrantSourceMeta:
 # do.onapi — ONAPI trademark search
 # ===========================================================================
 
+
 class TestDoOnapiResult:
     def test_default_values(self):
         from openquery.models.do.onapi import DoOnapiResult
+
         r = DoOnapiResult(search_term="COCA COLA")
         assert r.search_term == "COCA COLA"
         assert r.trademark_name == ""
@@ -93,6 +101,7 @@ class TestDoOnapiResult:
 
     def test_roundtrip(self):
         from openquery.models.do.onapi import DoOnapiResult
+
         r = DoOnapiResult(
             search_term="COCA COLA",
             trademark_name="COCA COLA",
@@ -111,6 +120,7 @@ class TestDoOnapiResult:
 
     def test_audit_excluded_from_dump(self):
         from openquery.models.do.onapi import DoOnapiResult
+
         r = DoOnapiResult(search_term="TEST")
         r.audit = b"pdf_bytes"
         data = r.model_dump()
@@ -120,6 +130,7 @@ class TestDoOnapiResult:
 class TestDoOnapiSourceMeta:
     def test_meta(self):
         from openquery.sources.do.onapi import DoOnapiSource
+
         meta = DoOnapiSource().meta()
         assert meta.name == "do.onapi"
         assert meta.country == "DO"
@@ -129,12 +140,14 @@ class TestDoOnapiSourceMeta:
 
     def test_query_requires_term(self):
         from openquery.sources.do.onapi import DoOnapiSource
+
         src = DoOnapiSource()
         with pytest.raises(SourceError, match="required"):
             src.query(QueryInput(document_type=DocumentType.CUSTOM, document_number="", extra={}))
 
     def test_registered(self):
         from openquery.sources import get_source
+
         src = get_source("do.onapi")
         assert src is not None
         assert src.meta().name == "do.onapi"

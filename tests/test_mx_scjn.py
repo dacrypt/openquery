@@ -11,6 +11,7 @@ from openquery.sources.mx.scjn import ScjnSource
 # Model tests
 # ---------------------------------------------------------------------------
 
+
 class TestScjnResult:
     def test_default_values(self):
         r = ScjnResult()
@@ -77,6 +78,7 @@ class TestMxCaseRecord:
 # Source meta tests
 # ---------------------------------------------------------------------------
 
+
 class TestScjnSourceMeta:
     def test_meta(self):
         src = ScjnSource()
@@ -101,6 +103,7 @@ class TestScjnSourceMeta:
 # ---------------------------------------------------------------------------
 # Parse result tests
 # ---------------------------------------------------------------------------
+
 
 class TestScjnParseResult:
     def test_parse_no_results(self):
@@ -156,8 +159,7 @@ class TestScjnParseResult:
 
         page = MagicMock()
         page.inner_text.return_value = (
-            "5 expedientes encontrados\n"
-            "123/2023 | Juzgado Primero | Amparo | En trámite\n"
+            "5 expedientes encontrados\n123/2023 | Juzgado Primero | Amparo | En trámite\n"
         )
         page.query_selector_all.return_value = []
 

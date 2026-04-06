@@ -64,6 +64,7 @@ class EstadoTramiteCedulaSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.estado_tramite_cedula", "cedula", cedula)
 
         with browser.page(REGISTRADURIA_TRAMITE_URL) as page:
@@ -121,9 +122,7 @@ class EstadoTramiteCedulaSource(BaseSource):
             except SourceError:
                 raise
             except Exception as e:
-                raise SourceError(
-                    "co.estado_tramite_cedula", f"Query failed: {e}"
-                ) from e
+                raise SourceError("co.estado_tramite_cedula", f"Query failed: {e}") from e
 
     def _parse_result(self, page, cedula: str) -> EstadoTramiteCedulaResult:
         from datetime import datetime

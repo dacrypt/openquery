@@ -49,7 +49,7 @@ class NicbVincheckSource(BaseSource):
         return SourceMeta(
             name="us.nicb_vincheck",
             display_name="NICB VINCheck — Stolen/Salvage Check",
-            description="National Insurance Crime Bureau VINCheck — checks if a vehicle was reported stolen or declared a total loss",
+            description="National Insurance Crime Bureau VINCheck — checks if a vehicle was reported stolen or declared a total loss",  # noqa: E501
             country="US",
             url=NICB_URL,
             supported_inputs=[DocumentType.VIN],
@@ -87,6 +87,7 @@ class NicbVincheckSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("us.nicb_vincheck", "vin", vin)
 
         api_data: dict = {}

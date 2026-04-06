@@ -101,20 +101,25 @@ class SecopSource(BaseSource):
             raise SourceError("co.secop", f"Request failed: {e}") from e
 
     def _build_result(
-        self, data: list[dict], documento: str = "", nombre_proveedor: str = "",
+        self,
+        data: list[dict],
+        documento: str = "",
+        nombre_proveedor: str = "",
     ) -> SecopResult:
         """Parse raw API rows into SecopResult."""
         contratos = []
         for row in data:
-            contratos.append(SecopContrato(
-                proceso=row.get("proceso_de_compra", row.get("numero_del_contrato", "")),
-                entidad=row.get("nombre_entidad", row.get("entidad", "")),
-                objeto=row.get("descripcion_del_proceso", row.get("objeto_del_contrato", "")),
-                tipo_contrato=row.get("tipo_de_contrato", ""),
-                valor=row.get("valor_del_contrato", row.get("valor_total", "")),
-                estado=row.get("estado_contrato", row.get("estado_del_contrato", "")),
-                fecha_firma=row.get("fecha_de_firma", ""),
-            ))
+            contratos.append(
+                SecopContrato(
+                    proceso=row.get("proceso_de_compra", row.get("numero_del_contrato", "")),
+                    entidad=row.get("nombre_entidad", row.get("entidad", "")),
+                    objeto=row.get("descripcion_del_proceso", row.get("objeto_del_contrato", "")),
+                    tipo_contrato=row.get("tipo_de_contrato", ""),
+                    valor=row.get("valor_del_contrato", row.get("valor_total", "")),
+                    estado=row.get("estado_contrato", row.get("estado_del_contrato", "")),
+                    fecha_firma=row.get("fecha_de_firma", ""),
+                )
+            )
 
         # Extract provider name from first result if not given
         if not nombre_proveedor and data:

@@ -66,9 +66,7 @@ class TestNiDgiSourceMeta:
             src.query(QueryInput(document_type=DocumentType.CUSTOM, document_number=""))
 
     def test_ruc_from_document_number(self):
-        inp = QueryInput(
-            document_type=DocumentType.CUSTOM, document_number="J0310000000001"
-        )
+        inp = QueryInput(document_type=DocumentType.CUSTOM, document_number="J0310000000001")
         assert inp.document_number == "J0310000000001"
 
     def test_ruc_from_extra(self):

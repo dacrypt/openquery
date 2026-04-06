@@ -1,6 +1,6 @@
 {
-  "active": true,
-  "current_phase": "deep-interview",
+  "active": false,
+  "current_phase": "complete",
   "iteration": 10,
   "max_iterations": 12,
   "task_description": "quiero que desarrolles el proyecto compleamente",
@@ -207,5 +207,12 @@
       "label": "Registraduría / estado de documento (Colombia)",
       "url": "https://servicios.registraduria.gov.co/"
     }
-  ]
+  ],
+  "completed_at": "2026-04-04T03:12:50Z",
+  "final_ambiguity": 0.18,
+  "round_count": 9,
+  "transcript_path": ".omx/interviews/quiero-que-desarrolles-el-proyecto-compleamente-20260404T031227Z.md",
+  "spec_path": ".omx/specs/deep-interview-quiero-que-desarrolles-el-proyecto-compleamente.md",
+  "recommended_handoff": "$ralplan",
+  "residual_risk": "low: falta convertir 'fuentes oficiales importantes' en backlog/priorización formal durante ralplan"
 }

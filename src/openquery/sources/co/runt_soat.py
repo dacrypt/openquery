@@ -130,6 +130,7 @@ class RuntSoatSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.runt_soat", "placa", placa)
 
         with browser.page(RUNT_PAGE, wait_until="networkidle") as page:
@@ -140,7 +141,9 @@ class RuntSoatSource(BaseSource):
                 try:
                     logger.info(
                         "RUNT SOAT attempt %d/%d for placa=%s",
-                        attempt, MAX_RETRIES, placa,
+                        attempt,
+                        MAX_RETRIES,
+                        placa,
                     )
 
                     # Step 1: Generate captcha
@@ -172,7 +175,10 @@ class RuntSoatSource(BaseSource):
                 except Exception as e:
                     last_error = e
                     logger.warning(
-                        "Attempt %d failed unexpectedly: %s", attempt, e, exc_info=True,
+                        "Attempt %d failed unexpectedly: %s",
+                        attempt,
+                        e,
+                        exc_info=True,
                     )
 
         raise SourceError(
@@ -211,13 +217,18 @@ class RuntSoatSource(BaseSource):
 
         if len(image_bytes) < 100:
             raise SourceError(
-                "co.runt_soat", f"Captcha image too small ({len(image_bytes)} bytes)",
+                "co.runt_soat",
+                f"Captcha image too small ({len(image_bytes)} bytes)",
             )
 
         return captcha_id, image_bytes
 
     def _execute_query(
-        self, page, placa: str, captcha_text: str, captcha_id: str,
+        self,
+        page,
+        placa: str,
+        captcha_text: str,
+        captcha_id: str,
     ) -> dict:
         """POST auth query to RUNT API via browser fetch."""
         body = {
@@ -261,7 +272,8 @@ class RuntSoatSource(BaseSource):
 
         if status != 200:
             raise SourceError(
-                "co.runt_soat", f"RUNT API returned {status}: {body_text[:200]}",
+                "co.runt_soat",
+                f"RUNT API returned {status}: {body_text[:200]}",
             )
 
         try:
@@ -275,7 +287,8 @@ class RuntSoatSource(BaseSource):
                 raise CaptchaError("co.runt_soat", f"Captcha error: {error_msg}")
             if data.get("error") is True:
                 desc = data.get(
-                    "descripcionRespuesta", data.get("mensaje", "Unknown error"),
+                    "descripcionRespuesta",
+                    data.get("mensaje", "Unknown error"),
                 )
                 if "no corresponden" in desc.lower() or "no se encontr" in desc.lower():
                     logger.info("RUNT SOAT returned no matching data: %s", desc)
@@ -300,14 +313,22 @@ class RuntSoatSource(BaseSource):
             return default
 
         soat_vigente = g(["soatVigente", "vigenciaSoat"]).upper() in (
-            "SI", "S\u00cd", "YES", "TRUE", "1",
+            "SI",
+            "S\u00cd",
+            "YES",
+            "TRUE",
+            "1",
         )
         aseguradora = g(["aseguradora", "soatAseguradora", "nombreAseguradora"])
         numero_poliza = g(["polizaSoat", "numPolizaSoat", "poliza"])
         fecha_inicio = g(["fechaInicioSoat", "soatFechaInicio"])
-        fecha_vencimiento = g([
-            "fechaVencimientoSoat", "soatFechaVencimiento", "vencimientoSoat",
-        ])
+        fecha_vencimiento = g(
+            [
+                "fechaVencimientoSoat",
+                "soatFechaVencimiento",
+                "vencimientoSoat",
+            ]
+        )
         estado = "Vigente" if soat_vigente else "Vencido"
         clase_vehiculo = g(["clase", "claseVehiculo"])
 

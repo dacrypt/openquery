@@ -61,6 +61,7 @@ class ReniecSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("pe.reniec", "cedula", dni)
 
         with browser.page(RENIEC_URL) as page:
@@ -147,7 +148,8 @@ class ReniecSource(BaseSource):
         if not result.nombre:
             m = re.search(
                 r"(?:Nombres?|Nombre\s+Propio)[:\s]+([A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ ]+)",
-                body_text, re.IGNORECASE,
+                body_text,
+                re.IGNORECASE,
             )
             if m:
                 result.nombre = m.group(1).strip()
@@ -155,7 +157,8 @@ class ReniecSource(BaseSource):
         if not result.apellido_paterno:
             m = re.search(
                 r"Apellido\s+Paterno[:\s]+([A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ ]+)",
-                body_text, re.IGNORECASE,
+                body_text,
+                re.IGNORECASE,
             )
             if m:
                 result.apellido_paterno = m.group(1).strip()
@@ -163,7 +166,8 @@ class ReniecSource(BaseSource):
         if not result.apellido_materno:
             m = re.search(
                 r"Apellido\s+Materno[:\s]+([A-ZÁÉÍÓÚÑ][A-ZÁÉÍÓÚÑ ]+)",
-                body_text, re.IGNORECASE,
+                body_text,
+                re.IGNORECASE,
             )
             if m:
                 result.apellido_materno = m.group(1).strip()

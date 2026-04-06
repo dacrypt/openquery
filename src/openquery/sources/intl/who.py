@@ -36,7 +36,7 @@ class WhoSource(BaseSource):
         return SourceMeta(
             name="intl.who",
             display_name="WHO Global Health Observatory",
-            description="WHO GHO OData API for global health indicators (life expectancy, mortality, etc.)",
+            description="WHO GHO OData API for global health indicators (life expectancy, mortality, etc.)",  # noqa: E501
             country="INTL",
             url="https://www.who.int/data/gho/",
             supported_inputs=[DocumentType.CUSTOM],
@@ -50,7 +50,10 @@ class WhoSource(BaseSource):
         country = input.extra.get("country", "").strip().upper()
 
         if not indicator:
-            raise SourceError("intl.who", "Provide an indicator code (extra.indicator or document_number), e.g. WHOSIS_000001")
+            raise SourceError(
+                "intl.who",
+                "Provide an indicator code (extra.indicator or document_number), e.g. WHOSIS_000001",  # noqa: E501
+            )
 
         return self._fetch(indicator, country)
 
@@ -79,12 +82,14 @@ class WhoSource(BaseSource):
             for record in records:
                 raw_value = record.get("NumericValue")
                 value_str = str(raw_value) if raw_value is not None else ""
-                data_points.append(WhoDataPoint(
-                    country=record.get("SpatialDim", ""),
-                    year=str(record.get("TimeDim", "")),
-                    value=value_str,
-                    sex=record.get("Dim1", ""),
-                ))
+                data_points.append(
+                    WhoDataPoint(
+                        country=record.get("SpatialDim", ""),
+                        year=str(record.get("TimeDim", "")),
+                        value=value_str,
+                        sex=record.get("Dim1", ""),
+                    )
+                )
 
             return WhoResult(
                 queried_at=datetime.now(),

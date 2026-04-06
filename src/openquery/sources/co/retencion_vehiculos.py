@@ -64,6 +64,7 @@ class RetencionVehiculosSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.retencion_vehiculos", "plate", placa)
 
         with browser.page(RETENCION_URL) as page:
@@ -76,9 +77,7 @@ class RetencionVehiculosSource(BaseSource):
 
                 # Fill plate number — Angular Material input
                 plate_input = page.query_selector(
-                    'input[placeholder*="ABC123"], '
-                    'input.mat-mdc-input-element, '
-                    'input[type="text"]'
+                    'input[placeholder*="ABC123"], input.mat-mdc-input-element, input[type="text"]'
                 )
                 if not plate_input:
                     raise SourceError("co.retencion_vehiculos", "Could not find plate input field")
@@ -91,8 +90,7 @@ class RetencionVehiculosSource(BaseSource):
 
                 # Submit — Angular button
                 submit_btn = page.query_selector(
-                    'button.btn-primary, '
-                    'button[type="submit"], input[type="submit"]'
+                    'button.btn-primary, button[type="submit"], input[type="submit"]'
                 )
                 if submit_btn:
                     submit_btn.click()
@@ -129,14 +127,29 @@ class RetencionVehiculosSource(BaseSource):
         )
 
         # Detect retention status
-        no_retention = any(phrase in body_lower for phrase in [
-            "no registra", "no se encontr", "sin retención",
-            "sin retencion", "no tiene retención",
-        ])
+        no_retention = any(
+            phrase in body_lower
+            for phrase in [
+                "no registra",
+                "no se encontr",
+                "sin retención",
+                "sin retencion",
+                "no tiene retención",
+            ]
+        )
 
-        has_retention = any(phrase in body_lower for phrase in [
-            "retenido", "retención", "retencion", "inmovilizado",
-        ]) and not no_retention
+        has_retention = (
+            any(
+                phrase in body_lower
+                for phrase in [
+                    "retenido",
+                    "retención",
+                    "retencion",
+                    "inmovilizado",
+                ]
+            )
+            and not no_retention
+        )
 
         result.esta_retenido = has_retention
 
@@ -146,11 +159,16 @@ class RetencionVehiculosSource(BaseSource):
             lower = stripped.lower()
             if ("patio" in lower or "parqueadero" in lower) and ":" in stripped:
                 result.patio = stripped.split(":", 1)[1].strip()
-            elif ("fecha" in lower and ("retención" in lower or "retencion" in lower or "inmoviliz" in lower)) and ":" in stripped:
+            elif (
+                "fecha" in lower
+                and ("retención" in lower or "retencion" in lower or "inmoviliz" in lower)
+            ) and ":" in stripped:
                 result.fecha_retencion = stripped.split(":", 1)[1].strip()
             elif "autoridad" in lower and ":" in stripped:
                 result.autoridad = stripped.split(":", 1)[1].strip()
-            elif ("motivo" in lower or "causal" in lower or "razón" in lower or "razon" in lower) and ":" in stripped:
+            elif (
+                "motivo" in lower or "causal" in lower or "razón" in lower or "razon" in lower
+            ) and ":" in stripped:
                 result.motivo = stripped.split(":", 1)[1].strip()
             elif "estado" in lower and ":" in stripped and not result.estado:
                 result.estado = stripped.split(":", 1)[1].strip()

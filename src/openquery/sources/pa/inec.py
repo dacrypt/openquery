@@ -35,7 +35,7 @@ class PaInecSource(BaseSource):
         return SourceMeta(
             name="pa.inec",
             display_name="INEC — Estadísticas Nacionales",
-            description="Panama national statistics categories (Instituto Nacional de Estadística y Censo)",
+            description="Panama national statistics categories (Instituto Nacional de Estadística y Censo)",  # noqa: E501
             country="PA",
             url="https://www.inec.gob.pa/",
             supported_inputs=[DocumentType.CUSTOM],
@@ -59,11 +59,13 @@ class PaInecSource(BaseSource):
             items = data if isinstance(data, list) else data.get("data", data.get("tipos", []))
             for item in items:
                 if isinstance(item, dict):
-                    categorias.append(InecCategoria(
-                        id=str(item.get("id", item.get("tipo_id", ""))),
-                        nombre=item.get("nombre", item.get("tipo", "")),
-                        descripcion=item.get("descripcion", ""),
-                    ))
+                    categorias.append(
+                        InecCategoria(
+                            id=str(item.get("id", item.get("tipo_id", ""))),
+                            nombre=item.get("nombre", item.get("tipo", "")),
+                            descripcion=item.get("descripcion", ""),
+                        )
+                    )
 
             return PaInecResult(
                 queried_at=datetime.now(),

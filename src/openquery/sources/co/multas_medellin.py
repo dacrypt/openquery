@@ -96,9 +96,7 @@ class MultasMedellinSource(BaseSource):
         if audit:
             from openquery.core.audit import AuditCollector
 
-            collector = AuditCollector(
-                "co.multas_medellin", doc_type.value, search_term
-            )
+            collector = AuditCollector("co.multas_medellin", doc_type.value, search_term)
 
         with browser.page(PORTAL_URL, wait_until="domcontentloaded") as page:
             try:
@@ -168,16 +166,12 @@ class MultasMedellinSource(BaseSource):
                     collector.screenshot(page, "result")
 
                 # Parse results
-                return self._parse_response(
-                    page, search_term, api_result, collector
-                )
+                return self._parse_response(page, search_term, api_result, collector)
 
             except SourceError:
                 raise
             except Exception as e:
-                raise SourceError(
-                    "co.multas_medellin", f"Query failed: {e}"
-                ) from e
+                raise SourceError("co.multas_medellin", f"Query failed: {e}") from e
 
     def _parse_response(
         self,

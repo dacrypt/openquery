@@ -69,6 +69,7 @@ class SepsSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("ec.seps", "ruc" if ruc else "nombre", search_term)
 
         with browser.page(SEPS_URL) as page:
@@ -144,8 +145,7 @@ class SepsSource(BaseSource):
                 continue
             lower = stripped.lower()
             if (
-                "raz" in lower and "social" in lower
-                or "nombre" in lower and "organizaci" in lower
+                "raz" in lower and "social" in lower or "nombre" in lower and "organizaci" in lower
             ) and ":" in stripped:
                 organization_name = stripped.split(":", 1)[1].strip()
             elif "ruc" in lower and ":" in stripped:

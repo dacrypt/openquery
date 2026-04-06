@@ -63,6 +63,7 @@ class DdrrSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("bo.ddrr", "search_value", search_value)
 
         with browser.page(DDRR_URL) as page:

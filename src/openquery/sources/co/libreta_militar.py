@@ -49,7 +49,9 @@ class LibretaMilitarSource(BaseSource):
 
     def query(self, input: QueryInput) -> BaseModel:
         if input.document_type != DocumentType.CEDULA:
-            raise SourceError("co.libreta_militar", f"Only cedula supported, got: {input.document_type}")
+            raise SourceError(
+                "co.libreta_militar", f"Only cedula supported, got: {input.document_type}"
+            )
         return self._query(input.document_number, audit=input.audit)
 
     def _query(self, documento: str, audit: bool = False) -> LibretaMilitarResult:
@@ -60,6 +62,7 @@ class LibretaMilitarSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.libreta_militar", "cedula", documento)
 
         with browser.page(LIBRETA_URL) as page:

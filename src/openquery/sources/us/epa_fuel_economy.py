@@ -53,7 +53,9 @@ class EpaFuelEconomySource(BaseSource):
     def query(self, input: QueryInput) -> BaseModel:
         """Query EPA fuel economy data for a given make/model/year."""
         if input.document_type != DocumentType.CUSTOM:
-            raise SourceError("us.epa_fuel_economy", f"Unsupported input type: {input.document_type}")
+            raise SourceError(
+                "us.epa_fuel_economy", f"Unsupported input type: {input.document_type}"
+            )
 
         make = input.extra.get("make", "").strip()
         model = input.extra.get("model", "").strip()
@@ -92,23 +94,25 @@ class EpaFuelEconomySource(BaseSource):
                     vresp.raise_for_status()
                     vdata = vresp.json()
 
-                    vehicles.append(EpaVehicle(
-                        vehicle_id=vehicle_id,
-                        make=str(vdata.get("make", "")),
-                        model=str(vdata.get("model", "")),
-                        year=str(vdata.get("year", "")),
-                        fuel_type=str(vdata.get("fuelType", "")),
-                        city_mpg=str(vdata.get("city08", "")),
-                        highway_mpg=str(vdata.get("highway08", "")),
-                        combined_mpg=str(vdata.get("comb08", "")),
-                        co2_grams_mile=str(vdata.get("co2TailpipeGpm", "")),
-                        annual_fuel_cost=str(vdata.get("fuelCost08", "")),
-                        range_miles=str(vdata.get("range", "")),
-                        cylinders=str(vdata.get("cylinders", "")),
-                        displacement=str(vdata.get("displ", "")),
-                        drive=str(vdata.get("drive", "")),
-                        transmission=str(vdata.get("trany", "")),
-                    ))
+                    vehicles.append(
+                        EpaVehicle(
+                            vehicle_id=vehicle_id,
+                            make=str(vdata.get("make", "")),
+                            model=str(vdata.get("model", "")),
+                            year=str(vdata.get("year", "")),
+                            fuel_type=str(vdata.get("fuelType", "")),
+                            city_mpg=str(vdata.get("city08", "")),
+                            highway_mpg=str(vdata.get("highway08", "")),
+                            combined_mpg=str(vdata.get("comb08", "")),
+                            co2_grams_mile=str(vdata.get("co2TailpipeGpm", "")),
+                            annual_fuel_cost=str(vdata.get("fuelCost08", "")),
+                            range_miles=str(vdata.get("range", "")),
+                            cylinders=str(vdata.get("cylinders", "")),
+                            displacement=str(vdata.get("displ", "")),
+                            drive=str(vdata.get("drive", "")),
+                            transmission=str(vdata.get("trany", "")),
+                        )
+                    )
 
             logger.info("Found %d vehicle records for %s %s %s", len(vehicles), year, make, model)
 
@@ -122,7 +126,9 @@ class EpaFuelEconomySource(BaseSource):
             )
 
         except httpx.HTTPStatusError as e:
-            raise SourceError("us.epa_fuel_economy", f"API returned HTTP {e.response.status_code}") from e
+            raise SourceError(
+                "us.epa_fuel_economy", f"API returned HTTP {e.response.status_code}"
+            ) from e
         except httpx.RequestError as e:
             raise SourceError("us.epa_fuel_economy", f"Request failed: {e}") from e
         except Exception as e:

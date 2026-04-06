@@ -62,6 +62,7 @@ class PoliciaSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.policia", "cedula", cedula)
 
         with browser.page(POLICIA_URL) as page:
@@ -136,18 +137,27 @@ class PoliciaSource(BaseSource):
 
         body_text = page.inner_text("body")
 
-        no_records = any(phrase in body_text.lower() for phrase in [
-            "no tiene asuntos pendientes",
-            "no registra",
-            "no aparece",
-            "su cédula de ciudadanía no registra",
-        ])
+        no_records = any(
+            phrase in body_text.lower()
+            for phrase in [
+                "no tiene asuntos pendientes",
+                "no registra",
+                "no aparece",
+                "su cédula de ciudadanía no registra",
+            ]
+        )
 
-        has_records = any(phrase in body_text.lower() for phrase in [
-            "registra antecedentes",
-            "tiene asuntos pendientes",
-            "anotacion",
-        ]) and not no_records
+        has_records = (
+            any(
+                phrase in body_text.lower()
+                for phrase in [
+                    "registra antecedentes",
+                    "tiene asuntos pendientes",
+                    "anotacion",
+                ]
+            )
+            and not no_records
+        )
 
         mensaje = ""
         if no_records:

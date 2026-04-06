@@ -97,6 +97,7 @@ class GaDmvSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("us.ga_dmv", "vin", vin)
 
         with browser.page(GA_DMV_TITLE_URL) as page:
@@ -158,6 +159,7 @@ class GaDmvSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("us.ga_dmv", "plate", plate)
 
         with browser.page(GA_DMV_INSURANCE_URL) as page:

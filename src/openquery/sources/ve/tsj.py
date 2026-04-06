@@ -41,9 +41,7 @@ class TsjSource(BaseSource):
         return SourceMeta(
             name="ve.tsj",
             display_name="TSJ — Consulta de Expedientes",
-            description=(
-                "Venezuela Supreme Court case lookup: case status, chamber, and rulings"
-            ),
+            description=("Venezuela Supreme Court case lookup: case status, chamber, and rulings"),
             country="VE",
             url=TSJ_URL,
             supported_inputs=[DocumentType.CUSTOM],
@@ -71,6 +69,7 @@ class TsjSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("ve.tsj", "custom", search_term)
 
         with browser.page(TSJ_URL) as page:
@@ -163,7 +162,9 @@ class TsjSource(BaseSource):
             elif any(k in key_lower for k in ("estado", "status", "estatus")):
                 if not status:
                     status = val_clean
-            elif any(k in key_lower for k in ("decisión", "decision", "fallo", "ruling", "sentencia")):  # noqa: E501
+            elif any(
+                k in key_lower for k in ("decisión", "decision", "fallo", "ruling", "sentencia")
+            ):  # noqa: E501
                 if not ruling:
                     ruling = val_clean
 

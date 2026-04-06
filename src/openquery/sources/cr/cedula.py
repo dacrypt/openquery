@@ -34,7 +34,7 @@ class CrCedulaSource(BaseSource):
         return SourceMeta(
             name="cr.cedula",
             display_name="TSE — Consulta de Cédula",
-            description="Costa Rica voter registry: name, birth date, district (Tribunal Supremo de Elecciones)",
+            description="Costa Rica voter registry: name, birth date, district (Tribunal Supremo de Elecciones)",  # noqa: E501
             country="CR",
             url=TSE_URL,
             supported_inputs=[DocumentType.CEDULA, DocumentType.CUSTOM],
@@ -57,6 +57,7 @@ class CrCedulaSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("cr.cedula", "cedula", cedula)
 
         with browser.page(TSE_URL) as page:
@@ -68,9 +69,7 @@ class CrCedulaSource(BaseSource):
                 page.wait_for_timeout(2000)
 
                 # Fill cedula — exact IDs from site inspection
-                cedula_input = page.query_selector(
-                    '#txtcedula, input[name="txtcedula"]'
-                )
+                cedula_input = page.query_selector('#txtcedula, input[name="txtcedula"]')
                 if not cedula_input:
                     raise SourceError("cr.cedula", "Could not find cedula input field")
 
@@ -81,9 +80,7 @@ class CrCedulaSource(BaseSource):
                     collector.screenshot(page, "form_filled")
 
                 # Submit — exact ID: #btnConsultaCedula
-                submit = page.query_selector(
-                    '#btnConsultaCedula, input[name="btnConsultaCedula"]'
-                )
+                submit = page.query_selector('#btnConsultaCedula, input[name="btnConsultaCedula"]')
                 if submit:
                     submit.click()
                 else:

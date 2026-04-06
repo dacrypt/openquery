@@ -157,10 +157,7 @@ class TestParseResult:
     def test_parse_branches(self):
         source = CmfFiscalizadosSource()
         page = self._make_page(
-            "Entidad: ABC\n"
-            "Sucursal: Providencia\n"
-            "Sucursal: Las Condes\n"
-            "Sucursal: Maipú\n"
+            "Entidad: ABC\nSucursal: Providencia\nSucursal: Las Condes\nSucursal: Maipú\n"
         )
         result = source._parse_result(page, "ABC")
         assert len(result.branches) == 3

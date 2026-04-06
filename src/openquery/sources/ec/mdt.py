@@ -68,6 +68,7 @@ class MdtSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("ec.mdt", "cedula", search_value)
 
         with browser.page(MDT_URL) as page:

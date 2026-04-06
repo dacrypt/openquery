@@ -36,11 +36,14 @@ class TestSourcesEndpoint:
 
 class TestQueryEndpoint:
     def test_unknown_source(self, client):
-        resp = client.post("/api/v1/query", json={
-            "source": "xx.unknown",
-            "document_type": "cedula",
-            "document_number": "123",
-        })
+        resp = client.post(
+            "/api/v1/query",
+            json={
+                "source": "xx.unknown",
+                "document_type": "cedula",
+                "document_number": "123",
+            },
+        )
         assert resp.status_code == 200
         data = resp.json()
         assert data["ok"] is False

@@ -52,7 +52,9 @@ class UySuciveSource(BaseSource):
             raise SourceError("uy.sucive", "Matrícula (plate) is required")
         return self._query(matricula.strip(), padron, departamento, audit=input.audit)
 
-    def _query(self, matricula: str, padron: str, departamento: str, audit: bool = False) -> UySuciveResult:
+    def _query(
+        self, matricula: str, padron: str, departamento: str, audit: bool = False
+    ) -> UySuciveResult:
         from openquery.core.browser import BrowserManager
 
         browser = BrowserManager(headless=self._headless, timeout=self._timeout)
@@ -60,6 +62,7 @@ class UySuciveSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("uy.sucive", "plate", matricula)
 
         with browser.page(SUCIVE_URL) as page:
@@ -83,17 +86,13 @@ class UySuciveSource(BaseSource):
 
                 # Fill padron if provided
                 if padron:
-                    padron_input = page.query_selector(
-                        '#padron, input[name*="padron"]'
-                    )
+                    padron_input = page.query_selector('#padron, input[name*="padron"]')
                     if padron_input:
                         padron_input.fill(padron)
 
                 # Fill departamento if provided
                 if departamento:
-                    dep_select = page.query_selector(
-                        '#departamento, select[name*="departamento"]'
-                    )
+                    dep_select = page.query_selector('#departamento, select[name*="departamento"]')
                     if dep_select:
                         page.select_option(
                             '#departamento, select[name*="departamento"]',
@@ -102,6 +101,7 @@ class UySuciveSource(BaseSource):
 
                 # Solve reCAPTCHA Enterprise if present
                 from openquery.core.captcha_middleware import solve_page_captchas
+
                 solve_page_captchas(page)
 
                 if collector:
@@ -109,8 +109,7 @@ class UySuciveSource(BaseSource):
 
                 # Submit — exact ID: #id1 (Wicket framework)
                 submit = page.query_selector(
-                    '#id1, button[name*="buscarLink"], '
-                    'button:has-text("Consulta")'
+                    '#id1, button[name*="buscarLink"], button:has-text("Consulta")'
                 )
                 if submit:
                     submit.click()

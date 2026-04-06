@@ -49,9 +49,7 @@ class SamExclusionsSource(BaseSource):
 
     def query(self, input: QueryInput) -> BaseModel:
         search_term = (
-            input.extra.get("name", "")
-            or input.extra.get("company", "")
-            or input.document_number
+            input.extra.get("name", "") or input.extra.get("company", "") or input.document_number
         )
         if not search_term:
             raise SourceError(

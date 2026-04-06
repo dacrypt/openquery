@@ -70,6 +70,7 @@ class CorporacionesSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("pr.corporaciones", "search_term", search_term)
 
         with browser.page(CORPORACIONES_URL) as page:
@@ -166,6 +167,8 @@ class CorporacionesSource(BaseSource):
         result.details = details
         logger.info(
             "Corporaciones result — entity=%s, type=%s, status=%s",
-            result.entity_name, result.entity_type, result.status,
+            result.entity_name,
+            result.entity_type,
+            result.status,
         )
         return result

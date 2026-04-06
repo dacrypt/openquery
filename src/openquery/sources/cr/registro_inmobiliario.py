@@ -57,6 +57,7 @@ class RegistroInmobiliarioSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("cr.registro_inmobiliario", "finca_number", finca_number)
 
         with browser.page(RNP_URL) as page:
@@ -72,7 +73,9 @@ class RegistroInmobiliarioSource(BaseSource):
                     "input[name*='numero'], input[type='text']"
                 )
                 if not finca_input:
-                    raise SourceError("cr.registro_inmobiliario", "Could not find finca number input field")
+                    raise SourceError(
+                        "cr.registro_inmobiliario", "Could not find finca number input field"
+                    )
 
                 finca_input.fill(finca_number)
                 logger.info("Filled finca number: %s", finca_number)
@@ -81,7 +84,7 @@ class RegistroInmobiliarioSource(BaseSource):
                     collector.screenshot(page, "form_filled")
 
                 submit = page.query_selector(
-                    "button[type='submit'], input[type='submit'], button[id*='buscar'], button[id*='consultar']"
+                    "button[type='submit'], input[type='submit'], button[id*='buscar'], button[id*='consultar']"  # noqa: E501
                 )
                 if submit:
                     submit.click()

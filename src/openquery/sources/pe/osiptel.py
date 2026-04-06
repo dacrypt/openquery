@@ -67,6 +67,7 @@ class OsiptelSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("pe.osiptel", "operador", search_term)
 
         with browser.page(OSIPTEL_URL) as page:
@@ -148,7 +149,11 @@ class OsiptelSource(BaseSource):
                 lower = stripped.lower()
                 if ("operador" in lower or "empresa" in lower) and ":" in stripped:
                     result.operator_name = stripped.split(":", 1)[1].strip()
-                elif ("servicio" in lower or "tipo" in lower) and ":" in stripped and not result.service_type:
+                elif (
+                    ("servicio" in lower or "tipo" in lower)
+                    and ":" in stripped
+                    and not result.service_type
+                ):
                     result.service_type = stripped.split(":", 1)[1].strip()
 
         return result

@@ -120,9 +120,7 @@ class TestInttQuery:
 
         src = InttSource()
         src._query = MagicMock(return_value=InttResult(placa="ABC123"))
-        result = src.query(
-            QueryInput(document_type=DocumentType.PLATE, document_number="abc123")
-        )
+        result = src.query(QueryInput(document_type=DocumentType.PLATE, document_number="abc123"))
         src._query.assert_called_once_with("ABC123", audit=False)
         assert result.placa == "ABC123"
 

@@ -65,9 +65,7 @@ class TarifasEnergiaSource(BaseSource):
             conditions = []
             if municipio:
                 prefix = municipio[:5]
-                conditions.append(
-                    f"starts_with(upper(operador_de_red), '{prefix}')"
-                )
+                conditions.append(f"starts_with(upper(operador_de_red), '{prefix}')")
             if estrato:
                 conditions.append(f"nivel='{estrato}'")
 
@@ -85,14 +83,16 @@ class TarifasEnergiaSource(BaseSource):
 
             tarifas = []
             for row in data:
-                tarifas.append(TarifaEnergia(
-                    estrato=row.get("nivel", row.get("estrato", "")),
-                    componente=row.get("periodo", row.get("componente", "")),
-                    valor_kwh=row.get("cu_total", row.get("valor_kwh", "")),
-                    empresa=row.get("operador_de_red", row.get("empresa", "")),
-                    departamento=row.get("a_o", row.get("departamento", "")),
-                    municipio=row.get("operador_de_red", row.get("municipio", "")),
-                ))
+                tarifas.append(
+                    TarifaEnergia(
+                        estrato=row.get("nivel", row.get("estrato", "")),
+                        componente=row.get("periodo", row.get("componente", "")),
+                        valor_kwh=row.get("cu_total", row.get("valor_kwh", "")),
+                        empresa=row.get("operador_de_red", row.get("empresa", "")),
+                        departamento=row.get("a_o", row.get("departamento", "")),
+                        municipio=row.get("operador_de_red", row.get("municipio", "")),
+                    )
+                )
 
             query_desc = municipio or f"estrato {estrato}"
 

@@ -80,9 +80,15 @@ class ArGeorefSource(BaseSource):
                 queried_at=datetime.now(),
                 direccion=direccion,
                 direccion_normalizada=d.get("nomenclatura", ""),
-                provincia=ubicacion.get("provincia", {}).get("nombre", "") if isinstance(ubicacion.get("provincia"), dict) else "",
-                departamento=ubicacion.get("departamento", {}).get("nombre", "") if isinstance(ubicacion.get("departamento"), dict) else "",
-                localidad=ubicacion.get("localidad", {}).get("nombre", "") if isinstance(ubicacion.get("localidad"), dict) else "",
+                provincia=ubicacion.get("provincia", {}).get("nombre", "")
+                if isinstance(ubicacion.get("provincia"), dict)
+                else "",
+                departamento=ubicacion.get("departamento", {}).get("nombre", "")
+                if isinstance(ubicacion.get("departamento"), dict)
+                else "",
+                localidad=ubicacion.get("localidad", {}).get("nombre", "")
+                if isinstance(ubicacion.get("localidad"), dict)
+                else "",
                 latitud=ubicacion.get("lat", 0.0) or 0.0,
                 longitud=ubicacion.get("lon", 0.0) or 0.0,
                 total_resultados=total,

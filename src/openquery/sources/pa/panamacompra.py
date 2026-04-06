@@ -131,17 +131,19 @@ class PanamaCompraSource(BaseSource):
                         currency = award_value.get("currency", currency)
                         value_str = str(amount) if amount != "" else ""
 
-            contracts.append(PanamaCompraContract(
-                ocid=ocid,
-                title=title,
-                description=description,
-                status=status,
-                value=value_str,
-                currency=currency,
-                buyer=buyer,
-                supplier=supplier,
-                date=date,
-            ))
+            contracts.append(
+                PanamaCompraContract(
+                    ocid=ocid,
+                    title=title,
+                    description=description,
+                    status=status,
+                    value=value_str,
+                    currency=currency,
+                    buyer=buyer,
+                    supplier=supplier,
+                    date=date,
+                )
+            )
 
         total = data.get("count", data.get("total", len(contracts)))
         return PanamaCompraResult(

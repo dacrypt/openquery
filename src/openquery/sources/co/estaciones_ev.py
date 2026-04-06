@@ -58,16 +58,12 @@ class EstacionesEVSource(BaseSource):
         ciudad = input.extra.get("ciudad", "").strip()
 
         try:
-            conditions = [
-                "tipo_de_estacion='Estación de carga eléctrica EPM'"
-            ]
+            conditions = ["tipo_de_estacion='Estación de carga eléctrica EPM'"]
             if ciudad:
                 # Socrata upper() preserves accents, so use starts_with
                 # to handle "Medellin" matching "Medellín"
                 prefix = ciudad.strip()[:5].upper()
-                conditions.append(
-                    f"starts_with(upper(ciudad), '{prefix}')"
-                )
+                conditions.append(f"starts_with(upper(ciudad), '{prefix}')")
 
             where_clause = " AND ".join(conditions)
             params: dict[str, str] = {"$where": where_clause, "$limit": "500"}
@@ -83,15 +79,17 @@ class EstacionesEVSource(BaseSource):
 
             estaciones = []
             for row in data:
-                estaciones.append({
-                    "nombre": row.get("estaci_n", ""),
-                    "direccion": row.get("direcci_n", ""),
-                    "tipo": row.get("tipo", ""),
-                    "horario": row.get("horario", ""),
-                    "conector": row.get("est_ndar_cargador", ""),
-                    "latitud": _fix_coord(row.get("latitud", "")),
-                    "longitud": _fix_coord(row.get("longitud", "")),
-                })
+                estaciones.append(
+                    {
+                        "nombre": row.get("estaci_n", ""),
+                        "direccion": row.get("direcci_n", ""),
+                        "tipo": row.get("tipo", ""),
+                        "horario": row.get("horario", ""),
+                        "conector": row.get("est_ndar_cargador", ""),
+                        "latitud": _fix_coord(row.get("latitud", "")),
+                        "longitud": _fix_coord(row.get("longitud", "")),
+                    }
+                )
 
             return EstacionEVResult(
                 ciudad=ciudad or "ALL",

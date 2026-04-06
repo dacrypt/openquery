@@ -65,6 +65,7 @@ class SbsSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("pe.sbs", "nombre", name)
 
         with browser.page(SBS_URL) as page:

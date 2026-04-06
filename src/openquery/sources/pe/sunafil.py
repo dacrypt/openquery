@@ -61,6 +61,7 @@ class SunafilSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("pe.sunafil", "custom", ruc)
 
         with browser.page(SUNAFIL_URL) as page:
@@ -125,7 +126,8 @@ class SunafilSource(BaseSource):
         # Extract employer name
         m = re.search(
             r"(?:Raz[oó]n Social|Empleador|Empresa)[:\s]+([^\n]+)",
-            body_text, re.IGNORECASE,
+            body_text,
+            re.IGNORECASE,
         )
         if m:
             result.employer_name = m.group(1).strip()
@@ -159,7 +161,8 @@ class SunafilSource(BaseSource):
         if not inspections:
             m2 = re.search(
                 r"(\d+)\s*(?:inspecci[oó]n|resultado|registro)",
-                body_text, re.IGNORECASE,
+                body_text,
+                re.IGNORECASE,
             )
             if m2:
                 result.inspections_count = int(m2.group(1))

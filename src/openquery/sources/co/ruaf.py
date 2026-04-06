@@ -66,7 +66,9 @@ class RuafSource(BaseSource):
         for attempt in range(MAX_RETRIES):
             try:
                 return self._query(
-                    input.document_type, input.document_number, audit=input.audit,
+                    input.document_type,
+                    input.document_number,
+                    audit=input.audit,
                 )
             except (SourceError, CaptchaError) as e:
                 last_error = e
@@ -74,7 +76,10 @@ class RuafSource(BaseSource):
         raise last_error  # type: ignore[misc]
 
     def _query(
-        self, doc_type: DocumentType, doc_number: str, audit: bool = False,
+        self,
+        doc_type: DocumentType,
+        doc_number: str,
+        audit: bool = False,
     ) -> RuafResult:
         from openquery.core.browser import BrowserManager
 
@@ -83,6 +88,7 @@ class RuafSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.ruaf", doc_type.value, doc_number)
 
         with browser.page(RUAF_URL) as page:
@@ -191,6 +197,7 @@ class RuafSource(BaseSource):
         solvers = [OCRSolver(max_chars=6)]
         try:
             from openquery.core.captcha import PaddleOCRSolver
+
             solvers.insert(0, PaddleOCRSolver(max_chars=6))
         except Exception:
             pass
@@ -210,7 +217,10 @@ class RuafSource(BaseSource):
             raise CaptchaError("co.ruaf", "Could not find CAPTCHA input field")
 
     def _parse_result(
-        self, page, doc_type: DocumentType, doc_number: str,
+        self,
+        page,
+        doc_type: DocumentType,
+        doc_number: str,
     ) -> RuafResult:
         """Parse the result page for affiliation records."""
         from datetime import datetime
@@ -219,21 +229,27 @@ class RuafSource(BaseSource):
         body_lower = body_text.lower()
 
         # Check for errors
-        is_error = any(phrase in body_lower for phrase in [
-            "captcha incorrecto",
-            "datos incorrectos",
-            "intente nuevamente",
-        ])
+        is_error = any(
+            phrase in body_lower
+            for phrase in [
+                "captcha incorrecto",
+                "datos incorrectos",
+                "intente nuevamente",
+            ]
+        )
         if is_error:
             raise CaptchaError("co.ruaf", "CAPTCHA or form validation failed")
 
         # Check for no records
-        no_records = any(phrase in body_lower for phrase in [
-            "no se encontr",
-            "sin registros",
-            "no registra afiliaciones",
-            "no aparece",
-        ])
+        no_records = any(
+            phrase in body_lower
+            for phrase in [
+                "no se encontr",
+                "sin registros",
+                "no registra afiliaciones",
+                "no aparece",
+            ]
+        )
 
         # Try to extract name
         nombre = ""
@@ -251,17 +267,17 @@ class RuafSource(BaseSource):
         for row in rows:
             cells = row.query_selector_all("td")
             text = row.inner_text().strip().lower()
-            if len(cells) >= 3 and any(
-                sub in text for sub in ["salud", "pensi", "riesgo", "caja"]
-            ):
+            if len(cells) >= 3 and any(sub in text for sub in ["salud", "pensi", "riesgo", "caja"]):
                 cell_texts = [c.inner_text().strip() for c in cells]
-                afiliaciones.append(RuafAfiliacion(
-                    subsistema=cell_texts[0] if len(cell_texts) > 0 else "",
-                    administradora=cell_texts[1] if len(cell_texts) > 1 else "",
-                    estado=cell_texts[2] if len(cell_texts) > 2 else "",
-                    regimen=cell_texts[3] if len(cell_texts) > 3 else "",
-                    fecha_afiliacion=cell_texts[4] if len(cell_texts) > 4 else "",
-                ))
+                afiliaciones.append(
+                    RuafAfiliacion(
+                        subsistema=cell_texts[0] if len(cell_texts) > 0 else "",
+                        administradora=cell_texts[1] if len(cell_texts) > 1 else "",
+                        estado=cell_texts[2] if len(cell_texts) > 2 else "",
+                        regimen=cell_texts[3] if len(cell_texts) > 3 else "",
+                        fecha_afiliacion=cell_texts[4] if len(cell_texts) > 4 else "",
+                    )
+                )
 
         mensaje = ""
         if no_records:

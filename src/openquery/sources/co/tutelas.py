@@ -69,9 +69,7 @@ class TutelasSource(BaseSource):
 
         return self._query(query_term, tipo, audit=input.audit)
 
-    def _query(
-        self, query: str, tipo: str, audit: bool = False
-    ) -> TutelasResult:
+    def _query(self, query: str, tipo: str, audit: bool = False) -> TutelasResult:
         from openquery.core.browser import BrowserManager
 
         browser = BrowserManager(headless=self._headless, timeout=self._timeout)
@@ -79,6 +77,7 @@ class TutelasSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.tutelas", tipo, query)
 
         with browser.page(TUTELAS_URL) as page:
@@ -87,9 +86,7 @@ class TutelasSource(BaseSource):
                     collector.attach(page)
 
                 # Wait for the SPA form — ARIA textboxes rendered by Angular/React
-                search_input = page.get_by_role(
-                    "textbox", name="Nombre"
-                )
+                search_input = page.get_by_role("textbox", name="Nombre")
                 search_input.wait_for(state="visible", timeout=15000)
                 page.wait_for_timeout(2000)
 
@@ -101,9 +98,7 @@ class TutelasSource(BaseSource):
                     collector.screenshot(page, "form_filled")
 
                 # Submit — target the elevated submit button, not the nav icon
-                submit_btn = page.locator(
-                    'button.v-btn--has-bg[aria-label*="onsultar"]'
-                )
+                submit_btn = page.locator('button.v-btn--has-bg[aria-label*="onsultar"]')
                 submit_btn.click()
 
                 page.wait_for_timeout(5000)
@@ -131,13 +126,16 @@ class TutelasSource(BaseSource):
         body_text = page.inner_text("body")
         body_lower = body_text.lower()
 
-        no_records = any(phrase in body_lower for phrase in [
-            "no se encontr",
-            "sin resultados",
-            "no hay resultados",
-            "0 resultados",
-            "no registra",
-        ])
+        no_records = any(
+            phrase in body_lower
+            for phrase in [
+                "no se encontr",
+                "sin resultados",
+                "no hay resultados",
+                "0 resultados",
+                "no registra",
+            ]
+        )
 
         nombre = ""
         for line in body_text.split("\n"):
@@ -150,9 +148,7 @@ class TutelasSource(BaseSource):
 
         # Parse tutela records from table rows
         tutelas: list[TutelaEntry] = []
-        rows = page.query_selector_all(
-            "table tbody tr, .proceso-row, .resultado-item, .tutela-row"
-        )
+        rows = page.query_selector_all("table tbody tr, .proceso-row, .resultado-item, .tutela-row")
 
         for row in rows:
             text = row.inner_text()
@@ -198,12 +194,14 @@ class TutelasSource(BaseSource):
                 elif "accionado" in lower and ":" in stripped:
                     accionado = stripped.split(":", 1)[1].strip()
             if radicado or despacho:
-                tutelas.append(TutelaEntry(
-                    radicado=radicado,
-                    despacho=despacho,
-                    accionante=accionante,
-                    accionado=accionado,
-                ))
+                tutelas.append(
+                    TutelaEntry(
+                        radicado=radicado,
+                        despacho=despacho,
+                        accionante=accionante,
+                        accionado=accionado,
+                    )
+                )
 
         total_tutelas = len(tutelas)
 

@@ -120,17 +120,23 @@ class RuntSource(BaseSource):
         """Query RUNT by VIN, plate, or owner cedula."""
         if input.document_type == DocumentType.VIN:
             return self._query_with_retries(
-                tipo_consulta="2", campo="vin", valor=input.document_number,
+                tipo_consulta="2",
+                campo="vin",
+                valor=input.document_number,
                 audit=input.audit,
             )
         elif input.document_type == DocumentType.PLATE:
             return self._query_with_retries(
-                tipo_consulta="1", campo="placa", valor=input.document_number,
+                tipo_consulta="1",
+                campo="placa",
+                valor=input.document_number,
                 audit=input.audit,
             )
         elif input.document_type == DocumentType.CEDULA:
             return self._query_with_retries(
-                tipo_consulta="1", campo="documento", valor=input.document_number,
+                tipo_consulta="1",
+                campo="documento",
+                valor=input.document_number,
                 tipo_documento=input.extra.get("tipo_documento", "C"),
                 audit=input.audit,
             )
@@ -138,7 +144,11 @@ class RuntSource(BaseSource):
             raise SourceError("co.runt", f"Unsupported input type: {input.document_type}")
 
     def _query_with_retries(
-        self, tipo_consulta: str, campo: str, valor: str, tipo_documento: str = "C",
+        self,
+        tipo_consulta: str,
+        campo: str,
+        valor: str,
+        tipo_documento: str = "C",
         audit: bool = False,
     ) -> RuntResult:
         """Execute query with captcha retry logic."""
@@ -151,6 +161,7 @@ class RuntSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.runt", campo, valor)
 
         with browser.page(RUNT_PAGE, wait_until="networkidle") as page:
@@ -160,7 +171,11 @@ class RuntSource(BaseSource):
             for attempt in range(1, MAX_RETRIES + 1):
                 try:
                     logger.info(
-                        "RUNT attempt %d/%d for %s=%s", attempt, MAX_RETRIES, campo, valor,
+                        "RUNT attempt %d/%d for %s=%s",
+                        attempt,
+                        MAX_RETRIES,
+                        campo,
+                        valor,
                     )
 
                     # Step 1: Generate captcha
@@ -175,7 +190,12 @@ class RuntSource(BaseSource):
 
                     # Step 3: Execute query
                     data = self._execute_query(
-                        page, tipo_consulta, campo, valor, captcha_text, captcha_id,
+                        page,
+                        tipo_consulta,
+                        campo,
+                        valor,
+                        captcha_text,
+                        captcha_id,
                         tipo_documento=tipo_documento,
                     )
 
@@ -380,15 +400,23 @@ class RuntSource(BaseSource):
             # SOAT
             soat_vigente=gb(["soatVigente", "vigenciaSoat"]),
             soat_aseguradora=g(["aseguradora", "soatAseguradora", "nombreAseguradora"]),
-            soat_vencimiento=g([
-                "fechaVencimientoSoat", "soatFechaVencimiento", "vencimientoSoat",
-            ]),
+            soat_vencimiento=g(
+                [
+                    "fechaVencimientoSoat",
+                    "soatFechaVencimiento",
+                    "vencimientoSoat",
+                ]
+            ),
             # RTM (tecnicomecanica)
             tecnomecanica_vigente=gb(["rtmVigente", "vigenciaRTM", "tecnomecanicaVigente"]),
-            tecnomecanica_vencimiento=g([
-                "fechaVencimientoRTM", "rtmFechaVencimiento", "vencimientoRTM",
-                "tecnomecanicaVencimiento",
-            ]),
+            tecnomecanica_vencimiento=g(
+                [
+                    "fechaVencimientoRTM",
+                    "rtmFechaVencimiento",
+                    "vencimientoRTM",
+                    "tecnomecanicaVencimiento",
+                ]
+            ),
             # Registration
             fecha_matricula=g(["fechaMatricula"]),
             fecha_registro=g(["fechaRegistro"]),

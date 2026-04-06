@@ -34,9 +34,7 @@ class RegistroPublicoSource(BaseSource):
         return SourceMeta(
             name="pa.registro_publico",
             display_name="Registro Público — Consulta de Sociedades",
-            description=(
-                "Panama company registry lookup via Registro Público (rp.gob.pa)"
-            ),
+            description=("Panama company registry lookup via Registro Público (rp.gob.pa)"),
             country="PA",
             url=PORTAL_URL,
             supported_inputs=[DocumentType.CUSTOM],
@@ -63,6 +61,7 @@ class RegistroPublicoSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("pa.registro_publico", "search", search_term)
 
         with browser.page(PORTAL_URL) as page:

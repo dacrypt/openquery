@@ -38,7 +38,7 @@ class ConservadorSource(BaseSource):
         return SourceMeta(
             name="cl.conservador",
             display_name="Conservador de Bienes Raíces",
-            description="Chile property registry: property records and mortgages by name and municipality",
+            description="Chile property registry: property records and mortgages by name and municipality",  # noqa: E501
             country="CL",
             url=CONSERVADOR_URL,
             supported_inputs=[DocumentType.CUSTOM],
@@ -60,7 +60,9 @@ class ConservadorSource(BaseSource):
             )
 
         search_term = " ".join(filter(None, [name, municipality]))
-        return self._query(name=name, municipality=municipality, search_term=search_term, audit=input.audit)
+        return self._query(
+            name=name, municipality=municipality, search_term=search_term, audit=input.audit
+        )
 
     def _query(
         self,
@@ -76,6 +78,7 @@ class ConservadorSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("cl.conservador", "nombre", search_term)
 
         with browser.page(CONSERVADOR_URL) as page:

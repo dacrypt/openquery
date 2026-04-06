@@ -53,7 +53,9 @@ class EmpresasGoogleSource(BaseSource):
         ubicacion = input.extra.get("ubicacion", "Colombia").strip()
 
         if not query:
-            raise SourceError("co.empresas_google", "Must provide extra['query'] or document_number")
+            raise SourceError(
+                "co.empresas_google", "Must provide extra['query'] or document_number"
+            )
 
         return self._query(query, ubicacion, audit=input.audit)
 
@@ -65,6 +67,7 @@ class EmpresasGoogleSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.empresas_google", "query", query)
 
         search_query = f"{query} {ubicacion}" if ubicacion else query
@@ -110,15 +113,13 @@ class EmpresasGoogleSource(BaseSource):
 
         # Google Maps renders results as div cards with role="article" or specific classes
         result_items = page.query_selector_all(
-            'div[role="article"], '
-            'a[href*="/maps/place/"], '
-            'div[class*="Nv2PK"]'
+            'div[role="article"], a[href*="/maps/place/"], div[class*="Nv2PK"]'
         )
 
         for item in result_items[:20]:  # Limit to first 20 results
             try:
                 text = item.inner_text()
-                lines = [l.strip() for l in text.split("\n") if l.strip()]
+                lines = [ln.strip() for ln in text.split("\n") if ln.strip()]
 
                 if not lines:
                     continue
@@ -146,7 +147,10 @@ class EmpresasGoogleSource(BaseSource):
                         continue
 
                     # Address-like lines (contain numbers and common words)
-                    if any(kw in line.lower() for kw in ["calle", "carrera", "cra", "cl", "av", "#", "no."]):
+                    if any(
+                        kw in line.lower()
+                        for kw in ["calle", "carrera", "cra", "cl", "av", "#", "no."]
+                    ):
                         if not direccion:
                             direccion = line
                             continue
@@ -157,19 +161,24 @@ class EmpresasGoogleSource(BaseSource):
                         continue
 
                     # Hours pattern
-                    if any(kw in line.lower() for kw in ["abierto", "cerrado", "cierra", "abre", "horario"]):
+                    if any(
+                        kw in line.lower()
+                        for kw in ["abierto", "cerrado", "cierra", "abre", "horario"]
+                    ):
                         horario = line
 
                 if nombre and nombre != query:
-                    empresas.append(EmpresaGoogle(
-                        nombre=nombre,
-                        direccion=direccion,
-                        telefono=telefono,
-                        rating=rating,
-                        total_resenas=total_resenas,
-                        categoria=categoria,
-                        horario=horario,
-                    ))
+                    empresas.append(
+                        EmpresaGoogle(
+                            nombre=nombre,
+                            direccion=direccion,
+                            telefono=telefono,
+                            rating=rating,
+                            total_resenas=total_resenas,
+                            categoria=categoria,
+                            horario=horario,
+                        )
+                    )
             except Exception:
                 continue
 

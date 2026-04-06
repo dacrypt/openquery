@@ -75,6 +75,7 @@ class TestSpensionesSourceMeta:
 
     def test_meta_supported_inputs(self):
         from openquery.sources.base import DocumentType
+
         source = SpensionesSource()
         assert DocumentType.CUSTOM in source.meta().supported_inputs
 
@@ -82,7 +83,9 @@ class TestSpensionesSourceMeta:
 class TestParseResult:
     """Test _parse_result parsing logic with mocked page."""
 
-    def _make_page(self, body_text: str, table_rows: list[tuple[str, str]] | None = None) -> MagicMock:
+    def _make_page(
+        self, body_text: str, table_rows: list[tuple[str, str]] | None = None
+    ) -> MagicMock:
         mock_page = MagicMock()
         mock_page.inner_text.return_value = body_text
 
@@ -106,10 +109,7 @@ class TestParseResult:
     def test_parse_afiliado_afp(self):
         source = SpensionesSource()
         page = self._make_page(
-            "Resultado de consulta\n"
-            "AFP: Habitat\n"
-            "Estado de Afiliación: AFILIADO\n"
-            "AFC: AFILIADO\n"
+            "Resultado de consulta\nAFP: Habitat\nEstado de Afiliación: AFILIADO\nAFC: AFILIADO\n"
         )
         result = source._parse_result(page, "12345678-9")
         assert result.rut == "12345678-9"

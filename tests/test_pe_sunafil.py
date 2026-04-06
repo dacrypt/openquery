@@ -83,6 +83,7 @@ class TestSunafilSourceMeta:
 
     def test_meta_supported_inputs(self):
         from openquery.sources.base import DocumentType
+
         source = SunafilSource()
         assert DocumentType.CUSTOM in source.meta().supported_inputs
 
@@ -114,9 +115,7 @@ class TestParseResult:
     def test_parse_employer_name_from_body(self):
         source = SunafilSource()
         page = self._make_page(
-            "Razón Social: EMPRESA TEST SAC\n"
-            "RUC: 20123456789\n"
-            "2 inspecciones encontradas\n"
+            "Razón Social: EMPRESA TEST SAC\nRUC: 20123456789\n2 inspecciones encontradas\n"
         )
         result = source._parse_result(page, "20123456789")
         assert result.ruc == "20123456789"

@@ -3,13 +3,12 @@
 from __future__ import annotations
 
 from datetime import datetime
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
 import pytest
 
 from openquery.exceptions import SourceError
 from openquery.sources.base import DocumentType, QueryInput
-
 
 # ===========================================================================
 # TestPaCssPatronoResult — model tests
@@ -131,8 +130,10 @@ class TestPaCssPatronoIntegration:
         from openquery.sources.pa.css_patrono import PaCssPatronoSource
 
         src = PaCssPatronoSource(headless=True)
-        result = src.query(QueryInput(
-            document_type=DocumentType.CUSTOM,
-            document_number="Copa Airlines",
-        ))
+        result = src.query(
+            QueryInput(
+                document_type=DocumentType.CUSTOM,
+                document_number="Copa Airlines",
+            )
+        )
         assert isinstance(result.search_term, str)

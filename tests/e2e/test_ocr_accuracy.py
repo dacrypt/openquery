@@ -32,12 +32,14 @@ def load_captcha_samples() -> list[tuple[str, bytes, str, str]]:
         png_path = json_path.with_suffix(".png")
         if not png_path.exists():
             continue
-        samples.append((
-            meta["id"],
-            png_path.read_bytes(),
-            gt,
-            meta.get("ocr_result", ""),
-        ))
+        samples.append(
+            (
+                meta["id"],
+                png_path.read_bytes(),
+                gt,
+                meta.get("ocr_result", ""),
+            )
+        )
     return samples
 
 
@@ -90,8 +92,7 @@ class TestOCRAccuracy:
         print(f"\nWord accuracy: {correct}/{total} = {accuracy:.0%}")
 
         assert accuracy >= 0.60, (
-            f"Word accuracy {accuracy:.0%} is below 60% threshold. "
-            f"{correct}/{total} correct."
+            f"Word accuracy {accuracy:.0%} is below 60% threshold. {correct}/{total} correct."
         )
 
     def test_character_accuracy_above_threshold(self, solver):
@@ -128,7 +129,8 @@ class TestOCRAccuracy:
         This test verifies the math holds with our actual accuracy.
         """
         correct = sum(
-            1 for _, image_bytes, ground_truth, _ in SAMPLES
+            1
+            for _, image_bytes, ground_truth, _ in SAMPLES
             if solver.solve(image_bytes) == ground_truth
         )
         p = correct / len(SAMPLES)

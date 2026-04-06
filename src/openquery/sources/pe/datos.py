@@ -35,7 +35,7 @@ class PeDatosSource(BaseSource):
         return SourceMeta(
             name="pe.datos",
             display_name="Datos Abiertos PE — Portal de Datos",
-            description="Peru open data catalog search (datosabiertos.gob.pe CKAN API, 4452+ datasets)",
+            description="Peru open data catalog search (datosabiertos.gob.pe CKAN API, 4452+ datasets)",  # noqa: E501
             country="PE",
             url="https://www.datosabiertos.gob.pe/",
             supported_inputs=[DocumentType.CUSTOM],
@@ -74,15 +74,17 @@ class PeDatosSource(BaseSource):
             datasets = []
             for r in results:
                 org = r.get("organization", {})
-                datasets.append(CkanDataset(
-                    id=r.get("id", ""),
-                    title=r.get("title", ""),
-                    name=r.get("name", ""),
-                    notes=(r.get("notes", "") or "")[:200],
-                    organization=org.get("title", "") if isinstance(org, dict) else "",
-                    num_resources=r.get("num_resources", 0),
-                    url=f"https://www.datosabiertos.gob.pe/dataset/{r.get('name', '')}",
-                ))
+                datasets.append(
+                    CkanDataset(
+                        id=r.get("id", ""),
+                        title=r.get("title", ""),
+                        name=r.get("name", ""),
+                        notes=(r.get("notes", "") or "")[:200],
+                        organization=org.get("title", "") if isinstance(org, dict) else "",
+                        num_resources=r.get("num_resources", 0),
+                        url=f"https://www.datosabiertos.gob.pe/dataset/{r.get('name', '')}",
+                    )
+                )
 
             return CkanSearchResult(
                 queried_at=datetime.now(),

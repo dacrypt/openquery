@@ -10,7 +10,6 @@ import pytest
 from openquery.exceptions import SourceError
 from openquery.sources.base import DocumentType, QueryInput
 
-
 # ===========================================================================
 # TestPortalTransparenciaResult — model tests
 # ===========================================================================
@@ -30,7 +29,10 @@ class TestPortalTransparenciaResult:
         assert isinstance(r.queried_at, datetime)
 
     def test_json_roundtrip(self):
-        from openquery.models.br.portal_transparencia import BrPortalTransparenciaResult, TransparenciaRecord
+        from openquery.models.br.portal_transparencia import (
+            BrPortalTransparenciaResult,
+            TransparenciaRecord,
+        )
 
         r = BrPortalTransparenciaResult(
             search_term="João Silva",
@@ -145,8 +147,10 @@ class TestPortalTransparenciaParseResult:
         mock_resp.json.return_value = MOCK_SERVIDORES_RESPONSE
         mock_resp.raise_for_status = MagicMock()
 
-        with patch("httpx.Client") as mock_client_cls, \
-             patch("openquery.sources.br.portal_transparencia.get_settings") as mock_settings:
+        with (
+            patch("httpx.Client") as mock_client_cls,
+            patch("openquery.sources.br.portal_transparencia.get_settings") as mock_settings,
+        ):
             mock_settings.return_value.br_transparencia_api_key = "test-key"
             mock_client = MagicMock()
             mock_client_cls.return_value.__enter__.return_value = mock_client
@@ -193,8 +197,10 @@ class TestPortalTransparenciaParseResult:
             "401", request=MagicMock(), response=mock_resp
         )
 
-        with patch("httpx.Client") as mock_client_cls, \
-             patch("openquery.sources.br.portal_transparencia.get_settings") as mock_settings:
+        with (
+            patch("httpx.Client") as mock_client_cls,
+            patch("openquery.sources.br.portal_transparencia.get_settings") as mock_settings,
+        ):
             mock_settings.return_value.br_transparencia_api_key = ""
             mock_client = MagicMock()
             mock_client_cls.return_value.__enter__.return_value = mock_client
@@ -214,8 +220,10 @@ class TestPortalTransparenciaParseResult:
             "503", request=MagicMock(), response=mock_resp
         )
 
-        with patch("httpx.Client") as mock_client_cls, \
-             patch("openquery.sources.br.portal_transparencia.get_settings") as mock_settings:
+        with (
+            patch("httpx.Client") as mock_client_cls,
+            patch("openquery.sources.br.portal_transparencia.get_settings") as mock_settings,
+        ):
             mock_settings.return_value.br_transparencia_api_key = ""
             mock_client = MagicMock()
             mock_client_cls.return_value.__enter__.return_value = mock_client

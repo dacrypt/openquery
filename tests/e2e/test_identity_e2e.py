@@ -27,14 +27,20 @@ def _get_source(name: str):
         return get_source(name, timeout=45.0)
 
 
-def _query(source_name: str, doc_type: DocumentType = DocumentType.CEDULA,
-           doc_number: str = CEDULA_PUBLIC, **extra):
+def _query(
+    source_name: str,
+    doc_type: DocumentType = DocumentType.CEDULA,
+    doc_number: str = CEDULA_PUBLIC,
+    **extra,
+):
     src = _get_source(source_name)
-    return src.query(QueryInput(
-        document_type=doc_type,
-        document_number=doc_number,
-        extra=extra,
-    ))
+    return src.query(
+        QueryInput(
+            document_type=doc_type,
+            document_number=doc_number,
+            extra=extra,
+        )
+    )
 
 
 def _safe_query(source_name: str, **kwargs):
@@ -45,9 +51,19 @@ def _safe_query(source_name: str, **kwargs):
         pytest.skip(f"CAPTCHA failed for {source_name}: {e}")
     except SourceError as e:
         msg = str(e).lower()
-        if any(k in msg for k in ("timeout", "navegación", "ssl", "certificate",
-                                   "http 404", "http 403", "could not",
-                                   "deprecated")):
+        if any(
+            k in msg
+            for k in (
+                "timeout",
+                "navegación",
+                "ssl",
+                "certificate",
+                "http 404",
+                "http 403",
+                "could not",
+                "deprecated",
+            )
+        ):
             pytest.skip(f"Transient failure for {source_name}: {e}")
         raise
     except Exception as e:

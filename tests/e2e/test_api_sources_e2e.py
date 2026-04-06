@@ -22,8 +22,8 @@ from openquery.sources.base import DocumentType, QueryInput
 # ---------------------------------------------------------------------------
 # Public test data
 # ---------------------------------------------------------------------------
-CEDULA_PUBLIC = "79940745"        # Iván Duque — ex-president (SIGEP public)
-NIT_PUBLIC = "899999068"          # Ecopetrol S.A.
+CEDULA_PUBLIC = "79940745"  # Iván Duque — ex-president (SIGEP public)
+NIT_PUBLIC = "899999068"  # Ecopetrol S.A.
 VIN_NHTSA = "1HGCM82633A004352"  # Honda Accord — NHTSA example VIN
 
 
@@ -33,11 +33,13 @@ VIN_NHTSA = "1HGCM82633A004352"  # Honda Accord — NHTSA example VIN
 def _query(source_name: str, doc_type: DocumentType, doc_number: str, **extra):
     src = get_source(source_name)
     try:
-        return src.query(QueryInput(
-            document_type=doc_type,
-            document_number=doc_number,
-            extra=extra,
-        ))
+        return src.query(
+            QueryInput(
+                document_type=doc_type,
+                document_number=doc_number,
+                extra=extra,
+            )
+        )
     except SourceError as e:
         msg = str(e).lower()
         if "ssl" in msg or "certificate" in msg:
@@ -107,8 +109,12 @@ class TestNhtsaRecallsE2E:
 
     def test_tesla_recalls(self):
         result = _query(
-            "us.nhtsa_recalls", DocumentType.CUSTOM, "tesla_model_y",
-            make="TESLA", model="Model Y", year="2024",
+            "us.nhtsa_recalls",
+            DocumentType.CUSTOM,
+            "tesla_model_y",
+            make="TESLA",
+            model="Model Y",
+            year="2024",
         )
         assert hasattr(result, "recalls")
         print(f"\nNHTSA Recalls Tesla Model Y 2024: {len(result.recalls)} recalls")
@@ -123,8 +129,12 @@ class TestNhtsaComplaintsE2E:
     def test_tesla_complaints(self):
         # NHTSA uses "MODEL 3" not "Model 3" — uppercase with space
         result = _query(
-            "us.nhtsa_complaints", DocumentType.CUSTOM, "tesla_model_3",
-            make="TESLA", model="MODEL 3", year="2023",
+            "us.nhtsa_complaints",
+            DocumentType.CUSTOM,
+            "tesla_model_3",
+            make="TESLA",
+            model="MODEL 3",
+            year="2023",
         )
         assert hasattr(result, "complaints")
         assert result.total_complaints > 0
@@ -138,8 +148,12 @@ class TestEpaFuelEconomyE2E:
     def test_toyota_camry_fuel_economy(self):
         """Toyota Camry — widely available in EPA database."""
         result = _query(
-            "us.epa_fuel_economy", DocumentType.CUSTOM, "camry",
-            make="Toyota", model="Camry", year="2024",
+            "us.epa_fuel_economy",
+            DocumentType.CUSTOM,
+            "camry",
+            make="Toyota",
+            model="Camry",
+            year="2024",
         )
         assert hasattr(result, "vehicles")
         assert result.total > 0
@@ -159,7 +173,9 @@ class TestPepE2E:
         """Iván Duque should appear as a PEP."""
         result = _query("co.pep", DocumentType.CEDULA, CEDULA_PUBLIC)
         assert hasattr(result, "is_pep")
-        print(f"\nPEP: is_pep={result.is_pep}, entries={len(result.entries) if hasattr(result, 'entries') else 'N/A'}")
+        print(
+            f"\nPEP: is_pep={result.is_pep}, entries={len(result.entries) if hasattr(result, 'entries') else 'N/A'}"  # noqa: E501
+        )
 
 
 @pytest.mark.integration
@@ -228,7 +244,9 @@ class TestSiniestraliadE2E:
 
     def test_antioquia(self):
         result = _query(
-            "co.siniestralidad", DocumentType.CUSTOM, "safety",
+            "co.siniestralidad",
+            DocumentType.CUSTOM,
+            "safety",
             departamento="ANTIOQUIA",
         )
         print(f"\nSiniestralidad Antioquia: {result}")
@@ -240,7 +258,9 @@ class TestTarifasEnergiaE2E:
 
     def test_medellin(self):
         result = _query(
-            "co.tarifas_energia", DocumentType.CUSTOM, "energy",
+            "co.tarifas_energia",
+            DocumentType.CUSTOM,
+            "energy",
             municipio="MEDELLIN",
         )
         print(f"\nTarifas Energia Medellin: {result}")

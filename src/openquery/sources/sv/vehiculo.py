@@ -62,6 +62,7 @@ class SvVehiculoSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("sv.vehiculo", "plate", search_value)
 
         with browser.page(SERTRACEN_URL) as page:

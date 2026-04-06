@@ -1,4 +1,6 @@
-"""DNRPA source — Argentine vehicle registry (Direccion Nacional de Registros de la Propiedad del Automotor).
+"""DNRPA source — Argentine vehicle registry.
+
+Direccion Nacional de Registros de la Propiedad del Automotor.
 
 Queries DNRPA for vehicle registration info by plate (dominio).
 The portal likely uses a CAPTCHA.
@@ -61,6 +63,7 @@ class DnrpaSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("ar.dnrpa", "placa", dominio)
 
         with browser.page(DNRPA_URL) as page:
@@ -86,13 +89,16 @@ class DnrpaSource(BaseSource):
                 captcha_input = all_inputs[1] if len(all_inputs) > 1 else None
                 if captcha_input:
                     # The CAPTCHA image is in the same table — find it and solve via LLM/OCR
-                    captcha_img = page.query_selector('img[alt*="verificador" i], img[alt*="captcha" i], table img')
+                    captcha_img = page.query_selector(
+                        'img[alt*="verificador" i], img[alt*="captcha" i], table img'
+                    )
                     if captcha_img:
                         from openquery.core.captcha import (
                             ChainedSolver,
                             LLMCaptchaSolver,
                             OCRSolver,
                         )
+
                         solvers = []
                         try:
                             solvers.append(LLMCaptchaSolver())
@@ -107,12 +113,16 @@ class DnrpaSource(BaseSource):
                                     text = chain.solve(image_bytes)
                                     if text:
                                         captcha_input.fill(text)
-                                        logger.info("CAPTCHA solved (attempt %d): %s", attempt, text)
+                                        logger.info(
+                                            "CAPTCHA solved (attempt %d): %s", attempt, text
+                                        )
                                         break
                             except Exception as e:
                                 logger.warning("CAPTCHA attempt %d failed: %s", attempt, e)
                             # Refresh CAPTCHA
-                            refresh = page.query_selector('a[href*="history.go"], a:has-text("Cargar nuevo")')
+                            refresh = page.query_selector(
+                                'a[href*="history.go"], a:has-text("Cargar nuevo")'
+                            )
                             if refresh:
                                 refresh.click()
                                 page.wait_for_timeout(1000)

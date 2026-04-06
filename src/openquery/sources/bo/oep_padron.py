@@ -59,6 +59,7 @@ class OepPadronSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("bo.oep_padron", "cedula", cedula)
 
         with browser.page(OEP_URL) as page:

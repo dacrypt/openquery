@@ -61,6 +61,7 @@ class FonasaSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("cl.fonasa", "rut", rut)
 
         with browser.page(FONASA_URL) as page:

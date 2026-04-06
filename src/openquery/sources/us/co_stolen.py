@@ -45,7 +45,7 @@ class CoStolenSource(BaseSource):
         return SourceMeta(
             name="us.co_stolen",
             display_name="Colorado MVVS — Stolen Vehicle Check",
-            description="Colorado Department of Public Safety Motor Vehicle Verification System — checks if a vehicle is reported stolen in the Colorado Crime Information Center",
+            description="Colorado Department of Public Safety Motor Vehicle Verification System — checks if a vehicle is reported stolen in the Colorado Crime Information Center",  # noqa: E501
             country="US",
             url=CO_STOLEN_URL,
             supported_inputs=[DocumentType.VIN],
@@ -65,7 +65,9 @@ class CoStolenSource(BaseSource):
 
         year = input.extra.get("year", "")
         if not year:
-            raise SourceError("us.co_stolen", "Model year is required (pass as extra={'year': '2020'})")
+            raise SourceError(
+                "us.co_stolen", "Model year is required (pass as extra={'year': '2020'})"
+            )
 
         return self._query(vin, str(year), audit=input.audit)
 
@@ -78,6 +80,7 @@ class CoStolenSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("us.co_stolen", "vin", vin)
 
         with browser.page(CO_STOLEN_URL) as page:
@@ -89,8 +92,7 @@ class CoStolenSource(BaseSource):
 
                 # Wait for VIN input
                 vin_input = page.locator(
-                    "input[id*='vin'], input[name*='vin'], "
-                    "input[id*='VIN'], input[name*='VIN']"
+                    "input[id*='vin'], input[name*='vin'], input[id*='VIN'], input[name*='VIN']"
                 ).first
                 vin_input.wait_for(state="visible", timeout=15000)
 
@@ -109,7 +111,9 @@ class CoStolenSource(BaseSource):
                         year_input.fill(year)
                         logger.info("Filled model year: %s", year)
                 except Exception:
-                    logger.debug("Year input not found by standard selectors, trying select element")
+                    logger.debug(
+                        "Year input not found by standard selectors, trying select element"
+                    )
                     year_select = page.locator(
                         "select[id*='year'], select[name*='year'], "
                         "select[id*='Year'], select[name*='Year']"

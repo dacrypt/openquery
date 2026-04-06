@@ -60,6 +60,7 @@ class CrHaciendaSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("cr.hacienda", "cedula", cedula)
 
         with browser.page(HACIENDA_URL) as page:
@@ -71,8 +72,7 @@ class CrHaciendaSource(BaseSource):
                 page.wait_for_timeout(2000)
 
                 cedula_input = page.query_selector(
-                    '#txtCedula, input[name="txtCedula"], '
-                    '#txtcedula, input[name="txtcedula"]'
+                    '#txtCedula, input[name="txtCedula"], #txtcedula, input[name="txtcedula"]'
                 )
                 if not cedula_input:
                     raise SourceError("cr.hacienda", "Could not find cedula input field")

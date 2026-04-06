@@ -115,10 +115,12 @@ class TestHuggingFaceOCRSolver:
 
         old = os.environ.pop("HF_TOKEN", None)
         try:
-            solver = ChainedSolver([
-                HuggingFaceOCRSolver(),
-                FixedSolver("fallback"),
-            ])
+            solver = ChainedSolver(
+                [
+                    HuggingFaceOCRSolver(),
+                    FixedSolver("fallback"),
+                ]
+            )
             assert solver.solve(b"dummy") == "fallback"
         finally:
             if old:
@@ -253,11 +255,13 @@ class TestVotingSolver:
         assert solver.solve(b"dummy") == "abc12"
 
     def test_majority_wins(self):
-        solver = VotingSolver([
-            FixedSolver("abc12"),
-            FixedSolver("aBc12"),
-            FixedSolver("abc12"),
-        ])
+        solver = VotingSolver(
+            [
+                FixedSolver("abc12"),
+                FixedSolver("aBc12"),
+                FixedSolver("abc12"),
+            ]
+        )
         # Position 1: a,a,a -> a; pos 2: b,B,b -> b; pos 3: c,c,c -> c
         assert solver.solve(b"dummy") == "abc12"
 
@@ -276,19 +280,23 @@ class TestVotingSolver:
 
     def test_character_level_voting_resolves_disagreements(self):
         """When solvers disagree on specific chars, majority wins per position."""
-        solver = VotingSolver([
-            FixedSolver("5bc12"),  # '5' at pos 0
-            FixedSolver("Sbc12"),  # 'S' at pos 0
-            FixedSolver("5bc12"),  # '5' at pos 0 — majority
-        ])
+        solver = VotingSolver(
+            [
+                FixedSolver("5bc12"),  # '5' at pos 0
+                FixedSolver("Sbc12"),  # 'S' at pos 0
+                FixedSolver("5bc12"),  # '5' at pos 0 — majority
+            ]
+        )
         assert solver.solve(b"dummy") == "5bc12"
 
     def test_different_lengths(self):
         """When results have different lengths, votes on available positions."""
-        solver = VotingSolver([
-            FixedSolver("abc"),
-            FixedSolver("abcd"),
-        ])
+        solver = VotingSolver(
+            [
+                FixedSolver("abc"),
+                FixedSolver("abcd"),
+            ]
+        )
         result = solver.solve(b"dummy")
         assert result.startswith("abc")
         assert len(result) == 4  # max length wins

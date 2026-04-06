@@ -79,6 +79,7 @@ class IntlWipoSource(BaseSource):
 
         # Try to extract result count from page text
         import re
+
         count_match = re.search(r"(\d[\d,]*)\s+result", text, re.IGNORECASE)
         if count_match:
             try:

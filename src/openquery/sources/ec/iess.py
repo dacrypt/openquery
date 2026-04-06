@@ -61,6 +61,7 @@ class IessSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("ec.iess", "cedula", cedula)
 
         with browser.page(IESS_URL) as page:
@@ -143,7 +144,11 @@ class IessSource(BaseSource):
                 lower = stripped.lower()
                 if ("afili" in lower or "estado" in lower) and ":" in stripped:
                     result.affiliation_status = stripped.split(":", 1)[1].strip()
-                elif ("empleador" in lower or "empresa" in lower) and ":" in stripped and not result.employer:
+                elif (
+                    ("empleador" in lower or "empresa" in lower)
+                    and ":" in stripped
+                    and not result.employer
+                ):
                     result.employer = stripped.split(":", 1)[1].strip()
 
         return result

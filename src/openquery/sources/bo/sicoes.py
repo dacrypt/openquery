@@ -63,6 +63,7 @@ class SicoesSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("bo.sicoes", "search_term", search_term)
 
         with browser.page(SICOES_URL) as page:

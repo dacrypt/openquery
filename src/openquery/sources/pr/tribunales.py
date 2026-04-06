@@ -38,9 +38,7 @@ class TribunalesSource(BaseSource):
         return SourceMeta(
             name="pr.tribunales",
             display_name="Poder Judicial PR — SUMAC",
-            description=(
-                "Puerto Rico Poder Judicial SUMAC: case status, documents filed, court"
-            ),
+            description=("Puerto Rico Poder Judicial SUMAC: case status, documents filed, court"),
             country="PR",
             url=TRIBUNALES_URL,
             supported_inputs=[DocumentType.CUSTOM],
@@ -72,6 +70,7 @@ class TribunalesSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("pr.tribunales", "search_term", search_term)
 
         with browser.page(TRIBUNALES_URL) as page:
@@ -178,6 +177,9 @@ class TribunalesSource(BaseSource):
         result.details = details
         logger.info(
             "Tribunales result — case=%s, court=%s, status=%s, parties=%d",
-            result.case_number, result.court, result.status, len(result.parties),
+            result.case_number,
+            result.court,
+            result.status,
+            len(result.parties),
         )
         return result

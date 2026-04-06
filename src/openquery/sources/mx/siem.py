@@ -70,6 +70,7 @@ class SiemSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("mx.siem", "consulta", consulta)
 
         with browser.page(SIEM_URL) as page:

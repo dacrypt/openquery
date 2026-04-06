@@ -9,7 +9,6 @@ import pytest
 from openquery.exceptions import SourceError
 from openquery.sources.base import DocumentType, QueryInput
 
-
 # ===========================================================================
 # TestWtoResult — model tests
 # ===========================================================================
@@ -141,11 +140,13 @@ class TestWtoParseResult:
             return WtoResult(reporter=reporter, indicator_code=indicator)
 
         src._fetch = fake_fetch
-        src.query(QueryInput(
-            document_type=DocumentType.CUSTOM,
-            document_number="000",
-            extra={"reporter": "76", "indicator": "HS_M_0020"},
-        ))
+        src.query(
+            QueryInput(
+                document_type=DocumentType.CUSTOM,
+                document_number="000",
+                extra={"reporter": "76", "indicator": "HS_M_0020"},
+            )
+        )
         assert called_with[0][0] == "76"
         assert called_with[0][1] == "HS_M_0020"
 
@@ -155,8 +156,18 @@ class TestWtoParseResult:
         src = WtoSource()
         data = {
             "Dataset": [
-                {"Year": "2023", "Value": "3.5", "IndicatorCode": "HS_M_0010", "PartnerEconomy": "000"},
-                {"Year": "2022", "Value": "4.0", "IndicatorCode": "HS_M_0010", "PartnerEconomy": "000"},
+                {
+                    "Year": "2023",
+                    "Value": "3.5",
+                    "IndicatorCode": "HS_M_0010",
+                    "PartnerEconomy": "000",
+                },
+                {
+                    "Year": "2022",
+                    "Value": "4.0",
+                    "IndicatorCode": "HS_M_0010",
+                    "PartnerEconomy": "000",
+                },
             ],
             "total": 2,
         }
@@ -172,7 +183,12 @@ class TestWtoParseResult:
         src = WtoSource()
         data = {
             "data": [
-                {"period": "2023", "value": "5.1", "indicatorCode": "HS_M_0010", "partnerEconomy": "76"},
+                {
+                    "period": "2023",
+                    "value": "5.1",
+                    "indicatorCode": "HS_M_0010",
+                    "partnerEconomy": "76",
+                },
             ],
         }
         result = src._parse_response(data, "840", "HS_M_0010")
@@ -201,11 +217,13 @@ class TestWtoIntegration:
         from openquery.sources.intl.wto import WtoSource
 
         src = WtoSource()
-        result = src.query(QueryInput(
-            document_type=DocumentType.CUSTOM,
-            document_number="840",
-            extra={"reporter": "840", "indicator": "HS_M_0010"},
-        ))
+        result = src.query(
+            QueryInput(
+                document_type=DocumentType.CUSTOM,
+                document_number="840",
+                extra={"reporter": "840", "indicator": "HS_M_0010"},
+            )
+        )
         assert result.reporter == "840"
         assert result.indicator_code == "HS_M_0010"
         assert isinstance(result.data_points, list)

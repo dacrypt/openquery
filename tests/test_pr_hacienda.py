@@ -122,9 +122,7 @@ class TestParseResult:
 
     def test_parse_english_fields(self):
         result = self._parse(
-            "Name: EXAMPLE STORE INC\n"
-            "Tax Status: Current\n"
-            "Registration Status: Active\n"
+            "Name: EXAMPLE STORE INC\nTax Status: Current\nRegistration Status: Active\n"
         )
         assert result.merchant_name == "EXAMPLE STORE INC"
         assert result.tax_status == "Current"

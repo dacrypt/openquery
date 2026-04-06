@@ -9,14 +9,15 @@ import pytest
 from openquery.exceptions import SourceError
 from openquery.sources.base import DocumentType, QueryInput
 
-
 # ===========================================================================
 # TestResult
 # ===========================================================================
 
+
 class TestResult:
     def test_default_values(self):
         from openquery.models.pa.tribunal_electoral import TribunalElectoralResult
+
         r = TribunalElectoralResult()
         assert r.cedula == ""
         assert r.nombre == ""
@@ -30,6 +31,7 @@ class TestResult:
 
     def test_audit_excluded_from_json(self):
         from openquery.models.pa.tribunal_electoral import TribunalElectoralResult
+
         r = TribunalElectoralResult(cedula="8-123-456")
         r.audit = {"evidence": "data"}
         data = r.model_dump_json()
@@ -37,6 +39,7 @@ class TestResult:
 
     def test_model_roundtrip(self):
         from openquery.models.pa.tribunal_electoral import TribunalElectoralResult
+
         r = TribunalElectoralResult(
             cedula="8-123-456",
             nombre="Juan Perez",
@@ -58,30 +61,36 @@ class TestResult:
 # TestSourceMeta
 # ===========================================================================
 
+
 class TestSourceMeta:
     def test_meta_name(self):
         from openquery.sources.pa.tribunal_electoral import TribunalElectoralSource
+
         meta = TribunalElectoralSource().meta()
         assert meta.name == "pa.tribunal_electoral"
 
     def test_meta_country(self):
         from openquery.sources.pa.tribunal_electoral import TribunalElectoralSource
+
         meta = TribunalElectoralSource().meta()
         assert meta.country == "PA"
 
     def test_meta_requires_browser(self):
         from openquery.sources.pa.tribunal_electoral import TribunalElectoralSource
+
         meta = TribunalElectoralSource().meta()
         assert meta.requires_browser is True
         assert meta.requires_captcha is False
 
     def test_meta_supports_cedula(self):
         from openquery.sources.pa.tribunal_electoral import TribunalElectoralSource
+
         meta = TribunalElectoralSource().meta()
         assert DocumentType.CEDULA in meta.supported_inputs
 
     def test_meta_rate_limit(self):
         from openquery.sources.pa.tribunal_electoral import TribunalElectoralSource
+
         meta = TribunalElectoralSource().meta()
         assert meta.rate_limit_rpm == 10
 
@@ -90,9 +99,11 @@ class TestSourceMeta:
 # TestParseResult
 # ===========================================================================
 
+
 class TestParseResult:
     def _parse(self, body_text: str, cedula: str = "8-123-456"):
         from openquery.sources.pa.tribunal_electoral import TribunalElectoralSource
+
         page = MagicMock()
         page.inner_text.return_value = body_text
         src = TribunalElectoralSource()
@@ -140,12 +151,14 @@ class TestParseResult:
 
     def test_wrong_document_type_raises(self):
         from openquery.sources.pa.tribunal_electoral import TribunalElectoralSource
+
         src = TribunalElectoralSource()
         with pytest.raises(SourceError, match="cedula"):
             src.query(QueryInput(document_type=DocumentType.NIT, document_number="123"))
 
     def test_empty_cedula_raises(self):
         from openquery.sources.pa.tribunal_electoral import TribunalElectoralSource
+
         src = TribunalElectoralSource()
         with pytest.raises(SourceError, match="required"):
             src.query(QueryInput(document_type=DocumentType.CEDULA, document_number=""))

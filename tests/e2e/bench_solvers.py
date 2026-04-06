@@ -55,26 +55,27 @@ def bench_solver(solver, samples, name):
 
     # Case-insensitive accuracy
     ci_correct = sum(
-        1 for _, gt, result, _, _ in results
+        1
+        for _, gt, result, _, _ in results
         if not result.startswith("ERR:") and result.lower() == gt.lower()
     )
     ci_accuracy = ci_correct / total if total else 0
 
-    print(f"\n{'='*60}")
+    print(f"\n{'=' * 60}")
     print(f" {name}")
-    print(f"{'='*60}")
+    print(f"{'=' * 60}")
     print(f"{'ID':<14} {'Truth':<8} {'Result':<8} {'Exact':<6} {'CI':<6} {'Time'}")
     print("-" * 60)
     for cid, gt, result, match, elapsed in results:
         exact = "OK" if match else "FAIL"
         ci = "OK" if not result.startswith("ERR:") and result.lower() == gt.lower() else "FAIL"
-        print(f"{cid:<14} {gt:<8} {result:<8} {exact:<6} {ci:<6} {elapsed*1000:.0f}ms")
+        print(f"{cid:<14} {gt:<8} {result:<8} {exact:<6} {ci:<6} {elapsed * 1000:.0f}ms")
 
     print(f"\nExact accuracy:    {correct}/{total} = {accuracy:.0%}")
     print(f"CI accuracy:       {ci_correct}/{total} = {ci_accuracy:.0%}")
     print(f"Errors: {errors}")
     print(f"Total time: {total_time:.1f}s")
-    print(f"Avg per captcha: {total_time/total*1000:.0f}ms")
+    print(f"Avg per captcha: {total_time / total * 1000:.0f}ms")
 
     return accuracy, ci_accuracy
 
@@ -85,18 +86,20 @@ def main():
 
     # Tesseract
     from openquery.core.captcha import OCRSolver
+
     tesseract = OCRSolver(max_chars=5)
     acc_tess, ci_tess = bench_solver(tesseract, samples, "Tesseract (pytesseract)")
 
     # TrOCR
     from openquery.core.captcha import TrOCRSolver
+
     trocr = TrOCRSolver(max_chars=5)
     acc_trocr, ci_trocr = bench_solver(trocr, samples, "TrOCR (microsoft/trocr-small-printed)")
 
     # Summary
-    print(f"\n{'='*60}")
+    print(f"\n{'=' * 60}")
     print(" SUMMARY")
-    print(f"{'='*60}")
+    print(f"{'=' * 60}")
     print(f"{'Solver':<20} {'Exact':<12} {'Case-insensitive'}")
     print("-" * 48)
     print(f"{'Tesseract':<20} {acc_tess:<12.0%} {ci_tess:.0%}")

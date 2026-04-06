@@ -57,6 +57,7 @@ class UyDgiSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("uy.dgi", "custom", rut)
 
         with browser.page(DGI_URL) as page:

@@ -75,6 +75,7 @@ class TestReniecSourceMeta:
 
     def test_meta_supported_inputs(self):
         from openquery.sources.base import DocumentType
+
         source = ReniecSource()
         assert DocumentType.CEDULA in source.meta().supported_inputs
 
@@ -105,11 +106,7 @@ class TestParseResult:
 
     def test_parse_from_body_text(self):
         source = ReniecSource()
-        page = self._make_page(
-            "Nombres: JUAN\n"
-            "Apellido Paterno: GARCIA\n"
-            "Apellido Materno: LOPEZ\n"
-        )
+        page = self._make_page("Nombres: JUAN\nApellido Paterno: GARCIA\nApellido Materno: LOPEZ\n")
         result = source._parse_result(page, "12345678")
         assert result.dni == "12345678"
         assert result.nombre == "JUAN"

@@ -70,6 +70,7 @@ class TestLaTitleSourceMeta:
 
     def test_meta_supported_inputs(self):
         from openquery.sources.base import DocumentType
+
         source = LaTitleSource()
         meta = source.meta()
         assert DocumentType.VIN in meta.supported_inputs

@@ -65,6 +65,7 @@ class SarenSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("ve.saren", "custom", search_term)
 
         with browser.page(SAREN_URL) as page:

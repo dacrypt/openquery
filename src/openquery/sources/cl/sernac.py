@@ -38,7 +38,7 @@ class SernacSource(BaseSource):
         return SourceMeta(
             name="cl.sernac",
             display_name="SERNAC — Servicio Nacional del Consumidor",
-            description="Chile consumer complaints: total complaints and resolution rates by company",
+            description="Chile consumer complaints: total complaints and resolution rates by company",  # noqa: E501
             country="CL",
             url=SERNAC_URL,
             supported_inputs=[DocumentType.CUSTOM],
@@ -65,6 +65,7 @@ class SernacSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("cl.sernac", "empresa", company)
 
         with browser.page(SERNAC_URL) as page:
@@ -145,7 +146,11 @@ class SernacSource(BaseSource):
                 lower = stripped.lower()
                 if ("reclamo" in lower or "total" in lower) and ":" in stripped:
                     result.total_complaints = stripped.split(":", 1)[1].strip()
-                elif ("resoluci" in lower or "tasa" in lower) and ":" in stripped and not result.resolution_rate:
+                elif (
+                    ("resoluci" in lower or "tasa" in lower)
+                    and ":" in stripped
+                    and not result.resolution_rate
+                ):
                     result.resolution_rate = stripped.split(":", 1)[1].strip()
 
         return result

@@ -52,10 +52,7 @@ class NiInssSource(BaseSource):
 
     def query(self, input: QueryInput) -> BaseModel:
         """Query INSS for social security affiliation data."""
-        cedula = (
-            input.extra.get("inss_number", "")
-            or input.document_number
-        )
+        cedula = input.extra.get("inss_number", "") or input.document_number
         if not cedula:
             raise SourceError("ni.inss", "cedula or inss_number is required")
         return self._query(cedula.strip(), audit=input.audit)
@@ -69,6 +66,7 @@ class NiInssSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("ni.inss", "cedula", cedula)
 
         with browser.page(INSS_URL) as page:
@@ -158,6 +156,8 @@ class NiInssSource(BaseSource):
         result.details = details
         logger.info(
             "INSS result — cedula=%s, affiliation_status=%s, employer=%s",
-            result.cedula, result.affiliation_status, result.employer,
+            result.cedula,
+            result.affiliation_status,
+            result.employer,
         )
         return result

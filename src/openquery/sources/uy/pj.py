@@ -57,6 +57,7 @@ class UyPjSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("uy.pj", "custom", sui)
 
         with browser.page(PJ_URL) as page:

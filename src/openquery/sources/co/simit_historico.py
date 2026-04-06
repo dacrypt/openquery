@@ -65,14 +65,16 @@ class SimitHistoricoSource(BaseSource):
 
             citaciones = []
             for row in data:
-                citaciones.append(SimitCitacion(
-                    numero=row.get("placa", ""),
-                    fecha=row.get("fecha_multa", ""),
-                    infraccion=row.get("vigencia", ""),
-                    estado=row.get("pagado_si_no", ""),
-                    valor=row.get("valor_multa", ""),
-                    secretaria=f"{row.get('ciudad', '')}, {row.get('departamento', '')}",
-                ))
+                citaciones.append(
+                    SimitCitacion(
+                        numero=row.get("placa", ""),
+                        fecha=row.get("fecha_multa", ""),
+                        infraccion=row.get("vigencia", ""),
+                        estado=row.get("pagado_si_no", ""),
+                        valor=row.get("valor_multa", ""),
+                        secretaria=f"{row.get('ciudad', '')}, {row.get('departamento', '')}",
+                    )
+                )
 
             return SimitHistoricoResult(
                 query=query_label,
@@ -81,7 +83,9 @@ class SimitHistoricoSource(BaseSource):
             )
 
         except httpx.HTTPStatusError as e:
-            raise SourceError("co.simit_historico", f"API returned HTTP {e.response.status_code}") from e
+            raise SourceError(
+                "co.simit_historico", f"API returned HTTP {e.response.status_code}"
+            ) from e
         except httpx.RequestError as e:
             raise SourceError("co.simit_historico", f"Request failed: {e}") from e
         except Exception as e:

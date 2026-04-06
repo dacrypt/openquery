@@ -67,6 +67,7 @@ class IndecopiSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("pe.indecopi", "custom", search_term)
 
         with browser.page(INDECOPI_URL) as page:
@@ -166,31 +167,29 @@ class IndecopiSource(BaseSource):
 
         # Fallback regex
         if not result.trademark_name:
-            m = re.search(
-                r"(?:Marca|Signo)[:\s]+([^\n]+)", body_text, re.IGNORECASE
-            )
+            m = re.search(r"(?:Marca|Signo)[:\s]+([^\n]+)", body_text, re.IGNORECASE)
             if m:
                 result.trademark_name = m.group(1).strip()
 
         if not result.owner:
             m = re.search(
                 r"(?:Titular|Propietario|Due[ñn]o)[:\s]+([^\n]+)",
-                body_text, re.IGNORECASE,
+                body_text,
+                re.IGNORECASE,
             )
             if m:
                 result.owner = m.group(1).strip()
 
         if not result.status:
-            m = re.search(
-                r"(?:Estado|Situaci[oó]n)[:\s]+([^\n]+)", body_text, re.IGNORECASE
-            )
+            m = re.search(r"(?:Estado|Situaci[oó]n)[:\s]+([^\n]+)", body_text, re.IGNORECASE)
             if m:
                 result.status = m.group(1).strip()
 
         if not result.registration_date:
             m = re.search(
                 r"(?:Fecha\s+de\s+Registro|Fecha\s+Inscripci[oó]n)[:\s]+([^\n]+)",
-                body_text, re.IGNORECASE,
+                body_text,
+                re.IGNORECASE,
             )
             if m:
                 result.registration_date = m.group(1).strip()

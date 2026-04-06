@@ -35,7 +35,7 @@ class ClMindicadorSource(BaseSource):
         return SourceMeta(
             name="cl.mindicador",
             display_name="Mindicador — Indicadores Económicos Chile",
-            description="Chilean economic indicators: UF, USD/CLP, EUR/CLP, UTM, IPC (mindicador.cl)",
+            description="Chilean economic indicators: UF, USD/CLP, EUR/CLP, UTM, IPC (mindicador.cl)",  # noqa: E501
             country="CL",
             url="https://mindicador.cl/",
             supported_inputs=[DocumentType.CUSTOM],
@@ -65,13 +65,15 @@ class ClMindicadorSource(BaseSource):
 
                 for key, val in data.items():
                     if isinstance(val, dict) and "valor" in val:
-                        indicadores.append(Indicador(
-                            codigo=val.get("codigo", key),
-                            nombre=val.get("nombre", ""),
-                            unidad=val.get("unidad_medida", ""),
-                            valor=float(val.get("valor", 0) or 0),
-                            fecha=val.get("fecha", ""),
-                        ))
+                        indicadores.append(
+                            Indicador(
+                                codigo=val.get("codigo", key),
+                                nombre=val.get("nombre", ""),
+                                unidad=val.get("unidad_medida", ""),
+                                valor=float(val.get("valor", 0) or 0),
+                                fecha=val.get("fecha", ""),
+                            )
+                        )
                         if key == "uf":
                             uf = float(val.get("valor", 0) or 0)
                         elif key == "dolar":
@@ -99,13 +101,15 @@ class ClMindicadorSource(BaseSource):
                 serie = data.get("serie", [])
                 indicadores = []
                 for entry in serie[:30]:
-                    indicadores.append(Indicador(
-                        codigo=data.get("codigo", indicator),
-                        nombre=data.get("nombre", ""),
-                        unidad=data.get("unidad_medida", ""),
-                        valor=float(entry.get("valor", 0) or 0),
-                        fecha=entry.get("fecha", ""),
-                    ))
+                    indicadores.append(
+                        Indicador(
+                            codigo=data.get("codigo", indicator),
+                            nombre=data.get("nombre", ""),
+                            unidad=data.get("unidad_medida", ""),
+                            valor=float(entry.get("valor", 0) or 0),
+                            fecha=entry.get("fecha", ""),
+                        )
+                    )
 
                 return ClMindicadorResult(
                     queried_at=datetime.now(),

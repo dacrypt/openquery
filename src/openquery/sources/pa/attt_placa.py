@@ -34,9 +34,7 @@ class AtttPlacaSource(BaseSource):
         return SourceMeta(
             name="pa.attt_placa",
             display_name="ATTT — Consulta de Multas y Placas",
-            description=(
-                "Panama traffic fines and plate status lookup via ATTT (transito.gob.pa)"
-            ),
+            description=("Panama traffic fines and plate status lookup via ATTT (transito.gob.pa)"),
             country="PA",
             url=PORTAL_URL,
             supported_inputs=[DocumentType.PLATE, DocumentType.CEDULA],
@@ -59,6 +57,7 @@ class AtttPlacaSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("pa.attt_placa", "plate", search_value)
 
         with browser.page(PORTAL_URL) as page:

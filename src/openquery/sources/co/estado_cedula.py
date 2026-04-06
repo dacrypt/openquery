@@ -49,12 +49,16 @@ class EstadoCedulaSource(BaseSource):
 
     def query(self, input: QueryInput) -> BaseModel:
         if input.document_type != DocumentType.CEDULA:
-            raise SourceError("co.estado_cedula", f"Only cedula supported, got: {input.document_type}")
+            raise SourceError(
+                "co.estado_cedula", f"Only cedula supported, got: {input.document_type}"
+            )
 
         fecha = input.extra.get("fecha_expedicion", "").strip()
         return self._query(input.document_number, fecha, audit=input.audit)
 
-    def _query(self, cedula: str, fecha_expedicion: str = "", audit: bool = False) -> EstadoCedulaResult:
+    def _query(
+        self, cedula: str, fecha_expedicion: str = "", audit: bool = False
+    ) -> EstadoCedulaResult:
         from openquery.core.browser import BrowserManager
 
         browser = BrowserManager(headless=self._headless, timeout=self._timeout)
@@ -62,6 +66,7 @@ class EstadoCedulaSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.estado_cedula", "cedula", cedula)
 
         with browser.page(REGISTRADURIA_URL) as page:

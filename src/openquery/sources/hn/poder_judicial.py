@@ -62,6 +62,7 @@ class HnPoderJudicialSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("hn.poder_judicial", "case_number", case_number)
 
         with browser.page(PODER_JUDICIAL_URL) as page:

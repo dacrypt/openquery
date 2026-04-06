@@ -2,9 +2,6 @@
 
 from __future__ import annotations
 
-import json
-import sys
-
 import typer
 from rich.console import Console
 from rich.panel import Panel
@@ -16,7 +13,9 @@ console = Console()
 def ocr_cmd(
     image: str = typer.Argument(..., help="Path to the document image"),
     doc_type: str = typer.Option(
-        ..., "--type", "-t",
+        ...,
+        "--type",
+        "-t",
         help="Document type: co.cedula, mx.ine, pe.dni, cl.carnet, passport.mrz",
     ),
     output_json: bool = typer.Option(False, "--json", "-j", help="Output raw JSON"),

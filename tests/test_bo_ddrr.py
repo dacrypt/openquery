@@ -93,7 +93,6 @@ class TestDdrrSourceMeta:
             src.query(QueryInput(document_type=DocumentType.CUSTOM, document_number=""))
 
     def test_folio_extra_accepted(self):
-        from openquery.sources.bo.ddrr import DdrrSource
 
         input_ = QueryInput(
             document_type=DocumentType.CUSTOM,

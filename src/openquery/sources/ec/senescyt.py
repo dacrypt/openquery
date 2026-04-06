@@ -72,6 +72,7 @@ class SenescytSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("ec.senescyt", "cedula", search_term)
 
         with browser.page(SENESCYT_URL) as page:
@@ -140,14 +141,16 @@ class SenescytSource(BaseSource):
             try:
                 cells = row.query_selector_all("td, .campo")
                 if len(cells) >= 2:
-                    titulos.append(TituloProfesional(
-                        titulo=cells[0].inner_text().strip() if len(cells) > 0 else "",
-                        institucion=cells[1].inner_text().strip() if len(cells) > 1 else "",
-                        tipo=cells[2].inner_text().strip() if len(cells) > 2 else "",
-                        nivel=cells[3].inner_text().strip() if len(cells) > 3 else "",
-                        fecha_registro=cells[4].inner_text().strip() if len(cells) > 4 else "",
-                        numero_registro=cells[5].inner_text().strip() if len(cells) > 5 else "",
-                    ))
+                    titulos.append(
+                        TituloProfesional(
+                            titulo=cells[0].inner_text().strip() if len(cells) > 0 else "",
+                            institucion=cells[1].inner_text().strip() if len(cells) > 1 else "",
+                            tipo=cells[2].inner_text().strip() if len(cells) > 2 else "",
+                            nivel=cells[3].inner_text().strip() if len(cells) > 3 else "",
+                            fecha_registro=cells[4].inner_text().strip() if len(cells) > 4 else "",
+                            numero_registro=cells[5].inner_text().strip() if len(cells) > 5 else "",
+                        )
+                    )
             except Exception:
                 continue
 
@@ -172,7 +175,11 @@ class SenescytSource(BaseSource):
                     titulo_current["nivel"] = stripped.split(":", 1)[1].strip()
                 elif "registro" in lower and "fecha" in lower and ":" in stripped:
                     titulo_current["fecha_registro"] = stripped.split(":", 1)[1].strip()
-                elif ("n\u00famero" in lower or "numero" in lower) and "registro" in lower and ":" in stripped:
+                elif (
+                    ("n\u00famero" in lower or "numero" in lower)
+                    and "registro" in lower
+                    and ":" in stripped
+                ):
                     titulo_current["numero_registro"] = stripped.split(":", 1)[1].strip()
             if titulo_current.get("titulo"):
                 titulos.append(TituloProfesional(**titulo_current))

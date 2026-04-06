@@ -72,6 +72,7 @@ class ScjnSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("mx.scjn", "search_term", search_term)
 
         with browser.page(SCJN_URL) as page:

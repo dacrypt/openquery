@@ -57,6 +57,7 @@ class CnrPropiedadSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("sv.cnr_propiedad", "property_number", search_value)
 
         with browser.page(CNR_URL) as page:
@@ -72,7 +73,9 @@ class CnrPropiedadSource(BaseSource):
                     "input[name*='propiedad'], input[name*='numero'], input[type='text']"
                 )
                 if not search_input:
-                    raise SourceError("sv.cnr_propiedad", "Could not find property number input field")
+                    raise SourceError(
+                        "sv.cnr_propiedad", "Could not find property number input field"
+                    )
 
                 search_input.fill(search_value)
                 logger.info("Filled property number: %s", search_value)
@@ -81,7 +84,7 @@ class CnrPropiedadSource(BaseSource):
                     collector.screenshot(page, "form_filled")
 
                 submit = page.query_selector(
-                    "button[type='submit'], input[type='submit'], button[id*='buscar'], button[id*='consultar']"
+                    "button[type='submit'], input[type='submit'], button[id*='buscar'], button[id*='consultar']"  # noqa: E501
                 )
                 if submit:
                     submit.click()

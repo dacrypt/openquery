@@ -10,7 +10,6 @@ import pytest
 from openquery.exceptions import SourceError
 from openquery.sources.base import DocumentType, QueryInput
 
-
 # ===========================================================================
 # TestBrTcuResult — model tests
 # ===========================================================================
@@ -123,7 +122,11 @@ class TestBrTcuParseResult:
         src = BrTcuSource()
         data = {
             "content": [
-                {"nomeRazaoSocial": "Empresa XYZ", "cpfCnpj": "98765432000100", "situacao": "active"}
+                {
+                    "nomeRazaoSocial": "Empresa XYZ",
+                    "cpfCnpj": "98765432000100",
+                    "situacao": "active",
+                }
             ]
         }
         result = src._parse_response(data, "XYZ")
@@ -156,8 +159,10 @@ class TestBrTcuIntegration:
         from openquery.sources.br.tcu import BrTcuSource
 
         src = BrTcuSource()
-        result = src.query(QueryInput(
-            document_type=DocumentType.CUSTOM,
-            document_number="Empresa Teste",
-        ))
+        result = src.query(
+            QueryInput(
+                document_type=DocumentType.CUSTOM,
+                document_number="Empresa Teste",
+            )
+        )
         assert isinstance(result.sanction_status, str)

@@ -3,13 +3,11 @@
 from __future__ import annotations
 
 from datetime import datetime
-from unittest.mock import MagicMock, patch
 
 import pytest
 
 from openquery.exceptions import SourceError
 from openquery.sources.base import DocumentType, QueryInput
-
 
 # ===========================================================================
 # TestIntlUnComtradeResult — model tests
@@ -36,7 +34,9 @@ class TestIntlUnComtradeResult:
             reporter="76",
             commodity_code="TOTAL",
             total_trade_value=1000000.0,
-            partners=[ComtradePartner(partner_code="484", partner_desc="Mexico", trade_value=500000.0)],
+            partners=[
+                ComtradePartner(partner_code="484", partner_desc="Mexico", trade_value=500000.0)
+            ],
         )
         restored = IntlUnComtradeResult.model_validate_json(r.model_dump_json())
         assert restored.reporter == "76"
@@ -107,8 +107,8 @@ class TestIntlUnComtradeParseResult:
             src.query(QueryInput(document_type=DocumentType.CUSTOM, document_number=""))
 
     def test_document_number_used_as_reporter(self):
-        from openquery.sources.intl.un_comtrade import IntlUnComtradeSource
         from openquery.models.intl.un_comtrade import IntlUnComtradeResult
+        from openquery.sources.intl.un_comtrade import IntlUnComtradeSource
 
         src = IntlUnComtradeSource()
         called_with: list = []
@@ -166,9 +166,11 @@ class TestIntlUnComtradeIntegration:
         from openquery.sources.intl.un_comtrade import IntlUnComtradeSource
 
         src = IntlUnComtradeSource()
-        result = src.query(QueryInput(
-            document_type=DocumentType.CUSTOM,
-            document_number="76",
-            extra={"reporter": "76", "commodity_code": "TOTAL"},
-        ))
+        result = src.query(
+            QueryInput(
+                document_type=DocumentType.CUSTOM,
+                document_number="76",
+                extra={"reporter": "76", "commodity_code": "TOTAL"},
+            )
+        )
         assert isinstance(result.reporter, str)

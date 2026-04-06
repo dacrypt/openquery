@@ -61,6 +61,7 @@ class UyDgrSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("uy.dgr", "custom", search_term)
 
         with browser.page(DGR_URL) as page:

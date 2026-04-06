@@ -84,7 +84,9 @@ class WtoSource(BaseSource):
 
         try:
             logger.info("Querying WTO timeseries: reporter=%s indicator=%s", reporter, indicator)
-            with httpx.Client(timeout=self._timeout, headers=headers, follow_redirects=True) as client:
+            with httpx.Client(
+                timeout=self._timeout, headers=headers, follow_redirects=True
+            ) as client:
                 resp = client.get(WTO_API_URL, params=params)
                 if resp.status_code in (400, 404):
                     return WtoResult(
@@ -124,12 +126,14 @@ class WtoSource(BaseSource):
             value = str(rec.get("Value", rec.get("value", "")))
             ind_code = rec.get("indicatorCode", rec.get("IndicatorCode", indicator))
             partner = str(rec.get("PartnerEconomy", rec.get("partnerEconomy", "")))
-            data_points.append(WtoDataPoint(
-                year=year,
-                value=value,
-                indicator=str(ind_code),
-                partner=partner,
-            ))
+            data_points.append(
+                WtoDataPoint(
+                    year=year,
+                    value=value,
+                    indicator=str(ind_code),
+                    partner=partner,
+                )
+            )
 
         return WtoResult(
             queried_at=datetime.now(),

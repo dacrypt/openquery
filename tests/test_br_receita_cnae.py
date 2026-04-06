@@ -10,7 +10,6 @@ import pytest
 from openquery.exceptions import SourceError
 from openquery.sources.base import DocumentType, QueryInput
 
-
 # ===========================================================================
 # TestBrReceitaCnaeResult — model tests
 # ===========================================================================
@@ -100,8 +99,8 @@ class TestBrReceitaCnaeParseResult:
             src.query(QueryInput(document_type=DocumentType.CUSTOM, document_number=""))
 
     def test_document_number_used_as_code(self):
-        from openquery.sources.br.receita_cnae import BrReceitaCnaeSource
         from openquery.models.br.receita_cnae import BrReceitaCnaeResult
+        from openquery.sources.br.receita_cnae import BrReceitaCnaeSource
 
         src = BrReceitaCnaeSource()
         called_with: list[str] = []
@@ -125,7 +124,6 @@ class TestBrReceitaCnaeParseResult:
             "divisao": "62",
         }
 
-        import httpx
         mock_resp = MagicMock()
         mock_resp.status_code = 200
         mock_resp.json.return_value = api_data
@@ -169,8 +167,10 @@ class TestBrReceitaCnaeIntegration:
         from openquery.sources.br.receita_cnae import BrReceitaCnaeSource
 
         src = BrReceitaCnaeSource()
-        result = src.query(QueryInput(
-            document_type=DocumentType.CUSTOM,
-            document_number="6201500",
-        ))
+        result = src.query(
+            QueryInput(
+                document_type=DocumentType.CUSTOM,
+                document_number="6201500",
+            )
+        )
         assert result.code != "" or result.details.get("error")

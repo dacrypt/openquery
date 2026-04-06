@@ -71,6 +71,7 @@ class TestNyDmvSourceMeta:
 
     def test_meta_supported_inputs(self):
         from openquery.sources.base import DocumentType
+
         source = NyDmvSource()
         meta = source.meta()
         assert DocumentType.VIN in meta.supported_inputs
@@ -107,7 +108,7 @@ class TestParseResult:
         mock_page.inner_text.return_value = body_text
 
         mock_rows = []
-        for key, val in (rows or []):
+        for key, val in rows or []:
             mock_row = MagicMock()
             mock_row.evaluate.return_value = "tr"
             mock_row.inner_text.return_value = f"{key}\t{val}"
@@ -134,9 +135,7 @@ class TestParseResult:
 
     def test_parse_fallback_clear_from_body(self):
         source = NyDmvSource()
-        page = self._make_page(
-            "Title lookup results\nStatus: clear\nNo lien recorded.\n"
-        )
+        page = self._make_page("Title lookup results\nStatus: clear\nNo lien recorded.\n")
         result = source._parse_results(page, "1HGCM82633A004352", "2003", "HONDA")
         assert result.title_status == "Clear"
         assert result.lien_status == "No lien"
@@ -163,6 +162,7 @@ class TestParseResult:
 
     def test_query_missing_year_raises(self):
         from openquery.sources.base import DocumentType, QueryInput
+
         source = NyDmvSource()
         inp = QueryInput(
             document_type=DocumentType.VIN,
@@ -174,6 +174,7 @@ class TestParseResult:
 
     def test_query_missing_make_raises(self):
         from openquery.sources.base import DocumentType, QueryInput
+
         source = NyDmvSource()
         inp = QueryInput(
             document_type=DocumentType.VIN,
@@ -185,6 +186,7 @@ class TestParseResult:
 
     def test_query_wrong_document_type_raises(self):
         from openquery.sources.base import DocumentType, QueryInput
+
         source = NyDmvSource()
         inp = QueryInput(
             document_type=DocumentType.CEDULA,

@@ -22,14 +22,13 @@ ANTT_URL = "https://consultapublica.antt.gov.br/Site/ConsultaRNTRC.aspx"
 
 # Selectors
 _SEL_RADIO_TRANSPORTADOR = "#Corpo_rbTipoConsulta_0"  # Por Transportador
-_SEL_RADIO_VEICULO = "#Corpo_rbTipoConsulta_2"         # Por Veículo
+_SEL_RADIO_VEICULO = "#Corpo_rbTipoConsulta_2"  # Por Veículo
 _SEL_RNTRC_INPUT = "#Corpo_txtRNTRC"
 _SEL_CPF_CNPJ_INPUT = "#Corpo_txtCPFCNPJ"
 _SEL_CHECKBOX = "input[type='checkbox']"
 _SEL_BUTTON = "#Corpo_btnConsultar"
 _SEL_RESULT_TABLE = (
-    "table.resultado, table[id*='Grid'], table[id*='grid'], "
-    "table[id*='Result'], table"
+    "table.resultado, table[id*='Grid'], table[id*='grid'], table[id*='Result'], table"
 )
 
 
@@ -66,10 +65,7 @@ class AnttRntrcSource(BaseSource):
             )
 
         search_type = input.extra.get("search_type", "").lower().strip()
-        search_value = (
-            input.extra.get("search_value", "")
-            or input.document_number
-        ).strip()
+        search_value = (input.extra.get("search_value", "") or input.document_number).strip()
 
         if not search_value:
             raise SourceError("br.antt_rntrc", "search_value is required")
@@ -93,9 +89,7 @@ class AnttRntrcSource(BaseSource):
 
         return self._query(search_type, search_value, audit=input.audit)
 
-    def _query(
-        self, search_type: str, search_value: str, audit: bool = False
-    ) -> AnttRntrcResult:
+    def _query(self, search_type: str, search_value: str, audit: bool = False) -> AnttRntrcResult:
         from openquery.core.browser import BrowserManager
 
         browser = BrowserManager(headless=self._headless, timeout=self._timeout)
@@ -103,6 +97,7 @@ class AnttRntrcSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("br.antt_rntrc", search_type, search_value)
 
         with browser.page(ANTT_URL) as page:
@@ -184,9 +179,7 @@ class AnttRntrcSource(BaseSource):
             except Exception as e:
                 raise SourceError("br.antt_rntrc", f"Query failed: {e}") from e
 
-    def _parse_result(
-        self, page, search_type: str, search_value: str
-    ) -> AnttRntrcResult:
+    def _parse_result(self, page, search_type: str, search_value: str) -> AnttRntrcResult:
         from datetime import datetime
 
         body_text = page.inner_text("body")

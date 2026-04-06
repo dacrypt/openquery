@@ -336,9 +336,7 @@ class PaddleOCRSolver(CaptchaSolver):
             text = re.sub(r"[^a-zA-Z0-9]", "", text.strip())
 
             if len(text) < 3:
-                raise CaptchaError(
-                    "paddleocr", f"PaddleOCR returned too few characters: '{text}'"
-                )
+                raise CaptchaError("paddleocr", f"PaddleOCR returned too few characters: '{text}'")
 
             logger.debug("PaddleOCR result: '%s'", text[:max_chars])
             return text[:max_chars]
@@ -712,7 +710,8 @@ class TaskBasedRecaptchaSolver(RecaptchaV2Solver):
         self._api_key = api_key
         self._provider = provider.lower()
         self._base_url = self.PROVIDER_URLS.get(
-            self._provider, provider  # allow raw URL
+            self._provider,
+            provider,  # allow raw URL
         )
         self._task_type = self.TASK_TYPES.get(self._provider, "NoCaptchaTaskProxyless")
         self._poll_interval = poll_interval
@@ -737,15 +736,11 @@ class TaskBasedRecaptchaSolver(RecaptchaV2Solver):
 
         try:
             with httpx.Client(timeout=30.0) as client:
-                resp = client.post(
-                    f"{self._base_url}/createTask", json=create_payload
-                )
+                resp = client.post(f"{self._base_url}/createTask", json=create_payload)
                 resp.raise_for_status()
                 data = resp.json()
         except Exception as e:
-            raise CaptchaError(
-                self._provider, f"createTask failed: {e}"
-            ) from e
+            raise CaptchaError(self._provider, f"createTask failed: {e}") from e
 
         error_id = data.get("errorId", 0)
         if error_id:
@@ -775,9 +770,7 @@ class TaskBasedRecaptchaSolver(RecaptchaV2Solver):
 
             try:
                 with httpx.Client(timeout=30.0) as client:
-                    resp = client.post(
-                        f"{self._base_url}/getTaskResult", json=poll_payload
-                    )
+                    resp = client.post(f"{self._base_url}/getTaskResult", json=poll_payload)
                     resp.raise_for_status()
                     result = resp.json()
             except Exception as e:
@@ -796,9 +789,7 @@ class TaskBasedRecaptchaSolver(RecaptchaV2Solver):
                         token[:30],
                     )
                     return token
-                raise CaptchaError(
-                    self._provider, "No gRecaptchaResponse in solution"
-                )
+                raise CaptchaError(self._provider, "No gRecaptchaResponse in solution")
 
             if result.get("errorId"):
                 raise CaptchaError(
@@ -868,9 +859,7 @@ class ChainedRecaptchaSolver(RecaptchaV2Solver):
             try:
                 return solver.solve_recaptcha_v2(sitekey, page_url)
             except Exception as e:
-                logger.warning(
-                    "RecaptchaSolver %s failed: %s", type(solver).__name__, e
-                )
+                logger.warning("RecaptchaSolver %s failed: %s", type(solver).__name__, e)
                 last_error = e
 
         raise CaptchaError(
@@ -916,7 +905,8 @@ def inject_recaptcha_token(page, token: str) -> None:
 
     Sets the hidden textarea value and attempts to trigger common callbacks.
     """
-    page.evaluate("""(token) => {
+    page.evaluate(
+        """(token) => {
         // Set all g-recaptcha-response textareas (some pages have multiple)
         var textareas = document.querySelectorAll(
             '#g-recaptcha-response, [name="g-recaptcha-response"], '
@@ -953,7 +943,9 @@ def inject_recaptcha_token(page, token: str) -> None:
         } catch (e) {
             // Callback trigger is best-effort
         }
-    }""", token)
+    }""",
+        token,
+    )
 
 
 def build_recaptcha_solver() -> RecaptchaV2Solver | None:
@@ -973,24 +965,16 @@ def build_recaptcha_solver() -> RecaptchaV2Solver | None:
     solvers: list[RecaptchaV2Solver] = []
 
     if settings.capsolver_api_key:
-        solvers.append(
-            TaskBasedRecaptchaSolver(settings.capsolver_api_key, "capsolver")
-        )
+        solvers.append(TaskBasedRecaptchaSolver(settings.capsolver_api_key, "capsolver"))
 
     if settings.capmonster_api_key:
-        solvers.append(
-            TaskBasedRecaptchaSolver(settings.capmonster_api_key, "capmonster")
-        )
+        solvers.append(TaskBasedRecaptchaSolver(settings.capmonster_api_key, "capmonster"))
 
     if settings.anticaptcha_api_key:
-        solvers.append(
-            TaskBasedRecaptchaSolver(settings.anticaptcha_api_key, "anticaptcha")
-        )
+        solvers.append(TaskBasedRecaptchaSolver(settings.anticaptcha_api_key, "anticaptcha"))
 
     if settings.two_captcha_api_key:
-        solvers.append(
-            TwoCaptchaRecaptchaSolver(settings.two_captcha_api_key)
-        )
+        solvers.append(TwoCaptchaRecaptchaSolver(settings.two_captcha_api_key))
 
     if not solvers:
         return None

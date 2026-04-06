@@ -67,6 +67,7 @@ class TestOhBmvSourceMeta:
 
     def test_meta_supported_inputs(self):
         from openquery.sources.base import DocumentType
+
         source = OhBmvSource()
         meta = source.meta()
         assert DocumentType.VIN in meta.supported_inputs
@@ -115,9 +116,7 @@ class TestParseResult:
     def test_parse_no_lien(self):
         source = OhBmvSource()
         page = self._make_page(
-            "Title Search Results\n"
-            "Title Status: Clean Title\n"
-            "No lien recorded for this vehicle.\n"
+            "Title Search Results\nTitle Status: Clean Title\nNo lien recorded for this vehicle.\n"
         )
         result = source._parse_results(page, "1HGCM82633A004352")
         assert result.vin == "1HGCM82633A004352"
@@ -136,9 +135,7 @@ class TestParseResult:
     def test_parse_salvage_title(self):
         source = OhBmvSource()
         page = self._make_page(
-            "Title Search Results\n"
-            "Title type: Salvage\n"
-            "This vehicle has a salvage title.\n"
+            "Title Search Results\nTitle type: Salvage\nThis vehicle has a salvage title.\n"
         )
         result = source._parse_results(page, "1HGCM82633A004352")
         assert result.title_status == "Salvage"

@@ -37,7 +37,7 @@ class UyCorteElectoralSource(BaseSource):
         return SourceMeta(
             name="uy.corteelectoral",
             display_name="Corte Electoral — Padrón Electoral",
-            description="Uruguay voter registry: habilitado status, polling location (Corte Electoral)",
+            description="Uruguay voter registry: habilitado status, polling location (Corte Electoral)",  # noqa: E501
             country="UY",
             url=CORTE_URL,
             supported_inputs=[DocumentType.CUSTOM],
@@ -60,6 +60,7 @@ class UyCorteElectoralSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("uy.corteelectoral", "custom", credencial)
 
         with browser.page(CORTE_URL) as page:

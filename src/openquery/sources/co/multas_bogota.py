@@ -13,7 +13,8 @@ Flow:
 
 API endpoints discovered:
 - TipoDocumento: GET /fx-mdmperstipodoc-sdm-prd/V1.0/TipoDocumento
-- Consulta por doc: GET /fx-bancoconsultacompar-sdm-prd/V1.0/Obligacion/consulta-pagos/documento/{tipoDoc}/{numero}
+- Consulta por doc: GET /fx-bancoconsultacompar-sdm-prd/
+  V1.0/Obligacion/consulta-pagos/documento/{tipoDoc}/{numero}
 - Consulta por placa: uses placa param
 """
 
@@ -39,20 +40,19 @@ logger = logging.getLogger(__name__)
 WEBFENIX_URL = "https://webfenix.movilidadbogota.gov.co/#/consulta-pagos"
 APIM_BASE = "https://apim-fenix-sdm-prd.azure-api.net"
 CONSULTA_ENDPOINT = (
-    f"{APIM_BASE}/fx-bancoconsultacompar-sdm-prd/V1.0/Obligacion/"
-    "consulta-pagos/documento"
+    f"{APIM_BASE}/fx-bancoconsultacompar-sdm-prd/V1.0/Obligacion/consulta-pagos/documento"
 )
 
 # Map openquery DocumentType to WebFenix tipo_documento code
 DOC_TYPE_MAP = {
-    "CC": "C",    # Cédula de ciudadanía
-    "CE": "E",    # Cédula de extranjería
-    "NIT": "N",   # NIT
-    "PA": "P",    # Pasaporte
-    "TI": "T",    # Tarjeta de identidad
-    "RC": "U",    # Registro civil
+    "CC": "C",  # Cédula de ciudadanía
+    "CE": "E",  # Cédula de extranjería
+    "NIT": "N",  # NIT
+    "PA": "P",  # Pasaporte
+    "TI": "T",  # Tarjeta de identidad
+    "RC": "U",  # Registro civil
     "PPT": "PT",  # Permiso por protección temporal
-    "CD": "D",    # Carnet diplomático
+    "CD": "D",  # Carnet diplomático
 }
 
 
@@ -106,9 +106,7 @@ class MultasBogotaSource(BaseSource):
         if audit:
             from openquery.core.audit import AuditCollector
 
-            collector = AuditCollector(
-                "co.multas_bogota", doc_type.value, search_term
-            )
+            collector = AuditCollector("co.multas_bogota", doc_type.value, search_term)
 
         with browser.page(WEBFENIX_URL) as page:
             try:
@@ -143,20 +141,14 @@ class MultasBogotaSource(BaseSource):
                 page.wait_for_timeout(2000)
 
                 if doc_type == DocumentType.PLATE:
-                    return self._query_by_plate(
-                        page, search_term, collector, api_data
-                    )
+                    return self._query_by_plate(page, search_term, collector, api_data)
 
-                return self._query_by_document(
-                    page, search_term, collector, api_data
-                )
+                return self._query_by_document(page, search_term, collector, api_data)
 
             except SourceError:
                 raise
             except Exception as e:
-                raise SourceError(
-                    "co.multas_bogota", f"Query failed: {e}"
-                ) from e
+                raise SourceError("co.multas_bogota", f"Query failed: {e}") from e
 
     def _query_by_document(
         self,
@@ -172,9 +164,7 @@ class MultasBogotaSource(BaseSource):
         page.wait_for_timeout(500)
 
         # Click CC option
-        cc_option = page.locator("mat-option").filter(
-            has_text="Cédula de ciudadanía"
-        )
+        cc_option = page.locator("mat-option").filter(has_text="Cédula de ciudadanía")
         cc_option.click()
         page.wait_for_timeout(500)
 
@@ -200,9 +190,7 @@ class MultasBogotaSource(BaseSource):
         if collector:
             collector.screenshot(page, "result")
 
-        return self._parse_api_response(
-            page, doc_number, collector, api_data
-        )
+        return self._parse_api_response(page, doc_number, collector, api_data)
 
     def _query_by_plate(
         self,
@@ -234,9 +222,7 @@ class MultasBogotaSource(BaseSource):
         if collector:
             collector.screenshot(page, "result")
 
-        return self._parse_api_response(
-            page, plate, collector, api_data
-        )
+        return self._parse_api_response(page, plate, collector, api_data)
 
     def _solve_math_captcha(self, page) -> None:
         """Solve the simple math CAPTCHA (e.g., '7 + 4')."""

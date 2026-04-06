@@ -54,6 +54,7 @@ class TestCrMarchamoResult:
 class TestCrMarchamoSourceMeta:
     def test_meta(self):
         from openquery.sources.cr.marchamo import CrMarchamoSource
+
         meta = CrMarchamoSource().meta()
         assert meta.name == "cr.marchamo"
         assert meta.country == "CR"
@@ -64,6 +65,7 @@ class TestCrMarchamoSourceMeta:
 
     def test_missing_placa_raises(self):
         from openquery.sources.cr.marchamo import CrMarchamoSource
+
         src = CrMarchamoSource()
         with pytest.raises(SourceError, match="Placa is required"):
             src.query(QueryInput(document_type=DocumentType.PLATE, document_number=""))
@@ -74,6 +76,7 @@ class TestCrMarchamoParseResult:
 
     def _parse(self, body_text: str, placa: str = "ABC123") -> CrMarchamoResult:
         from openquery.sources.cr.marchamo import CrMarchamoSource
+
         page = MagicMock()
         page.inner_text.return_value = body_text
         src = CrMarchamoSource()

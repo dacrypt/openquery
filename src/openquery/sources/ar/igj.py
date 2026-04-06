@@ -66,6 +66,7 @@ class IgjSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("ar.igj", "search", search_term)
 
         try:
@@ -144,6 +145,7 @@ class IgjSource(BaseSource):
 
         # Fallback: regex on body text
         import re
+
         if not result.company_name:
             m = re.search(
                 r"(?:denominacion|razon\s*social)[:\s]+([^\n]+)", body_text, re.IGNORECASE

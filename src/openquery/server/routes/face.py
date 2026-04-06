@@ -20,11 +20,13 @@ async def face_verify(req: FaceVerifyInput):
     verifier = FaceVerifier()
 
     img1 = (
-        base64.b64decode(req.image1_base64) if req.image1_base64
+        base64.b64decode(req.image1_base64)
+        if req.image1_base64
         else Path(req.image1_path).read_bytes()
     )
     img2 = (
-        base64.b64decode(req.image2_base64) if req.image2_base64
+        base64.b64decode(req.image2_base64)
+        if req.image2_base64
         else Path(req.image2_path).read_bytes()
     )
 

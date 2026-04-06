@@ -62,6 +62,7 @@ class GtOjSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("gt.oj", "search_term", search_term)
 
         with browser.page(OJ_URL) as page:

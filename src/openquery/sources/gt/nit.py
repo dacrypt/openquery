@@ -34,7 +34,7 @@ class GtNitSource(BaseSource):
         return SourceMeta(
             name="gt.nit",
             display_name="SAT — Consulta NIT",
-            description="Guatemalan tax registry: taxpayer name, status (Superintendencia de Administración Tributaria)",
+            description="Guatemalan tax registry: taxpayer name, status (Superintendencia de Administración Tributaria)",  # noqa: E501
             country="GT",
             url=SAT_URL,
             supported_inputs=[DocumentType.NIT, DocumentType.CUSTOM],
@@ -57,6 +57,7 @@ class GtNitSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("gt.nit", "nit", nit)
 
         with browser.page(SAT_URL) as page:
@@ -68,8 +69,7 @@ class GtNitSource(BaseSource):
                 page.wait_for_timeout(2000)
 
                 nit_input = page.query_selector(
-                    '#nitConsulta, input[id*="nit"], '
-                    'input[name*="nit"], input[type="text"]'
+                    '#nitConsulta, input[id*="nit"], input[name*="nit"], input[type="text"]'
                 )
                 if not nit_input:
                     raise SourceError("gt.nit", "Could not find NIT input field")

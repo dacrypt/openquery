@@ -61,6 +61,7 @@ class TestSepsSourceMeta:
 
     def test_meta_supported_inputs(self):
         from openquery.sources.base import DocumentType
+
         source = SepsSource()
         meta = source.meta()
         assert DocumentType.CUSTOM in meta.supported_inputs
@@ -111,9 +112,7 @@ class TestParseResult:
     def test_parse_ruc(self):
         source = SepsSource()
         page = self._make_page(
-            "Razón Social: COOPERATIVA TEST LTDA\n"
-            "RUC: 0912345678001\n"
-            "Estado: ACTIVA\n"
+            "Razón Social: COOPERATIVA TEST LTDA\nRUC: 0912345678001\nEstado: ACTIVA\n"
         )
         result = source._parse_result(page, "0912345678001")
         assert result.ruc == "0912345678001"
@@ -131,8 +130,7 @@ class TestParseResult:
     def test_parse_organization_type(self):
         source = SepsSource()
         page = self._make_page(
-            "Razón Social: COOPERATIVA TEST LTDA\n"
-            "Tipo: COOPERATIVA DE AHORRO Y CREDITO\n"
+            "Razón Social: COOPERATIVA TEST LTDA\nTipo: COOPERATIVA DE AHORRO Y CREDITO\n"
         )
         result = source._parse_result(page, "COOPERATIVA TEST")
         assert result.organization_type == "COOPERATIVA DE AHORRO Y CREDITO"

@@ -72,6 +72,7 @@ class TestSernacSourceMeta:
 
     def test_meta_supported_inputs(self):
         from openquery.sources.base import DocumentType
+
         source = SernacSource()
         assert DocumentType.CUSTOM in source.meta().supported_inputs
 
@@ -108,9 +109,7 @@ class TestParseResult:
 
     def test_parse_from_body_text(self):
         source = SernacSource()
-        page = self._make_page(
-            "Total Reclamos: 120\nTasa de Resolución: 85%\n"
-        )
+        page = self._make_page("Total Reclamos: 120\nTasa de Resolución: 85%\n")
         result = source._parse_result(page, "EMPRESA ABC")
         assert result.total_complaints == "120"
         assert result.resolution_rate == "85%"

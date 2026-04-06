@@ -63,6 +63,7 @@ class DianRutSource(BaseSource):
 
         if audit:
             from openquery.core.audit import AuditCollector
+
             collector = AuditCollector("co.dian_rut", doc_type.value, documento)
 
         with browser.page(DIAN_RUT_URL) as page:
@@ -75,9 +76,7 @@ class DianRutSource(BaseSource):
 
                 # Select document type
                 doc_type_value = "Nit" if doc_type == DocumentType.NIT else "Cc"
-                doc_select = page.query_selector(
-                    'select[id*="tipo"], select[name*="tipo"]'
-                )
+                doc_select = page.query_selector('select[id*="tipo"], select[name*="tipo"]')
                 if doc_select:
                     page.select_option(
                         'select[id*="tipo"], select[name*="tipo"]',

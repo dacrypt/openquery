@@ -121,9 +121,7 @@ class TestTsjQuery:
                 document_number="AA20-C-2021-000001",
             )
         )
-        src._query.assert_called_once_with(
-            search_term="AA20-C-2021-000001", audit=False
-        )
+        src._query.assert_called_once_with(search_term="AA20-C-2021-000001", audit=False)
         assert result.search_term == "AA20-C-2021-000001"
 
     def test_search_from_extra_case_number(self):
@@ -139,9 +137,7 @@ class TestTsjQuery:
                 extra={"case_number": "AA20-C-2021-000001"},
             )
         )
-        src._query.assert_called_once_with(
-            search_term="AA20-C-2021-000001", audit=False
-        )
+        src._query.assert_called_once_with(search_term="AA20-C-2021-000001", audit=False)
         assert result.search_term == "AA20-C-2021-000001"
 
     def test_search_from_extra_party_name(self):
@@ -172,9 +168,7 @@ class TestTsjParseResult:
         page.inner_text.return_value = body_text
         return page
 
-    def _parse(
-        self, body_text: str, search_term: str = "AA20-C-2021-000001"
-    ) -> object:
+    def _parse(self, body_text: str, search_term: str = "AA20-C-2021-000001") -> object:
         from openquery.sources.ve.tsj import TsjSource
 
         return TsjSource()._parse_result(self._make_page(body_text), search_term)
