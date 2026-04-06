@@ -23,19 +23,19 @@
     "medium"
   ],
   "countries": {
-    "AR": 15,
+    "AR": 16,
     "BO": 10,
-    "BR": 21,
-    "CL": 16,
+    "BR": 23,
+    "CL": 18,
     "CO": 91,
     "CR": 10,
     "DO": 10,
-    "EC": 15,
+    "EC": 16,
     "GT": 9,
     "HN": 9,
-    "MX": 16,
+    "MX": 18,
     "PA": 10,
-    "PE": 17,
+    "PE": 19,
     "PY": 9,
     "SV": 10,
     "US": 21,
@@ -45,7 +45,7 @@
     "blocked": 8,
     "excluded": 2,
     "implemented": 70,
-    "queued": 218
+    "queued": 228
   },
   "sources": [
     {
@@ -138,6 +138,37 @@
       "blocker_reason": null,
       "importance_score": 74,
       "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "ar.coprec",
+      "name": "ar.coprec",
+      "country": "AR",
+      "region_phase": "americas",
+      "official_name": "COPREC — Mediación de Consumo (Argentina)",
+      "display_name": "COPREC — Mediación de Consumo (Argentina)",
+      "official_url": "https://www.argentina.gob.ar/produccion/defensadelconsumidor/formulario",
+      "url": "https://www.argentina.gob.ar/produccion/defensadelconsumidor/formulario",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "ar.coprec",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
@@ -1155,6 +1186,40 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "br.detran_rj",
+      "name": "br.detran_rj",
+      "country": "BR",
+      "region_phase": "americas",
+      "official_name": "DETRAN-RJ — Consulta de Veículo (Rio de Janeiro)",
+      "display_name": "DETRAN-RJ — Consulta de Veículo (Rio de Janeiro)",
+      "official_url": "https://www.detran.rj.gov.br/_monta_aplicacoes.asp?cod=22&tipo=consulta_veiculo",
+      "url": "https://www.detran.rj.gov.br/_monta_aplicacoes.asp?cod=22&tipo=consulta_veiculo",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "placa",
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom",
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "custom",
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "br.detran_rj",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "br.detran_sp",
       "name": "br.detran_sp",
       "country": "BR",
@@ -1275,6 +1340,37 @@
       "source_type": "api",
       "officiality": "official",
       "implemented_source_name": "br.ibge",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "br.inss",
+      "name": "br.inss",
+      "country": "BR",
+      "region_phase": "americas",
+      "official_name": "INSS — Consulta de Contribuição (Meu INSS)",
+      "display_name": "INSS — Consulta de Contribuição (Meu INSS)",
+      "official_url": "https://meu.inss.gov.br/",
+      "url": "https://meu.inss.gov.br/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "br.inss",
       "blocker_reason": null,
       "importance_score": 54,
       "importance_tier": "long_tail",
@@ -1623,6 +1719,37 @@
       "evidence_note": "Live accountability report shows OK"
     },
     {
+      "id": "cl.dicom",
+      "name": "cl.dicom",
+      "country": "CL",
+      "region_phase": "americas",
+      "official_name": "DICOM — Consulta de Crédito Equifax Chile",
+      "display_name": "DICOM — Consulta de Crédito Equifax Chile",
+      "official_url": "https://www.equifax.cl/personas/consulta-dicom/",
+      "url": "https://www.equifax.cl/personas/consulta-dicom/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "cl.dicom",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "cl.fiscalizacion",
       "name": "cl.fiscalizacion",
       "country": "CL",
@@ -1833,6 +1960,37 @@
       "source_type": "browser",
       "officiality": "official",
       "implemented_source_name": "cl.sernac",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "cl.sii_boleta",
+      "name": "cl.sii_boleta",
+      "country": "CL",
+      "region_phase": "americas",
+      "official_name": "SII — Verificación de Boleta/Factura",
+      "display_name": "SII — Verificación de Boleta/Factura",
+      "official_url": "https://www.sii.cl/servicios_online/1047-.html",
+      "url": "https://www.sii.cl/servicios_online/1047-.html",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "cl.sii_boleta",
       "blocker_reason": null,
       "importance_score": 54,
       "importance_tier": "long_tail",
@@ -6103,6 +6261,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "ec.superbancos",
+      "name": "ec.superbancos",
+      "country": "EC",
+      "region_phase": "americas",
+      "official_name": "Superbancos — Entidades Supervisadas (Ecuador)",
+      "display_name": "Superbancos — Entidades Supervisadas (Ecuador)",
+      "official_url": "https://www.superbancos.gob.ec/bancos/index.php/entidades-supervisadas",
+      "url": "https://www.superbancos.gob.ec/bancos/index.php/entidades-supervisadas",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "ec.superbancos",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "ec.supercias",
       "name": "ec.supercias",
       "country": "EC",
@@ -6728,6 +6917,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "mx.cofepris",
+      "name": "mx.cofepris",
+      "country": "MX",
+      "region_phase": "americas",
+      "official_name": "COFEPRIS — Registros Sanitarios",
+      "display_name": "COFEPRIS — Registros Sanitarios",
+      "official_url": "https://www.gob.mx/cofepris/acciones-y-programas/consulta-de-registros-sanitarios",
+      "url": "https://www.gob.mx/cofepris/acciones-y-programas/consulta-de-registros-sanitarios",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "mx.cofepris",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "mx.condusef",
       "name": "mx.condusef",
       "country": "MX",
@@ -6845,6 +7065,37 @@
       "source_type": "browser",
       "officiality": "official",
       "implemented_source_name": "mx.impi",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "mx.imss_patron",
+      "name": "mx.imss_patron",
+      "country": "MX",
+      "region_phase": "americas",
+      "official_name": "IMSS — Registro Patronal",
+      "display_name": "IMSS — Registro Patronal",
+      "official_url": "https://serviciosdigitales.imss.gob.mx/gestionAsegurados-web-externo/asegurado",
+      "url": "https://serviciosdigitales.imss.gob.mx/gestionAsegurados-web-externo/asegurado",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "mx.imss_patron",
       "blocker_reason": null,
       "importance_score": 54,
       "importance_tier": "long_tail",
@@ -7608,6 +7859,37 @@
       "evidence_note": "Live accountability report shows OK"
     },
     {
+      "id": "pe.essalud",
+      "name": "pe.essalud",
+      "country": "PE",
+      "region_phase": "americas",
+      "official_name": "EsSalud — Acreditación de Afiliado",
+      "display_name": "EsSalud — Acreditación de Afiliado",
+      "official_url": "https://ww1.essalud.gob.pe/sisep/postulante/postulante_acredita.htm",
+      "url": "https://ww1.essalud.gob.pe/sisep/postulante/postulante_acredita.htm",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "pe.essalud",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "pe.indecopi",
       "name": "pe.indecopi",
       "country": "PE",
@@ -7666,6 +7948,37 @@
       "blocker_reason": null,
       "importance_score": 74,
       "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "pe.migraciones",
+      "name": "pe.migraciones",
+      "country": "PE",
+      "region_phase": "americas",
+      "official_name": "Migraciones Perú — Consulta de Migrante",
+      "display_name": "Migraciones Perú — Consulta de Migrante",
+      "official_url": "https://www.migraciones.gob.pe/consultas/consulta_migrante.php",
+      "url": "https://www.migraciones.gob.pe/consultas/consulta_migrante.php",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "pe.migraciones",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
