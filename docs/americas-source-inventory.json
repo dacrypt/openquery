@@ -23,29 +23,29 @@
     "medium"
   ],
   "countries": {
-    "AR": 5,
+    "AR": 6,
     "BO": 6,
     "BR": 16,
-    "CL": 6,
+    "CL": 8,
     "CO": 91,
-    "CR": 1,
-    "DO": 2,
+    "CR": 4,
+    "DO": 4,
     "EC": 7,
-    "GT": 2,
-    "HN": 1,
-    "MX": 5,
+    "GT": 5,
+    "HN": 3,
+    "MX": 8,
     "PA": 8,
     "PE": 7,
-    "PY": 2,
-    "SV": 1,
+    "PY": 4,
+    "SV": 3,
     "US": 18,
-    "UY": 2
+    "UY": 4
   },
   "status_counts": {
     "blocked": 8,
     "excluded": 2,
     "implemented": 70,
-    "queued": 100
+    "queued": 122
   },
   "sources": [
     {
@@ -78,6 +78,37 @@
       "importance_tier": "medium",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "ar.bcra_deudores",
+      "name": "ar.bcra_deudores",
+      "country": "AR",
+      "region_phase": "americas",
+      "official_name": "BCRA — Central de Deudores",
+      "display_name": "BCRA — Central de Deudores",
+      "official_url": "https://api.bcra.gob.ar/centraldedeudores/v1.0",
+      "url": "https://api.bcra.gob.ar/centraldedeudores/v1.0",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "ar.bcra_deudores",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
       "id": "ar.dnrpa",
@@ -1034,6 +1065,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "cl.registro_civil",
+      "name": "cl.registro_civil",
+      "country": "CL",
+      "region_phase": "americas",
+      "official_name": "Registro Civil — Validez de Documento (SIDIV)",
+      "display_name": "Registro Civil — Validez de Documento (SIDIV)",
+      "official_url": "https://portal.sidiv.registrocivil.cl/usuarios-portal/pages/DocumentRequestStatus.xhtml",
+      "url": "https://portal.sidiv.registrocivil.cl/usuarios-portal/pages/DocumentRequestStatus.xhtml",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "cl.registro_civil",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "cl.sii_rut",
       "name": "cl.sii_rut",
       "country": "CL",
@@ -1063,6 +1125,37 @@
       "importance_tier": "medium",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "cl.spensiones",
+      "name": "cl.spensiones",
+      "country": "CL",
+      "region_phase": "americas",
+      "official_name": "Superintendencia de Pensiones — Afiliación AFP/AFC",
+      "display_name": "Superintendencia de Pensiones — Afiliación AFP/AFC",
+      "official_url": "https://www.spensiones.cl/portal/institucional/597/w3-article-15721.html",
+      "url": "https://www.spensiones.cl/portal/institucional/597/w3-article-15721.html",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "cl.spensiones",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
       "id": "cl.superir",
@@ -4149,6 +4242,108 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "cr.marchamo",
+      "name": "cr.marchamo",
+      "country": "CR",
+      "region_phase": "americas",
+      "official_name": "INS — Consulta de Marchamo",
+      "display_name": "INS — Consulta de Marchamo",
+      "official_url": "https://marchamo.ins-cr.com/marchamo/ConsultaMarchamo.aspx",
+      "url": "https://marchamo.ins-cr.com/marchamo/ConsultaMarchamo.aspx",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "placa",
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom",
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "custom",
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "cr.marchamo",
+      "blocker_reason": null,
+      "importance_score": 68,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "cr.tse",
+      "name": "cr.tse",
+      "country": "CR",
+      "region_phase": "americas",
+      "official_name": "TSE — Padrón Electoral",
+      "display_name": "TSE — Padrón Electoral",
+      "official_url": "https://servicioselectorales.tse.go.cr/chc/consulta_cedula.aspx",
+      "url": "https://servicioselectorales.tse.go.cr/chc/consulta_cedula.aspx",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula",
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom",
+        "person"
+      ],
+      "identifier_categories": [
+        "custom",
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "cr.tse",
+      "blocker_reason": null,
+      "importance_score": 68,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "cr.vehiculo",
+      "name": "cr.vehiculo",
+      "country": "CR",
+      "region_phase": "americas",
+      "official_name": "Hacienda TICA — Registro de Vehículos",
+      "display_name": "Hacienda TICA — Registro de Vehículos",
+      "official_url": "https://ticaconsultas.hacienda.go.cr/Tica/hrgvehiculos.aspx",
+      "url": "https://ticaconsultas.hacienda.go.cr/Tica/hrgvehiculos.aspx",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "placa",
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom",
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "custom",
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "cr.vehiculo",
+      "blocker_reason": null,
+      "importance_score": 68,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "do.datos",
       "name": "do.datos",
       "country": "DO",
@@ -4176,6 +4371,68 @@
       "blocker_reason": null,
       "importance_score": 48,
       "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "do.jce",
+      "name": "do.jce",
+      "country": "DO",
+      "region_phase": "americas",
+      "official_name": "JCE — Validar Cédula",
+      "display_name": "JCE — Validar Cédula",
+      "official_url": "https://dataportal.jce.gob.do/sarc/validar-certificacion-cedula/",
+      "url": "https://dataportal.jce.gob.do/sarc/validar-certificacion-cedula/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "do.jce",
+      "blocker_reason": null,
+      "importance_score": 68,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "do.placas",
+      "name": "do.placas",
+      "country": "DO",
+      "region_phase": "americas",
+      "official_name": "DGII — Consulta Placas",
+      "display_name": "DGII — Consulta Placas",
+      "official_url": "https://dgii.gov.do/vehiculosMotor/consultas/Paginas/consultaPlacas.aspx",
+      "url": "https://dgii.gov.do/vehiculosMotor/consultas/Paginas/consultaPlacas.aspx",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "placa"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "do.placas",
+      "blocker_reason": null,
+      "importance_score": 68,
+      "importance_tier": "medium",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
@@ -4515,6 +4772,130 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "gt.renap",
+      "name": "gt.renap",
+      "country": "GT",
+      "region_phase": "americas",
+      "official_name": "RENAP — Estado de Trámite DPI",
+      "display_name": "RENAP — Estado de Trámite DPI",
+      "official_url": "https://www.renap.gob.gt/estado-tramite-dpi",
+      "url": "https://www.renap.gob.gt/estado-tramite-dpi",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "gt.renap",
+      "blocker_reason": null,
+      "importance_score": 68,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "gt.sat_vehiculo",
+      "name": "gt.sat_vehiculo",
+      "country": "GT",
+      "region_phase": "americas",
+      "official_name": "SAT — Impresión Calcomanía (Circulación Vehículos)",
+      "display_name": "SAT — Impresión Calcomanía (Circulación Vehículos)",
+      "official_url": "https://portal.sat.gob.gt/portal/impresion-calcomania/",
+      "url": "https://portal.sat.gob.gt/portal/impresion-calcomania/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "placa"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "gt.sat_vehiculo",
+      "blocker_reason": null,
+      "importance_score": 68,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "gt.tse",
+      "name": "gt.tse",
+      "country": "GT",
+      "region_phase": "americas",
+      "official_name": "TSE — Consulta de Afiliación Guatemala",
+      "display_name": "TSE — Consulta de Afiliación Guatemala",
+      "official_url": "https://www.tse.org.gt/reg-ciudadanos/sistema-de-estadisticas/consulta-de-afiliacion",
+      "url": "https://www.tse.org.gt/reg-ciudadanos/sistema-de-estadisticas/consulta-de-afiliacion",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "gt.tse",
+      "blocker_reason": null,
+      "importance_score": 68,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "hn.cne",
+      "name": "hn.cne",
+      "country": "HN",
+      "region_phase": "americas",
+      "official_name": "CNE — Censo Electoral Honduras",
+      "display_name": "CNE — Censo Electoral Honduras",
+      "official_url": "https://censo.cne.hn/",
+      "url": "https://censo.cne.hn/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "hn.cne",
+      "blocker_reason": null,
+      "importance_score": 68,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "hn.rtn",
       "name": "hn.rtn",
       "country": "HN",
@@ -4541,6 +4922,68 @@
       "implemented_source_name": "hn.rtn",
       "blocker_reason": null,
       "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "hn.vehiculo",
+      "name": "hn.vehiculo",
+      "country": "HN",
+      "region_phase": "americas",
+      "official_name": "IP — Registro de Vehículos Honduras",
+      "display_name": "IP — Registro de Vehículos Honduras",
+      "official_url": "https://placas.ip.gob.hn/vehiculos",
+      "url": "https://placas.ip.gob.hn/vehiculos",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "placa"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "hn.vehiculo",
+      "blocker_reason": null,
+      "importance_score": 68,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "mx.condusef",
+      "name": "mx.condusef",
+      "country": "MX",
+      "region_phase": "americas",
+      "official_name": "CONDUSEF — Buró de Entidades Financieras",
+      "display_name": "CONDUSEF — Buró de Entidades Financieras",
+      "official_url": "https://www.buro.gob.mx/",
+      "url": "https://www.buro.gob.mx/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "mx.condusef",
+      "blocker_reason": null,
+      "importance_score": 54,
       "importance_tier": "long_tail",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Registered runtime connector pending live accountability coverage"
@@ -4608,6 +5051,37 @@
       "evidence_note": "Live accountability report shows OK"
     },
     {
+      "id": "mx.profeco",
+      "name": "mx.profeco",
+      "country": "MX",
+      "region_phase": "americas",
+      "official_name": "Profeco — Buró Comercial",
+      "display_name": "Profeco — Buró Comercial",
+      "official_url": "https://burocomercial.profeco.gob.mx/",
+      "url": "https://burocomercial.profeco.gob.mx/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "mx.profeco",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "mx.repuve",
       "name": "mx.repuve",
       "country": "MX",
@@ -4669,6 +5143,37 @@
       "importance_tier": "long_tail",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Live accountability report skip: NO_FORM: Static XLS"
+    },
+    {
+      "id": "mx.sat_rfc",
+      "name": "mx.sat_rfc",
+      "country": "MX",
+      "region_phase": "americas",
+      "official_name": "SAT — Validación de RFC",
+      "display_name": "SAT — Validación de RFC",
+      "official_url": "https://agsc.siat.sat.gob.mx/PTSC/ValidaRFC/index.jsf",
+      "url": "https://agsc.siat.sat.gob.mx/PTSC/ValidaRFC/index.jsf",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "mx.sat_rfc",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
       "id": "mx.siem",
@@ -5178,6 +5683,37 @@
       "evidence_note": "Live accountability report shows OK"
     },
     {
+      "id": "py.antsv",
+      "name": "py.antsv",
+      "country": "PY",
+      "region_phase": "americas",
+      "official_name": "ANTSV — Valor Impositivo Vehicular",
+      "display_name": "ANTSV — Valor Impositivo Vehicular",
+      "official_url": "https://ruhr.antsv.gov.py/",
+      "url": "https://ruhr.antsv.gov.py/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "py.antsv",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "py.datos",
       "name": "py.datos",
       "country": "PY",
@@ -5240,6 +5776,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "py.tsje",
+      "name": "py.tsje",
+      "country": "PY",
+      "region_phase": "americas",
+      "official_name": "TSJE — Padrón Electoral",
+      "display_name": "TSJE — Padrón Electoral",
+      "official_url": "https://padron.tsje.gov.py/",
+      "url": "https://padron.tsje.gov.py/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "py.tsje",
+      "blocker_reason": null,
+      "importance_score": 68,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "sv.nit",
       "name": "sv.nit",
       "country": "SV",
@@ -5267,6 +5834,68 @@
       "source_type": "browser",
       "officiality": "official",
       "implemented_source_name": "sv.nit",
+      "blocker_reason": null,
+      "importance_score": 68,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "sv.tse",
+      "name": "sv.tse",
+      "country": "SV",
+      "region_phase": "americas",
+      "official_name": "TSE — Consulta Electoral El Salvador",
+      "display_name": "TSE — Consulta Electoral El Salvador",
+      "official_url": "https://consulta.tse.gob.sv/",
+      "url": "https://consulta.tse.gob.sv/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "sv.tse",
+      "blocker_reason": null,
+      "importance_score": 68,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "sv.vehiculo",
+      "name": "sv.vehiculo",
+      "country": "SV",
+      "region_phase": "americas",
+      "official_name": "SERTRACEN — Registro Público de Vehículos El Salvador",
+      "display_name": "SERTRACEN — Registro Público de Vehículos El Salvador",
+      "official_url": "https://www.sertracen.com.sv/index.php/consultas-en-linea-del-registro-publico-de-vehiculos/consulta-de-estado-de-vehiculos",
+      "url": "https://www.sertracen.com.sv/index.php/consultas-en-linea-del-registro-publico-de-vehiculos/consulta-de-estado-de-vehiculos",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "placa"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "sv.vehiculo",
       "blocker_reason": null,
       "importance_score": 68,
       "importance_tier": "medium",
@@ -5852,6 +6481,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "uy.corteelectoral",
+      "name": "uy.corteelectoral",
+      "country": "UY",
+      "region_phase": "americas",
+      "official_name": "Corte Electoral — Padrón Electoral",
+      "display_name": "Corte Electoral — Padrón Electoral",
+      "official_url": "https://aplicaciones.corteelectoral.gub.uy/buscadorpermanente/buscadores.buscadorpermanente.aspx",
+      "url": "https://aplicaciones.corteelectoral.gub.uy/buscadorpermanente/buscadores.buscadorpermanente.aspx",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "uy.corteelectoral",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "uy.datos",
       "name": "uy.datos",
       "country": "UY",
@@ -5876,6 +6536,37 @@
       "source_type": "dataset",
       "officiality": "official",
       "implemented_source_name": "uy.datos",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "uy.pj",
+      "name": "uy.pj",
+      "country": "UY",
+      "region_phase": "americas",
+      "official_name": "Poder Judicial — Expedientes",
+      "display_name": "Poder Judicial — Expedientes",
+      "official_url": "https://expedientes.poderjudicial.gub.uy/",
+      "url": "https://expedientes.poderjudicial.gub.uy/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "uy.pj",
       "blocker_reason": null,
       "importance_score": 48,
       "importance_tier": "long_tail",

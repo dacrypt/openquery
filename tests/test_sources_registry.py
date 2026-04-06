@@ -116,6 +116,7 @@ class TestListSources:
                 "SV",
                 "US",
                 "UY",
+                "VE",
             }
 
     def test_all_sources_have_supported_inputs(self):
