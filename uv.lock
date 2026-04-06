@@ -1902,11 +1902,14 @@ wheels = [
 
 [[package]]
 name = "openquery"
-version = "0.9.0"
+version = "1.3.0"
 source = { editable = "." }
 dependencies = [
     { name = "cachetools" },
+    { name = "easyocr" },
     { name = "httpx" },
+    { name = "paddleocr" },
+    { name = "paddlepaddle" },
     { name = "patchright" },
     { name = "pillow" },
     { name = "playwright" },
@@ -1931,15 +1934,8 @@ dev = [
     { name = "pytest-httpx" },
     { name = "ruff" },
 ]
-easyocr = [
-    { name = "easyocr" },
-]
 huggingface = [
     { name = "huggingface-hub" },
-]
-paddleocr = [
-    { name = "paddleocr" },
-    { name = "paddlepaddle" },
 ]
 passport = [
     { name = "passporteye" },
@@ -1967,12 +1963,12 @@ requires-dist = [
     { name = "2captcha-python", marker = "extra == 'captcha'", specifier = ">=1.5" },
     { name = "cachetools", specifier = ">=5.5" },
     { name = "deepface", marker = "extra == 'deepface'", specifier = ">=0.0.93" },
-    { name = "easyocr", marker = "extra == 'easyocr'", specifier = ">=1.7" },
+    { name = "easyocr", specifier = ">=1.7" },
     { name = "fastapi", marker = "extra == 'serve'", specifier = ">=0.115" },
     { name = "httpx", specifier = ">=0.28" },
     { name = "huggingface-hub", marker = "extra == 'huggingface'", specifier = ">=0.25" },
-    { name = "paddleocr", marker = "extra == 'paddleocr'", specifier = ">=3.0" },
-    { name = "paddlepaddle", marker = "extra == 'paddleocr'", specifier = ">=3.0" },
+    { name = "paddleocr", specifier = ">=3.0" },
+    { name = "paddlepaddle", specifier = ">=3.0" },
     { name = "passporteye", marker = "extra == 'passport'", specifier = ">=2.1" },
     { name = "patchright", specifier = ">=1.58.2" },
     { name = "pillow", specifier = ">=11.0" },
@@ -1993,7 +1989,7 @@ requires-dist = [
     { name = "typer", specifier = ">=0.15" },
     { name = "uvicorn", extras = ["standard"], marker = "extra == 'serve'", specifier = ">=0.34" },
 ]
-provides-extras = ["serve", "redis", "captcha", "trocr", "huggingface", "paddleocr", "easyocr", "passport", "deepface", "dev"]
+provides-extras = ["serve", "redis", "captcha", "trocr", "huggingface", "passport", "deepface", "dev"]
 
 [package.metadata.requires-dev]
 dev = [{ name = "pytest-cov", specifier = ">=7.1.0" }]
