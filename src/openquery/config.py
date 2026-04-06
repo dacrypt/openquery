@@ -54,6 +54,9 @@ class Settings(BaseSettings):
     circuit_breaker_threshold: int = 5
     circuit_breaker_cooldown: float = 60.0
 
+    # External API keys
+    wto_api_key: str = ""  # WTO Timeseries API (register at apiportal.wto.org)
+
     # Logging
     log_level: str = "INFO"
 
