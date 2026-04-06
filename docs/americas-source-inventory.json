@@ -23,29 +23,29 @@
     "medium"
   ],
   "countries": {
-    "AR": 16,
-    "BO": 10,
-    "BR": 23,
-    "CL": 18,
-    "CO": 91,
-    "CR": 10,
-    "DO": 10,
-    "EC": 16,
-    "GT": 9,
-    "HN": 9,
-    "MX": 18,
-    "PA": 10,
-    "PE": 19,
-    "PY": 9,
-    "SV": 10,
-    "US": 21,
-    "UY": 9
+    "AR": 18,
+    "BO": 12,
+    "BR": 27,
+    "CL": 20,
+    "CO": 94,
+    "CR": 11,
+    "DO": 11,
+    "EC": 18,
+    "GT": 11,
+    "HN": 11,
+    "MX": 20,
+    "PA": 13,
+    "PE": 21,
+    "PY": 11,
+    "SV": 12,
+    "US": 26,
+    "UY": 11
   },
   "status_counts": {
     "blocked": 8,
     "excluded": 2,
     "implemented": 70,
-    "queued": 228
+    "queued": 267
   },
   "sources": [
     {
@@ -78,6 +78,37 @@
       "importance_tier": "medium",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "ar.afip_monotributo",
+      "name": "ar.afip_monotributo",
+      "country": "AR",
+      "region_phase": "americas",
+      "official_name": "AFIP — Monotributo",
+      "display_name": "AFIP — Monotributo",
+      "official_url": "https://www.afip.gob.ar/",
+      "url": "https://www.afip.gob.ar/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "ar.afip_monotributo",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
       "id": "ar.bcra_deudores",
@@ -138,6 +169,37 @@
       "blocker_reason": null,
       "importance_score": 74,
       "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "ar.cnv",
+      "name": "ar.cnv",
+      "country": "AR",
+      "region_phase": "americas",
+      "official_name": "CNV — Comisión Nacional de Valores",
+      "display_name": "CNV — Comisión Nacional de Valores",
+      "official_url": "https://www.cnv.gov.ar/",
+      "url": "https://www.cnv.gov.ar/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "ar.cnv",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
@@ -545,6 +607,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "bo.abi",
+      "name": "bo.abi",
+      "country": "BO",
+      "region_phase": "americas",
+      "official_name": "ABI — Agencia Boliviana de Información",
+      "display_name": "ABI — Agencia Boliviana de Información",
+      "official_url": "https://www.abi.bo/",
+      "url": "https://www.abi.bo/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "bo.abi",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "bo.ajam",
       "name": "bo.ajam",
       "country": "BO",
@@ -600,6 +693,37 @@
       "source_type": "browser",
       "officiality": "official",
       "implemented_source_name": "bo.asfi",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "bo.autoridad_fiscalizacion",
+      "name": "bo.autoridad_fiscalizacion",
+      "country": "BO",
+      "region_phase": "americas",
+      "official_name": "AEMP — Autoridad de Fiscalización y Control (BO)",
+      "display_name": "AEMP — Autoridad de Fiscalización y Control (BO)",
+      "official_url": "https://www.aemp.gob.bo/",
+      "url": "https://www.aemp.gob.bo/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "bo.autoridad_fiscalizacion",
       "blocker_reason": null,
       "importance_score": 48,
       "importance_tier": "long_tail",
@@ -891,6 +1015,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "br.anvisa",
+      "name": "br.anvisa",
+      "country": "BR",
+      "region_phase": "americas",
+      "official_name": "ANVISA — Consulta de Produtos Registrados",
+      "display_name": "ANVISA — Consulta de Produtos Registrados",
+      "official_url": "https://consultas.anvisa.gov.br/#/medicamentos/",
+      "url": "https://consultas.anvisa.gov.br/#/medicamentos/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "br.anvisa",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "br.bacen_ptax",
       "name": "br.bacen_ptax",
       "country": "BR",
@@ -1090,6 +1245,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "br.cvm",
+      "name": "br.cvm",
+      "country": "BR",
+      "region_phase": "americas",
+      "official_name": "CVM — Consulta de Companhias e Fundos",
+      "display_name": "CVM — Consulta de Companhias e Fundos",
+      "official_url": "https://www.rad.cvm.gov.br/ENET/frmConsultaExternaCVM.aspx",
+      "url": "https://www.rad.cvm.gov.br/ENET/frmConsultaExternaCVM.aspx",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "br.cvm",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "br.datajud",
       "name": "br.datajud",
       "country": "BR",
@@ -1179,6 +1365,37 @@
       "source_type": "browser",
       "officiality": "official",
       "implemented_source_name": "br.detran_mg",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "br.detran_pr",
+      "name": "br.detran_pr",
+      "country": "BR",
+      "region_phase": "americas",
+      "official_name": "DETRAN-PR — Consulta de Veículos (Paraná)",
+      "display_name": "DETRAN-PR — Consulta de Veículos (Paraná)",
+      "official_url": "https://www.detran.pr.gov.br/Noticia/Consultar-Veiculos",
+      "url": "https://www.detran.pr.gov.br/Noticia/Consultar-Veiculos",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "placa"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "br.detran_pr",
       "blocker_reason": null,
       "importance_score": 74,
       "importance_tier": "high",
@@ -1557,6 +1774,37 @@
       "source_type": "browser",
       "officiality": "official",
       "implemented_source_name": "br.tcu",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "br.tjsp",
+      "name": "br.tjsp",
+      "country": "BR",
+      "region_phase": "americas",
+      "official_name": "TJSP — Consulta de Processos (São Paulo)",
+      "display_name": "TJSP — Consulta de Processos (São Paulo)",
+      "official_url": "https://esaj.tjsp.jus.br/cjpg/pesquisar.do",
+      "url": "https://esaj.tjsp.jus.br/cjpg/pesquisar.do",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "br.tjsp",
       "blocker_reason": null,
       "importance_score": 54,
       "importance_tier": "long_tail",
@@ -1967,6 +2215,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "cl.servel",
+      "name": "cl.servel",
+      "country": "CL",
+      "region_phase": "americas",
+      "official_name": "Servel — Servicio Electoral de Chile",
+      "display_name": "Servel — Servicio Electoral de Chile",
+      "official_url": "https://www.servel.cl/",
+      "url": "https://www.servel.cl/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "cl.servel",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "cl.sii_boleta",
       "name": "cl.sii_boleta",
       "country": "CL",
@@ -2087,6 +2366,37 @@
       "blocker_reason": null,
       "importance_score": 74,
       "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "cl.sma",
+      "name": "cl.sma",
+      "country": "CL",
+      "region_phase": "americas",
+      "official_name": "SMA — Superintendencia del Medio Ambiente",
+      "display_name": "SMA — Superintendencia del Medio Ambiente",
+      "official_url": "https://snifa.sma.gob.cl/",
+      "url": "https://snifa.sma.gob.cl/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "cl.sma",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
@@ -4728,6 +5038,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "co.sena",
+      "name": "co.sena",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "SENA — Verificación de Certificados",
+      "display_name": "SENA — Verificación de Certificados",
+      "official_url": "https://certificados.sena.edu.co/CertificadoSena/validarCertificado.aspx",
+      "url": "https://certificados.sena.edu.co/CertificadoSena/validarCertificado.aspx",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.sena",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "co.simit",
       "name": "co.simit",
       "country": "CO",
@@ -4929,6 +5270,68 @@
       "importance_tier": "critical",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Live accountability report skip: AUTH_REQUIRED: Login-only"
+    },
+    {
+      "id": "co.superfinanciera",
+      "name": "co.superfinanciera",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Superfinanciera — Entidades Vigiladas",
+      "display_name": "Superfinanciera — Entidades Vigiladas",
+      "official_url": "https://www.superfinanciera.gov.co/publicaciones/10038768/entidades-vigiladas/",
+      "url": "https://www.superfinanciera.gov.co/publicaciones/10038768/entidades-vigiladas/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.superfinanciera",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.supersalud",
+      "name": "co.supersalud",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Supersalud — Entidades Vigiladas (EPS/IPS)",
+      "display_name": "Supersalud — Entidades Vigiladas (EPS/IPS)",
+      "official_url": "https://www.supersalud.gov.co/es-co/entidades-vigiladas",
+      "url": "https://www.supersalud.gov.co/es-co/entidades-vigiladas",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.supersalud",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
       "id": "co.supersociedades",
@@ -5333,6 +5736,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "cr.procomer",
+      "name": "cr.procomer",
+      "country": "CR",
+      "region_phase": "americas",
+      "official_name": "PROCOMER — Comercio Exterior (CR)",
+      "display_name": "PROCOMER — Comercio Exterior (CR)",
+      "official_url": "https://www.procomer.com/",
+      "url": "https://www.procomer.com/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "cr.procomer",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "cr.registro_inmobiliario",
       "name": "cr.registro_inmobiliario",
       "country": "CR",
@@ -5518,6 +5952,37 @@
       "source_type": "dataset",
       "officiality": "official",
       "implemented_source_name": "do.datos",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "do.dgii_ncf",
+      "name": "do.dgii_ncf",
+      "country": "DO",
+      "region_phase": "americas",
+      "official_name": "DGII — Consulta NCF (DO)",
+      "display_name": "DGII — Consulta NCF (DO)",
+      "official_url": "https://dgii.gov.do/app/WebApps/ConsultasWeb2/ConsultaNCF2/",
+      "url": "https://dgii.gov.do/app/WebApps/ConsultasWeb2/ConsultaNCF2/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "do.dgii_ncf",
       "blocker_reason": null,
       "importance_score": 48,
       "importance_tier": "long_tail",
@@ -5879,6 +6344,37 @@
       "blocker_reason": null,
       "importance_score": 78,
       "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "ec.arcsa",
+      "name": "ec.arcsa",
+      "country": "EC",
+      "region_phase": "americas",
+      "official_name": "ARCSA — Agencia Nacional de Regulación, Control y Vigilancia Sanitaria",
+      "display_name": "ARCSA — Agencia Nacional de Regulación, Control y Vigilancia Sanitaria",
+      "official_url": "https://www.controlsanitario.gob.ec/",
+      "url": "https://www.controlsanitario.gob.ec/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "ec.arcsa",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
@@ -6323,6 +6819,37 @@
       "evidence_note": "Live accountability report shows OK"
     },
     {
+      "id": "ec.supercias_expediente",
+      "name": "ec.supercias_expediente",
+      "country": "EC",
+      "region_phase": "americas",
+      "official_name": "Supercias — Expediente Societario",
+      "display_name": "Supercias — Expediente Societario",
+      "official_url": "https://www.supercias.gob.ec/",
+      "url": "https://www.supercias.gob.ec/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "ec.supercias_expediente",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "gt.banguat",
       "name": "gt.banguat",
       "country": "GT",
@@ -6347,6 +6874,68 @@
       "source_type": "api",
       "officiality": "official",
       "implemented_source_name": "gt.banguat",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "gt.banguat_tc",
+      "name": "gt.banguat_tc",
+      "country": "GT",
+      "region_phase": "americas",
+      "official_name": "Banguat — Tipo de Cambio por Fecha (GT)",
+      "display_name": "Banguat — Tipo de Cambio por Fecha (GT)",
+      "official_url": "https://www.banguat.gob.gt/tipo_cambio/",
+      "url": "https://www.banguat.gob.gt/tipo_cambio/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "gt.banguat_tc",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "gt.conred",
+      "name": "gt.conred",
+      "country": "GT",
+      "region_phase": "americas",
+      "official_name": "CONRED — Desastres y Emergencias (GT)",
+      "display_name": "CONRED — Desastres y Emergencias (GT)",
+      "official_url": "https://www.conred.gob.gt/",
+      "url": "https://www.conred.gob.gt/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "gt.conred",
       "blocker_reason": null,
       "importance_score": 48,
       "importance_tier": "long_tail",
@@ -6607,6 +7196,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "hn.bch",
+      "name": "hn.bch",
+      "country": "HN",
+      "region_phase": "americas",
+      "official_name": "BCH — Tasa de Cambio (HN)",
+      "display_name": "BCH — Tasa de Cambio (HN)",
+      "official_url": "https://www.bch.hn/",
+      "url": "https://www.bch.hn/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "hn.bch",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "hn.cnbs",
       "name": "hn.cnbs",
       "country": "HN",
@@ -6855,6 +7475,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "hn.sefin",
+      "name": "hn.sefin",
+      "country": "HN",
+      "region_phase": "americas",
+      "official_name": "SEFIN — Transparencia Presupuestaria Honduras",
+      "display_name": "SEFIN — Transparencia Presupuestaria Honduras",
+      "official_url": "https://www.sefin.gob.hn/",
+      "url": "https://www.sefin.gob.hn/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "hn.sefin",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "hn.vehiculo",
       "name": "hn.vehiculo",
       "country": "HN",
@@ -6910,6 +7561,37 @@
       "source_type": "api",
       "officiality": "official",
       "implemented_source_name": "mx.banxico",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "mx.cnbv",
+      "name": "mx.cnbv",
+      "country": "MX",
+      "region_phase": "americas",
+      "official_name": "CNBV — Comisión Nacional Bancaria y de Valores",
+      "display_name": "CNBV — Comisión Nacional Bancaria y de Valores",
+      "official_url": "https://www.cnbv.gob.mx/",
+      "url": "https://www.cnbv.gob.mx/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "mx.cnbv",
       "blocker_reason": null,
       "importance_score": 54,
       "importance_tier": "long_tail",
@@ -7352,6 +8034,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "mx.sep",
+      "name": "mx.sep",
+      "country": "MX",
+      "region_phase": "americas",
+      "official_name": "SEP — Cédula Profesional",
+      "display_name": "SEP — Cédula Profesional",
+      "official_url": "https://www.cedulaprofesional.sep.gob.mx/cedula/presidencia/indexAvanzada.action",
+      "url": "https://www.cedulaprofesional.sep.gob.mx/cedula/presidencia/indexAvanzada.action",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "mx.sep",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "mx.siem",
       "name": "mx.siem",
       "country": "MX",
@@ -7603,6 +8316,68 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "pa.mici",
+      "name": "pa.mici",
+      "country": "PA",
+      "region_phase": "americas",
+      "official_name": "MICI — Registro Industrial y Comercial",
+      "display_name": "MICI — Registro Industrial y Comercial",
+      "official_url": "https://www.mici.gob.pa/consulta-industrial",
+      "url": "https://www.mici.gob.pa/consulta-industrial",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "pa.mici",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "pa.minsa",
+      "name": "pa.minsa",
+      "country": "PA",
+      "region_phase": "americas",
+      "official_name": "MINSA — Registro de Establecimientos de Salud",
+      "display_name": "MINSA — Registro de Establecimientos de Salud",
+      "official_url": "https://www.minsa.gob.pa/establecimientos",
+      "url": "https://www.minsa.gob.pa/establecimientos",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "pa.minsa",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "pa.organo_judicial",
       "name": "pa.organo_judicial",
       "country": "PA",
@@ -7731,6 +8506,37 @@
       "blocker_reason": null,
       "importance_score": 78,
       "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "pa.tribunal_cuentas",
+      "name": "pa.tribunal_cuentas",
+      "country": "PA",
+      "region_phase": "americas",
+      "official_name": "Tribunal de Cuentas — Procesos y Hallazgos",
+      "display_name": "Tribunal de Cuentas — Procesos y Hallazgos",
+      "official_url": "https://www.tribunaldecuentas.gob.pa/procesos",
+      "url": "https://www.tribunaldecuentas.gob.pa/procesos",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "pa.tribunal_cuentas",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
@@ -7983,6 +8789,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "pe.onpe",
+      "name": "pe.onpe",
+      "country": "PE",
+      "region_phase": "americas",
+      "official_name": "ONPE — Oficina Nacional de Procesos Electorales",
+      "display_name": "ONPE — Oficina Nacional de Procesos Electorales",
+      "official_url": "https://www.onpe.gob.pe/",
+      "url": "https://www.onpe.gob.pe/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "pe.onpe",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "pe.osce_sancionados",
       "name": "pe.osce_sancionados",
       "country": "PE",
@@ -8193,6 +9030,37 @@
       "source_type": "browser",
       "officiality": "official",
       "implemented_source_name": "pe.servir_sanciones",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "pe.sineace",
+      "name": "pe.sineace",
+      "country": "PE",
+      "region_phase": "americas",
+      "official_name": "SINEACE — Sistema Nacional de Evaluación, Acreditación y Certificación de la Calidad Educativa",
+      "display_name": "SINEACE — Sistema Nacional de Evaluación, Acreditación y Certificación de la Calidad Educativa",
+      "official_url": "https://www.sineace.gob.pe/",
+      "url": "https://www.sineace.gob.pe/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "pe.sineace",
       "blocker_reason": null,
       "importance_score": 54,
       "importance_tier": "long_tail",
@@ -8448,6 +9316,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "py.dncp",
+      "name": "py.dncp",
+      "country": "PY",
+      "region_phase": "americas",
+      "official_name": "DNCP — Contrataciones Públicas Paraguay",
+      "display_name": "DNCP — Contrataciones Públicas Paraguay",
+      "official_url": "https://www.contrataciones.gov.py/",
+      "url": "https://www.contrataciones.gov.py/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "py.dncp",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "py.drfs",
       "name": "py.drfs",
       "country": "PY",
@@ -8503,6 +9402,37 @@
       "source_type": "dataset",
       "officiality": "official",
       "implemented_source_name": "py.mitic",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "py.mre",
+      "name": "py.mre",
+      "country": "PY",
+      "region_phase": "americas",
+      "official_name": "MRE — Estado Pasaporte Paraguay",
+      "display_name": "MRE — Estado Pasaporte Paraguay",
+      "official_url": "https://www.mre.gov.py/",
+      "url": "https://www.mre.gov.py/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "py.mre",
       "blocker_reason": null,
       "importance_score": 48,
       "importance_tier": "long_tail",
@@ -8634,6 +9564,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "sv.bcr",
+      "name": "sv.bcr",
+      "country": "SV",
+      "region_phase": "americas",
+      "official_name": "BCR — Indicadores Económicos El Salvador",
+      "display_name": "BCR — Indicadores Económicos El Salvador",
+      "official_url": "https://www.bcr.gob.sv/",
+      "url": "https://www.bcr.gob.sv/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "sv.bcr",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "sv.cnr_propiedad",
       "name": "sv.cnr_propiedad",
       "country": "SV",
@@ -8689,6 +9650,37 @@
       "source_type": "browser",
       "officiality": "official",
       "implemented_source_name": "sv.csj",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "sv.defensor",
+      "name": "sv.defensor",
+      "country": "SV",
+      "region_phase": "americas",
+      "official_name": "Defensoría del Consumidor (SV)",
+      "display_name": "Defensoría del Consumidor (SV)",
+      "official_url": "https://www.defensoria.gob.sv/",
+      "url": "https://www.defensoria.gob.sv/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "sv.defensor",
       "blocker_reason": null,
       "importance_score": 48,
       "importance_tier": "long_tail",
@@ -8978,6 +9970,68 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "us.bls",
+      "name": "us.bls",
+      "country": "US",
+      "region_phase": "americas",
+      "official_name": "BLS — Bureau of Labor Statistics Time Series",
+      "display_name": "BLS — Bureau of Labor Statistics Time Series",
+      "official_url": "https://www.bls.gov/developers/",
+      "url": "https://www.bls.gov/developers/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "us.bls",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "us.census",
+      "name": "us.census",
+      "country": "US",
+      "region_phase": "americas",
+      "official_name": "US Census Bureau — American Community Survey",
+      "display_name": "US Census Bureau — American Community Survey",
+      "official_url": "https://data.census.gov/",
+      "url": "https://data.census.gov/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "us.census",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "us.co_stolen",
       "name": "us.co_stolen",
       "country": "US",
@@ -9040,6 +10094,37 @@
       "evidence_note": "Live accountability report shows OK"
     },
     {
+      "id": "us.fcc_broadband",
+      "name": "us.fcc_broadband",
+      "country": "US",
+      "region_phase": "americas",
+      "official_name": "FCC — National Broadband Map",
+      "display_name": "FCC — National Broadband Map",
+      "official_url": "https://broadbandmap.fcc.gov/",
+      "url": "https://broadbandmap.fcc.gov/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "us.fcc_broadband",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "us.fda_recalls",
       "name": "us.fda_recalls",
       "country": "US",
@@ -9099,6 +10184,37 @@
       "blocker_reason": null,
       "importance_score": 74,
       "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "us.fred",
+      "name": "us.fred",
+      "country": "US",
+      "region_phase": "americas",
+      "official_name": "Federal Reserve FRED — Economic Time Series",
+      "display_name": "Federal Reserve FRED — Economic Time Series",
+      "official_url": "https://fred.stlouisfed.org/",
+      "url": "https://fred.stlouisfed.org/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "us.fred",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
@@ -9522,6 +10638,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "us.osha",
+      "name": "us.osha",
+      "country": "US",
+      "region_phase": "americas",
+      "official_name": "OSHA — Workplace Inspections and Violations",
+      "display_name": "OSHA — Workplace Inspections and Violations",
+      "official_url": "https://enforcedata.dol.gov/views/oshaFilter.php",
+      "url": "https://enforcedata.dol.gov/views/oshaFilter.php",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "us.osha",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "us.sam_exclusions",
       "name": "us.sam_exclusions",
       "country": "US",
@@ -9804,6 +10951,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "uy.impo",
+      "name": "uy.impo",
+      "country": "UY",
+      "region_phase": "americas",
+      "official_name": "IMPO — Base de Normas Jurídicas Uruguay",
+      "display_name": "IMPO — Base de Normas Jurídicas Uruguay",
+      "official_url": "https://www.impo.com.uy/",
+      "url": "https://www.impo.com.uy/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "uy.impo",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "uy.ine",
       "name": "uy.ine",
       "country": "UY",
@@ -9828,6 +11006,37 @@
       "source_type": "browser",
       "officiality": "official",
       "implemented_source_name": "uy.ine",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "uy.msp",
+      "name": "uy.msp",
+      "country": "UY",
+      "region_phase": "americas",
+      "official_name": "MSP — Registro Establecimientos Salud Uruguay",
+      "display_name": "MSP — Registro Establecimientos Salud Uruguay",
+      "official_url": "https://www.gub.uy/ministerio-salud-publica/",
+      "url": "https://www.gub.uy/ministerio-salud-publica/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "uy.msp",
       "blocker_reason": null,
       "importance_score": 48,
       "importance_tier": "long_tail",
