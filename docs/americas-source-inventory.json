@@ -25,14 +25,14 @@
   "countries": {
     "AR": 8,
     "BO": 6,
-    "BR": 16,
+    "BR": 18,
     "CL": 10,
     "CO": 91,
     "CR": 6,
     "DO": 6,
     "EC": 10,
-    "GT": 5,
-    "HN": 5,
+    "GT": 7,
+    "HN": 7,
     "MX": 9,
     "PA": 8,
     "PE": 10,
@@ -45,7 +45,7 @@
     "blocked": 8,
     "excluded": 2,
     "implemented": 70,
-    "queued": 146
+    "queued": 152
   },
   "sources": [
     {
@@ -972,6 +972,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "br.portal_transparencia",
+      "name": "br.portal_transparencia",
+      "country": "BR",
+      "region_phase": "americas",
+      "official_name": "Portal da Transparência — Governo Federal",
+      "display_name": "Portal da Transparência — Governo Federal",
+      "official_url": "https://portaldatransparencia.gov.br/",
+      "url": "https://portaldatransparencia.gov.br/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "br.portal_transparencia",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "br.taxas",
       "name": "br.taxas",
       "country": "BR",
@@ -996,6 +1027,37 @@
       "source_type": "api",
       "officiality": "official",
       "implemented_source_name": "br.taxas",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "br.tse_candidatos",
+      "name": "br.tse_candidatos",
+      "country": "BR",
+      "region_phase": "americas",
+      "official_name": "TSE — Candidatos e Políticos",
+      "display_name": "TSE — Candidatos e Políticos",
+      "official_url": "https://dadosabertos.tse.jus.br/",
+      "url": "https://dadosabertos.tse.jus.br/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "br.tse_candidatos",
       "blocker_reason": null,
       "importance_score": 54,
       "importance_tier": "long_tail",
@@ -5113,6 +5175,68 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "gt.oj",
+      "name": "gt.oj",
+      "country": "GT",
+      "region_phase": "americas",
+      "official_name": "OJ — Consultas Externas Guatemala",
+      "display_name": "OJ — Consultas Externas Guatemala",
+      "official_url": "https://consultasexternas.oj.gob.gt/",
+      "url": "https://consultasexternas.oj.gob.gt/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "gt.oj",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "gt.registromercantil",
+      "name": "gt.registromercantil",
+      "country": "GT",
+      "region_phase": "americas",
+      "official_name": "Registro Mercantil — Consulta de Empresas Guatemala",
+      "display_name": "Registro Mercantil — Consulta de Empresas Guatemala",
+      "official_url": "https://eregistros.registromercantil.gob.gt/",
+      "url": "https://eregistros.registromercantil.gob.gt/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "gt.registromercantil",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "gt.renap",
       "name": "gt.renap",
       "country": "GT",
@@ -5264,6 +5388,68 @@
       "blocker_reason": null,
       "importance_score": 48,
       "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "hn.poder_judicial",
+      "name": "hn.poder_judicial",
+      "country": "HN",
+      "region_phase": "americas",
+      "official_name": "Poder Judicial — SEJE Honduras",
+      "display_name": "Poder Judicial — SEJE Honduras",
+      "official_url": "https://sejedata.poderjudicial.gob.hn/sejeinfo/",
+      "url": "https://sejedata.poderjudicial.gob.hn/sejeinfo/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "hn.poder_judicial",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "hn.rnp",
+      "name": "hn.rnp",
+      "country": "HN",
+      "region_phase": "americas",
+      "official_name": "RNP — Registro Nacional de las Personas Honduras",
+      "display_name": "RNP — Registro Nacional de las Personas Honduras",
+      "official_url": "https://www.rnp.hn/",
+      "url": "https://www.rnp.hn/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "hn.rnp",
+      "blocker_reason": null,
+      "importance_score": 68,
+      "importance_tier": "medium",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
