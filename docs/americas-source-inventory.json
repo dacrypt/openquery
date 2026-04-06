@@ -23,17 +23,17 @@
     "medium"
   ],
   "countries": {
-    "AR": 6,
+    "AR": 8,
     "BO": 6,
     "BR": 16,
-    "CL": 8,
+    "CL": 10,
     "CO": 91,
-    "CR": 4,
-    "DO": 4,
+    "CR": 6,
+    "DO": 6,
     "EC": 7,
     "GT": 5,
     "HN": 3,
-    "MX": 8,
+    "MX": 9,
     "PA": 8,
     "PE": 7,
     "PY": 4,
@@ -45,7 +45,7 @@
     "blocked": 8,
     "excluded": 2,
     "implemented": 70,
-    "queued": 122
+    "queued": 131
   },
   "sources": [
     {
@@ -173,6 +173,37 @@
       "evidence_note": "Live accountability report shows OK"
     },
     {
+      "id": "ar.igj",
+      "name": "ar.igj",
+      "country": "AR",
+      "region_phase": "americas",
+      "official_name": "IGJ — Inspección General de Justicia",
+      "display_name": "IGJ — Inspección General de Justicia",
+      "official_url": "https://www2.jus.gov.ar/igj-vistas/Busqueda.aspx",
+      "url": "https://www2.jus.gov.ar/igj-vistas/Busqueda.aspx",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "ar.igj",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "ar.pjn",
       "name": "ar.pjn",
       "country": "AR",
@@ -233,6 +264,37 @@
       "importance_tier": "medium",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "ar.sisa_refes",
+      "name": "ar.sisa_refes",
+      "country": "AR",
+      "region_phase": "americas",
+      "official_name": "SISA REFES — Registro Federal de Establecimientos de Salud",
+      "display_name": "SISA REFES — Registro Federal de Establecimientos de Salud",
+      "official_url": "https://sisa.msal.gov.ar/sisa/",
+      "url": "https://sisa.msal.gov.ar/sisa/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "ar.sisa_refes",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
       "id": "bo.ddrr",
@@ -941,6 +1003,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "cl.cmf_fiscalizados",
+      "name": "cl.cmf_fiscalizados",
+      "country": "CL",
+      "region_phase": "americas",
+      "official_name": "CMF — Entidades Fiscalizadas",
+      "display_name": "CMF — Entidades Fiscalizadas",
+      "official_url": "https://www.cmfchile.cl/portal/principal/613/w3-propertyvalue-43336.html",
+      "url": "https://www.cmfchile.cl/portal/principal/613/w3-propertyvalue-43336.html",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "cl.cmf_fiscalizados",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "cl.datos",
       "name": "cl.datos",
       "country": "CL",
@@ -1089,6 +1182,37 @@
       "source_type": "browser",
       "officiality": "official",
       "implemented_source_name": "cl.registro_civil",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "cl.sii_deuda",
+      "name": "cl.sii_deuda",
+      "country": "CL",
+      "region_phase": "americas",
+      "official_name": "SII — Situacion Tributaria de Terceros",
+      "display_name": "SII — Situacion Tributaria de Terceros",
+      "official_url": "https://www.sii.cl/como_se_hace_para/situacion_trib_terceros.html",
+      "url": "https://www.sii.cl/como_se_hace_para/situacion_trib_terceros.html",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "cl.sii_deuda",
       "blocker_reason": null,
       "importance_score": 54,
       "importance_tier": "long_tail",
@@ -4242,6 +4366,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "cr.hacienda",
+      "name": "cr.hacienda",
+      "country": "CR",
+      "region_phase": "americas",
+      "official_name": "Hacienda — Consulta de Declarantes",
+      "display_name": "Hacienda — Consulta de Declarantes",
+      "official_url": "https://ticaconsultas.hacienda.go.cr/Tica/hrgdeclarantescedula.aspx",
+      "url": "https://ticaconsultas.hacienda.go.cr/Tica/hrgdeclarantescedula.aspx",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "cr.hacienda",
+      "blocker_reason": null,
+      "importance_score": 68,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "cr.marchamo",
       "name": "cr.marchamo",
       "country": "CR",
@@ -4272,6 +4427,37 @@
       "blocker_reason": null,
       "importance_score": 68,
       "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "cr.poder_judicial",
+      "name": "cr.poder_judicial",
+      "country": "CR",
+      "region_phase": "americas",
+      "official_name": "Poder Judicial — Consultas en Línea",
+      "display_name": "Poder Judicial — Consultas en Línea",
+      "official_url": "https://pj.poder-judicial.go.cr/index.php/consultas-en-linea",
+      "url": "https://pj.poder-judicial.go.cr/index.php/consultas-en-linea",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "cr.poder_judicial",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
@@ -4375,6 +4561,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "do.intrant",
+      "name": "do.intrant",
+      "country": "DO",
+      "region_phase": "americas",
+      "official_name": "INTRANT — Estatus Licencia de Conducir",
+      "display_name": "INTRANT — Estatus Licencia de Conducir",
+      "official_url": "https://www.intrant.gob.do/categoria/servicios/consulta-en-linea-estatus-de-licencias-de-conducir",
+      "url": "https://www.intrant.gob.do/categoria/servicios/consulta-en-linea-estatus-de-licencias-de-conducir",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "do.intrant",
+      "blocker_reason": null,
+      "importance_score": 68,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "do.jce",
       "name": "do.jce",
       "country": "DO",
@@ -4402,6 +4619,37 @@
       "blocker_reason": null,
       "importance_score": 68,
       "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "do.onapi",
+      "name": "do.onapi",
+      "country": "DO",
+      "region_phase": "americas",
+      "official_name": "ONAPI — Búsqueda de Marcas",
+      "display_name": "ONAPI — Búsqueda de Marcas",
+      "official_url": "https://www.onapi.gov.do/index.php/busqueda-de-signos-nombres-y-marcas",
+      "url": "https://www.onapi.gov.do/index.php/busqueda-de-signos-nombres-y-marcas",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "do.onapi",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
@@ -5169,6 +5417,37 @@
       "source_type": "browser",
       "officiality": "official",
       "implemented_source_name": "mx.sat_rfc",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "mx.scjn",
+      "name": "mx.scjn",
+      "country": "MX",
+      "region_phase": "americas",
+      "official_name": "SCJN/PJF — Expedientes Judiciales",
+      "display_name": "SCJN/PJF — Expedientes Judiciales",
+      "official_url": "https://www.serviciosenlinea.pjf.gob.mx/",
+      "url": "https://www.serviciosenlinea.pjf.gob.mx/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "mx.scjn",
       "blocker_reason": null,
       "importance_score": 54,
       "importance_tier": "long_tail",
