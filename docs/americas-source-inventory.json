@@ -23,19 +23,19 @@
     "medium"
   ],
   "countries": {
-    "AR": 11,
+    "AR": 15,
     "BO": 8,
     "BR": 21,
-    "CL": 13,
+    "CL": 16,
     "CO": 91,
     "CR": 8,
     "DO": 8,
-    "EC": 13,
+    "EC": 15,
     "GT": 7,
     "HN": 7,
-    "MX": 12,
+    "MX": 16,
     "PA": 10,
-    "PE": 13,
+    "PE": 17,
     "PY": 7,
     "SV": 8,
     "US": 21,
@@ -45,7 +45,7 @@
     "blocked": 8,
     "excluded": 2,
     "implemented": 70,
-    "queued": 185
+    "queued": 202
   },
   "sources": [
     {
@@ -107,6 +107,37 @@
       "blocker_reason": null,
       "importance_score": 54,
       "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "ar.ceta",
+      "name": "ar.ceta",
+      "country": "AR",
+      "region_phase": "americas",
+      "official_name": "CETA — Certificado de Transferencia Automotor (DNRPA)",
+      "display_name": "CETA — Certificado de Transferencia Automotor (DNRPA)",
+      "official_url": "https://www.dnrpa.gov.ar/portal_dnrpa/fabr_import2.php?EstadoCertificado=true",
+      "url": "https://www.dnrpa.gov.ar/portal_dnrpa/fabr_import2.php?EstadoCertificado=true",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "placa"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "ar.ceta",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
@@ -359,6 +390,37 @@
       "evidence_note": "Live accountability report shows OK"
     },
     {
+      "id": "ar.sinai",
+      "name": "ar.sinai",
+      "country": "AR",
+      "region_phase": "americas",
+      "official_name": "SINAI — Infracciones de Tránsito (ANSV)",
+      "display_name": "SINAI — Infracciones de Tránsito (ANSV)",
+      "official_url": "https://consultainfracciones.seguridadvial.gob.ar/",
+      "url": "https://consultainfracciones.seguridadvial.gob.ar/",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "placa"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "ar.sinai",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "ar.sisa_refes",
       "name": "ar.sisa_refes",
       "country": "AR",
@@ -386,6 +448,68 @@
       "blocker_reason": null,
       "importance_score": 54,
       "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "ar.ssn_seguro",
+      "name": "ar.ssn_seguro",
+      "country": "AR",
+      "region_phase": "americas",
+      "official_name": "SSN — Seguro Obligatorio Automotor",
+      "display_name": "SSN — Seguro Obligatorio Automotor",
+      "official_url": "https://seguro.ssn.gob.ar/",
+      "url": "https://seguro.ssn.gob.ar/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "placa"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "ar.ssn_seguro",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "ar.vtv",
+      "name": "ar.vtv",
+      "country": "AR",
+      "region_phase": "americas",
+      "official_name": "VTV — Verificación Técnica Vehicular (Buenos Aires)",
+      "display_name": "VTV — Verificación Técnica Vehicular (Buenos Aires)",
+      "official_url": "https://vtv.gba.gob.ar/consultar-vtv",
+      "url": "https://vtv.gba.gob.ar/consultar-vtv",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "placa"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "ar.vtv",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
@@ -1313,6 +1437,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "cl.autopase",
+      "name": "cl.autopase",
+      "country": "CL",
+      "region_phase": "americas",
+      "official_name": "Autopase — Estado TAG Autopista",
+      "display_name": "Autopase — Estado TAG Autopista",
+      "official_url": "https://www.autopase.cl/tag/estado",
+      "url": "https://www.autopase.cl/tag/estado",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "placa"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "cl.autopase",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "cl.cmf_fiscalizados",
       "name": "cl.cmf_fiscalizados",
       "country": "CL",
@@ -1530,6 +1685,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "cl.prt",
+      "name": "cl.prt",
+      "country": "CL",
+      "region_phase": "americas",
+      "official_name": "PRT — Revision Tecnica Vehicular",
+      "display_name": "PRT — Revision Tecnica Vehicular",
+      "official_url": "https://www.prt.cl/Paginas/RevisionTecnica.aspx",
+      "url": "https://www.prt.cl/Paginas/RevisionTecnica.aspx",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "placa"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "cl.prt",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "cl.registro_civil",
       "name": "cl.registro_civil",
       "country": "CL",
@@ -1652,6 +1838,37 @@
       "importance_tier": "medium",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "cl.sii_tasacion",
+      "name": "cl.sii_tasacion",
+      "country": "CL",
+      "region_phase": "americas",
+      "official_name": "SII — Tasacion Fiscal Vehicular",
+      "display_name": "SII — Tasacion Fiscal Vehicular",
+      "official_url": "https://www4.sii.cl/vehiculospubui/",
+      "url": "https://www4.sii.cl/vehiculospubui/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "placa"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "cl.sii_tasacion",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
       "id": "cl.spensiones",
@@ -5288,6 +5505,40 @@
       "evidence_note": "Live accountability report skip: API_ERROR: HTTP 500"
     },
     {
+      "id": "ec.ant_multas",
+      "name": "ec.ant_multas",
+      "country": "EC",
+      "region_phase": "americas",
+      "official_name": "ANT — Multas de Transito",
+      "display_name": "ANT — Multas de Transito",
+      "official_url": "https://consultaweb.ant.gob.ec/PortalWEB/paginas/clientes/clp_criterio_consulta.jsp",
+      "url": "https://consultaweb.ant.gob.ec/PortalWEB/paginas/clientes/clp_criterio_consulta.jsp",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "placa",
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person",
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "person",
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "ec.ant_multas",
+      "blocker_reason": null,
+      "importance_score": 78,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "ec.cne_padron",
       "name": "ec.cne_padron",
       "country": "EC",
@@ -5633,6 +5884,37 @@
       "importance_tier": "long_tail",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "ec.sri_vehiculos",
+      "name": "ec.sri_vehiculos",
+      "country": "EC",
+      "region_phase": "americas",
+      "official_name": "SRI — Impuestos Vehiculares",
+      "display_name": "SRI — Impuestos Vehiculares",
+      "official_url": "https://www.sri.gob.ec/impuestos-vehiculares",
+      "url": "https://www.sri.gob.ec/impuestos-vehiculares",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "placa"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "ec.sri_vehiculos",
+      "blocker_reason": null,
+      "importance_score": 68,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
       "id": "ec.supercias",
@@ -6198,6 +6480,37 @@
       "evidence_note": "Live accountability report shows OK"
     },
     {
+      "id": "mx.fotocivicas",
+      "name": "mx.fotocivicas",
+      "country": "MX",
+      "region_phase": "americas",
+      "official_name": "Fotocivicas CDMX",
+      "display_name": "Fotocivicas CDMX",
+      "official_url": "https://www.tramites.cdmx.gob.mx/fotocivicas/public/",
+      "url": "https://www.tramites.cdmx.gob.mx/fotocivicas/public/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "placa"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "mx.fotocivicas",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "mx.impi",
       "name": "mx.impi",
       "country": "MX",
@@ -6258,6 +6571,37 @@
       "importance_tier": "medium",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "mx.infracciones_cdmx",
+      "name": "mx.infracciones_cdmx",
+      "country": "MX",
+      "region_phase": "americas",
+      "official_name": "Infracciones CDMX",
+      "display_name": "Infracciones CDMX",
+      "official_url": "https://infracciones.cdmx.gob.mx/",
+      "url": "https://infracciones.cdmx.gob.mx/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "placa"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "mx.infracciones_cdmx",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
       "id": "mx.profeco",
@@ -6474,6 +6818,68 @@
       "blocker_reason": null,
       "importance_score": 54,
       "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "mx.tenencia_edomex",
+      "name": "mx.tenencia_edomex",
+      "country": "MX",
+      "region_phase": "americas",
+      "official_name": "Tenencia Edomex — SFPYA",
+      "display_name": "Tenencia Edomex — SFPYA",
+      "official_url": "https://sfpya.edomexico.gob.mx/controlv/faces/tramiteselectronicos/cv/portalPublico/ConsultaVigenciaPlaca.xhtml",
+      "url": "https://sfpya.edomexico.gob.mx/controlv/faces/tramiteselectronicos/cv/portalPublico/ConsultaVigenciaPlaca.xhtml",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "placa"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "mx.tenencia_edomex",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "mx.verificacion_cdmx",
+      "name": "mx.verificacion_cdmx",
+      "country": "MX",
+      "region_phase": "americas",
+      "official_name": "Verificacion Vehicular CDMX — SEDEMA",
+      "display_name": "Verificacion Vehicular CDMX — SEDEMA",
+      "official_url": "https://sedema.cdmx.gob.mx/programas/programa/verificacion-vehicular",
+      "url": "https://sedema.cdmx.gob.mx/programas/programa/verificacion-vehicular",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "placa"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "mx.verificacion_cdmx",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
@@ -6830,6 +7236,37 @@
       "evidence_note": "Live accountability report shows OK"
     },
     {
+      "id": "pe.citv",
+      "name": "pe.citv",
+      "country": "PE",
+      "region_phase": "americas",
+      "official_name": "CITV — Inspección Técnica Vehicular (MTC)",
+      "display_name": "CITV — Inspección Técnica Vehicular (MTC)",
+      "official_url": "https://rec.mtc.gob.pe/Citv/ArConsultaCitv",
+      "url": "https://rec.mtc.gob.pe/Citv/ArConsultaCitv",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "placa"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "pe.citv",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "pe.datos",
       "name": "pe.datos",
       "country": "PE",
@@ -7047,6 +7484,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "pe.sat_lima",
+      "name": "pe.sat_lima",
+      "country": "PE",
+      "region_phase": "americas",
+      "official_name": "SAT Lima — Papeletas y Tributos Vehiculares",
+      "display_name": "SAT Lima — Papeletas y Tributos Vehiculares",
+      "official_url": "https://www.sat.gob.pe/WebSiteV9/TributosMultas/Papeletas/ConsultasPapeletas",
+      "url": "https://www.sat.gob.pe/WebSiteV9/TributosMultas/Papeletas/ConsultasPapeletas",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "placa"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "pe.sat_lima",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "pe.sbs",
       "name": "pe.sbs",
       "country": "PE",
@@ -7105,6 +7573,37 @@
       "blocker_reason": null,
       "importance_score": 54,
       "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "pe.soat",
+      "name": "pe.soat",
+      "country": "PE",
+      "region_phase": "americas",
+      "official_name": "SOAT — Consulta APESEG/SBS",
+      "display_name": "SOAT — Consulta APESEG/SBS",
+      "official_url": "https://www.apeseg.org.pe/consultas-soat/",
+      "url": "https://www.apeseg.org.pe/consultas-soat/",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "placa"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "pe.soat",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
@@ -7200,6 +7699,37 @@
       "importance_tier": "medium",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "pe.sutran",
+      "name": "pe.sutran",
+      "country": "PE",
+      "region_phase": "americas",
+      "official_name": "SUTRAN — Record de Infracciones",
+      "display_name": "SUTRAN — Record de Infracciones",
+      "official_url": "https://www.sutran.gob.pe/consultas/record-de-infracciones/record-de-infracciones/",
+      "url": "https://www.sutran.gob.pe/consultas/record-de-infracciones/record-de-infracciones/",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "placa"
+      ],
+      "identifier_classes": [
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "pe.sutran",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
       "id": "py.antsv",
