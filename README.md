@@ -32,7 +32,7 @@ for this wave, and the repo intentionally defers a new typecheck gate until a la
 - **Extensible** — add new data sources by implementing a single class
 - **Country-organized** — sources grouped by country code (`co`, `us`, etc.)
 
-## Built-in Sources — 470 sources across 21 country and region namespaces
+## Built-in Sources — 500 sources across 21 country and region namespaces
 
 For current America rollout status, use `docs/sources.md` and
 `docs/americas-source-inventory.json` as the source of truth. Public inventory counts there are

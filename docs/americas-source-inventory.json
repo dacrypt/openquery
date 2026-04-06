@@ -23,29 +23,29 @@
     "medium"
   ],
   "countries": {
-    "AR": 23,
-    "BO": 13,
-    "BR": 36,
-    "CL": 23,
-    "CO": 114,
+    "AR": 25,
+    "BO": 14,
+    "BR": 39,
+    "CL": 26,
+    "CO": 117,
     "CR": 11,
-    "DO": 12,
-    "EC": 20,
-    "GT": 11,
-    "HN": 11,
-    "MX": 24,
-    "PA": 14,
-    "PE": 30,
+    "DO": 13,
+    "EC": 22,
+    "GT": 12,
+    "HN": 12,
+    "MX": 27,
+    "PA": 15,
+    "PE": 33,
     "PY": 12,
-    "SV": 12,
+    "SV": 13,
     "US": 31,
-    "UY": 12
+    "UY": 13
   },
   "status_counts": {
     "blocked": 8,
     "excluded": 2,
     "implemented": 70,
-    "queued": 329
+    "queued": 355
   },
   "sources": [
     {
@@ -295,6 +295,37 @@
       "importance_tier": "high",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "ar.enacom",
+      "name": "ar.enacom",
+      "country": "AR",
+      "region_phase": "americas",
+      "official_name": "ENACOM — Prestadores de Telecomunicaciones",
+      "display_name": "ENACOM — Prestadores de Telecomunicaciones",
+      "official_url": "https://www.enacom.gob.ar/prestadores_p3003",
+      "url": "https://www.enacom.gob.ar/prestadores_p3003",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "ar.enacom",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
       "id": "ar.georef",
@@ -700,6 +731,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "ar.smn",
+      "name": "ar.smn",
+      "country": "AR",
+      "region_phase": "americas",
+      "official_name": "SMN — Servicio Meteorológico Nacional",
+      "display_name": "SMN — Servicio Meteorológico Nacional",
+      "official_url": "https://www.smn.gob.ar/",
+      "url": "https://www.smn.gob.ar/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "ar.smn",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "ar.ssn_seguro",
       "name": "ar.ssn_seguro",
       "country": "AR",
@@ -879,6 +941,37 @@
       "source_type": "browser",
       "officiality": "official",
       "implemented_source_name": "bo.autoridad_fiscalizacion",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "bo.bcb",
+      "name": "bo.bcb",
+      "country": "BO",
+      "region_phase": "americas",
+      "official_name": "BCB — Banco Central de Bolivia (Tipo de Cambio)",
+      "display_name": "BCB — Banco Central de Bolivia (Tipo de Cambio)",
+      "official_url": "https://www.bcb.gob.bo/",
+      "url": "https://www.bcb.gob.bo/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "bo.bcb",
       "blocker_reason": null,
       "importance_score": 48,
       "importance_tier": "long_tail",
@@ -1356,6 +1449,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "br.cfc",
+      "name": "br.cfc",
+      "country": "BR",
+      "region_phase": "americas",
+      "official_name": "CFC — Registro de Contadores",
+      "display_name": "CFC — Registro de Contadores",
+      "official_url": "https://www.cfc.org.br/registro-profissional/pesquisa-de-profissional/",
+      "url": "https://www.cfc.org.br/registro-profissional/pesquisa-de-profissional/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "br.cfc",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "br.cfm",
       "name": "br.cfm",
       "country": "BR",
@@ -1450,6 +1574,37 @@
       "blocker_reason": null,
       "importance_score": 84,
       "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "br.confef",
+      "name": "br.confef",
+      "country": "BR",
+      "region_phase": "americas",
+      "official_name": "CONFEF — Registro de Profissionais de Educação Física",
+      "display_name": "CONFEF — Registro de Profissionais de Educação Física",
+      "official_url": "https://www.confef.org.br/confef/comunicacao/registros-no-confef",
+      "url": "https://www.confef.org.br/confef/comunicacao/registros-no-confef",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "br.confef",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
@@ -2153,6 +2308,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "br.receita_mei",
+      "name": "br.receita_mei",
+      "country": "BR",
+      "region_phase": "americas",
+      "official_name": "Receita Federal — MEI (Microempreendedor Individual)",
+      "display_name": "Receita Federal — MEI (Microempreendedor Individual)",
+      "official_url": "https://www.gov.br/empresas-e-negocios/pt-br/empreendedor",
+      "url": "https://www.gov.br/empresas-e-negocios/pt-br/empreendedor",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "br.receita_mei",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "br.susep",
       "name": "br.susep",
       "country": "BR",
@@ -2742,6 +2928,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "cl.sernageomin",
+      "name": "cl.sernageomin",
+      "country": "CL",
+      "region_phase": "americas",
+      "official_name": "SERNAGEOMIN — Concesiones Mineras",
+      "display_name": "SERNAGEOMIN — Concesiones Mineras",
+      "official_url": "https://www.sernageomin.cl/datos-publicos-catastro-minero/",
+      "url": "https://www.sernageomin.cl/datos-publicos-catastro-minero/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "cl.sernageomin",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "cl.servel",
       "name": "cl.servel",
       "country": "CL",
@@ -2959,6 +3176,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "cl.subtel",
+      "name": "cl.subtel",
+      "country": "CL",
+      "region_phase": "americas",
+      "official_name": "SUBTEL — Operadores de Telecomunicaciones",
+      "display_name": "SUBTEL — Operadores de Telecomunicaciones",
+      "official_url": "https://www.subtel.gob.cl/informacion-estadistica-e-institucional/registros/",
+      "url": "https://www.subtel.gob.cl/informacion-estadistica-e-institucional/registros/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "cl.subtel",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "cl.superir",
       "name": "cl.superir",
       "country": "CL",
@@ -2988,6 +3236,37 @@
       "importance_tier": "medium",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "cl.tdlc",
+      "name": "cl.tdlc",
+      "country": "CL",
+      "region_phase": "americas",
+      "official_name": "TDLC — Tribunal de Defensa de la Libre Competencia",
+      "display_name": "TDLC — Tribunal de Defensa de la Libre Competencia",
+      "official_url": "https://www.tdlc.cl/jurisprudencia/",
+      "url": "https://www.tdlc.cl/jurisprudencia/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "cl.tdlc",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
       "id": "cl.uaf",
@@ -3088,6 +3367,37 @@
       "importance_tier": "high",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.agencia_tierras",
+      "name": "co.agencia_tierras",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "ANT — Agencia Nacional de Tierras",
+      "display_name": "ANT — Agencia Nacional de Tierras",
+      "official_url": "https://www.agenciadetierras.gov.co/atencion-al-ciudadano/consulta-de-casos/",
+      "url": "https://www.agenciadetierras.gov.co/atencion-al-ciudadano/consulta-de-casos/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.agencia_tierras",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
       "id": "co.anla",
@@ -3243,6 +3553,37 @@
       "source_type": "browser",
       "officiality": "official",
       "implemented_source_name": "co.certificado_tradicion",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "co.colciencias",
+      "name": "co.colciencias",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "MinCiencias — Grupos de Investigación (ScienTI)",
+      "display_name": "MinCiencias — Grupos de Investigación (ScienTI)",
+      "official_url": "https://scienti.minciencias.gov.co/ciencia-war/busquedaGrupoXNombre.do",
+      "url": "https://scienti.minciencias.gov.co/ciencia-war/busquedaGrupoXNombre.do",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.colciencias",
       "blocker_reason": null,
       "importance_score": 54,
       "importance_tier": "long_tail",
@@ -6551,6 +6892,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "co.supervigilancia",
+      "name": "co.supervigilancia",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Supervigilancia — Empresas de Vigilancia y Seguridad Privada",
+      "display_name": "Supervigilancia — Empresas de Vigilancia y Seguridad Privada",
+      "official_url": "https://www.supervigilancia.gov.co/publicaciones/5751/consulta-de-empresas-de-vigilancia-y-seguridad-privada/",
+      "url": "https://www.supervigilancia.gov.co/publicaciones/5751/consulta-de-empresas-de-vigilancia-y-seguridad-privada/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "co.supervigilancia",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "co.tarifas_energia",
       "name": "co.tarifas_energia",
       "country": "CO",
@@ -7455,6 +7827,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "do.superbanco",
+      "name": "do.superbanco",
+      "country": "DO",
+      "region_phase": "americas",
+      "official_name": "Superintendencia de Bancos — Entidades Supervisadas (RD)",
+      "display_name": "Superintendencia de Bancos — Entidades Supervisadas (RD)",
+      "official_url": "https://sb.gob.do/supervision/entidades-supervisadas/",
+      "url": "https://sb.gob.do/supervision/entidades-supervisadas/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "do.superbanco",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "do.tss",
       "name": "do.tss",
       "country": "DO",
@@ -7870,6 +8273,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "ec.senae",
+      "name": "ec.senae",
+      "country": "EC",
+      "region_phase": "americas",
+      "official_name": "SENAE — Declaraciones Aduaneras",
+      "display_name": "SENAE — Declaraciones Aduaneras",
+      "official_url": "https://ecuapass.aduana.gob.ec/",
+      "url": "https://ecuapass.aduana.gob.ec/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "ec.senae",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "ec.senescyt",
       "name": "ec.senescyt",
       "country": "EC",
@@ -8121,6 +8555,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "ec.superintendencia_bancos",
+      "name": "ec.superintendencia_bancos",
+      "country": "EC",
+      "region_phase": "americas",
+      "official_name": "Superintendencia de Bancos Ecuador — Entidades Supervisadas",
+      "display_name": "Superintendencia de Bancos Ecuador — Entidades Supervisadas",
+      "official_url": "https://www.superbancos.gob.ec/bancos/index.php/component/k2/itemlist/category/102",
+      "url": "https://www.superbancos.gob.ec/bancos/index.php/component/k2/itemlist/category/102",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "ec.superintendencia_bancos",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "gt.banguat",
       "name": "gt.banguat",
       "country": "GT",
@@ -8207,6 +8672,37 @@
       "source_type": "browser",
       "officiality": "official",
       "implemented_source_name": "gt.conred",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "gt.mingob",
+      "name": "gt.mingob",
+      "country": "GT",
+      "region_phase": "americas",
+      "official_name": "MINGOB — Empresas de Seguridad Privada",
+      "display_name": "MINGOB — Empresas de Seguridad Privada",
+      "official_url": "https://www.mingob.gob.gt/servicios/seguridad-privada/",
+      "url": "https://www.mingob.gob.gt/servicios/seguridad-privada/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "gt.mingob",
       "blocker_reason": null,
       "importance_score": 48,
       "importance_tier": "long_tail",
@@ -8653,6 +9149,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "hn.rap",
+      "name": "hn.rap",
+      "country": "HN",
+      "region_phase": "americas",
+      "official_name": "RAP — Registro de la Propiedad Honduras",
+      "display_name": "RAP — Registro de la Propiedad Honduras",
+      "official_url": "https://www.ip.gob.hn/",
+      "url": "https://www.ip.gob.hn/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "hn.rap",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "hn.rnp",
       "name": "hn.rnp",
       "country": "HN",
@@ -8870,6 +9397,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "mx.cfe",
+      "name": "mx.cfe",
+      "country": "MX",
+      "region_phase": "americas",
+      "official_name": "CFE — Cuenta de Electricidad",
+      "display_name": "CFE — Cuenta de Electricidad",
+      "official_url": "https://app.cfe.mx/Aplicaciones/CCFE/Resumenes/ResumenesB2C/Inicio.aspx",
+      "url": "https://app.cfe.mx/Aplicaciones/CCFE/Resumenes/ResumenesB2C/Inicio.aspx",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "mx.cfe",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "mx.cnbv",
       "name": "mx.cnbv",
       "country": "MX",
@@ -8956,6 +9514,37 @@
       "source_type": "browser",
       "officiality": "official",
       "implemented_source_name": "mx.cofepris_establecimientos",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "mx.conagua",
+      "name": "mx.conagua",
+      "country": "MX",
+      "region_phase": "americas",
+      "official_name": "CONAGUA — Concesiones de Agua",
+      "display_name": "CONAGUA — Concesiones de Agua",
+      "official_url": "https://sigras.conagua.gob.mx/apps/sicorp/consulta_titulos.php",
+      "url": "https://sigras.conagua.gob.mx/apps/sicorp/consulta_titulos.php",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "mx.conagua",
       "blocker_reason": null,
       "importance_score": 54,
       "importance_tier": "long_tail",
@@ -9147,6 +9736,37 @@
       "importance_tier": "medium",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "mx.infonavit",
+      "name": "mx.infonavit",
+      "country": "MX",
+      "region_phase": "americas",
+      "official_name": "INFONAVIT — Crédito de Vivienda",
+      "display_name": "INFONAVIT — Crédito de Vivienda",
+      "official_url": "https://portalmx.infonavit.org.mx/wps/portal/infonavit-web/trabajadores/para-tu-credito/consulta-tu-saldo/",
+      "url": "https://portalmx.infonavit.org.mx/wps/portal/infonavit-web/trabajadores/para-tu-credito/consulta-tu-saldo/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "mx.infonavit",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
       "id": "mx.infracciones_cdmx",
@@ -9611,6 +10231,37 @@
       "source_type": "browser",
       "officiality": "official",
       "implemented_source_name": "pa.aup",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "pa.autoridad_canal",
+      "name": "pa.autoridad_canal",
+      "country": "PA",
+      "region_phase": "americas",
+      "official_name": "ACP — Autoridad del Canal de Panamá",
+      "display_name": "ACP — Autoridad del Canal de Panamá",
+      "official_url": "https://pancanal.com/en/business-opportunities/",
+      "url": "https://pancanal.com/en/business-opportunities/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "pa.autoridad_canal",
       "blocker_reason": null,
       "importance_score": 48,
       "importance_tier": "long_tail",
@@ -10215,6 +10866,40 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "pe.midis",
+      "name": "pe.midis",
+      "country": "PE",
+      "region_phase": "americas",
+      "official_name": "MIDIS — Beneficiarios de Programas Sociales",
+      "display_name": "MIDIS — Beneficiarios de Programas Sociales",
+      "official_url": "https://www.midis.gob.pe/index.php/es/informacion/consulta-de-beneficiarios",
+      "url": "https://www.midis.gob.pe/index.php/es/informacion/consulta-de-beneficiarios",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula",
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom",
+        "person"
+      ],
+      "identifier_categories": [
+        "custom",
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "pe.midis",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "pe.migraciones",
       "name": "pe.migraciones",
       "country": "PE",
@@ -10401,6 +11086,37 @@
       "evidence_note": "Live accountability report shows OK"
     },
     {
+      "id": "pe.osinergmin",
+      "name": "pe.osinergmin",
+      "country": "PE",
+      "region_phase": "americas",
+      "official_name": "OSINERGMIN — Empresas Supervisadas",
+      "display_name": "OSINERGMIN — Empresas Supervisadas",
+      "official_url": "https://www.osinergmin.gob.pe/empresas/supervisadas",
+      "url": "https://www.osinergmin.gob.pe/empresas/supervisadas",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "pe.osinergmin",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "pe.osiptel",
       "name": "pe.osiptel",
       "country": "PE",
@@ -10492,6 +11208,37 @@
       "importance_tier": "medium",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "pe.produce",
+      "name": "pe.produce",
+      "country": "PE",
+      "region_phase": "americas",
+      "official_name": "PRODUCE — Registro Industrial y Pesquero",
+      "display_name": "PRODUCE — Registro Industrial y Pesquero",
+      "official_url": "https://www.produce.gob.pe/index.php/tramites-y-servicios/consultas",
+      "url": "https://www.produce.gob.pe/index.php/tramites-y-servicios/consultas",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "pe.produce",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
       "id": "pe.reniec",
@@ -11609,6 +12356,37 @@
       "blocker_reason": null,
       "importance_score": 68,
       "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "sv.ssf",
+      "name": "sv.ssf",
+      "country": "SV",
+      "region_phase": "americas",
+      "official_name": "SSF — Superintendencia del Sistema Financiero (El Salvador)",
+      "display_name": "SSF — Superintendencia del Sistema Financiero (El Salvador)",
+      "official_url": "https://www.ssf.gob.sv/index.php/supervision/entidades-supervisadas",
+      "url": "https://www.ssf.gob.sv/index.php/supervision/entidades-supervisadas",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "sv.ssf",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
@@ -13027,6 +13805,37 @@
       "blocker_reason": null,
       "importance_score": 68,
       "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "uy.ursea",
+      "name": "uy.ursea",
+      "country": "UY",
+      "region_phase": "americas",
+      "official_name": "URSEA — Empresas Habilitadas (Uruguay)",
+      "display_name": "URSEA — Empresas Habilitadas (Uruguay)",
+      "official_url": "https://www.gub.uy/unidad-reguladora-servicios-energia-agua/tramites-y-servicios/servicios/consulta-empresas-habilitadas",
+      "url": "https://www.gub.uy/unidad-reguladora-servicios-energia-agua/tramites-y-servicios/servicios/consulta-empresas-habilitadas",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "uy.ursea",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     }
