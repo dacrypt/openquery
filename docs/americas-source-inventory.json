@@ -30,22 +30,22 @@
     "CO": 91,
     "CR": 6,
     "DO": 6,
-    "EC": 7,
+    "EC": 10,
     "GT": 5,
-    "HN": 3,
+    "HN": 5,
     "MX": 9,
     "PA": 8,
-    "PE": 7,
-    "PY": 4,
-    "SV": 3,
+    "PE": 10,
+    "PY": 6,
+    "SV": 6,
     "US": 18,
-    "UY": 4
+    "UY": 6
   },
   "status_counts": {
     "blocked": 8,
     "excluded": 2,
     "implemented": 70,
-    "queued": 131
+    "queued": 146
   },
   "sources": [
     {
@@ -4792,6 +4792,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "ec.dinardap",
+      "name": "ec.dinardap",
+      "country": "EC",
+      "region_phase": "americas",
+      "official_name": "DINARDAP — Registro de Datos Públicos",
+      "display_name": "DINARDAP — Registro de Datos Públicos",
+      "official_url": "https://www.dinardap.gob.ec/",
+      "url": "https://www.dinardap.gob.ec/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "ec.dinardap",
+      "blocker_reason": null,
+      "importance_score": 68,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "ec.funcion_judicial",
       "name": "ec.funcion_judicial",
       "country": "EC",
@@ -4826,6 +4857,37 @@
       "evidence_note": "Live accountability report shows OK"
     },
     {
+      "id": "ec.mdt",
+      "name": "ec.mdt",
+      "country": "EC",
+      "region_phase": "americas",
+      "official_name": "MDT — Ministerio del Trabajo",
+      "display_name": "MDT — Ministerio del Trabajo",
+      "official_url": "https://www.trabajo.gob.ec/",
+      "url": "https://www.trabajo.gob.ec/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "ec.mdt",
+      "blocker_reason": null,
+      "importance_score": 68,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "ec.senescyt",
       "name": "ec.senescyt",
       "country": "EC",
@@ -4858,6 +4920,37 @@
       "importance_tier": "medium",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Live accountability report skip: URL_MOVED: Endpoint gone"
+    },
+    {
+      "id": "ec.seps",
+      "name": "ec.seps",
+      "country": "EC",
+      "region_phase": "americas",
+      "official_name": "SEPS — Superintendencia de Economía Popular y Solidaria",
+      "display_name": "SEPS — Superintendencia de Economía Popular y Solidaria",
+      "official_url": "https://www.seps.gob.ec/",
+      "url": "https://www.seps.gob.ec/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "ec.seps",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
       "id": "ec.sri_establecimientos",
@@ -5144,6 +5237,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "hn.empresa",
+      "name": "hn.empresa",
+      "country": "HN",
+      "region_phase": "americas",
+      "official_name": "Registro Mercantil Honduras — CCICH",
+      "display_name": "Registro Mercantil Honduras — CCICH",
+      "official_url": "https://registromercantil.ccichonduras.org/app/consulta-registro-mercantil/Consulta_de_empresas.htm",
+      "url": "https://registromercantil.ccichonduras.org/app/consulta-registro-mercantil/Consulta_de_empresas.htm",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "hn.empresa",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "hn.rtn",
       "name": "hn.rtn",
       "country": "HN",
@@ -5168,6 +5292,37 @@
       "source_type": "browser",
       "officiality": "official",
       "implemented_source_name": "hn.rtn",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "hn.sar",
+      "name": "hn.sar",
+      "country": "HN",
+      "region_phase": "americas",
+      "official_name": "SAR — Registro Tributario Nacional",
+      "display_name": "SAR — Registro Tributario Nacional",
+      "official_url": "https://www.sar.gob.hn/registro-tributario-nacional-rtn/",
+      "url": "https://www.sar.gob.hn/registro-tributario-nacional-rtn/",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "hn.sar",
       "blocker_reason": null,
       "importance_score": 48,
       "importance_tier": "long_tail",
@@ -5807,6 +5962,37 @@
       "evidence_note": "Live accountability report shows OK"
     },
     {
+      "id": "pe.indecopi",
+      "name": "pe.indecopi",
+      "country": "PE",
+      "region_phase": "americas",
+      "official_name": "INDECOPI — Consulta de Marcas",
+      "display_name": "INDECOPI — Consulta de Marcas",
+      "official_url": "https://sistramite.indecopi.gob.pe/consultaMarcas/consultaMarcas.aspx",
+      "url": "https://sistramite.indecopi.gob.pe/consultaMarcas/consultaMarcas.aspx",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "pe.indecopi",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "pe.osce_sancionados",
       "name": "pe.osce_sancionados",
       "country": "PE",
@@ -5869,6 +6055,37 @@
       "evidence_note": "Live accountability report shows OK"
     },
     {
+      "id": "pe.reniec",
+      "name": "pe.reniec",
+      "country": "PE",
+      "region_phase": "americas",
+      "official_name": "RENIEC — Consulta DNI",
+      "display_name": "RENIEC — Consulta DNI",
+      "official_url": "https://eldni.com/pe/buscar-por-dni",
+      "url": "https://eldni.com/pe/buscar-por-dni",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "pe.reniec",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "pe.servir_sanciones",
       "name": "pe.servir_sanciones",
       "country": "PE",
@@ -5893,6 +6110,37 @@
       "source_type": "browser",
       "officiality": "official",
       "implemented_source_name": "pe.servir_sanciones",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "pe.sunafil",
+      "name": "pe.sunafil",
+      "country": "PE",
+      "region_phase": "americas",
+      "official_name": "SUNAFIL — Consulta de Inspecciones",
+      "display_name": "SUNAFIL — Consulta de Inspecciones",
+      "official_url": "https://www.sunafil.gob.pe/consultas-en-linea.html",
+      "url": "https://www.sunafil.gob.pe/consultas-en-linea.html",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "pe.sunafil",
       "blocker_reason": null,
       "importance_score": 54,
       "importance_tier": "long_tail",
@@ -6024,6 +6272,68 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "py.drfs",
+      "name": "py.drfs",
+      "country": "PY",
+      "region_phase": "americas",
+      "official_name": "DRFS — Registro de Personas Jurídicas",
+      "display_name": "DRFS — Registro de Personas Jurídicas",
+      "official_url": "https://drfs.abogacia.gov.py/",
+      "url": "https://drfs.abogacia.gov.py/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "py.drfs",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "py.pj",
+      "name": "py.pj",
+      "country": "PY",
+      "region_phase": "americas",
+      "official_name": "CSJ — Consulta de Caso Judicial",
+      "display_name": "CSJ — Consulta de Caso Judicial",
+      "official_url": "https://www.csj.gov.py/consultacasojudicial",
+      "url": "https://www.csj.gov.py/consultacasojudicial",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "py.pj",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "py.ruc",
       "name": "py.ruc",
       "country": "PY",
@@ -6079,6 +6389,99 @@
       "source_type": "browser",
       "officiality": "official",
       "implemented_source_name": "py.tsje",
+      "blocker_reason": null,
+      "importance_score": 68,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "sv.csj",
+      "name": "sv.csj",
+      "country": "SV",
+      "region_phase": "americas",
+      "official_name": "CSJ — Consulta Pública El Salvador",
+      "display_name": "CSJ — Consulta Pública El Salvador",
+      "official_url": "https://www.csj.gob.sv/consulta-publica/",
+      "url": "https://www.csj.gob.sv/consulta-publica/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "sv.csj",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "sv.empresa",
+      "name": "sv.empresa",
+      "country": "SV",
+      "region_phase": "americas",
+      "official_name": "CNR — Registro de Comercio El Salvador",
+      "display_name": "CNR — Registro de Comercio El Salvador",
+      "official_url": "https://www.e.cnr.gob.sv/ServiciosOL/portada/rco.htm",
+      "url": "https://www.e.cnr.gob.sv/ServiciosOL/portada/rco.htm",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "sv.empresa",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "sv.hacienda",
+      "name": "sv.hacienda",
+      "country": "SV",
+      "region_phase": "americas",
+      "official_name": "Hacienda / DGII — Consulta DUI/NIT",
+      "display_name": "Hacienda / DGII — Consulta DUI/NIT",
+      "official_url": "https://portaldgii.mh.gob.sv/ssc/serviciosinclave/consulta/duinit/",
+      "url": "https://portaldgii.mh.gob.sv/ssc/serviciosinclave/consulta/duinit/",
+      "requires_browser": true,
+      "requires_captcha": true,
+      "supported_inputs": [
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person"
+      ],
+      "identifier_categories": [
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "sv.hacienda",
       "blocker_reason": null,
       "importance_score": 68,
       "importance_tier": "medium",
@@ -6815,6 +7218,68 @@
       "source_type": "dataset",
       "officiality": "official",
       "implemented_source_name": "uy.datos",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "uy.dgi",
+      "name": "uy.dgi",
+      "country": "UY",
+      "region_phase": "americas",
+      "official_name": "DGI — Consulta de RUT",
+      "display_name": "DGI — Consulta de RUT",
+      "official_url": "https://servicios.dgi.gub.uy/serviciosenlinea",
+      "url": "https://servicios.dgi.gub.uy/serviciosenlinea",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "uy.dgi",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "uy.dgr",
+      "name": "uy.dgr",
+      "country": "UY",
+      "region_phase": "americas",
+      "official_name": "DGR — Registro de Comercio",
+      "display_name": "DGR — Registro de Comercio",
+      "official_url": "https://portal.dgr.gub.uy/",
+      "url": "https://portal.dgr.gub.uy/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "uy.dgr",
       "blocker_reason": null,
       "importance_score": 48,
       "importance_tier": "long_tail",
