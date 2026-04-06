@@ -104,25 +104,27 @@ class GaDmvSource(BaseSource):
                 if collector:
                     collector.attach(page)
 
-                logger.info("Waiting for title search form...")
-                vin_input = page.locator(
-                    "input[name*='vin' i], input[id*='vin' i], "
-                    "input[placeholder*='VIN' i], input[type='text']"
-                ).first
-                vin_input.wait_for(state="visible", timeout=15000)
+                # The form has radio buttons: "Title Number" (default) and "VIN".
+                # Click VIN radio first so the textbox is labeled for VIN input.
+                logger.info("Waiting for GA DRIVES title status form...")
+                vin_radio = page.get_by_role("radio", name="VIN")
+                vin_radio.wait_for(state="visible", timeout=15000)
+                vin_radio.click()
+                logger.info("Selected VIN radio button")
+
+                # After clicking VIN radio the textbox label changes to "VIN *"
+                vin_input = page.get_by_role("textbox")
+                vin_input.wait_for(state="visible", timeout=5000)
                 vin_input.fill(vin)
                 logger.info("Filled VIN: %s", vin)
 
                 if collector:
                     collector.screenshot(page, "form_filled")
 
-                submit_btn = page.locator(
-                    "button[type='submit'], input[type='submit'], "
-                    "button:has-text('Search'), button:has-text('Submit'), "
-                    "button:has-text('Check'), a:has-text('Search')"
-                ).first
+                # Submit button text: "Get Title Status"
+                submit_btn = page.get_by_role("button", name="Get Title Status")
                 submit_btn.click()
-                logger.info("Clicked submit button")
+                logger.info("Clicked Get Title Status button")
 
                 page.wait_for_selector(
                     "[class*='result' i], [id*='result' i], "

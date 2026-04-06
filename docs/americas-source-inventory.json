@@ -24,8 +24,8 @@
   ],
   "countries": {
     "AR": 5,
-    "BO": 3,
-    "BR": 13,
+    "BO": 6,
+    "BR": 16,
     "CL": 6,
     "CO": 91,
     "CR": 1,
@@ -34,7 +34,7 @@
     "GT": 2,
     "HN": 1,
     "MX": 5,
-    "PA": 5,
+    "PA": 8,
     "PE": 7,
     "PY": 2,
     "SV": 1,
@@ -45,7 +45,7 @@
     "blocked": 8,
     "excluded": 2,
     "implemented": 70,
-    "queued": 91
+    "queued": 100
   },
   "sources": [
     {
@@ -204,6 +204,37 @@
       "evidence_note": "Live accountability report shows OK"
     },
     {
+      "id": "bo.ddrr",
+      "name": "bo.ddrr",
+      "country": "BO",
+      "region_phase": "americas",
+      "official_name": "DDRR — Derechos Reales",
+      "display_name": "DDRR — Derechos Reales",
+      "official_url": "https://magistratura.organojudicial.gob.bo/consultaddrr/",
+      "url": "https://magistratura.organojudicial.gob.bo/consultaddrr/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "bo.ddrr",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "bo.nit",
       "name": "bo.nit",
       "country": "BO",
@@ -297,6 +328,99 @@
       "implemented_source_name": "bo.seprec",
       "blocker_reason": null,
       "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "bo.sicoes",
+      "name": "bo.sicoes",
+      "country": "BO",
+      "region_phase": "americas",
+      "official_name": "SICOES — Contratos del Estado",
+      "display_name": "SICOES — Contratos del Estado",
+      "official_url": "https://www.sicoes.gob.bo/",
+      "url": "https://www.sicoes.gob.bo/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "bo.sicoes",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "bo.tsj_procesos",
+      "name": "bo.tsj_procesos",
+      "country": "BO",
+      "region_phase": "americas",
+      "official_name": "TSJ — Consulta de Procesos",
+      "display_name": "TSJ — Consulta de Procesos",
+      "official_url": "https://tsj.bo/servicios-judiciales/plataforma-servicios/",
+      "url": "https://tsj.bo/servicios-judiciales/plataforma-servicios/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "bo.tsj_procesos",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "br.antt_rntrc",
+      "name": "br.antt_rntrc",
+      "country": "BR",
+      "region_phase": "americas",
+      "official_name": "ANTT RNTRC — Registro Nacional de Transportadores Rodoviários de Cargas",
+      "display_name": "ANTT RNTRC — Registro Nacional de Transportadores Rodoviários de Cargas",
+      "official_url": "https://consultapublica.antt.gov.br/Site/ConsultaRNTRC.aspx",
+      "url": "https://consultapublica.antt.gov.br/Site/ConsultaRNTRC.aspx",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "br.antt_rntrc",
+      "blocker_reason": null,
+      "importance_score": 54,
       "importance_tier": "long_tail",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Registered runtime connector pending live accountability coverage"
@@ -528,6 +652,74 @@
       "blocker_reason": null,
       "importance_score": 54,
       "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "br.detran_mg",
+      "name": "br.detran_mg",
+      "country": "BR",
+      "region_phase": "americas",
+      "official_name": "DETRAN-MG — Situação de Veículos (Minas Gerais)",
+      "display_name": "DETRAN-MG — Situação de Veículos (Minas Gerais)",
+      "official_url": "https://detran.mg.gov.br/veiculos",
+      "url": "https://detran.mg.gov.br/veiculos",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "placa",
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom",
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "custom",
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "br.detran_mg",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "br.detran_sp",
+      "name": "br.detran_sp",
+      "country": "BR",
+      "region_phase": "americas",
+      "official_name": "DETRAN-SP — Débitos de Veículos (São Paulo)",
+      "display_name": "DETRAN-SP — Débitos de Veículos (São Paulo)",
+      "official_url": "https://www.detran.sp.gov.br/wps/portal/portaldetran/cidadao/veiculos/consultaDebitoVeiculo/debitoVeiculo",
+      "url": "https://www.detran.sp.gov.br/wps/portal/portaldetran/cidadao/veiculos/consultaDebitoVeiculo/debitoVeiculo",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "placa",
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom",
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "custom",
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "br.detran_sp",
+      "blocker_reason": null,
+      "importance_score": 74,
+      "importance_tier": "high",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
@@ -4510,6 +4702,40 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "pa.attt_placa",
+      "name": "pa.attt_placa",
+      "country": "PA",
+      "region_phase": "americas",
+      "official_name": "ATTT — Consulta de Multas y Placas",
+      "display_name": "ATTT — Consulta de Multas y Placas",
+      "official_url": "https://transito.gob.pa/servicios-en-linea/",
+      "url": "https://transito.gob.pa/servicios-en-linea/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "placa",
+        "cedula"
+      ],
+      "identifier_classes": [
+        "person",
+        "vehicle"
+      ],
+      "identifier_categories": [
+        "person",
+        "vehicle"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "pa.attt_placa",
+      "blocker_reason": null,
+      "importance_score": 78,
+      "importance_tier": "high",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "pa.contraloria",
       "name": "pa.contraloria",
       "country": "PA",
@@ -4572,6 +4798,40 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "pa.organo_judicial",
+      "name": "pa.organo_judicial",
+      "country": "PA",
+      "region_phase": "americas",
+      "official_name": "Organo Judicial — Consulta de Procesos",
+      "display_name": "Organo Judicial — Consulta de Procesos",
+      "official_url": "https://ojpanama.organojudicial.gob.pa/",
+      "url": "https://ojpanama.organojudicial.gob.pa/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "cedula",
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom",
+        "person"
+      ],
+      "identifier_categories": [
+        "custom",
+        "person"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "pa.organo_judicial",
+      "blocker_reason": null,
+      "importance_score": 68,
+      "importance_tier": "medium",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "pa.panamacompra",
       "name": "pa.panamacompra",
       "country": "PA",
@@ -4596,6 +4856,37 @@
       "source_type": "api",
       "officiality": "official",
       "implemented_source_name": "pa.panamacompra",
+      "blocker_reason": null,
+      "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "pa.registro_publico",
+      "name": "pa.registro_publico",
+      "country": "PA",
+      "region_phase": "americas",
+      "official_name": "Registro Público — Consulta de Sociedades",
+      "display_name": "Registro Público — Consulta de Sociedades",
+      "official_url": "https://www.rp.gob.pa/",
+      "url": "https://www.rp.gob.pa/",
+      "requires_browser": true,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "browser",
+      "officiality": "official",
+      "implemented_source_name": "pa.registro_publico",
       "blocker_reason": null,
       "importance_score": 48,
       "importance_tier": "long_tail",
@@ -4989,8 +5280,8 @@
       "region_phase": "americas",
       "official_name": "Arizona MVD — Title & Lien Status",
       "display_name": "Arizona MVD — Title & Lien Status",
-      "official_url": "https://azmvdnow.gov/",
-      "url": "https://azmvdnow.gov/",
+      "official_url": "https://azmvdnow.gov/home",
+      "url": "https://azmvdnow.gov/home",
       "requires_browser": true,
       "requires_captcha": false,
       "supported_inputs": [

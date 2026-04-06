@@ -53,23 +53,63 @@ class LaTitleSource(BaseSource):
         )
 
     def query(self, input: QueryInput) -> BaseModel:
-        """Query Louisiana OMV title verification portal."""
+        """Query Louisiana OMV title verification portal.
+
+        The AccessGov portal requires three pieces of information:
+        - Title Number (``document_number`` when ``document_type=CUSTOM``,
+          or ``extra.title_number`` when ``document_type=VIN``)
+        - Title Date in MM-DD-YYYY format (``extra.title_date``)
+        - Last 6 digits of VIN (``document_number`` when ``document_type=VIN``,
+          or ``extra.vin_last6`` when ``document_type=CUSTOM``)
+        """
         if input.document_type not in (DocumentType.VIN, DocumentType.CUSTOM):
             raise SourceError("us.la_title", f"Unsupported input type: {input.document_type}")
 
-        search_value = input.document_number.strip().upper()
-        if not search_value:
-            raise SourceError("us.la_title", "VIN or title number is required")
+        if input.document_type == DocumentType.VIN:
+            vin_last6 = input.document_number.strip().upper()[-6:]
+            title_number = str(input.extra.get("title_number", "")).strip()
+            title_date = str(input.extra.get("title_date", "")).strip()
+            search_type = "vin"
+        else:
+            title_number = input.document_number.strip()
+            vin_last6 = str(input.extra.get("vin_last6", "")).strip().upper()
+            title_date = str(input.extra.get("title_date", "")).strip()
+            search_type = "title_number"
 
-        search_type = "vin" if input.document_type == DocumentType.VIN else "title_number"
-        return self._query(search_value, search_type, audit=input.audit)
+        if not title_number:
+            raise SourceError("us.la_title", "Title number is required (extra.title_number)")
+        if not title_date:
+            raise SourceError(
+                "us.la_title",
+                "Title date is required (extra.title_date) in MM-DD-YYYY format",
+            )
+        if not vin_last6:
+            raise SourceError("us.la_title", "Last 6 digits of VIN are required")
 
-    def _query(self, search_value: str, search_type: str, audit: bool = False) -> LaTitleResult:
-        """Full flow: launch browser, fill form, parse results."""
+        return self._query(title_number, title_date, vin_last6, search_type, audit=input.audit)
+
+    def _query(
+        self,
+        title_number: str,
+        title_date: str,
+        vin_last6: str,
+        search_type: str,
+        audit: bool = False,
+    ) -> LaTitleResult:
+        """Full flow: navigate wizard, fill 3 fields, parse results.
+
+        The AccessGov portal is a 3-step wizard:
+        Step 1 — Introduction (click "Continue >")
+        Step 2 — Search Page (fill Title Number, Title Date, Last 6 of VIN, click "Next >")
+        Step 3 — Result
+        """
         from openquery.core.browser import BrowserManager
 
         browser = BrowserManager(headless=self._headless, timeout=self._timeout)
         collector = None
+
+        # Use title_number as the canonical search_value for audit/logging
+        search_value = title_number
 
         if audit:
             from openquery.core.audit import AuditCollector
@@ -80,36 +120,40 @@ class LaTitleSource(BaseSource):
                 if collector:
                     collector.attach(page)
 
-                # Wait for the search input to appear
-                logger.info("Waiting for Louisiana title verification form...")
-                search_input = page.locator(
-                    "input[name*='vin'], input[id*='vin'], "
-                    "input[name*='title'], input[id*='title'], "
-                    "input[placeholder*='VIN'], input[placeholder*='Title'], "
-                    "input[type='text']"
-                ).first
-                search_input.wait_for(state="visible", timeout=15000)
+                # Step 1: Introduction page — click "Continue >"
+                logger.info("Waiting for Louisiana title verification intro page...")
+                continue_btn = page.get_by_role("button", name="Continue >")
+                continue_btn.wait_for(state="visible", timeout=15000)
+                continue_btn.click()
+                logger.info("Clicked Continue button")
 
-                # Fill the search value
-                search_input.fill(search_value)
-                logger.info("Filled search value: %s (type=%s)", search_value, search_type)
+                # Step 2: Search Page — fill Title Number, Title Date, Last 6 of VIN
+                logger.info("Waiting for search form fields...")
+                # Title Number is the first text input (auto-focused)
+                title_number_input = page.get_by_role("textbox", name="Title Number")
+                title_number_input.wait_for(state="visible", timeout=10000)
+                title_number_input.fill(title_number)
+                logger.info("Filled Title Number: %s", title_number)
+
+                # Title Date has placeholder MM-DD-YYYY
+                title_date_input = page.get_by_placeholder("MM-DD-YYYY")
+                title_date_input.fill(title_date)
+                logger.info("Filled Title Date: %s", title_date)
+
+                # Last 6 of VIN
+                vin_input = page.get_by_role("textbox", name="Last 6 of VIN")
+                vin_input.fill(vin_last6)
+                logger.info("Filled Last 6 of VIN: %s", vin_last6)
 
                 if collector:
                     collector.screenshot(page, "form_filled")
 
-                # Click submit button
-                submit_btn = page.locator(
-                    "button[type='submit'], "
-                    "input[type='submit'], "
-                    "button:has-text('Search'), "
-                    "button:has-text('Check'), "
-                    "button:has-text('Verify'), "
-                    "button:has-text('Submit')"
-                ).first
-                submit_btn.click()
-                logger.info("Clicked submit button")
+                # Submit — "Next >" advances to the result step
+                next_btn = page.get_by_role("button", name="Next >")
+                next_btn.click()
+                logger.info("Clicked Next button")
 
-                # Wait for results
+                # Step 3: Wait for Result tab to be active / result content to appear
                 page.wait_for_selector(
                     "[class*='result'], [class*='Result'], [id*='result'], "
                     "[class*='valid'], [class*='invalid'], "

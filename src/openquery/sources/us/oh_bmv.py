@@ -80,14 +80,17 @@ class OhBmvSource(BaseSource):
                 if collector:
                     collector.attach(page)
 
-                # Wait for the VIN input to appear
-                logger.info("Waiting for Ohio BMV title search form...")
-                vin_input = page.locator(
-                    "input[name*='vin'], input[id*='vin'], "
-                    "input[placeholder*='VIN'], input[placeholder*='vin'], "
-                    "input[type='text']"
-                ).first
-                vin_input.wait_for(state="visible", timeout=15000)
+                # The page has tabs: Title | Vehicle | Watercraft | Outboard Motor
+                # VIN search is under the "Vehicle" tab — click it first.
+                logger.info("Waiting for Ohio BMV title search form tabs...")
+                vehicle_tab = page.get_by_role("tab", name="Vehicle")
+                vehicle_tab.wait_for(state="visible", timeout=15000)
+                vehicle_tab.click()
+                logger.info("Clicked Vehicle tab")
+
+                # Wait for the VIN input inside the Vehicle tabpanel
+                vin_input = page.get_by_placeholder("Enter a vin number to search for:")
+                vin_input.wait_for(state="visible", timeout=10000)
 
                 # Fill VIN
                 vin_input.fill(vin)
@@ -96,16 +99,12 @@ class OhBmvSource(BaseSource):
                 if collector:
                     collector.screenshot(page, "form_filled")
 
-                # Click submit button
-                submit_btn = page.locator(
-                    "button[type='submit'], "
-                    "input[type='submit'], "
-                    "button:has-text('Search'), "
-                    "button:has-text('Submit'), "
-                    "button:has-text('Find')"
-                ).first
+                # The Search button is inside the Vehicle tabpanel
+                submit_btn = page.get_by_role("tabpanel", name="Vehicle").get_by_role(
+                    "button", name="Search"
+                )
                 submit_btn.click()
-                logger.info("Clicked submit button")
+                logger.info("Clicked Search button")
 
                 # Wait for results to appear
                 page.wait_for_selector(

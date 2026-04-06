@@ -92,37 +92,31 @@ class TnLienSource(BaseSource):
                     collector.attach(page)
 
                 logger.info("Waiting for TN MVTL search form...")
-                page.wait_for_selector("select, input[type='text'], input[type='search']", timeout=15000)
 
-                # Select search type if a dropdown is present
-                search_type_map = {
-                    "vin": ["VIN", "Vin", "vin"],
-                    "debtor": ["Debtor", "debtor", "Name", "name"],
-                    "document": ["Document", "document", "Doc", "doc"],
+                # The form uses radio buttons for search type:
+                # "Individual's Name" (default), "Organization Name",
+                # "Document Number", "VIN Number"
+                # Map our search_type values to the radio button labels.
+                radio_label_map = {
+                    "vin": "VIN Number",
+                    "debtor": "Individual's Name",
+                    "document": "Document Number",
                 }
-                try:
-                    select_el = page.locator(
-                        "select[name*='search'], select[id*='search'], "
-                        "select[name*='type'], select[id*='type'], select"
-                    ).first
-                    if select_el.is_visible(timeout=3000):
-                        labels = search_type_map.get(search_type, [search_type])
-                        for label in labels:
-                            try:
-                                select_el.select_option(label=label)
-                                logger.info("Selected search type: %s", label)
-                                break
-                            except Exception:
-                                continue
-                except Exception:
-                    logger.debug("No search type dropdown found")
+                radio_label = radio_label_map.get(search_type, "VIN Number")
+                search_radio = page.get_by_role("radio", name=radio_label)
+                search_radio.wait_for(state="visible", timeout=15000)
+                search_radio.click()
+                logger.info("Selected search type radio: %s", radio_label)
 
-                # Fill search field
-                search_input = page.locator(
-                    "input[name*='search'], input[id*='search'], "
-                    "input[placeholder*='VIN'], input[placeholder*='vin'], "
-                    "input[placeholder*='Search'], input[type='text']"
-                ).first
+                # After selecting VIN, the VIN input appears with placeholder
+                # "Enter VIN Number". For other types, appropriate fields appear.
+                placeholder_map = {
+                    "vin": "Enter VIN Number",
+                    "debtor": "Enter Last Name",
+                    "document": "Enter an MVTL Document Number",
+                }
+                placeholder = placeholder_map.get(search_type, "Enter VIN Number")
+                search_input = page.get_by_placeholder(placeholder)
                 search_input.wait_for(state="visible", timeout=10000)
                 search_input.fill(search_value)
                 logger.info("Filled search field: %s (%s)", search_value, search_type)
@@ -130,20 +124,15 @@ class TnLienSource(BaseSource):
                 if collector:
                     collector.screenshot(page, "form_filled")
 
-                # Submit form
-                submit_btn = page.locator(
-                    "button[type='submit'], "
-                    "input[type='submit'], "
-                    "button:has-text('Search'), "
-                    "button:has-text('Submit')"
-                ).first
+                # Submit — the Search button has Kendo UI styling but is a standard button
+                submit_btn = page.get_by_role("button", name="Search")
                 submit_btn.click()
-                logger.info("Clicked submit button")
+                logger.info("Clicked Search button")
 
-                # Wait for results
+                # Wait for results — Kendo UI grid or no-results message
                 page.wait_for_selector(
-                    "table, [class*='result'], [class*='lien'], "
-                    "[class*='no-result'], [class*='noResult'], p",
+                    ".k-grid, .k-grid-content, table, "
+                    "[class*='result'], [class*='no-result'], p",
                     timeout=20000,
                 )
                 page.wait_for_timeout(1500)

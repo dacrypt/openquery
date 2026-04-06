@@ -25,7 +25,8 @@ from openquery.sources.base import BaseSource, DocumentType, QueryInput, SourceM
 
 logger = logging.getLogger(__name__)
 
-AZ_MVD_URL = "https://azmvdnow.gov/"
+AZ_MVD_URL = "https://azmvdnow.gov/home"
+AZ_MVD_TITLE_URL = "https://azmvdnow.gov/home"
 
 
 @register
@@ -71,38 +72,52 @@ class AzMvdSource(BaseSource):
             from openquery.core.audit import AuditCollector
             collector = AuditCollector("us.az_mvd", "vin", vin)
 
-        with browser.page(AZ_MVD_URL) as page:
+        with browser.page(AZ_MVD_TITLE_URL) as page:
             try:
                 if collector:
                     collector.attach(page)
 
-                # Look for the Title / Check Title Status express service link
-                logger.info("Looking for title check express service link...")
+                # azmvdnow.gov is behind Cloudflare — wait longer for challenge to pass.
+                # After passing, the home page has express service tiles including Title Check.
+                logger.info("Waiting for AZ MVD home page to load (may pass Cloudflare)...")
+                page.wait_for_load_state("networkidle", timeout=30000)
+
+                if collector:
+                    collector.screenshot(page, "home_page")
+
+                # Look for the Title Check / Check Title express service tile or link.
+                # The site uses Angular/React tiles with text like "Title Check" or
+                # "Check Title Status".
+                logger.info("Looking for title check link...")
                 title_link = page.locator(
-                    "a:has-text('Title'), "
+                    "a:has-text('Title Check'), "
                     "a:has-text('Check Title'), "
                     "a:has-text('Title Status'), "
-                    "button:has-text('Title'), "
-                    "[href*='title']"
+                    "button:has-text('Title Check'), "
+                    "button:has-text('Check Title'), "
+                    "[href*='titlecheck' i], "
+                    "[href*='title-check' i], "
+                    "[href*='title_check' i]"
                 ).first
                 try:
-                    if title_link.is_visible(timeout=5000):
-                        title_link.click()
-                        logger.info("Clicked title check link")
-                        page.wait_for_load_state("networkidle", timeout=10000)
+                    title_link.wait_for(state="visible", timeout=8000)
+                    title_link.click()
+                    logger.info("Clicked title check link")
+                    page.wait_for_load_state("networkidle", timeout=15000)
                 except Exception:
-                    logger.debug("No title link found on homepage, proceeding")
+                    logger.debug("No title link found — may already be on title check page")
 
                 if collector:
                     collector.screenshot(page, "title_page")
 
-                # Wait for VIN input
+                # Wait for VIN input — the title check form uses a text input for VIN
                 logger.info("Waiting for VIN input...")
                 vin_input = page.locator(
                     "input[name*='vin' i], "
                     "input[id*='vin' i], "
                     "input[placeholder*='VIN' i], "
                     "input[placeholder*='Vehicle Identification' i], "
+                    "input[aria-label*='VIN' i], "
                     "input[type='text']"
                 ).first
                 vin_input.wait_for(state="visible", timeout=15000)
@@ -121,7 +136,8 @@ class AzMvdSource(BaseSource):
                     "button:has-text('Search'), "
                     "button:has-text('Check'), "
                     "button:has-text('Submit'), "
-                    "button:has-text('Look Up')"
+                    "button:has-text('Look Up'), "
+                    "button:has-text('Find')"
                 ).first
                 submit_btn.click()
                 logger.info("Clicked submit button")
