@@ -59,6 +59,9 @@ class Settings(BaseSettings):
     sam_api_key: str = ""  # SAM.gov API (register at api.sam.gov)
     br_transparencia_api_key: str = ""  # Brazil Portal Transparencia
 
+    # SSL — set to False for government sites with expired/self-signed certs
+    ssl_verify: bool = True
+
     # Logging
     log_level: str = "INFO"
 
