@@ -62,6 +62,8 @@ class Settings(BaseSettings):
     inegi_api_key: str = ""  # INEGI BIE API (register at inegi.org.mx)
     ocm_api_key: str = ""  # Open Charge Map API (register at openchargemap.io)
     nrel_api_key: str = ""  # NREL/AFDC API (register at developer.nrel.gov)
+    eia_api_key: str = ""  # EIA API (register at eia.gov/opendata)
+    electricitymaps_api_key: str = ""  # Electricity Maps API (register at electricitymaps.com)
 
     # SSL — set to False for government sites with expired/self-signed certs
     ssl_verify: bool = True
