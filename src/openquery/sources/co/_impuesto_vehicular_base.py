@@ -61,35 +61,95 @@ class ImpuestoVehicularBaseSource(BaseSource):
 
                 logger.info("Searching %s vehicle tax for placa=%s", self._departamento, placa)
 
-                # Fill plate field
-                placa_sel = (
-                    "input[name*='placa' i], input[id*='placa' i], "
-                    "input[placeholder*='placa' i], input[name*='plate' i]"
-                )
-                placa_input = page.locator(placa_sel).first
-                placa_input.wait_for(state="visible", timeout=15000)
-                placa_input.fill(placa)
+                # Fill plate field — broad selectors to match diverse portals
+                placa_filled = False
+                placa_selectors = [
+                    "input[name*='placa' i]", "input[id*='placa' i]",
+                    "input[placeholder*='placa' i]", "input[placeholder*='Placa' i]",
+                    "input[name*='plate' i]", "input[id*='plate' i]",
+                    "input[name*='nro' i]", "input[id*='nro' i]",
+                    "input[name*='vehiculo' i]", "input[id*='vehiculo' i]",
+                    "input[type='text']:visible",
+                ]
+                for sel in placa_selectors:
+                    try:
+                        loc = page.locator(sel).first
+                        if loc.count() and loc.is_visible():
+                            loc.fill(placa)
+                            placa_filled = True
+                            logger.info("Filled placa using selector: %s", sel)
+                            break
+                    except Exception:
+                        continue
+
+                if not placa_filled:
+                    # Last resort: try any visible text input
+                    all_inputs = page.locator("input[type='text']")
+                    for i in range(min(all_inputs.count(), 5)):
+                        try:
+                            inp = all_inputs.nth(i)
+                            if inp.is_visible():
+                                inp.fill(placa)
+                                placa_filled = True
+                                logger.info("Filled placa via text input #%d", i)
+                                break
+                        except Exception:
+                            continue
+
+                if not placa_filled:
+                    raise SourceError(
+                        self._source_name, "Could not find plate input field"
+                    )
 
                 # Fill documento if needed
                 if self._needs_documento and documento:
-                    doc_sel = (
-                        "input[name*='documento' i], input[id*='documento' i], "
-                        "input[placeholder*='documento' i], input[name*='cedula' i]"
-                    )
-                    doc_input = page.locator(doc_sel).first
-                    if doc_input.count():
-                        doc_input.fill(documento)
+                    doc_selectors = [
+                        "input[name*='documento' i]", "input[id*='documento' i]",
+                        "input[placeholder*='documento' i]",
+                        "input[name*='cedula' i]", "input[id*='cedula' i]",
+                        "input[name*='identificacion' i]",
+                        "input[name*='nit' i]", "input[id*='nit' i]",
+                    ]
+                    for sel in doc_selectors:
+                        try:
+                            loc = page.locator(sel).first
+                            if loc.count() and loc.is_visible():
+                                loc.fill(documento)
+                                break
+                        except Exception:
+                            continue
 
                 if collector:
                     collector.screenshot(page, "form_filled")
 
-                # Submit
-                submit_sel = (
-                    "button[type='submit'], input[type='submit'], "
-                    "button:has-text('Consultar'), button:has-text('Buscar'), "
-                    "button:has-text('Consulta')"
-                )
-                page.locator(submit_sel).first.click()
+                # Submit — try multiple strategies
+                submitted = False
+                submit_selectors = [
+                    "button[type='submit']", "input[type='submit']",
+                    "button:has-text('Consultar')", "button:has-text('Buscar')",
+                    "button:has-text('Consulta')", "button:has-text('Liquidar')",
+                    "button:has-text('Continuar')", "button:has-text('Enviar')",
+                    "a:has-text('Consultar')", "a:has-text('Buscar')",
+                    "input[type='button'][value*='Consultar' i]",
+                    "input[type='button'][value*='Buscar' i]",
+                    ".btn-primary", ".btn-success",
+                ]
+                for sel in submit_selectors:
+                    try:
+                        loc = page.locator(sel).first
+                        if loc.count() and loc.is_visible():
+                            loc.click()
+                            submitted = True
+                            logger.info("Submitted using selector: %s", sel)
+                            break
+                    except Exception:
+                        continue
+
+                if not submitted:
+                    # Press Enter on the placa field as last resort
+                    page.keyboard.press("Enter")
+                    logger.info("Submitted via Enter key")
+
                 page.wait_for_load_state("networkidle", timeout=25000)
 
                 if collector:
