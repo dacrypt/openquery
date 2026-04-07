@@ -1,7 +1,7 @@
 # Sources Guide
 
 For the current America-first rollout, the machine-readable inventory/status snapshot is tracked in
-`docs/americas-source-inventory.json`. It currently tracks **435** Americas runtime connectors
+`docs/americas-source-inventory.json`. It currently tracks **456** Americas runtime connectors
 across **17** countries, with explicit rollout statuses (`implemented`, `broken`, `blocked`, `excluded`, `queued`). Use it to see current America coverage and to keep
 future source-expansion work explicit.
 

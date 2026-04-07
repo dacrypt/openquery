@@ -58,6 +58,8 @@ class Settings(BaseSettings):
     wto_api_key: str = ""  # WTO Timeseries API (register at apiportal.wto.org)
     sam_api_key: str = ""  # SAM.gov API (register at api.sam.gov)
     br_transparencia_api_key: str = ""  # Brazil Portal Transparencia
+    fred_api_key: str = ""  # FRED API (register at fredaccount.stlouisfed.org)
+    inegi_api_key: str = ""  # INEGI BIE API (register at inegi.org.mx)
 
     # SSL — set to False for government sites with expired/self-signed certs
     ssl_verify: bool = True
