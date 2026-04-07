@@ -60,6 +60,8 @@ class Settings(BaseSettings):
     br_transparencia_api_key: str = ""  # Brazil Portal Transparencia
     fred_api_key: str = ""  # FRED API (register at fredaccount.stlouisfed.org)
     inegi_api_key: str = ""  # INEGI BIE API (register at inegi.org.mx)
+    ocm_api_key: str = ""  # Open Charge Map API (register at openchargemap.io)
+    nrel_api_key: str = ""  # NREL/AFDC API (register at developer.nrel.gov)
 
     # SSL — set to False for government sites with expired/self-signed certs
     ssl_verify: bool = True
