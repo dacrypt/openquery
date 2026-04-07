@@ -25,9 +25,9 @@
   "countries": {
     "AR": 26,
     "BO": 15,
-    "BR": 40,
+    "BR": 41,
     "CL": 26,
-    "CO": 134,
+    "CO": 137,
     "CR": 15,
     "DO": 15,
     "EC": 22,
@@ -38,14 +38,14 @@
     "PE": 33,
     "PY": 15,
     "SV": 15,
-    "US": 32,
+    "US": 35,
     "UY": 15
   },
   "status_counts": {
     "blocked": 8,
     "excluded": 2,
     "implemented": 70,
-    "queued": 396
+    "queued": 403
   },
   "sources": [
     {
@@ -1320,6 +1320,37 @@
       "implemented_source_name": "bo.tsj_procesos",
       "blocker_reason": null,
       "importance_score": 48,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "br.aneel_ev",
+      "name": "br.aneel_ev",
+      "country": "BR",
+      "region_phase": "americas",
+      "official_name": "ANEEL — Estações de Recarga de Veículos Elétricos (Brasil)",
+      "display_name": "ANEEL — Estações de Recarga de Veículos Elétricos (Brasil)",
+      "official_url": "https://dadosabertos.aneel.gov.br/",
+      "url": "https://dadosabertos.aneel.gov.br/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "br.aneel_ev",
+      "blocker_reason": null,
+      "importance_score": 54,
       "importance_tier": "long_tail",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Registered runtime connector pending live accountability coverage"
@@ -3746,6 +3777,37 @@
       "evidence_note": "Live accountability report shows OK"
     },
     {
+      "id": "co.combustible_precios",
+      "name": "co.combustible_precios",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Combustible Precios — Precios de Combustible por Ciudad",
+      "display_name": "Combustible Precios — Precios de Combustible por Ciudad",
+      "official_url": "https://www.datos.gov.co/resource/43yz-mf4a.json",
+      "url": "https://www.datos.gov.co/resource/43yz-mf4a.json",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "dataset",
+      "officiality": "official",
+      "implemented_source_name": "co.combustible_precios",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "co.comparendos_transito",
       "name": "co.comparendos_transito",
       "country": "CO",
@@ -4527,6 +4589,37 @@
       "importance_tier": "medium",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.estaciones_ev_epm",
+      "name": "co.estaciones_ev_epm",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "EPM — Estaciones de Carga Eléctrica (Colombia)",
+      "display_name": "EPM — Estaciones de Carga Eléctrica (Colombia)",
+      "official_url": "https://www.datos.gov.co/resource/qqm3-dw2u.json",
+      "url": "https://www.datos.gov.co/resource/qqm3-dw2u.json",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "dataset",
+      "officiality": "official",
+      "implemented_source_name": "co.estaciones_ev_epm",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
       "id": "co.estado_cedula",
@@ -6109,6 +6202,37 @@
       "importance_tier": "medium",
       "last_reviewed_at": "2026-04-04",
       "evidence_note": "Live accountability report shows OK"
+    },
+    {
+      "id": "co.peajes_tarifas",
+      "name": "co.peajes_tarifas",
+      "country": "CO",
+      "region_phase": "americas",
+      "official_name": "Peajes INVIAS — Tarifas por Categoría",
+      "display_name": "Peajes INVIAS — Tarifas por Categoría",
+      "official_url": "https://www.datos.gov.co/resource/dqv3-yfxh.json",
+      "url": "https://www.datos.gov.co/resource/dqv3-yfxh.json",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "dataset",
+      "officiality": "official",
+      "implemented_source_name": "co.peajes_tarifas",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
       "id": "co.pep",
@@ -13634,6 +13758,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "us.afdc",
+      "name": "us.afdc",
+      "country": "US",
+      "region_phase": "americas",
+      "official_name": "DOE AFDC — Alternative Fuels Station Locator (US)",
+      "display_name": "DOE AFDC — Alternative Fuels Station Locator (US)",
+      "official_url": "https://afdc.energy.gov/stations/",
+      "url": "https://afdc.energy.gov/stations/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "us.afdc",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "us.auto_sales",
       "name": "us.auto_sales",
       "country": "US",
@@ -13727,6 +13882,37 @@
       "evidence_note": "Registered runtime connector pending live accountability coverage"
     },
     {
+      "id": "us.carquery",
+      "name": "us.carquery",
+      "country": "US",
+      "region_phase": "americas",
+      "official_name": "CarQuery — Vehicle Trim Specifications",
+      "display_name": "CarQuery — Vehicle Trim Specifications",
+      "official_url": "https://www.carqueryapi.com/",
+      "url": "https://www.carqueryapi.com/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "us.carquery",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
       "id": "us.census",
       "name": "us.census",
       "country": "US",
@@ -13813,6 +13999,37 @@
       "source_type": "api",
       "officiality": "official",
       "implemented_source_name": "us.cpsc_recalls",
+      "blocker_reason": null,
+      "importance_score": 54,
+      "importance_tier": "long_tail",
+      "last_reviewed_at": "2026-04-04",
+      "evidence_note": "Registered runtime connector pending live accountability coverage"
+    },
+    {
+      "id": "us.eia",
+      "name": "us.eia",
+      "country": "US",
+      "region_phase": "americas",
+      "official_name": "EIA — US Electricity Retail Prices",
+      "display_name": "EIA — US Electricity Retail Prices",
+      "official_url": "https://api.eia.gov/v2/electricity/retail-sales/",
+      "url": "https://api.eia.gov/v2/electricity/retail-sales/",
+      "requires_browser": false,
+      "requires_captcha": false,
+      "supported_inputs": [
+        "custom"
+      ],
+      "identifier_classes": [
+        "custom"
+      ],
+      "identifier_categories": [
+        "custom"
+      ],
+      "runtime_status": "queued",
+      "status": "queued",
+      "source_type": "api",
+      "officiality": "official",
+      "implemented_source_name": "us.eia",
       "blocker_reason": null,
       "importance_score": 54,
       "importance_tier": "long_tail",
